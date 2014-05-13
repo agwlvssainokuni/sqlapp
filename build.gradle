@@ -1,0 +1,99 @@
+apply plugin: "java"
+apply plugin: "eclipse-wtp"
+
+version = "1.0"
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	versionH2db = "1.4.178"
+	versionFlyway = "3.0"
+	versionJodaTime = "2.3"
+	versionCommonsDbcp = "1.4"
+	versionCommonsLang3 = "3.3"
+	versionCommonsMath3 = "3.2"
+	versionSlf4j = "1.7.7"
+	versionLogback = "1.1.2"
+	versionJackson = "2.3.2"
+	versionAspectJ = "1.7.4"
+	versionAopalliance = "1.0"
+	versionSpring = "4.0.4.RELEASE"
+	versionSpringSecurity = "3.2.3.RELEASE"
+	versionSpringMobile = "1.1.1.RELEASE"
+	versionHibernateValidator = "5.1.0.Final"
+	versionJavaValidation = "1.1.0.Final"
+	versionTiles = "3.0.3"
+	versionJstl = "1.2"
+	versionJavaServlet = "3.0.1"
+	versionJavaJsp = "2.2.1"
+	versionJunit = "4.11"
+	versionMockito = "1.9.5"
+}
+
+dependencies {
+	compile "com.h2database:h2:${versionH2db}"
+	compile "org.flywaydb:flyway-core:${versionFlyway}"
+	compile "joda-time:joda-time:${versionJodaTime}"
+	compile "commons-dbcp:commons-dbcp:${versionCommonsDbcp}"
+	compile "org.apache.commons:commons-lang3:${versionCommonsLang3}"
+	compile "org.apache.commons:commons-math3:${versionCommonsMath3}"
+	compile "org.slf4j:slf4j-api:${versionSlf4j}"
+	compile "org.slf4j:jcl-over-slf4j:${versionSlf4j}"
+	compile "ch.qos.logback:logback-core:${versionLogback}"
+	compile "ch.qos.logback:logback-classic:${versionLogback}"
+	compile "com.fasterxml.jackson.core:jackson-core:${versionJackson}"
+	compile "com.fasterxml.jackson.core:jackson-annotations:${versionJackson}"
+	compile "com.fasterxml.jackson.core:jackson-databind:${versionJackson}"
+	compile "org.aspectj:aspectjrt:${versionAspectJ}"
+	compile "org.aspectj:aspectjweaver:${versionAspectJ}"
+	compile "aopalliance:aopalliance:${versionAopalliance}"
+	compile "org.springframework:spring-core:${versionSpring}"
+	compile "org.springframework:spring-beans:${versionSpring}"
+	compile "org.springframework:spring-expression:${versionSpring}"
+	compile "org.springframework:spring-aop:${versionSpring}"
+	compile "org.springframework:spring-context:${versionSpring}"
+	compile "org.springframework:spring-context-support:${versionSpring}"
+	compile "org.springframework:spring-tx:${versionSpring}"
+	compile "org.springframework:spring-jdbc:${versionSpring}"
+	compile "org.springframework:spring-orm:${versionSpring}"
+	compile "org.springframework:spring-oxm:${versionSpring}"
+	compile "org.springframework:spring-jms:${versionSpring}"
+	compile "org.springframework:spring-web:${versionSpring}"
+	compile "org.springframework:spring-webmvc:${versionSpring}"
+	compile "org.springframework.security:spring-security-core:${versionSpringSecurity}"
+	compile "org.springframework.security:spring-security-acl:${versionSpringSecurity}"
+	compile "org.springframework.security:spring-security-web:${versionSpringSecurity}"
+	compile "org.springframework.security:spring-security-taglibs:${versionSpringSecurity}"
+	compile "org.springframework.security:spring-security-config:${versionSpringSecurity}"
+	compile "org.springframework.mobile:spring-mobile-device:${versionSpringMobile}"
+	compile "org.hibernate:hibernate-validator:${versionHibernateValidator}"
+	compile "javax.validation:validation-api:${versionJavaValidation}"
+	compile "org.apache.tiles:tiles-core:${versionTiles}"
+	compile "org.apache.tiles:tiles-api:${versionTiles}"
+	compile "org.apache.tiles:tiles-servlet:${versionTiles}"
+	compile "org.apache.tiles:tiles-jsp:${versionTiles}"
+	compile "org.apache.tiles:tiles-el:${versionTiles}"
+	compile "org.apache.tiles:tiles-extras:${versionTiles}"
+	compile "javax.servlet:jstl:${versionJstl}"
+	providedCompile "javax.servlet:javax.servlet-api:${versionJavaServlet}"
+	providedCompile "javax.servlet.jsp:javax.servlet.jsp-api:${versionJavaJsp}"
+	testCompile "junit:junit:${versionJunit}"
+	testCompile "org.mockito:mockito-all:${versionMockito}"
+}
+
+configurations {
+	all*.exclude group: "commons-logging", module: "commons-logging"
+}
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+compileJava {
+	options.encoding = "UTF-8"
+}
+
+compileTestJava {
+	options.encoding = "UTF-8"
+}

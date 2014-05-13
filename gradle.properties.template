@@ -1,0 +1,10 @@
+# HTTP PROXY CONFIGURATION
+systemProp.http.proxyHost={proxyHost}
+systemProp.http.proxyPort={proxyPort}
+systemProp.http.proxyUser={proxyUser}
+systemProp.http.proxyPassword={proxyPassword}
+# HTTPS PROXY CONFIGURATION
+systemProp.https.proxyHost={proxyHost}
+systemProp.https.proxyPort={proxyPort}
+systemProp.https.proxyUser={proxyUser}
+systemProp.https.proxyPassword={proxyPassword}
