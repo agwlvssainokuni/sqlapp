@@ -1,0 +1,186 @@
+@CHARSET "UTF-8";
+
+/*
+ * レイアウト
+ */
+
+/* 基本レイアウト */
+body {
+	font-size: 12pt;
+}
+
+input {
+	font-size: 12pt;
+}
+
+textarea {
+	font-size: 12pt;
+}
+
+body,ul,ol,form {
+	margin: 0px;
+	padding: 0px;
+}
+
+td,th {
+	padding: 5px 5px;
+}
+
+.app-subject {
+	margin: 10px 0px;
+}
+
+h1.app-subject {
+	font-size: 16pt;
+}
+
+h2.app-subject {
+	font-size: 14pt;
+}
+
+h3.app-subject {
+	font-size: 12pt;
+}
+
+h4.app-subject {
+	font-size: 12pt;
+}
+
+.app-portion {
+	margin: 10px 0px 10px 10px;
+}
+
+ul.app-flat {
+	list-style: none;
+}
+
+ul.app-flat>li {
+	display: inline;
+}
+
+ul.app-flat>li+li {
+	margin-left: 5px;
+}
+
+.app-pager {
+	text-align: right;
+	padding: 0px 20px;
+}
+
+.app-pager-desc .app-number {
+	font-weight: bold;
+}
+
+.app-width-full {
+	width: 100%;
+}
+
+.app-width10 {
+	width: 160px;
+}
+
+.app-width15 {
+	width: 240px;
+}
+
+.app-width20 {
+	width: 320px;
+}
+
+.app-width30 {
+	width: 480px;
+}
+
+.app-width50 {
+	width: 800px;
+}
+
+.app-height3 {
+	height: 54px;
+}
+
+.app-height5 {
+	height: 90px;
+}
+
+/* 領域レイアウト */
+#Header,#Navi,#Content,#Footer {
+	/* width: 1280px; */
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#PageContent {
+	padding: 1px 0px;
+}
+
+/*
+ * 配色
+ */
+
+/* 基本配色 */
+body {
+	color: midnightblue;
+	background-color: royalblue;
+}
+
+a:link,a:visited {
+	color: midnightblue;
+	background-color: transparent;
+}
+
+a:hover,a:active {
+	color: midnightblue;
+	background-color: lavender;
+}
+
+/* 領域配色 */
+#PageHeader,#PageFooter {
+	color: white;
+	background-color: royalblue;
+}
+
+#PageNavi {
+	color: midnightblue;
+	background-color: lightskyblue;
+}
+
+#PageContent {
+	color: midnightblue;
+	background-color: azure;
+}
+
+/* 表配色 */
+/* 通常表 */
+table>thead,tfoot>tr {
+	color: white;
+	background-color: royalblue;
+}
+
+table>tbody>tr {
+	color: midnightblue;
+	background-color: lightblue;
+}
+
+table>.app-transparent>tr {
+	color: midnightblue;
+	background-color: transparent;
+}
+
+/* ストライプ表 */
+table.app-stripe>tbody>tr.app-even {
+	color: midnightblue;
+	background-color: lightblue;
+}
+
+table.app-stripe>tbody>tr.app-odd {
+	color: midnightblue;
+	background-color: skyblue;
+}
+
+/* 列見出し表 */
+table.app-collabel>tbody>tr>th {
+	color: white;
+	background-color: royalblue;
+	text-align: left;
+}
