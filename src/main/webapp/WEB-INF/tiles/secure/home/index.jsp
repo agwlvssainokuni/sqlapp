@@ -13,9 +13,9 @@
 </h1>
 <div class="app-portion">
 	<ul>
-		<li><a href="<c:url value="/secure/sqlExec" />"><s:message
-					code="secure/home/index.menu.sqlExec" /></a></li>
-		<li><a href="<c:url value="/secure/sqlAdmin" />"><s:message
-					code="secure/home/index.menu.sqlAdmin" /></a></li>
+		<li><a href="<c:url value="/secure/sqlexec" />"><s:message
+					code="secure/home/index.menu.sqlexec" /></a></li>
+		<li><a href="<c:url value="/secure/sqladmin" />"><s:message
+					code="secure/home/index.menu.sqladmin" /></a></li>
 	</ul>
 </div>
