@@ -1,7 +1,194 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+	<context:property-placeholder location="classpath:common.properties"
+		ignore-unresolvable="true" />
+	<context:property-placeholder location="classpath:sqlapp.properties"
+		ignore-unresolvable="true" />
+
+	<context:component-scan base-package="cherry.spring" />
+	<context:component-scan base-package="cherry.sqlapp" />
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>message/error</value>
+				<value>message/page</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="cherry.spring.common.log.LogInitializer">
+		<property name="messageDef">
+			<util:properties location="classpath:log.properties" />
+		</property>
+	</bean>
+
+	<bean id="navigator" class="cherry.spring.common.lib.navi.NavigatorImpl">
+		<property name="navigationDef" value="classpath:navi.json" />
+		<property name="objectMapper">
+			<bean class="com.fasterxml.jackson.databind.ObjectMapper" />
+		</property>
+	</bean>
+
+	<tx:annotation-driven />
+
+	<aop:config>
+		<aop:advisor advice-ref="traceInterceptor"
+			pointcut="execution(* cherry..*.*(..))
+				and
+				!execution(* cherry.spring.common.log..*.*(..))
+				and
+				!execution(* cherry.spring.common.custom..*.*(..))
+				" />
+	</aop:config>
+
+	<bean id="traceInterceptor" class="cherry.spring.common.log.trace.TraceInterceptor">
+		<property name="arrayLengthLimit" value="${common.trace.arrayLengthLimit}" />
+		<property name="objectLengthLimit" value="${common.trace.objectLengthLimit}" />
+		<property name="packagePrefix">
+			<list>
+				<value>cherry.spring</value>
+				<value>cherry.sqlapp</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="conversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="registerDefaultFormatters" value="false" />
+		<property name="formatters">
+			<set>
+				<bean
+					class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
+				<bean
+					class="org.springframework.format.datetime.joda.JodaDateTimeFormatAnnotationFormatterFactory" />
+				<bean
+					class="cherry.spring.common.custom.format.CustomDateTimeFormatAnnotationFormatterFactory" />
+			</set>
+		</property>
+		<property name="formatterRegistrars">
+			<set>
+				<bean class="org.springframework.format.datetime.DateFormatterRegistrar" />
+			</set>
+		</property>
+	</bean>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
+
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
+	<bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/tiles.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="passwordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<security:authentication-manager id="authenticationManager">
+		<security:authentication-provider>
+			<security:password-encoder ref="passwordEncoder" />
+			<security:user-service properties="${sqlapp.userfile}" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<security:http auto-config="false"
+		authentication-manager-ref="authenticationManager">
+		<security:intercept-url pattern="/secure/**"
+			access="IS_AUTHENTICATED_FULLY" />
+		<security:form-login login-page="/login"
+			login-processing-url="/login/req" authentication-failure-url="/login?err=login"
+			default-target-url="/secure/" always-use-default-target="false"
+			username-parameter="loginId" password-parameter="password" />
+		<security:logout logout-url="/logout"
+			logout-success-url="/login?ok=logout" invalidate-session="true" />
+		<security:csrf />
+	</security:http>
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/login/**" />
+			<mvc:mapping path="/logout/**" />
+			<mvc:mapping path="/secure/**" />
+			<bean class="cherry.spring.common.log.web.OperationLogHandlerInterceptor" />
+		</mvc:interceptor>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+		<bean
+			class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
+		<bean
+			class="org.springframework.mobile.device.site.SitePreferenceHandlerInterceptor" />
+	</mvc:interceptors>
+
+	<mvc:annotation-driven conversion-service="conversionService">
+		<mvc:argument-resolvers>
+			<bean class="org.springframework.mobile.device.DeviceWebArgumentResolver" />
+			<bean
+				class="org.springframework.mobile.device.site.SitePreferenceWebArgumentResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+
+	<mvc:default-servlet-handler />
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="viewResolvers">
+			<list>
+				<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+					<property name="viewClass"
+						value="org.springframework.web.servlet.view.tiles3.TilesView" />
+				</bean>
+				<bean
+					class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+					<property name="viewClass"
+						value="org.springframework.web.servlet.view.JstlView" />
+					<property name="prefix" value="/WEB-INF/jsp/" />
+					<property name="suffix" value=".jsp" />
+				</bean>
+			</list>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<bean
+					class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${sqlapp.jdbc.driverClassName}" />
+		<property name="url" value="${sqlapp.jdbc.url}" />
+		<property name="username" value="${sqlapp.jdbc.username}" />
+		<property name="password" value="${sqlapp.jdbc.password}" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
+		<property name="dataSource" ref="dataSource" />
+		<property name="locations" value="db/migration" />
+		<property name="encoding" value="UTF-8" />
+	</bean>
 
 </beans>
