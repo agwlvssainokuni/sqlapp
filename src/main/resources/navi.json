@@ -1,0 +1,14 @@
+{
+	"name": "secure/home/index",
+	"uri": "/secure/",
+	"children": [
+		{
+			"name": "secure/sqlExec/index",
+			"uri": "/secure/sqlExec"
+		},
+		{
+			"name": "secure/sqlAdmin/index",
+			"uri": "/secure/sqlAdmin"
+		}
+	]
+}
