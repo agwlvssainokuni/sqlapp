@@ -31,8 +31,7 @@
 	src="//code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
 <script type="text/javascript"
 	src="<c:url value="/script/general.js" />"></script>
-<script type="text/javascript"
-	src="<c:url value="/script/custom.js" />"></script>
+<script type="text/javascript" src="<c:url value="/script/custom.js" />"></script>
 </head>
 <body>
 	<div id="PageHeader">

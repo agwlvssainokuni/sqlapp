@@ -31,8 +31,7 @@
 	src="//code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
 <script type="text/javascript"
 	src="<c:url value="/script/general.js" />"></script>
-<script type="text/javascript"
-	src="<c:url value="/script/custom.js" />"></script>
+<script type="text/javascript" src="<c:url value="/script/custom.js" />"></script>
 </head>
 <body>
 	<div id="PageHeader">
@@ -54,10 +53,7 @@
 			<ul class="app-flat">
 				<li><s:message code="base/auth.navigation" /></li>
 				<c:set var="sc" value="<%=application%>" />
-				<s:eval var="naviClass"
-					expression="T(cherry.spring.common.lib.navi.Navigator)" />
-				<c:forEach var="node"
-					items="${common:getBean(sc, 'navigator', naviClass).navigate(name)}">
+				<c:forEach var="node" items="${common:navigate(sc, name)}">
 					<li><a href="<c:url value="${node.uri}" />"><s:message
 								code="${node.name}.title" /></a> <c:if test="${! node.last}"> &gt;</c:if></li>
 				</c:forEach>
