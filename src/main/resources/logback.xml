@@ -3,7 +3,7 @@
 <configuration>
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>[%X{loginId}] [%X{req.requestURI}] %-5level %logger - %msg%n</pattern>
+			<pattern>%d{yyyy-MM-dd-HH:mm:ss.SSS} [%t] [%X{loginId}] [%X{req.requestURI}] %-5level %logger - %msg%n</pattern>
 		</encoder>
 	</appender>
 	<logger name="cherry.sqlapp" level="DEBUG" />
