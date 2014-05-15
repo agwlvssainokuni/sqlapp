@@ -28,6 +28,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -48,6 +49,8 @@ public interface ExecAnyController {
 
 	public static final String PATH_VAR = "id";
 
+	public static final String PARAM_H = "h";
+
 	@ModelAttribute("execMetadataForm")
 	ExecMetadataForm getMetadata();
 
@@ -55,7 +58,9 @@ public interface ExecAnyController {
 	ExecAnyForm getForm();
 
 	@RequestMapping()
-	ModelAndView index(Authentication authentication, Locale locale,
+	ModelAndView index(
+			@RequestParam(value = PARAM_H, required = false, defaultValue = "") Integer hid,
+			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_EXEC)

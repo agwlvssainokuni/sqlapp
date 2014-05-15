@@ -50,6 +50,8 @@ public interface ExecCsvController {
 
 	public static final String PATH_VAR = "id";
 
+	public static final String PARAM_H = "h";
+
 	public static final String PARAM_FILE = "file";
 
 	@ModelAttribute("execMetadataForm")
@@ -59,7 +61,9 @@ public interface ExecCsvController {
 	ExecCsvForm getForm();
 
 	@RequestMapping()
-	ModelAndView index(Authentication authentication, Locale locale,
+	ModelAndView index(
+			@RequestParam(value = PARAM_H, required = false, defaultValue = "") Integer hid,
+			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_EXEC)

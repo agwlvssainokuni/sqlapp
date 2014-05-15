@@ -49,6 +49,8 @@ public interface ExecSelectController {
 
 	public static final String PATH_VAR = "id";
 
+	public static final String PARAM_H = "h";
+
 	public static final String PARAM_NO = "no";
 
 	public static final String PARAM_SZ = "sz";
@@ -60,7 +62,9 @@ public interface ExecSelectController {
 	ExecSelectForm getForm();
 
 	@RequestMapping()
-	ModelAndView index(Authentication authentication, Locale locale,
+	ModelAndView index(
+			@RequestParam(value = PARAM_H, required = false, defaultValue = "") Integer hid,
+			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_EXEC)
