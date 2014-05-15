@@ -21,7 +21,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import cherry.sqlapp.controller.BaseForm;
 import cherry.sqlapp.validation.SqlClauseSize;
 
-public class SqlExecSelectForm extends BaseForm {
+public class ExecSelectForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
 

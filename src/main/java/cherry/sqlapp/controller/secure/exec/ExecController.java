@@ -32,8 +32,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(SqlExecController.URI_PATH)
-public interface SqlExecController {
+@RequestMapping(ExecController.URI_PATH)
+public interface ExecController {
 
 	public static final String URI_PATH = "/secure/sqlexec";
 
@@ -56,23 +56,23 @@ public interface SqlExecController {
 	public static final String PARAM_SZ = "sz";
 
 	@ModelAttribute("sqlExecSearchForm")
-	SqlExecSearchForm getSearcForm();
+	ExecSearchForm getSearcForm();
 
 	@ModelAttribute("sqlExecMetadataForm")
-	SqlExecMetadataForm getForm();
+	ExecMetadataForm getForm();
 
 	@ModelAttribute("sqlExecSelectForm")
-	SqlExecSelectForm getFormS();
+	ExecSelectForm getFormS();
 
 	@ModelAttribute("sqlExecAnyForm")
-	SqlExecAnyForm getFormA();
+	ExecAnyForm getFormA();
 
 	@ModelAttribute("sqlExecCsvForm")
-	SqlExecCsvForm getFormC();
+	ExecCsvForm getFormC();
 
 	@RequestMapping()
 	ModelAndView index(
-			@Validated SqlExecSearchForm form,
+			@Validated ExecSearchForm form,
 			BindingResult binding,
 			@RequestParam(value = PARAM_NO, required = false, defaultValue = "0") int pageNo,
 			@RequestParam(value = PARAM_SZ, required = false, defaultValue = "0") int pageSz,
@@ -86,31 +86,31 @@ public interface SqlExecController {
 
 	@RequestMapping(URI_PATH_ID_UPDATE)
 	ModelAndView update(@PathVariable(PATH_VAR) int id,
-			@Validated SqlExecMetadataForm form, BindingResult binding,
+			@Validated ExecMetadataForm form, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_ID_UPDATE_S)
 	ModelAndView updateS(@PathVariable(PATH_VAR) int id,
-			@Validated SqlExecSelectForm form, BindingResult binding,
+			@Validated ExecSelectForm form, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_ID_UPDATE_A)
 	ModelAndView updateA(@PathVariable(PATH_VAR) int id,
-			@Validated SqlExecAnyForm form, BindingResult binding,
+			@Validated ExecAnyForm form, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_ID_UPDATE_C)
 	ModelAndView updateC(@PathVariable(PATH_VAR) int id,
-			@Validated SqlExecCsvForm form, BindingResult binding,
+			@Validated ExecCsvForm form, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_ID_EXEC)
 	ModelAndView exec(@PathVariable(PATH_VAR) int id,
-			@Validated SqlExecCsvForm form, BindingResult binding,
+			@Validated ExecCsvForm form, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 

@@ -17,57 +17,47 @@
 package cherry.sqlapp.controller.secure.exec;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.web.multipart.MultipartFile;
 
 import cherry.sqlapp.controller.BaseForm;
-import cherry.sqlapp.validation.SqlStatementSize;
+import cherry.sqlapp.validation.DescriptionSize;
+import cherry.sqlapp.validation.NameSize;
 
-public class SqlExecCsvForm extends BaseForm {
+public class ExecMetadataForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
 
 	@NotEmpty
-	@SqlStatementSize
-	private String sql;
+	@NameSize
+	private String name;
 
-	@SqlStatementSize
-	private String sqlAlt1;
+	@NotEmpty
+	@DescriptionSize
+	private String description;
 
-	@SqlStatementSize
-	private String sqlAlt2;
+	private boolean publish;
 
-	private MultipartFile file;
-
-	public String getSql() {
-		return sql;
+	public String getName() {
+		return name;
 	}
 
-	public void setSql(String sql) {
-		this.sql = sql;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getSqlAlt1() {
-		return sqlAlt1;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setSqlAlt1(String sqlAlt1) {
-		this.sqlAlt1 = sqlAlt1;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public String getSqlAlt2() {
-		return sqlAlt2;
+	public boolean isPublish() {
+		return publish;
 	}
 
-	public void setSqlAlt2(String sqlAlt2) {
-		this.sqlAlt2 = sqlAlt2;
-	}
-
-	public MultipartFile getFile() {
-		return file;
-	}
-
-	public void setFile(MultipartFile file) {
-		this.file = file;
+	public void setPublish(boolean publish) {
+		this.publish = publish;
 	}
 
 }

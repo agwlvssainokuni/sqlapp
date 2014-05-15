@@ -19,45 +19,22 @@ package cherry.sqlapp.controller.secure.exec;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import cherry.sqlapp.controller.BaseForm;
-import cherry.sqlapp.validation.DescriptionSize;
-import cherry.sqlapp.validation.NameSize;
+import cherry.sqlapp.validation.SqlStatementSize;
 
-public class SqlExecMetadataForm extends BaseForm {
+public class ExecAnyForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
 
 	@NotEmpty
-	@NameSize
-	private String name;
+	@SqlStatementSize
+	private String sql;
 
-	@NotEmpty
-	@DescriptionSize
-	private String description;
-
-	private boolean publish;
-
-	public String getName() {
-		return name;
+	public String getSql() {
+		return sql;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public boolean isPublish() {
-		return publish;
-	}
-
-	public void setPublish(boolean publish) {
-		this.publish = publish;
+	public void setSql(String sql) {
+		this.sql = sql;
 	}
 
 }
