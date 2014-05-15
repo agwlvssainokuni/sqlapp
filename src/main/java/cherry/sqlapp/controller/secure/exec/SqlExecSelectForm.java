@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.controller.secure.sqlexec;
+package cherry.sqlapp.controller.secure.exec;
 
 import org.hibernate.validator.constraints.NotEmpty;
 

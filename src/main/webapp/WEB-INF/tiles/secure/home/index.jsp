@@ -13,8 +13,8 @@
 </h1>
 <div class="app-portion">
 	<ul>
-		<li><a href="<c:url value="/secure/sqlexec" />"><s:message
-					code="secure/home/index.menu.sqlexec" /></a></li>
+		<li><a href="<c:url value="/secure/exec" />"><s:message
+					code="secure/home/index.menu.exec" /></a></li>
 		<li><a href="<c:url value="/secure/sqladmin" />"><s:message
 					code="secure/home/index.menu.sqladmin" /></a></li>
 	</ul>

@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.controller.secure.sqlexec;
+package cherry.sqlapp.controller.secure.exec;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
 
 import cherry.sqlapp.controller.BaseForm;
 import cherry.sqlapp.validation.SqlStatementSize;
 
-public class SqlExecAnyForm extends BaseForm {
+public class SqlExecCsvForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,12 +30,44 @@ public class SqlExecAnyForm extends BaseForm {
 	@SqlStatementSize
 	private String sql;
 
+	@SqlStatementSize
+	private String sqlAlt1;
+
+	@SqlStatementSize
+	private String sqlAlt2;
+
+	private MultipartFile file;
+
 	public String getSql() {
 		return sql;
 	}
 
 	public void setSql(String sql) {
 		this.sql = sql;
+	}
+
+	public String getSqlAlt1() {
+		return sqlAlt1;
+	}
+
+	public void setSqlAlt1(String sqlAlt1) {
+		this.sqlAlt1 = sqlAlt1;
+	}
+
+	public String getSqlAlt2() {
+		return sqlAlt2;
+	}
+
+	public void setSqlAlt2(String sqlAlt2) {
+		this.sqlAlt2 = sqlAlt2;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 
 }
