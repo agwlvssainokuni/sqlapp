@@ -16,6 +16,8 @@
 
 package cherry.sqlapp.controller.secure.exec;
 
+import static org.springframework.web.util.UriComponentsBuilder.fromPath;
+
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +27,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
@@ -34,7 +35,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 	public static final String VIEW_PATH = "secure/exec/select/index";
 
-	public static final String VIEW_PATH_EDIT = "secure/exec/select/edit";
+	public static final String VIEW_PATH_ID = "secure/exec/select/indexId";
 
 	@Override
 	public ExecMetadataForm getMetadata() {
@@ -55,7 +56,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	}
 
 	@Override
-	public ModelAndView exec(ExecSelectForm form, BindingResult binding,
+	public ModelAndView request(ExecSelectForm form, BindingResult binding,
 			String pmap, int pageNo, int pageSz, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
@@ -70,10 +71,18 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	}
 
 	@Override
-	public ModelAndView edit(int id, Authentication authentication,
+	public ModelAndView indexId(int id, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH_EDIT);
+		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
+		return mav;
+	}
+
+	@Override
+	public ModelAndView requestId(int id, String pmap, int pageNo, int pageSz,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		return mav;
 	}
 
@@ -84,13 +93,12 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH_EDIT);
+			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 			return mav;
 		}
 
-		UriComponents uri = MvcUriComponentsBuilder.fromMethodName(
-				ExecSelectController.class, "edit", id, authentication, locale,
-				sitePreference, request).build();
+		UriComponents uri = fromPath(URI_PATH).path(URI_PATH_ID)
+				.buildAndExpand(id);
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uri.toUriString(), true));
 		return mav;
@@ -103,23 +111,14 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH_EDIT);
+			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 			return mav;
 		}
 
-		UriComponents uri = MvcUriComponentsBuilder.fromMethodName(
-				ExecSelectController.class, "edit", id, authentication, locale,
-				sitePreference, request).build();
+		UriComponents uri = fromPath(URI_PATH).path(URI_PATH_ID)
+				.buildAndExpand(id);
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uri.toUriString(), true));
-		return mav;
-	}
-
-	@Override
-	public ModelAndView exec(int id, String pmap, int pageNo, int pageSz,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH_EDIT);
 		return mav;
 	}
 

@@ -35,15 +35,15 @@ public interface ExecSelectController {
 
 	public static final String URI_PATH = "/secure/exec/select";
 
-	public static final String URI_PATH_EXEC = "exec";
+	public static final String URI_PATH_REQ = "req";
 
 	public static final String URI_PATH_ID = "{id}";
+
+	public static final String URI_PATH_ID_REQ = "{id}/req";
 
 	public static final String URI_PATH_ID_METADATA = "{id}/metadata";
 
 	public static final String URI_PATH_ID_UPDATE = "{id}/update";
-
-	public static final String URI_PATH_ID_EXEC = "{id}/exec";
 
 	public static final String PATH_VAR = "id";
 
@@ -67,8 +67,8 @@ public interface ExecSelectController {
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
-	@RequestMapping(URI_PATH_EXEC)
-	ModelAndView exec(
+	@RequestMapping(URI_PATH_REQ)
+	ModelAndView request(
 			@Validated ExecSelectForm form,
 			BindingResult binding,
 			@RequestParam(value = PARAM_PMAP, required = false, defaultValue = "") String pmap,
@@ -78,7 +78,16 @@ public interface ExecSelectController {
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_ID)
-	ModelAndView edit(@PathVariable(PATH_VAR) int id,
+	ModelAndView indexId(@PathVariable(PATH_VAR) int id,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request);
+
+	@RequestMapping(URI_PATH_ID_REQ)
+	ModelAndView requestId(
+			@PathVariable(PATH_VAR) int id,
+			@RequestParam(value = PARAM_PMAP, required = false, defaultValue = "") String pmap,
+			@RequestParam(value = PARAM_NO, required = false, defaultValue = "0") int pageNo,
+			@RequestParam(value = PARAM_SZ, required = false, defaultValue = "0") int pageSz,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
@@ -91,15 +100,6 @@ public interface ExecSelectController {
 	@RequestMapping(URI_PATH_ID_UPDATE)
 	ModelAndView update(@PathVariable(PATH_VAR) int id,
 			@Validated ExecSelectForm form, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
-
-	@RequestMapping(URI_PATH_ID_EXEC)
-	ModelAndView exec(
-			@PathVariable(PATH_VAR) int id,
-			@RequestParam(value = PARAM_PMAP, required = false, defaultValue = "") String pmap,
-			@RequestParam(value = PARAM_NO, required = false, defaultValue = "0") int pageNo,
-			@RequestParam(value = PARAM_SZ, required = false, defaultValue = "0") int pageSz,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
