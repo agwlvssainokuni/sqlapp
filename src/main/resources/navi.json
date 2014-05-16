@@ -3,12 +3,28 @@
 	"uri": "/secure/",
 	"children": [
 		{
-			"name": "secure/sqlExec/index",
-			"uri": "/secure/sqlExec"
+			"name": "secure/exec/select/index",
+			"uri": "/secure/exec/select"
 		},
 		{
-			"name": "secure/sqlAdmin/index",
-			"uri": "/secure/sqlAdmin"
+			"name": "secure/exec/select/indexId",
+			"uri": "/secure/exec/select/{id}"
+		},
+		{
+			"name": "secure/exec/any/index",
+			"uri": "/secure/exec/any"
+		},
+		{
+			"name": "secure/exec/any/indexId",
+			"uri": "/secure/exec/any/{id}"
+		},
+		{
+			"name": "secure/exec/csv/index",
+			"uri": "/secure/exec/csv"
+		},
+		{
+			"name": "secure/exec/csv/indexId",
+			"uri": "/secure/exec/csv/{id}"
 		}
 	]
 }
