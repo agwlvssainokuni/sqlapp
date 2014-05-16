@@ -1,28 +1,41 @@
 /*
- *   Copyright 2004,2014 agwlvssainokuni
+ * Copyright 2004,2014 agwlvssainokuni
  *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
-package cherry.spring.common.lib.pager;
+package cherry.spring.common.lib.paginate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ページネーション機能を実現する。
+ * ページネーション機能。
  */
-public abstract class Paginator {
+public class Paginator implements IPaginator {
+
+	/** ページネーションリンクとして並べるページ番号の範囲の算出方法を定義する。 */
+	private PageNumberStrategy pageNumberStrategy;
+
+	/**
+	 * ページネーションリンクとして並べるページ番号の範囲の算出方法を設定する。
+	 * 
+	 * @param pageNumberStrategy
+	 *            ページネーションリンクとして並べるページ番号の範囲の算出方法。
+	 */
+	public void setPageNumberStrategy(PageNumberStrategy pageNumberStrategy) {
+		this.pageNumberStrategy = pageNumberStrategy;
+	}
 
 	/**
 	 * ページ数を計算する。
@@ -33,6 +46,7 @@ public abstract class Paginator {
 	 *            ページサイズ。
 	 * @return ページ数。
 	 */
+	@Override
 	public int getPageCount(int itemCount, int pageSize) {
 		if (itemCount % pageSize == 0) {
 			return itemCount / pageSize;
@@ -52,6 +66,7 @@ public abstract class Paginator {
 	 *            ページサイズ。
 	 * @return ページ情報。
 	 */
+	@Override
 	public Page getPage(int pageNo, int itemCount, int pageSize) {
 
 		if (itemCount <= 0) {
@@ -79,6 +94,7 @@ public abstract class Paginator {
 	 *            ページサイズ。
 	 * @return ページネーションの処理結果。
 	 */
+	@Override
 	public PageSet paginate(int pageNo, int itemCount, int pageSize) {
 
 		int pageCount = getPageCount(itemCount, pageSize);
@@ -88,11 +104,9 @@ public abstract class Paginator {
 		int firstNo = adjustPageNo(0, pageCount);
 		int lastNo = adjustPageNo(pageCount - 1, pageCount);
 
-		Range range = calcRange(curNo, pageCount);
-
 		PageSet pageSet = new PageSet();
 		List<Page> list = new ArrayList<>();
-		for (int no = range.from; no <= range.to; no++) {
+		for (Integer no : pageNumberStrategy.calculate(curNo, pageCount)) {
 
 			Page page = createPage(no, pageCount, itemCount, pageSize);
 			list.add(page);
@@ -181,34 +195,6 @@ public abstract class Paginator {
 		page.setFrom(pageSize * pageNo);
 		page.setTo(page.getFrom() + page.getCount() - 1);
 		return page;
-	}
-
-	/**
-	 * 画面に表示するページの範囲を算出する。サブクラスで実装する。
-	 * 
-	 * @param pgNo
-	 *            ページ番号。
-	 * @param pgCount
-	 *            ページ数。
-	 * @return ページの範囲。
-	 */
-	protected abstract Range calcRange(int pgNo, int pgCount);
-
-	/**
-	 * 画面に表示するページの範囲を表す。{@link #calcRange}メソッドの 戻り値として使用する。
-	 */
-	protected static class Range {
-
-		/** 開始ページ番号を保持する。 */
-		public final int from;
-
-		/** 終了ページ番号を保持する。 */
-		public final int to;
-
-		Range(int from, int to) {
-			this.from = from;
-			this.to = to;
-		}
 	}
 
 }

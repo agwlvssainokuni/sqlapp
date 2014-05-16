@@ -43,6 +43,14 @@
 		</property>
 	</bean>
 
+	<bean id="paginator" class="cherry.spring.common.lib.paginate.Paginator">
+		<property name="pageNumberStrategy">
+			<bean class="cherry.spring.common.lib.paginate.TotalCountNoEdgeStrategy">
+				<property name="totalCount" value="${sqlapp.app.paginator.totalCount}" />
+			</bean>
+		</property>
+	</bean>
+
 	<tx:annotation-driven />
 
 	<aop:config>
