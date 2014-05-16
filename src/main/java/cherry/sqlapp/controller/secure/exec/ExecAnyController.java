@@ -51,6 +51,8 @@ public interface ExecAnyController {
 
 	public static final String PARAM_H = "h";
 
+	public static final String PARAM_PMAP = "pmap";
+
 	@ModelAttribute("execMetadataForm")
 	ExecMetadataForm getMetadata();
 
@@ -64,7 +66,10 @@ public interface ExecAnyController {
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_EXEC)
-	ModelAndView exec(@Validated ExecAnyForm form, BindingResult binding,
+	ModelAndView exec(
+			@Validated ExecAnyForm form,
+			BindingResult binding,
+			@RequestParam(value = PARAM_PMAP, required = false, defaultValue = "") String pmap,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
@@ -86,7 +91,9 @@ public interface ExecAnyController {
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_ID_EXEC)
-	ModelAndView exec(@PathVariable(PATH_VAR) int id,
+	ModelAndView exec(
+			@PathVariable(PATH_VAR) int id,
+			@RequestParam(value = PARAM_PMAP, required = false, defaultValue = "") String pmap,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 

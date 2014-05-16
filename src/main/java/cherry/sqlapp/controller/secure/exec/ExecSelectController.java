@@ -51,6 +51,8 @@ public interface ExecSelectController {
 
 	public static final String PARAM_H = "h";
 
+	public static final String PARAM_PMAP = "pmap";
+
 	public static final String PARAM_NO = "no";
 
 	public static final String PARAM_SZ = "sz";
@@ -71,6 +73,7 @@ public interface ExecSelectController {
 	ModelAndView exec(
 			@Validated ExecSelectForm form,
 			BindingResult binding,
+			@RequestParam(value = PARAM_PMAP, required = false, defaultValue = "") String pmap,
 			@RequestParam(value = PARAM_NO, required = false, defaultValue = "0") int pageNo,
 			@RequestParam(value = PARAM_SZ, required = false, defaultValue = "0") int pageSz,
 			Authentication authentication, Locale locale,
@@ -96,6 +99,7 @@ public interface ExecSelectController {
 	@RequestMapping(URI_PATH_ID_EXEC)
 	ModelAndView exec(
 			@PathVariable(PATH_VAR) int id,
+			@RequestParam(value = PARAM_PMAP, required = false, defaultValue = "") String pmap,
 			@RequestParam(value = PARAM_NO, required = false, defaultValue = "0") int pageNo,
 			@RequestParam(value = PARAM_SZ, required = false, defaultValue = "0") int pageSz,
 			Authentication authentication, Locale locale,
