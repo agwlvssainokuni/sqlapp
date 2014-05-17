@@ -19,7 +19,7 @@ package cherry.spring.common.lib.paginate;
 /**
  * ページネーションリンクとして並べるページ番号の範囲を算出する。ページリンクとして表示するページ番号の総数を一定にする。
  */
-public class TotalCountStrategy implements PageNumberStrategy {
+public class TotalCountStrategy implements PaginateStrategy {
 
 	/** ページ番号の総数を保持する。 */
 	private int totalCount;
