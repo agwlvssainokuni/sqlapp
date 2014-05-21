@@ -185,7 +185,9 @@ public class PaginatorImpl implements Paginator {
 			int pageSize) {
 		Page page = new Page();
 		page.setNo(pageNo);
-		if (pageNo < pageCount - 1) {
+		if (itemCount <= 0) {
+			page.setCount(0);
+		} else if (pageNo < pageCount - 1) {
 			page.setCount(pageSize);
 		} else if (itemCount % pageSize == 0) {
 			page.setCount(pageSize);

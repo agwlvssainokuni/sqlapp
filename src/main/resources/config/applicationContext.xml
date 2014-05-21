@@ -45,8 +45,11 @@
 
 	<bean id="paginator" class="cherry.spring.common.lib.paginate.PaginatorImpl">
 		<property name="paginateStrategy">
-			<bean class="cherry.spring.common.lib.paginate.TotalCountNoEdgeStrategy">
+			<bean class="cherry.spring.common.lib.paginate.TotalCountStrategy">
 				<property name="totalCount" value="${sqlapp.app.paginator.totalCount}" />
+				<property name="lowerSideHint" value="${sqlapp.app.paginator.lowerSideHint}" />
+				<property name="lowerTrim" value="1" />
+				<property name="upperTrim" value="1" />
 			</bean>
 		</property>
 	</bean>

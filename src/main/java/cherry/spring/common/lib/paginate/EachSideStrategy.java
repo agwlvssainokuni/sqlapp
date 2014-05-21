@@ -27,12 +27,26 @@ public class EachSideStrategy implements PaginateStrategy {
 	/** 上位に表示するページ数を保持する。 */
 	private int upperSide;
 
+	/** ページ番号の下限設定を保持する。「0 + 設定値」以上に調整する */
+	private int lowerTrim = 0;
+
+	/** ページ番号の上限設定を保持する。「最終ページ番号 - 設定値」以下に調整する。 */
+	private int upperTrim = 0;
+
 	public void setLowerSide(int lowerSide) {
 		this.lowerSide = lowerSide;
 	}
 
 	public void setUpperSide(int upperSide) {
 		this.upperSide = upperSide;
+	}
+
+	public void setLowerTrim(int lowerTrim) {
+		this.lowerTrim = lowerTrim;
+	}
+
+	public void setUpperTrim(int upperTrim) {
+		this.upperTrim = upperTrim;
 	}
 
 	/**
@@ -47,12 +61,12 @@ public class EachSideStrategy implements PaginateStrategy {
 	@Override
 	public Iterable<Integer> calculate(int pageNo, int pageCount) {
 		int from = pageNo - lowerSide;
-		if (from < 0) {
-			from = 0;
+		if (from <= lowerTrim) {
+			from = lowerTrim;
 		}
 		int to = pageNo + upperSide;
-		if (to >= pageCount) {
-			to = pageCount - 1;
+		if (to >= (pageCount - 1) - upperTrim) {
+			to = (pageCount - 1) - upperTrim;
 		}
 		return new Range(from, to);
 	}

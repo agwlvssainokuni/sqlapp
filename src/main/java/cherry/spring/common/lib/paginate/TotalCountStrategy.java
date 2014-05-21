@@ -24,8 +24,29 @@ public class TotalCountStrategy implements PaginateStrategy {
 	/** ページ番号の総数を保持する。 */
 	private int totalCount;
 
+	/** 下位に表示するページ数のヒントを保持する。 */
+	private int lowerSideHint;
+
+	/** ページ番号の下限設定を保持する。「0 + 設定値」以上に調整する */
+	private int lowerTrim = 0;
+
+	/** ページ番号の上限設定を保持する。「最終ページ番号 - 設定値」以下に調整する。 */
+	private int upperTrim = 0;
+
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
+	}
+
+	public void setLowerSideHint(int lowerSideHint) {
+		this.lowerSideHint = lowerSideHint;
+	}
+
+	public void setLowerTrim(int lowerTrim) {
+		this.lowerTrim = lowerTrim;
+	}
+
+	public void setUpperTrim(int upperTrim) {
+		this.upperTrim = upperTrim;
 	}
 
 	/**
@@ -39,16 +60,16 @@ public class TotalCountStrategy implements PaginateStrategy {
 	 */
 	@Override
 	public Iterable<Integer> calculate(int pageNo, int pageCount) {
-		int from = pageNo - (totalCount - 1) / 2;
-		if (from < 0) {
-			from = 0;
+		int from = pageNo - lowerSideHint;
+		if (from <= lowerTrim) {
+			from = lowerTrim;
 		}
-		int to = from + totalCount - 1;
-		if (to > pageCount - 1) {
-			to = pageCount - 1;
-			from = to - totalCount + 1;
-			if (from < 0) {
-				from = 0;
+		int to = from + (totalCount - 1);
+		if (to >= (pageCount - 1) - upperTrim) {
+			to = (pageCount - 1) - upperTrim;
+			from = to - (totalCount - 1);
+			if (from <= lowerTrim) {
+				from = lowerTrim;
 			}
 		}
 		return new Range(from, to);
