@@ -30,10 +30,8 @@
 		</property>
 	</bean>
 
-	<bean class="cherry.spring.common.log.LogInitializer">
-		<property name="messageDef">
-			<util:properties location="classpath:log.properties" />
-		</property>
+	<bean class="cherry.spring.common.log.Log" factory-method="setMessageDef">
+		<constructor-arg value="log" />
 	</bean>
 
 	<bean id="navigator" class="cherry.spring.common.lib.navi.NavigatorImpl">
@@ -74,6 +72,15 @@
 				<value>cherry.spring</value>
 				<value>cherry.sqlapp</value>
 			</list>
+		</property>
+	</bean>
+
+	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="java.util.ResourceBundle"
+					value="org.springframework.beans.propertyeditors.ResourceBundleEditor" />
+			</map>
 		</property>
 	</bean>
 
