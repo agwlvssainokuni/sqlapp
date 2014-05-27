@@ -41,7 +41,7 @@ public class LocalTimeToParser implements Parser<LocalTime> {
 		try {
 			return parserHms.parse(text, locale);
 		} catch (IllegalArgumentException ex) {
-			return parserHm.parse(text, locale).plusMillis(1).minusSeconds(1);
+			return parserHm.parse(text, locale).plusMinutes(1).minusSeconds(1);
 		}
 	}
 
