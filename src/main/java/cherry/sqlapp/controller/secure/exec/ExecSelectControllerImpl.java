@@ -18,10 +18,13 @@ package cherry.sqlapp.controller.secure.exec;
 
 import static org.springframework.web.util.UriComponentsBuilder.fromPath;
 
+import java.util.HashMap;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -30,12 +33,21 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
+import cherry.sqlapp.service.secure.exec.DefaultConsumer;
+import cherry.sqlapp.service.secure.exec.ExecService;
+
 @Controller
 public class ExecSelectControllerImpl implements ExecSelectController {
 
 	public static final String VIEW_PATH = "secure/exec/select/index";
 
 	public static final String VIEW_PATH_ID = "secure/exec/select/indexId";
+
+	@Autowired
+	private DataSource dataSource;
+
+	@Autowired
+	private ExecService execService;
 
 	@Override
 	public ExecMetadataForm getMetadata() {
@@ -65,6 +77,12 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			return mav;
 		}
+
+		String sql = "SELECT " + form.getSelect() + " FROM " + form.getFrom();
+
+		DefaultConsumer consumer = new DefaultConsumer();
+		long count = execService.execute(dataSource, sql,
+				new HashMap<String, Object>(), consumer);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		return mav;

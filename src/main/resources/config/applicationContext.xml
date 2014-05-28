@@ -20,6 +20,17 @@
 	<context:component-scan base-package="cherry.spring" />
 	<context:component-scan base-package="cherry.sqlapp" />
 
+	<bean id="execServiceTarget" class="cherry.sqlapp.service.secure.exec.ExecServiceImpl"
+		scope="prototype" />
+	<bean id="execService" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="targetSource">
+			<bean class="org.springframework.aop.target.CommonsPoolTargetSource">
+				<property name="targetBeanName" value="execServiceTarget" />
+				<property name="maxSize" value="10" />
+			</bean>
+		</property>
+	</bean>
+
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
