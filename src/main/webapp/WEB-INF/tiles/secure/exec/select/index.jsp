@@ -101,6 +101,8 @@
 			</table>
 		</f:form>
 	</div>
+</div>
+<div class="app-portion">
 	<h1 class="app-subject">
 		<s:message code="secure/exec/select/index.message.2" />
 	</h1>
