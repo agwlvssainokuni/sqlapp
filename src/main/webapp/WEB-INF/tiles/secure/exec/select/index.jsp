@@ -44,8 +44,8 @@
 						<th><label for="from"><s:message
 									code="execSelectForm.from" /></label></th>
 						<td><f:textarea path="from"
-								cssClass="app-width50 app-height5"
-								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
+								cssClass="app-width50 app-height3"
+								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
 					<tr>
 						<th><label for="where"><s:message
@@ -58,22 +58,22 @@
 						<th><label for="groupBy"><s:message
 									code="execSelectForm.groupBy" /></label></th>
 						<td><f:textarea path="groupBy"
-								cssClass="app-width50 app-height5"
-								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
+								cssClass="app-width50 app-height3"
+								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
 					<tr>
 						<th><label for="having"><s:message
 									code="execSelectForm.having" /></label></th>
 						<td><f:textarea path="having"
-								cssClass="app-width50 app-height5"
-								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
+								cssClass="app-width50 app-height3"
+								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
 					<tr>
 						<th><label for="orderBy"><s:message
 									code="execSelectForm.orderBy" /></label></th>
 						<td><f:textarea path="orderBy"
-								cssClass="app-width50 app-height5"
-								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
+								cssClass="app-width50 app-height3"
+								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
 					<tr>
 						<th><label for="limit"><s:message
