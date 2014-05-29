@@ -34,26 +34,22 @@ public class SqlBuilder {
 
 	public String build(Integer limit, Integer offset) {
 		StringBuilder builder = new StringBuilder();
-		builder.append("SELECT ").append(select);
-		builder.append(" FROM ").append(from);
+		append(builder, "SELECT ", select);
+		append(builder, " FROM ", from);
 		append(builder, " WHERE ", where);
 		append(builder, " GROUP BY ", groupBy);
 		append(builder, " HAVING ", having);
 		append(builder, " ORDER BY ", orderBy);
-		if (limit != null) {
-			builder.append(" LIMIT ").append(limit);
-		}
-		if (offset != null) {
-			builder.append(" OFFSET ").append(offset);
-		}
+		append(builder, " LIMIT ", limit);
+		append(builder, " OFFSET ", offset);
 		return builder.toString();
 	}
 
 	public String buildCount() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("SELECT COUNT(*) FROM (");
-		builder.append("SELECT ").append(select);
-		builder.append(" FROM ").append(from);
+		append(builder, "SELECT ", select);
+		append(builder, " FROM ", from);
 		append(builder, " WHERE ", where);
 		append(builder, " GROUP BY ", groupBy);
 		append(builder, " HAVING ", having);
@@ -63,6 +59,12 @@ public class SqlBuilder {
 
 	private void append(StringBuilder builder, String clause, String value) {
 		if (StringUtils.isNotBlank(value)) {
+			builder.append(clause).append(value);
+		}
+	}
+
+	private void append(StringBuilder builder, String clause, Integer value) {
+		if (value != null) {
 			builder.append(clause).append(value);
 		}
 	}
