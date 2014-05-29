@@ -8,6 +8,7 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <h1 class="app-subject">
 	<s:message code="secure/exec/select/index.message.0" />
 </h1>
@@ -88,9 +89,55 @@
 		</f:form>
 	</div>
 </div>
-<div class="app-portion">
-	<h1 class="app-subject">
-		<s:message code="secure/exec/select/index.message.2" />
-	</h1>
-	<div class="app-portion"></div>
-</div>
+<c:if test="${execResult != null && pageSet != null}">
+	<div class="app-portion">
+		<h1 class="app-subject">
+			<s:message code="secure/exec/select/index.message.2" />
+		</h1>
+		<div class="app-portion">
+			<f:form servletRelativeAction="/secure/exec/select/req" method="POST"
+				modelAttribute="execSelectForm" id="execSelectWithPage"
+				class="app-pager-form">
+				<f:hidden id="select2" path="select" />
+				<f:hidden id="from2" path="from" />
+				<f:hidden id="where2" path="where" />
+				<f:hidden id="groupBy2" path="groupBy" />
+				<f:hidden id="having2" path="having" />
+				<f:hidden id="orderBy2" path="orderBy" />
+				<input type="hidden" id="no" name="no">
+				<input type="hidden" id="sz" name="sz" value="${param.sz}">
+			</f:form>
+			<div class="app-pager">
+				<div class="app-pager-desc">
+					<s:message code="common/pager.message.0"
+						arguments="${pageSet.last.to+1},${pageSet.current.from+1},${pageSet.current.to+1}" />
+				</div>
+				<app:pagerLink pageSet="${pageSet}" />
+			</div>
+			<table id="execResultList" class="app-stripe app-width-full">
+				<thead>
+					<tr>
+						<th>#</th>
+						<c:forEach var="col" items="${execResult.header}">
+							<th><c:out value="${col.label}" /></th>
+						</c:forEach>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="record" items="${execResult.recordSet}"
+						varStatus="status">
+						<tr>
+							<td><c:out value="${pageSet.current.from + status.count}" /></td>
+							<c:forEach var="field" items="${record}">
+								<td><c:out value="${field}" /></td>
+							</c:forEach>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			<div class="app-pager">
+				<app:pagerLink pageSet="${pageSet}" />
+			</div>
+		</div>
+	</div>
+</c:if>
