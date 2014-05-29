@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -46,7 +47,8 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 	public static final String VIEW_PATH_ID = "secure/exec/select/indexId";
 
-	private int defaultPageSize = 10;
+	@Value("${sqlapp.app.paginator.pageSize}")
+	private int defaultPageSize;
 
 	@Autowired
 	private DataSource dataSource;
