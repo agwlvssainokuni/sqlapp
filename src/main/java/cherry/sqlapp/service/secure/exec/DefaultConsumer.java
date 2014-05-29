@@ -16,27 +16,39 @@
 
 package cherry.sqlapp.service.secure.exec;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import cherry.sqlapp.service.secure.exec.ExecService.Column;
 import cherry.sqlapp.service.secure.exec.ExecService.Consumer;
 
 public class DefaultConsumer implements Consumer {
 
+	private Column[] header;
+
+	private List<Object[]> recordSet = new LinkedList<>();
+
 	@Override
 	public void begin(Column[] col) {
-		// TODO 自動生成されたメソッド・スタブ
-
+		header = col;
 	}
 
 	@Override
 	public void consume(Object[] record) {
-		// TODO 自動生成されたメソッド・スタブ
-
+		recordSet.add(record);
 	}
 
 	@Override
 	public void end() {
-		// TODO 自動生成されたメソッド・スタブ
+		// NOTHING TO DO
+	}
 
+	public Column[] getHeader() {
+		return header;
+	}
+
+	public List<Object[]> getRecordSet() {
+		return recordSet;
 	}
 
 }
