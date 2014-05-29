@@ -22,7 +22,9 @@ import javax.sql.DataSource;
 
 public interface ExecService {
 
-	long execute(DataSource dataSource, String sql, Map<String, ?> paramMap,
+	int count(DataSource dataSource, String sql, Map<String, ?> paramMap);
+
+	int query(DataSource dataSource, String sql, Map<String, ?> paramMap,
 			Consumer consumer);
 
 	public static interface Consumer {

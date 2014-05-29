@@ -20,6 +20,7 @@ import static org.springframework.web.util.UriComponentsBuilder.fromPath;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
@@ -33,6 +34,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
+import cherry.spring.common.lib.paginate.PageSet;
+import cherry.spring.common.lib.paginate.Paginator;
 import cherry.sqlapp.service.secure.exec.ExecResult;
 import cherry.sqlapp.service.secure.exec.ExecService;
 
@@ -48,6 +51,9 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 	@Autowired
 	private ExecService execService;
+
+	@Autowired
+	private Paginator paginator;
 
 	@Override
 	public ExecMetadataForm getMetadata() {
@@ -78,13 +84,29 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			return mav;
 		}
 
-		String sql = "SELECT " + form.getSelect() + " FROM " + form.getFrom();
+		SqlBuilder builder = new SqlBuilder();
+		builder.setSelect(form.getSelect());
+		builder.setFrom(form.getFrom());
+		builder.setWhere(form.getWhere());
+		builder.setGroupBy(form.getGroupBy());
+		builder.setHaving(form.getHaving());
+		builder.setOrderBy(form.getOrderBy());
 
-		ExecResult consumer = new ExecResult();
-		long count = execService.execute(dataSource, sql,
-				new HashMap<String, Object>(), consumer);
+		Map<String, ?> paramMap = new HashMap<>();
+
+		int count = execService.count(dataSource, builder.buildCount(),
+				paramMap);
+		PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
+
+		int limit = pageSz;
+		int offset = pageSet.getCurrent().getFrom() + 1;
+		ExecResult execResult = new ExecResult();
+		int items = execService.query(dataSource, builder.build(limit, offset),
+				paramMap, execResult);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		mav.addObject(pageSet);
+		mav.addObject(execResult);
 		return mav;
 	}
 

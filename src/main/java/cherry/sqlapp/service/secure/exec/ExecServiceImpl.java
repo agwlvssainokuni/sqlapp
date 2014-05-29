@@ -31,12 +31,20 @@ public class ExecServiceImpl implements ExecService {
 
 	@Transactional
 	@Override
-	public long execute(DataSource dataSource, String sql,
+	public int count(DataSource dataSource, String sql, Map<String, ?> paramMap) {
+		NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(
+				dataSource);
+		return template.queryForObject(sql, paramMap, Integer.class);
+	}
+
+	@Transactional
+	@Override
+	public int query(DataSource dataSource, String sql,
 			Map<String, ?> paramMap, final Consumer consumer) {
 
-		ResultSetExtractor<Long> callback = new ResultSetExtractor<Long>() {
+		ResultSetExtractor<Integer> callback = new ResultSetExtractor<Integer>() {
 			@Override
-			public Long extractData(ResultSet rs) throws SQLException {
+			public Integer extractData(ResultSet rs) throws SQLException {
 
 				ResultSetMetaData metaData = rs.getMetaData();
 				Column[] col = new Column[metaData.getColumnCount()];
@@ -48,8 +56,8 @@ public class ExecServiceImpl implements ExecService {
 
 				consumer.begin(col);
 
-				long count;
-				for (count = 0L; rs.next(); count++) {
+				int count;
+				for (count = 0; rs.next(); count++) {
 
 					Object[] record = new Object[col.length];
 					for (int i = 1; i <= record.length; i++) {

@@ -19,6 +19,9 @@ package cherry.sqlapp.service.secure.exec;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import cherry.sqlapp.service.secure.exec.ExecService.Column;
 import cherry.sqlapp.service.secure.exec.ExecService.Consumer;
 
@@ -41,6 +44,12 @@ public class ExecResult implements Consumer {
 	@Override
 	public void end() {
 		// NOTHING TO DO
+	}
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 	public Column[] getHeader() {
