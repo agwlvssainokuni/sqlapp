@@ -33,7 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
-import cherry.sqlapp.service.secure.exec.DefaultConsumer;
+import cherry.sqlapp.service.secure.exec.ExecResult;
 import cherry.sqlapp.service.secure.exec.ExecService;
 
 @Controller
@@ -80,7 +80,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 		String sql = "SELECT " + form.getSelect() + " FROM " + form.getFrom();
 
-		DefaultConsumer consumer = new DefaultConsumer();
+		ExecResult consumer = new ExecResult();
 		long count = execService.execute(dataSource, sql,
 				new HashMap<String, Object>(), consumer);
 

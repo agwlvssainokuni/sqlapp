@@ -22,7 +22,7 @@ import java.util.List;
 import cherry.sqlapp.service.secure.exec.ExecService.Column;
 import cherry.sqlapp.service.secure.exec.ExecService.Consumer;
 
-public class DefaultConsumer implements Consumer {
+public class ExecResult implements Consumer {
 
 	private Column[] header;
 
