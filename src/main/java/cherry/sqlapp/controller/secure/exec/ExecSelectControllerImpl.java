@@ -46,6 +46,8 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 	public static final String VIEW_PATH_ID = "secure/exec/select/indexId";
 
+	private int defaultPageSize = 10;
+
 	@Autowired
 	private DataSource dataSource;
 
@@ -96,13 +98,13 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 		int count = execService.count(dataSource, builder.buildCount(),
 				paramMap);
-		PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
+		int pageSize = (pageSz <= 0 ? defaultPageSize : pageSz);
+		PageSet pageSet = paginator.paginate(pageNo, count, pageSize);
 
-		int limit = pageSz;
 		int offset = pageSet.getCurrent().getFrom() + 1;
 		ExecResult execResult = new ExecResult();
-		int items = execService.query(dataSource, builder.build(limit, offset),
-				paramMap, execResult);
+		int items = execService.query(dataSource,
+				builder.build(pageSize, offset), paramMap, execResult);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(pageSet);
