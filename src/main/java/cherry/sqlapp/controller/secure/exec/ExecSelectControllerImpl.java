@@ -101,10 +101,13 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		int pageSize = (pageSz <= 0 ? defaultPageSize : pageSz);
 		PageSet pageSet = paginator.paginate(pageNo, count, pageSize);
 
-		int offset = pageSet.getCurrent().getFrom() + 1;
 		ExecResult execResult = new ExecResult();
-		int items = execService.query(dataSource,
-				builder.build(pageSize, offset), paramMap, execResult);
+		int numOfItems = execService.query(dataSource,
+				builder.build(pageSize, pageSet.getCurrent().getFrom()),
+				paramMap, execResult);
+		if (numOfItems != pageSet.getCurrent().getCount()) {
+			throw new IllegalStateException();
+		}
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(pageSet);

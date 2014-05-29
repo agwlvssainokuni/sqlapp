@@ -25,8 +25,6 @@
 				<f:errors path="execSelectForm.groupBy" element="div" />
 				<f:errors path="execSelectForm.having" element="div" />
 				<f:errors path="execSelectForm.orderBy" element="div" />
-				<f:errors path="execSelectForm.limit" element="div" />
-				<f:errors path="execSelectForm.offset" element="div" />
 			</div>
 		</s:hasBindErrors>
 		<f:form servletRelativeAction="/secure/exec/select/req" method="POST"
@@ -74,18 +72,6 @@
 						<td><f:textarea path="orderBy"
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
-					</tr>
-					<tr>
-						<th><label for="limit"><s:message
-									code="execSelectForm.limit" /></label></th>
-						<td><f:input path="limit" cssClass="app-width10"
-								cssErrorClass="app-width10 ui-state-error" /></td>
-					</tr>
-					<tr>
-						<th><label for="offset"><s:message
-									code="execSelectForm.offset" /></label></th>
-						<td><f:input path="offset" cssClass="app-width10"
-								cssErrorClass="app-width10 ui-state-error" /></td>
 					</tr>
 				</tbody>
 				<tfoot class="app-transparent">
