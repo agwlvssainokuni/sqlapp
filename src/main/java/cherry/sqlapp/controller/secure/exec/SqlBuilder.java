@@ -22,8 +22,6 @@ public class SqlBuilder {
 
 	private String select = "*";
 
-	private String count = "COUNT(*)";
-
 	private String from = "dual";
 
 	private String where = null;
@@ -53,11 +51,13 @@ public class SqlBuilder {
 
 	public String buildCount() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("SELECT ").append(count);
+		builder.append("SELECT COUNT(*) FROM (");
+		builder.append("SELECT ").append(select);
 		builder.append(" FROM ").append(from);
 		append(builder, " WHERE ", where);
 		append(builder, " GROUP BY ", groupBy);
 		append(builder, " HAVING ", having);
+		builder.append(")");
 		return builder.toString();
 	}
 
@@ -73,14 +73,6 @@ public class SqlBuilder {
 
 	public void setSelect(String select) {
 		this.select = select;
-	}
-
-	public String getCount() {
-		return count;
-	}
-
-	public void setCount(String count) {
-		this.count = count;
 	}
 
 	public String getFrom() {
