@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cherry.sqlapp.db.app.mapper.SelectMapper">
+	<insert id="create" parameterType="cherry.sqlapp.db.gen.dto.SqlSelect"
+		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		INSERT INTO sql_select (
+			id,
+			select_clause,
+			from_clause,
+			where_clause,
+			group_by_clause,
+			having_clause,
+			order_by_clause
+		)
+		VALUES (
+			#{id,jdbcType=INTEGER},
+			#{selectClause,jdbcType=VARCHAR},
+			#{fromClause,jdbcType=VARCHAR},
+			#{whereClause,jdbcType=VARCHAR},
+			#{groupByClause,jdbcType=VARCHAR},
+			#{havingClause,jdbcType=VARCHAR},
+			#{orderByClause,jdbcType=VARCHAR}
+		)
+	</insert>
+	<update id="update" parameterType="cherry.sqlapp.db.gen.dto.SqlSelect">
+		UPDATE sql_select
+		SET
+			select_clause = #{whereClause,jdbcType=VARCHAR},
+			from_clause = #{whereClause,jdbcType=VARCHAR},
+			where_clause = #{whereClause,jdbcType=VARCHAR},
+			group_by_clause = #{groupByClause,jdbcType=VARCHAR}
+			having_clause = #{havingClause,jdbcType=VARCHAR}
+			order_by_clause = #{orderByClause,jdbcType=VARCHAR}
+		WHERE
+			id = #{id,jdbcType=INTEGER}
+			AND
+			deleted_flg = 0
+	</update>
+</mapper>

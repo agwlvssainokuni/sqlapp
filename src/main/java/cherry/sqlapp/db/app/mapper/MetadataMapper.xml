@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cherry.sqlapp.db.app.mapper.MetadataMapper">
+	<insert id="createSelect" parameterType="cherry.sqlapp.db.gen.dto.SqlMetadata"
+		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		INSERT INTO sql_metadata (
+			sql_type
+			name,
+			description
+		)
+		VALUES (
+			'select',
+			#{name,jdbcType=VARCHAR},
+			#{description,jdbcType=VARCHAR}
+		)
+	</insert>
+	<update id="update" parameterType="cherry.sqlapp.db.gen.dto.SqlMetadata">
+		UPDATE sql_metadata
+		SET
+			name = #{name,jdbcType=VARCHAR},
+			description = #{description,jdbcType=VARCHAR}
+		WHERE
+			id = #{id,jdbcType=INTEGER}
+			AND
+			deleted_flg = 0
+	</update>
+</mapper>
