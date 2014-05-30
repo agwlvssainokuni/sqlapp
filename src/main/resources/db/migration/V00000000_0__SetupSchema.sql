@@ -1,12 +1,12 @@
 -- Project Name : SqlApp
--- Date/Time    : 2014/05/30 21:50:00
+-- Date/Time    : 2014/05/30 22:03:57
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
 
 -- SQL文・SELECT
 CREATE TABLE sql_select( 
-	id INTEGER DEFAULT auto_increment NOT NULL, 
+	id INTEGER NOT NULL auto_increment, 
 	select_clause VARCHAR (500) NOT NULL, 
 	from_clause VARCHAR (500) NOT NULL, 
 	where_clause VARCHAR (500), 
@@ -21,7 +21,7 @@ CREATE TABLE sql_select(
 
 -- SQLメタデータ
 CREATE TABLE sql_metadata( 
-	id INTEGER DEFAULT auto_increment NOT NULL, 
+	id INTEGER NOT NULL auto_increment, 
 	sql_type VARCHAR (32) NOT NULL, 
 	name VARCHAR (50) NOT NULL, 
 	description VARCHAR (500) NOT NULL, 
