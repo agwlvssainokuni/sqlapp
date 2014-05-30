@@ -42,6 +42,7 @@
 		</s:hasBindErrors>
 		<f:form servletRelativeAction="/secure/exec/select/req" method="POST"
 			modelAttribute="execSelectForm">
+			<input type="hidden" id="sz" name="sz" value="${param.sz}">
 			<table class="app-collabel">
 				<tbody>
 					<tr>
@@ -114,14 +115,14 @@
 			<f:form servletRelativeAction="/secure/exec/select/req" method="POST"
 				modelAttribute="execSelectForm" id="execSelectWithPage"
 				class="app-pager-form">
+				<input type="hidden" id="no" name="no">
+				<input type="hidden" id="sz" name="sz" value="${param.sz}">
 				<f:hidden id="select2" path="select" />
 				<f:hidden id="from2" path="from" />
 				<f:hidden id="where2" path="where" />
 				<f:hidden id="groupBy2" path="groupBy" />
 				<f:hidden id="having2" path="having" />
 				<f:hidden id="orderBy2" path="orderBy" />
-				<input type="hidden" id="no" name="no">
-				<input type="hidden" id="sz" name="sz" value="${param.sz}">
 			</f:form>
 			<div class="app-pager">
 				<div class="app-pager-desc">
@@ -130,27 +131,8 @@
 				</div>
 				<app:pagerLink pageSet="${pageSet}" />
 			</div>
-			<table id="execResultList" class="app-stripe app-width-full">
-				<thead>
-					<tr>
-						<th>#</th>
-						<c:forEach var="col" items="${execResult.header}">
-							<th><c:out value="${col.label}" /></th>
-						</c:forEach>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="record" items="${execResult.recordSet}"
-						varStatus="status">
-						<tr>
-							<td><c:out value="${pageSet.current.from + status.count}" /></td>
-							<c:forEach var="field" items="${record}">
-								<td><c:out value="${field}" /></td>
-							</c:forEach>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+			<app:execResult id="execResultList" execResult="${execResult}"
+				pageSet="${pageSet}" />
 			<div class="app-pager">
 				<app:pagerLink pageSet="${pageSet}" />
 			</div>
