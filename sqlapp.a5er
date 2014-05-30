@@ -1,0 +1,110 @@
+﻿# A5:ER FORMAT:09
+# A5:ER ENCODING:UTF8
+# A5:ER Mk-1 Copyright (C)2007 m.matsubara
+# A5:SQL Mk-2 Copyright (C)1997 m.matsubara
+#  http://www.wind.sannet.ne.jp/m_matsu/developer/a5m2/
+
+[Manager]
+ProjectName=SqlApp
+Author=agwlvssainokuni
+MaxEntityRowShow=1000
+ReadOnlyRecommend=0
+Page=Main
+PageInfo="Main",2,"A3Landscape",$FFFFFF
+Domain=ID=@INT
+Domain=識別名=@VARCHAR(32)
+Domain=表示名=@VARCHAR(50)
+Domain=説明文=@VARCHAR(500)
+Domain=SQL句=@VARCHAR(500)
+Domain=SQL文=@VARCHAR(5000)
+Domain=日時=@DATETIME
+Domain=フラグ=@INT
+LogicalView=1
+DecodeDomain=0
+ViewModePageIndividually=1
+ViewMode=2
+ViewFormat=0
+UseNondependenceDashLine=0
+FontName=ＭＳ 明朝
+FontSize=11
+PaperSize=A4Landscape
+HeaderLeft=
+HeaderCenter=
+HeaderRight=
+FooterLeft=
+FooterCenter=
+FooterRight=
+ShowPageoutRelation=1
+RDBMSType=1
+RDBMSTypeName=IBM DB2
+CommonField="更新日時","updated_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF
+CommonField="作成日時","created_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF
+CommonField="削除フラグ","deleted_flg","*フラグ","NOT NULL",,"0","",$FFFFFFFF
+DefaultPkName=%0:s_PKC
+DefaultPkIndexName=%0:s_PKI
+DefaultIndexName=%0:s_IX%1:d
+DefaultFkName=%0:s_FK%1:d
+SqlSeparator=0
+ShowTag=1
+ShowCommonAttributes=0
+
+[Relation]
+Entity1=sql_metadata
+Entity2=SQL_SELECT
+RelationType1=1
+RelationType2=3
+Fields1=id
+Fields2=id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,956,9044,901,R,R
+Dependence=1
+Caption=
+PName=
+LineMode=0
+Bar1=96
+Bar2=904
+Bar3=90
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=SQL_SELECT
+LName=SQL文・SELECT
+Comment=
+TableOption=
+Page=Main
+Left=300
+Top=800
+Field="ID","id","*ID","NOT NULL",0,"AUTO_INCREMENT","",$FFFFFFFF,""
+Field="SELECT句","select_clause","*SQL句","NOT NULL",,"","",$FFFFFFFF,""
+Field="FROM句","from_clause","*SQL句","NOT NULL",,"","",$FFFFFFFF,""
+Field="WHERE句","where_clause","*SQL句",,,"","",$FFFFFFFF,""
+Field="GROUP BY句","group_by_clause","*SQL句",,,"","",$FFFFFFFF,""
+Field="HAVING句","having_clause","*SQL句",,,"","",$FFFFFFFF,""
+Field="ORDER BY句","order_by_clause","*SQL句",,,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20140530214902
+Position="Main",300,800
+
+[Entity]
+PName=sql_metadata
+LName=SQLメタデータ
+Comment=
+TableOption=
+Page=Main
+Left=300
+Top=300
+Field="ID","id","*ID","NOT NULL",0,"AUTO_INCREMENT","",$FFFFFFFF,""
+Field="SQL種別","sql_type","*識別名","NOT NULL",,"","",$FFFFFFFF,""
+Field="表示名","name","*表示名","NOT NULL",,"","",$FFFFFFFF,""
+Field="説明文","description","*説明文","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20140530214250
+Position="Main",300,300
