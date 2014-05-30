@@ -12,9 +12,9 @@
 <h1 class="app-subject">
 	<s:message code="secure/exec/select/indexId.message.0" />
 </h1>
-<c:url var="baseUri" value="/secure/exec/select/{id}">
-	<c:param name="id" value="${id}" />
-</c:url>
+<s:url var="baseUri" value="/secure/exec/select/{id}">
+	<s:param name="id" value="${id}" />
+</s:url>
 <div class="app-portion">
 	<h1 class="app-subject">
 		<s:message code="secure/exec/select/indexId.message.1" />
@@ -34,8 +34,8 @@
 					<tr>
 						<th><label for="name"><s:message
 									code="execMetadataForm.name" /></label></th>
-						<td><f:input path="name" cssClass="app-width50 app-height3"
-								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
+						<td><f:input path="name" cssClass="app-width50"
+								cssErrorClass="app-width50 ui-state-error" /></td>
 					</tr>
 					<tr>
 						<th><label for="description"><s:message

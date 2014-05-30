@@ -54,8 +54,11 @@
 				<li><s:message code="base/auth.navigation" /></li>
 				<c:set var="sc" value="<%=application%>" />
 				<c:forEach var="node" items="${common:navigate(sc, name)}">
-					<li><a href="<c:url value="${node.uri}" />"><s:message
-								code="${node.name}.title" /></a> <c:if test="${! node.last}"> &gt;</c:if></li>
+					<s:url var="uri" value="${node.uri}">
+						<s:param name="id" value="${id}" />
+					</s:url>
+					<li><a href="${uri}"><s:message code="${node.name}.title" /></a>
+						<c:if test="${! node.last}"> &gt;</c:if></li>
 				</c:forEach>
 			</ul>
 		</div>

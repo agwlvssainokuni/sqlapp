@@ -37,6 +37,7 @@ import org.springframework.web.util.UriComponents;
 
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.spring.common.lib.paginate.Paginator;
+import cherry.sqlapp.db.gen.dto.SqlMetadata;
 import cherry.sqlapp.db.gen.dto.SqlSelect;
 import cherry.sqlapp.service.secure.exec.ExecResult;
 import cherry.sqlapp.service.secure.exec.ExecService;
@@ -156,7 +157,25 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	public ModelAndView indexId(int id, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
+
+		SqlMetadata md = metadataService.findById(id);
+		ExecMetadataForm mdForm = getMetadata();
+		mdForm.setName(md.getName());
+		mdForm.setDescription(md.getDescription());
+
+		SqlSelect sel = selectService.findById(id);
+		ExecSelectForm form = getForm();
+		form.setSelect(sel.getSelectClause());
+		form.setFrom(sel.getFromClause());
+		form.setWhere(sel.getWhereClause());
+		form.setGroupBy(sel.getGroupByClause());
+		form.setHaving(sel.getHavingClause());
+		form.setOrderBy(sel.getOrderByClause());
+
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
+		mav.addObject(PATH_VAR, id);
+		mav.addObject(mdForm);
+		mav.addObject(form);
 		return mav;
 	}
 
