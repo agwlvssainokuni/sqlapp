@@ -127,6 +127,9 @@
 					<tr>
 						<td></td>
 						<td>
+							<button type="submit" name="proc" value="exec" class="app-button">
+								<s:message code="secure/exec/select/indexId.execButton" />
+							</button>
 							<button type="submit" name="proc" value="update"
 								class="app-button">
 								<s:message code="secure/exec/select/indexId.updateButton" />
@@ -136,22 +139,6 @@
 				</tfoot>
 			</table>
 		</f:form>
-	</div>
-	<div class="app-portion">
-		<form action="<c:out value="${baseUri}/req" />">
-			<table class="app-collabel">
-				<tfoot class="app-transparent">
-					<tr>
-						<td></td>
-						<td>
-							<button type="submit" name="proc" value="exec" class="app-button">
-								<s:message code="secure/exec/select/indexId.execButton" />
-							</button>
-						</td>
-					</tr>
-				</tfoot>
-			</table>
-		</form>
 	</div>
 </div>
 <c:if test="${execResult != null && pageSet != null}">

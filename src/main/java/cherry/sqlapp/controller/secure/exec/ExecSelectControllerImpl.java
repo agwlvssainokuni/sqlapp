@@ -98,13 +98,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			return mav;
 		}
 
-		SqlBuilder builder = new SqlBuilder();
-		builder.setSelect(form.getSelect());
-		builder.setFrom(form.getFrom());
-		builder.setWhere(form.getWhere());
-		builder.setGroupBy(form.getGroupBy());
-		builder.setHaving(form.getHaving());
-		builder.setOrderBy(form.getOrderBy());
+		SqlBuilder builder = getSqlBuilder(form);
 
 		Map<String, ?> paramMap = new HashMap<>();
 
@@ -172,23 +166,20 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	}
 
 	@Override
-	public ModelAndView requestId(int id, String pmap, int pageNo, int pageSz,
+	public ModelAndView requestId(int id, ExecSelectForm form,
+			BindingResult binding, String pmap, int pageNo, int pageSz,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
-		SqlMetadata md = metadataService.findById(id);
-		ExecMetadataForm mdForm = getMetadata(md);
+		ExecMetadataForm mdForm = getMetadata(metadataService.findById(id));
 
-		SqlSelect sel = selectService.findById(id);
-		ExecSelectForm form = getForm(sel);
+		if (binding.hasErrors()) {
+			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
+			mav.addObject(mdForm);
+			return mav;
+		}
 
-		SqlBuilder builder = new SqlBuilder();
-		builder.setSelect(sel.getSelectClause());
-		builder.setFrom(sel.getFromClause());
-		builder.setWhere(sel.getWhereClause());
-		builder.setGroupBy(sel.getGroupByClause());
-		builder.setHaving(sel.getHavingClause());
-		builder.setOrderBy(sel.getOrderByClause());
+		SqlBuilder builder = getSqlBuilder(form);
 
 		Map<String, ?> paramMap = new HashMap<>();
 
@@ -208,7 +199,6 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
 		mav.addObject(mdForm);
-		mav.addObject(form);
 		mav.addObject(pageSet);
 		mav.addObject(execResult);
 		return mav;
@@ -268,6 +258,17 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uri.toUriString(), true));
 		return mav;
+	}
+
+	private SqlBuilder getSqlBuilder(ExecSelectForm form) {
+		SqlBuilder builder = new SqlBuilder();
+		builder.setSelect(form.getSelect());
+		builder.setFrom(form.getFrom());
+		builder.setWhere(form.getWhere());
+		builder.setGroupBy(form.getGroupBy());
+		builder.setHaving(form.getHaving());
+		builder.setOrderBy(form.getOrderBy());
+		return builder;
 	}
 
 	private ExecMetadataForm getMetadata(SqlMetadata record) {
