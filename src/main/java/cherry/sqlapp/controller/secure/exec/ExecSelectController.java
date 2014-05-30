@@ -43,8 +43,6 @@ public interface ExecSelectController {
 
 	public static final String URI_PATH_ID_METADATA = "{id}/metadata";
 
-	public static final String URI_PATH_ID_UPDATE = "{id}/update";
-
 	public static final String PATH_VAR = "id";
 
 	public static final String PARAM_H = "h";
@@ -77,6 +75,11 @@ public interface ExecSelectController {
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
+	@RequestMapping(value = URI_PATH_REQ, params = { "proc=create" })
+	ModelAndView create(@Validated ExecSelectForm form, BindingResult binding,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request);
+
 	@RequestMapping(URI_PATH_ID)
 	ModelAndView indexId(@PathVariable(PATH_VAR) int id,
 			Authentication authentication, Locale locale,
@@ -91,15 +94,15 @@ public interface ExecSelectController {
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
-	@RequestMapping(URI_PATH_ID_METADATA)
-	ModelAndView metadata(@PathVariable(PATH_VAR) int id,
-			@Validated ExecMetadataForm form, BindingResult binding,
+	@RequestMapping(value = URI_PATH_ID_REQ, params = { "proc=update" })
+	ModelAndView update(@PathVariable(PATH_VAR) int id,
+			@Validated ExecSelectForm form, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
-	@RequestMapping(URI_PATH_ID_UPDATE)
-	ModelAndView update(@PathVariable(PATH_VAR) int id,
-			@Validated ExecSelectForm form, BindingResult binding,
+	@RequestMapping(URI_PATH_ID_METADATA)
+	ModelAndView metadata(@PathVariable(PATH_VAR) int id,
+			@Validated ExecMetadataForm form, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 

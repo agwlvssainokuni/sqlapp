@@ -118,6 +118,24 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	}
 
 	@Override
+	public ModelAndView create(ExecSelectForm form, BindingResult binding,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request) {
+
+		if (binding.hasErrors()) {
+			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			return mav;
+		}
+
+		int id = 1;
+
+		ModelAndView mav = new ModelAndView();
+		mav.setView(new RedirectView(URI_PATH_ID, true));
+		mav.addObject(PATH_VAR, id);
+		return mav;
+	}
+
+	@Override
 	public ModelAndView indexId(int id, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
@@ -134,7 +152,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	}
 
 	@Override
-	public ModelAndView metadata(int id, ExecMetadataForm form,
+	public ModelAndView update(int id, ExecSelectForm form,
 			BindingResult binding, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
@@ -152,7 +170,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	}
 
 	@Override
-	public ModelAndView update(int id, ExecSelectForm form,
+	public ModelAndView metadata(int id, ExecMetadataForm form,
 			BindingResult binding, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {

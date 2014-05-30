@@ -79,8 +79,12 @@
 					<tr>
 						<td></td>
 						<td>
-							<button type="submit" name="submit" class="app-button">
+							<button type="submit" name="proc" value="exec" class="app-button">
 								<s:message code="secure/exec/select/index.execButton" />
+							</button>
+							<button type="submit" name="proc" value="create"
+								class="app-button">
+								<s:message code="secure/exec/select/index.createButton" />
 							</button>
 						</td>
 					</tr>
