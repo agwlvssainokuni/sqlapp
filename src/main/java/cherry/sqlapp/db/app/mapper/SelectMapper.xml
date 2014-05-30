@@ -24,8 +24,8 @@
 	<update id="update" parameterType="cherry.sqlapp.db.gen.dto.SqlSelect">
 		UPDATE sql_select
 		SET
-			select_clause = #{whereClause,jdbcType=VARCHAR},
-			from_clause = #{whereClause,jdbcType=VARCHAR},
+			select_clause = #{selectClause,jdbcType=VARCHAR},
+			from_clause = #{fromClause,jdbcType=VARCHAR},
 			where_clause = #{whereClause,jdbcType=VARCHAR},
 			group_by_clause = #{groupByClause,jdbcType=VARCHAR},
 			having_clause = #{havingClause,jdbcType=VARCHAR},

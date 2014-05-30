@@ -237,7 +237,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 		selectService.update(record);
 
-		UriComponents uri = fromPath(URI_PATH).path(URI_PATH_ID)
+		UriComponents uri = fromPath(URI_PATH).pathSegment(URI_PATH_ID)
 				.buildAndExpand(id);
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uri.toUriString(), true));
@@ -263,7 +263,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 		metadataService.update(record);
 
-		UriComponents uri = fromPath(URI_PATH).path(URI_PATH_ID)
+		UriComponents uri = fromPath(URI_PATH).pathSegment(URI_PATH_ID)
 				.buildAndExpand(id);
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uri.toUriString(), true));
