@@ -55,7 +55,9 @@
 				<c:set var="sc" value="<%=application%>" />
 				<c:forEach var="node" items="${common:navigate(sc, name)}">
 					<s:url var="uri" value="${node.uri}">
-						<s:param name="id" value="${id}" />
+						<c:if test="${id != null}">
+							<s:param name="id" value="${id}" />
+						</c:if>
 					</s:url>
 					<li><a href="${uri}"><s:message code="${node.name}.title" /></a>
 						<c:if test="${! node.last}"> &gt;</c:if></li>

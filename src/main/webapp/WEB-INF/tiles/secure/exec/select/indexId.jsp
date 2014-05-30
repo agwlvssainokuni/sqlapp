@@ -147,12 +147,18 @@
 			<s:message code="secure/exec/select/indexId.message.3" />
 		</h1>
 		<div class="app-portion">
-			<form action="${baseUri}/req" method="POST" id="execSelectWithPage"
+			<f:form servletRelativeAction="${baseUri}/req" method="POST"
+				modelAttribute="execSelectForm" id="execSelectWithPage"
 				class="app-pager-form">
-				<input type="hidden" id="no" name="no"> <input type="hidden"
-					id="sz" name="sz" value="${param.sz}"> <input type="hidden"
-					name="${_csrf.parameterName}" value="${_csrf.token}">
-			</form>
+				<f:hidden id="select2" path="select" />
+				<f:hidden id="from2" path="from" />
+				<f:hidden id="where2" path="where" />
+				<f:hidden id="groupBy2" path="groupBy" />
+				<f:hidden id="having2" path="having" />
+				<f:hidden id="groupBy2" path="orderBy" />
+				<input type="hidden" id="no" name="no">
+				<input type="hidden" id="sz" name="sz" value="${param.sz}">
+			</f:form>
 			<div class="app-pager">
 				<div class="app-pager-desc">
 					<s:message code="common/pager.message.0"
