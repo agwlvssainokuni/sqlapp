@@ -171,7 +171,8 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
-		ExecMetadataForm mdForm = getMetadata(metadataService.findById(id));
+		SqlMetadata md = metadataService.findById(id);
+		ExecMetadataForm mdForm = getMetadata(md);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -210,9 +211,12 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
+		SqlMetadata md = metadataService.findById(id);
+		ExecMetadataForm mdForm = getMetadata(md);
+
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
-			mav.addObject(getMetadata(metadataService.findById(id)));
+			mav.addObject(mdForm);
 			return mav;
 		}
 
@@ -235,21 +239,24 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	}
 
 	@Override
-	public ModelAndView metadata(int id, ExecMetadataForm form,
+	public ModelAndView metadata(int id, ExecMetadataForm mdForm,
 			BindingResult binding, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
+		SqlSelect sel = selectService.findById(id);
+		ExecSelectForm form = getForm(sel);
+
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
-			mav.addObject(getForm(selectService.findById(id)));
+			mav.addObject(form);
 			return mav;
 		}
 
 		SqlMetadata record = new SqlMetadata();
 		record.setId(id);
-		record.setName(form.getName());
-		record.setDescription(form.getDescription());
+		record.setName(mdForm.getName());
+		record.setDescription(mdForm.getDescription());
 
 		metadataService.update(record);
 
