@@ -18,7 +18,8 @@
 		UPDATE sql_metadata
 		SET
 			name = #{name,jdbcType=VARCHAR},
-			description = #{description,jdbcType=VARCHAR}
+			description = #{description,jdbcType=VARCHAR},
+			updated_at = CURRENT_TIMESTAMP
 		WHERE
 			id = #{id,jdbcType=INTEGER}
 			AND
