@@ -9,17 +9,22 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
-<h1 class="app-subject">
-	<s:message code="secure/exec/select/indexId.message.0" />
-</h1>
+<script type="text/javascript">
+	$(".accordion").accordion({
+		collapsible : true
+	}).removeClass("ui-widget");
+</script>
 <s:url var="baseUri" value="/secure/exec/select/{id}">
 	<s:param name="id" value="${id}" />
 </s:url>
-<div class="app-portion">
-	<h1 class="app-subject">
+<h1 class="app-subject">
+	<s:message code="secure/exec/select/indexId.message.0" />
+</h1>
+<div class="app-portion accordion">
+	<h1>
 		<s:message code="secure/exec/select/indexId.message.1" />
 	</h1>
-	<div class="app-portion">
+	<div>
 		<s:hasBindErrors name="execMetadataForm">
 			<div class="ui-state-error">
 				<f:errors path="execMetadataForm" element="div" />
@@ -59,12 +64,10 @@
 			</table>
 		</f:form>
 	</div>
-</div>
-<div class="app-portion">
-	<h1 class="app-subject">
+	<h1>
 		<s:message code="secure/exec/select/indexId.message.2" />
 	</h1>
-	<div class="app-portion">
+	<div>
 		<s:hasBindErrors name="execSelectForm">
 			<div class="ui-state-error">
 				<f:errors path="execSelectForm" element="div" />
