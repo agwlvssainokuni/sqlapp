@@ -159,18 +159,10 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			HttpServletRequest request) {
 
 		SqlMetadata md = metadataService.findById(id);
-		ExecMetadataForm mdForm = getMetadata();
-		mdForm.setName(md.getName());
-		mdForm.setDescription(md.getDescription());
+		ExecMetadataForm mdForm = getMetadata(md);
 
 		SqlSelect sel = selectService.findById(id);
-		ExecSelectForm form = getForm();
-		form.setSelect(sel.getSelectClause());
-		form.setFrom(sel.getFromClause());
-		form.setWhere(sel.getWhereClause());
-		form.setGroupBy(sel.getGroupByClause());
-		form.setHaving(sel.getHavingClause());
-		form.setOrderBy(sel.getOrderByClause());
+		ExecSelectForm form = getForm(sel);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
@@ -183,7 +175,42 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	public ModelAndView requestId(int id, String pmap, int pageNo, int pageSz,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
+
+		SqlMetadata md = metadataService.findById(id);
+		ExecMetadataForm mdForm = getMetadata(md);
+
+		SqlSelect sel = selectService.findById(id);
+		ExecSelectForm form = getForm(sel);
+
+		SqlBuilder builder = new SqlBuilder();
+		builder.setSelect(sel.getSelectClause());
+		builder.setFrom(sel.getFromClause());
+		builder.setWhere(sel.getWhereClause());
+		builder.setGroupBy(sel.getGroupByClause());
+		builder.setHaving(sel.getHavingClause());
+		builder.setOrderBy(sel.getOrderByClause());
+
+		Map<String, ?> paramMap = new HashMap<>();
+
+		int count = execService.count(dataSource, builder.buildCount(),
+				paramMap);
+		int pageSize = (pageSz <= 0 ? defaultPageSize : pageSz);
+		PageSet pageSet = paginator.paginate(pageNo, count, pageSize);
+
+		ExecResult execResult = new ExecResult();
+		int numOfItems = execService.query(dataSource,
+				builder.build(pageSize, pageSet.getCurrent().getFrom()),
+				paramMap, execResult);
+		if (numOfItems != pageSet.getCurrent().getCount()) {
+			throw new IllegalStateException();
+		}
+
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
+		mav.addObject(PATH_VAR, id);
+		mav.addObject(mdForm);
+		mav.addObject(form);
+		mav.addObject(pageSet);
+		mav.addObject(execResult);
 		return mav;
 	}
 
@@ -195,8 +222,20 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
+			mav.addObject(getMetadata(metadataService.findById(id)));
 			return mav;
 		}
+
+		SqlSelect record = new SqlSelect();
+		record.setId(id);
+		record.setSelectClause(form.getSelect());
+		record.setFromClause(form.getFrom());
+		record.setWhereClause(form.getWhere());
+		record.setGroupByClause(form.getGroupBy());
+		record.setHavingClause(form.getHaving());
+		record.setOrderByClause(form.getOrderBy());
+
+		selectService.update(record);
 
 		UriComponents uri = fromPath(URI_PATH).path(URI_PATH_ID)
 				.buildAndExpand(id);
@@ -213,14 +252,40 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
+			mav.addObject(getForm(selectService.findById(id)));
 			return mav;
 		}
+
+		SqlMetadata record = new SqlMetadata();
+		record.setId(id);
+		record.setName(form.getName());
+		record.setDescription(form.getDescription());
+
+		metadataService.update(record);
 
 		UriComponents uri = fromPath(URI_PATH).path(URI_PATH_ID)
 				.buildAndExpand(id);
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uri.toUriString(), true));
 		return mav;
+	}
+
+	private ExecMetadataForm getMetadata(SqlMetadata record) {
+		ExecMetadataForm mdForm = getMetadata();
+		mdForm.setName(record.getName());
+		mdForm.setDescription(record.getDescription());
+		return mdForm;
+	}
+
+	private ExecSelectForm getForm(SqlSelect record) {
+		ExecSelectForm form = getForm();
+		form.setSelect(record.getSelectClause());
+		form.setFrom(record.getFromClause());
+		form.setWhere(record.getWhereClause());
+		form.setGroupBy(record.getGroupByClause());
+		form.setHaving(record.getHavingClause());
+		form.setOrderBy(record.getOrderByClause());
+		return form;
 	}
 
 }
