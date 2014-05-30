@@ -37,8 +37,11 @@ import org.springframework.web.util.UriComponents;
 
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.spring.common.lib.paginate.Paginator;
+import cherry.sqlapp.db.gen.dto.SqlSelect;
 import cherry.sqlapp.service.secure.exec.ExecResult;
 import cherry.sqlapp.service.secure.exec.ExecService;
+import cherry.sqlapp.service.secure.exec.MetadataService;
+import cherry.sqlapp.service.secure.exec.SelectService;
 
 @Controller
 public class ExecSelectControllerImpl implements ExecSelectController {
@@ -55,6 +58,12 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 	@Autowired
 	private ExecService execService;
+
+	@Autowired
+	private MetadataService metadataService;
+
+	@Autowired
+	private SelectService selectService;
 
 	@Autowired
 	private Paginator paginator;
@@ -127,7 +136,15 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			return mav;
 		}
 
-		int id = 1;
+		SqlSelect record = new SqlSelect();
+		record.setSelectClause(form.getSelect());
+		record.setFromClause(form.getFrom());
+		record.setWhereClause(form.getWhere());
+		record.setGroupByClause(form.getGroupBy());
+		record.setHavingClause(form.getHaving());
+		record.setOrderByClause(form.getOrderBy());
+
+		int id = selectService.create(record);
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(URI_PATH_ID, true));

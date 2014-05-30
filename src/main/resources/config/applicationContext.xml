@@ -208,7 +208,7 @@
 		<constructor-arg ref="dataSource" />
 	</bean>
 
-	<mybatis-spring:scan base-package="cherry.spring.common.db" />
+	<mybatis-spring:scan base-package="cherry.sqlapp.db" />
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />

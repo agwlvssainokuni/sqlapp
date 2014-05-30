@@ -4,7 +4,7 @@
 	<insert id="createSelect" parameterType="cherry.sqlapp.db.gen.dto.SqlMetadata"
 		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
 		INSERT INTO sql_metadata (
-			sql_type
+			sql_type,
 			name,
 			description
 		)
