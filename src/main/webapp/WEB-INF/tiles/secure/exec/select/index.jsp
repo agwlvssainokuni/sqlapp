@@ -42,7 +42,8 @@
 		</s:hasBindErrors>
 		<f:form servletRelativeAction="/secure/exec/select/req" method="POST"
 			modelAttribute="execSelectForm">
-			<input type="hidden" id="sz" name="sz" value="${param.sz}">
+			<input type="hidden" id="sz" name="sz"
+				value="<c:out value="${param.sz}" />">
 			<table class="app-collabel">
 				<tbody>
 					<tr>
@@ -87,6 +88,13 @@
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
+					<tr>
+						<th><label for="pmap"><s:message
+									code="secure/exec/select/index.form.pmap" /></label></th>
+						<td><textarea id="pmap" name="pmap"
+								class="app-width50 app-height3"><c:out
+									value="${param.pmap}" /></textarea></td>
+					</tr>
 				</tbody>
 				<tfoot class="app-transparent">
 					<tr>
@@ -115,8 +123,11 @@
 			<f:form servletRelativeAction="/secure/exec/select/req" method="POST"
 				modelAttribute="execSelectForm" id="execSelectWithPage"
 				class="app-pager-form">
-				<input type="hidden" id="no" name="no">
-				<input type="hidden" id="sz" name="sz" value="${param.sz}">
+				<input type="hidden" id="no2" name="no">
+				<input type="hidden" id="sz2" name="sz"
+					value="<c:out value="${param.sz}" />">
+				<input type="hidden" id="pmap2" name="pmap"
+					value="<c:out value="${param.pmap}" />">
 				<f:hidden id="select2" path="select" />
 				<f:hidden id="from2" path="from" />
 				<f:hidden id="where2" path="where" />

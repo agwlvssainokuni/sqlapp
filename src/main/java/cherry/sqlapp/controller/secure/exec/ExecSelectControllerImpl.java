@@ -309,7 +309,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	}
 
 	private Map<String, ?> getParamMap(String pmap) {
-		if (StringUtils.isNotBlank(pmap)) {
+		if (StringUtils.isBlank(pmap)) {
 			return new HashMap<>();
 		}
 		try {
