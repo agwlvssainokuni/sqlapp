@@ -35,8 +35,18 @@ public class MetadataServiceImpl implements MetadataService {
 
 	@Transactional
 	@Override
-	public SqlMetadata findById(int id) {
-		return sqlMetadataMapper.selectByPrimaryKey(id);
+	public SqlMetadata findById(int id, String ownedBy) {
+		SqlMetadata record = sqlMetadataMapper.selectByPrimaryKey(id);
+		if (0 != record.getDeletedFlg()) {
+			return null;
+		}
+		if (0 != record.getPublishedFlg()) {
+			return record;
+		}
+		if (ownedBy.equals(record.getOwnedBy())) {
+			return record;
+		}
+		return null;
 	}
 
 	@Transactional

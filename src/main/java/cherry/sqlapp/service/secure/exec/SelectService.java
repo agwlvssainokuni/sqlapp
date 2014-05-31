@@ -22,7 +22,7 @@ public interface SelectService {
 
 	SqlSelect findById(int id);
 
-	int create(SqlSelect record);
+	int create(SqlSelect record, String ownedBy);
 
 	void update(SqlSelect record);
 

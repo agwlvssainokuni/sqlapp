@@ -56,6 +56,16 @@
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
+					<tr>
+						<th><label for="ownedBy"><s:message
+									code="execMetadataForm.ownedBy" /></label></th>
+						<td><f:input path="ownedBy" disabled="true" /></td>
+					</tr>
+					<tr>
+						<th><label for="publishedFlg"><s:message
+									code="execMetadataForm.publishedFlg" /></label></th>
+						<td><f:checkbox path="publishedFlg" /></td>
+					</tr>
 				</tbody>
 				<tfoot class="app-transparent">
 					<tr>

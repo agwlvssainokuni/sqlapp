@@ -20,7 +20,7 @@ import cherry.sqlapp.db.gen.dto.SqlMetadata;
 
 public interface MetadataService {
 
-	SqlMetadata findById(int id);
+	SqlMetadata findById(int id, String ownedBy);
 
 	void update(SqlMetadata record);
 

@@ -6,12 +6,14 @@
 		INSERT INTO sql_metadata (
 			sql_type,
 			name,
-			description
+			description,
+			owned_by
 		)
 		VALUES (
 			'select',
-			#{name,jdbcType=VARCHAR},
-			#{description,jdbcType=VARCHAR}
+			DEFAULT,
+			#{description,jdbcType=VARCHAR},
+			#{ownedBy,jdbcType=VARCHAR}
 		)
 	</insert>
 	<update id="update" parameterType="cherry.sqlapp.db.gen.dto.SqlMetadata">
@@ -19,6 +21,7 @@
 		SET
 			name = #{name,jdbcType=VARCHAR},
 			description = #{description,jdbcType=VARCHAR},
+			published_flg = #{publishedFlg,jdbcType=INTEGER},
 			updated_at = CURRENT_TIMESTAMP
 		WHERE
 			id = #{id,jdbcType=INTEGER}

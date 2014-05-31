@@ -41,15 +41,19 @@ public class SelectServiceImpl implements SelectService {
 	@Transactional
 	@Override
 	public SqlSelect findById(int id) {
-		return sqlSelectMapper.selectByPrimaryKey(id);
+		SqlSelect record = sqlSelectMapper.selectByPrimaryKey(id);
+		if (record.getDeletedFlg() != 0) {
+			return null;
+		}
+		return record;
 	}
 
 	@Transactional
 	@Override
-	public int create(SqlSelect record) {
+	public int create(SqlSelect record, String ownedBy) {
 		SqlMetadata metadata = new SqlMetadata();
-		metadata.setName("name");
-		metadata.setDescription("description");
+		metadata.setDescription(ownedBy);
+		metadata.setOwnedBy(ownedBy);
 		int count0 = metadataMapper.createSelect(metadata);
 		if (count0 != 1) {
 			throw new IllegalArgumentException(

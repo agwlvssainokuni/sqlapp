@@ -93,9 +93,13 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		if (ref != null) {
-			SqlSelect sel = selectService.findById(ref);
-			if (sel != null) {
-				mav.addObject(getForm(sel));
+			SqlMetadata md = metadataService.findById(ref,
+					authentication.getName());
+			if (md != null) {
+				SqlSelect sel = selectService.findById(ref);
+				if (sel != null) {
+					mav.addObject(getForm(sel));
+				}
 			}
 		}
 		return mav;
@@ -151,8 +155,9 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		record.setGroupByClause(form.getGroupBy());
 		record.setHavingClause(form.getHaving());
 		record.setOrderByClause(form.getOrderBy());
+		record.setParamMap(form.getParamMap());
 
-		int id = selectService.create(record);
+		int id = selectService.create(record, authentication.getName());
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(URI_PATH_ID, true));
@@ -165,8 +170,8 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
-		SqlMetadata md = metadataService.findById(id);
-		ExecMetadataForm mdForm = getMetadata(md);
+		SqlMetadata md = metadataService.findById(id, authentication.getName());
+		ExecMetadataForm mdForm = getMdForm(md);
 
 		SqlSelect sel = selectService.findById(id);
 		ExecSelectForm form = getForm(sel);
@@ -184,8 +189,8 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
-		SqlMetadata md = metadataService.findById(id);
-		ExecMetadataForm mdForm = getMetadata(md);
+		SqlMetadata md = metadataService.findById(id, authentication.getName());
+		ExecMetadataForm mdForm = getMdForm(md);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -223,8 +228,8 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
-		SqlMetadata md = metadataService.findById(id);
-		ExecMetadataForm mdForm = getMetadata(md);
+		SqlMetadata md = metadataService.findById(id, authentication.getName());
+		ExecMetadataForm mdForm = getMdForm(md);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -240,6 +245,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		record.setGroupByClause(form.getGroupBy());
 		record.setHavingClause(form.getHaving());
 		record.setOrderByClause(form.getOrderBy());
+		record.setParamMap(form.getParamMap());
 
 		selectService.update(record);
 
@@ -269,6 +275,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		record.setId(id);
 		record.setName(mdForm.getName());
 		record.setDescription(mdForm.getDescription());
+		record.setPublishedFlg(mdForm.isPublishedFlg() ? 1 : 0);
 
 		metadataService.update(record);
 
@@ -290,10 +297,12 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		return builder;
 	}
 
-	private ExecMetadataForm getMetadata(SqlMetadata record) {
+	private ExecMetadataForm getMdForm(SqlMetadata record) {
 		ExecMetadataForm mdForm = getMetadata();
 		mdForm.setName(record.getName());
 		mdForm.setDescription(record.getDescription());
+		mdForm.setOwnedBy(record.getOwnedBy());
+		mdForm.setPublishedFlg(record.getPublishedFlg() != 0);
 		return mdForm;
 	}
 
@@ -305,6 +314,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		form.setGroupBy(record.getGroupByClause());
 		form.setHaving(record.getHavingClause());
 		form.setOrderBy(record.getOrderByClause());
+		form.setParamMap(record.getParamMap());
 		return form;
 	}
 
