@@ -1,5 +1,5 @@
 -- Project Name : SqlApp
--- Date/Time    : 2014/05/30 22:03:57
+-- Date/Time    : 2014/06/01 6:31:22
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -13,6 +13,7 @@ CREATE TABLE sql_select(
 	group_by_clause VARCHAR (500), 
 	having_clause VARCHAR (500), 
 	order_by_clause VARCHAR (500), 
+	param_map VARCHAR (5000), 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
@@ -23,8 +24,10 @@ CREATE TABLE sql_select(
 CREATE TABLE sql_metadata( 
 	id INTEGER NOT NULL auto_increment, 
 	sql_type VARCHAR (32) NOT NULL, 
-	name VARCHAR (50) NOT NULL, 
-	description VARCHAR (500) NOT NULL, 
+	name VARCHAR (50) DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	description VARCHAR (500) DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	owned_by VARCHAR (32) NOT NULL, 
+	published_flg INTEGER DEFAULT 0 NOT NULL, 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
@@ -56,6 +59,9 @@ COMMENT
 	ON COLUMN sql_select.order_by_clause IS 'ORDER BY句'; 
 
 COMMENT 
+	ON COLUMN sql_select.param_map IS 'パラメタMAP(JSON)'; 
+
+COMMENT 
 	ON COLUMN sql_select.updated_at IS '更新日時'; 
 
 COMMENT 
@@ -78,6 +84,12 @@ COMMENT
 
 COMMENT 
 	ON COLUMN sql_metadata.description IS '説明文'; 
+
+COMMENT 
+	ON COLUMN sql_metadata.owned_by IS '所有者'; 
+
+COMMENT 
+	ON COLUMN sql_metadata.published_flg IS '公開フラグ'; 
 
 COMMENT 
 	ON COLUMN sql_metadata.updated_at IS '更新日時'; 

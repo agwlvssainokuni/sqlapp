@@ -17,6 +17,7 @@ Domain=表示名=@VARCHAR(50)
 Domain=説明文=@VARCHAR(500)
 Domain=SQL句=@VARCHAR(500)
 Domain=SQL文=@VARCHAR(5000)
+Domain=パラメタMAP(JSON)=@VARCHAR(5000)
 Domain=日時=@DATETIME
 Domain=フラグ=@INT
 LogicalView=1
@@ -83,11 +84,12 @@ Field="WHERE句","where_clause","*SQL句",,,"","",$FFFFFFFF,""
 Field="GROUP BY句","group_by_clause","*SQL句",,,"","",$FFFFFFFF,""
 Field="HAVING句","having_clause","*SQL句",,,"","",$FFFFFFFF,""
 Field="ORDER BY句","order_by_clause","*SQL句",,,"","",$FFFFFFFF,""
+Field="パラメタMAP(JSON)","param_map","*パラメタMAP(JSON)",,,"","",$FFFFFFFF,""
 EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140530220338
+ModifiedDateTime=20140601055852
 Position="MAIN",300,800
 
 [Entity]
@@ -100,11 +102,13 @@ Left=300
 Top=300
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="SQL種別","sql_type","*識別名","NOT NULL",,"","",$FFFFFFFF,""
-Field="表示名","name","*表示名","NOT NULL",,"","",$FFFFFFFF,""
-Field="説明文","description","*説明文","NOT NULL",,"","",$FFFFFFFF,""
+Field="表示名","name","*表示名","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
+Field="説明文","description","*説明文","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
+Field="所有者","owned_by","*識別名","NOT NULL",,"","",$FFFFFFFF,""
+Field="公開フラグ","published_flg","*フラグ","NOT NULL",,"0","",$FFFFFFFF,""
 EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140530220327
+ModifiedDateTime=20140601063106
 Position="MAIN",300,300
