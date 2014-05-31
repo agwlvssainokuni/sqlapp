@@ -155,6 +155,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		record.setGroupByClause(form.getGroupBy());
 		record.setHavingClause(form.getHaving());
 		record.setOrderByClause(form.getOrderBy());
+		record.setParamMap(form.getParamMap());
 
 		int id = selectService.create(record, authentication.getName());
 
