@@ -18,6 +18,7 @@ package cherry.sqlapp.controller.secure.exec;
 
 import static org.springframework.web.util.UriComponentsBuilder.fromPath;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -25,6 +26,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.site.SitePreference;
@@ -43,6 +45,10 @@ import cherry.sqlapp.service.secure.exec.ExecResult;
 import cherry.sqlapp.service.secure.exec.ExecService;
 import cherry.sqlapp.service.secure.exec.MetadataService;
 import cherry.sqlapp.service.secure.exec.SelectService;
+
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
 @Controller
 public class ExecSelectControllerImpl implements ExecSelectController {
@@ -69,6 +75,8 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	@Autowired
 	private Paginator paginator;
 
+	private ObjectMapper objectMapper = new ObjectMapper();
+
 	@Override
 	public ExecMetadataForm getMetadata() {
 		return new ExecMetadataForm();
@@ -84,6 +92,12 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		if (hid != null) {
+			SqlSelect sel = selectService.findById(hid);
+			if (sel != null) {
+				mav.addObject(getForm(sel));
+			}
+		}
 		return mav;
 	}
 
@@ -99,8 +113,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		}
 
 		SqlBuilder builder = getSqlBuilder(form);
-
-		Map<String, ?> paramMap = new HashMap<>();
+		Map<String, ?> paramMap = getParamMap(pmap);
 
 		int count = execService.count(dataSource, builder.buildCount(),
 				paramMap);
@@ -181,8 +194,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		}
 
 		SqlBuilder builder = getSqlBuilder(form);
-
-		Map<String, ?> paramMap = new HashMap<>();
+		Map<String, ?> paramMap = getParamMap(pmap);
 
 		int count = execService.count(dataSource, builder.buildCount(),
 				paramMap);
@@ -296,4 +308,16 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		return form;
 	}
 
+	private Map<String, ?> getParamMap(String pmap) {
+		if (StringUtils.isNotBlank(pmap)) {
+			return new HashMap<>();
+		}
+		try {
+			JavaType type = TypeFactory.defaultInstance().constructMapType(
+					Map.class, String.class, Object.class);
+			return objectMapper.readValue(pmap, type);
+		} catch (IOException ex) {
+			return new HashMap<>();
+		}
+	}
 }
