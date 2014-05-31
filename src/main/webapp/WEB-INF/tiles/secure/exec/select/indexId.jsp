@@ -84,6 +84,7 @@
 				<f:errors path="execSelectForm.groupBy" element="div" />
 				<f:errors path="execSelectForm.having" element="div" />
 				<f:errors path="execSelectForm.orderBy" element="div" />
+				<f:errors path="execSelectForm.paramMap" element="div" />
 			</div>
 		</s:hasBindErrors>
 		<f:form servletRelativeAction="${baseUri}/req" method="POST"
@@ -135,11 +136,11 @@
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<th><label for="pmap"><s:message
-									code="secure/exec/select/indexId.form.pmap" /></label></th>
-						<td><textarea id="pmap" name="pmap"
-								class="app-width50 app-height3"><c:out
-									value="${param.pmap}" /></textarea></td>
+						<th><label for="paramMap"><s:message
+									code="execSelectForm.paramMap" /></label></th>
+						<td><f:textarea path="paramMap"
+								cssClass="app-width50 app-height3"
+								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
 				</tbody>
 				<tfoot class="app-transparent">
@@ -172,14 +173,13 @@
 				<input type="hidden" id="no2" name="no">
 				<input type="hidden" id="sz2" name="sz"
 					value="<c:out value="${param.sz}" />">
-				<input type="hidden" id="pmap2" name="pmap"
-					value="<c:out value="${param.pmap}" />">
 				<f:hidden id="select2" path="select" />
 				<f:hidden id="from2" path="from" />
 				<f:hidden id="where2" path="where" />
 				<f:hidden id="groupBy2" path="groupBy" />
 				<f:hidden id="having2" path="having" />
-				<f:hidden id="groupBy2" path="orderBy" />
+				<f:hidden id="orderBy2" path="orderBy" />
+				<f:hidden id="paramMap2" path="paramMap" />
 			</f:form>
 			<div class="app-pager">
 				<div class="app-pager-desc">
