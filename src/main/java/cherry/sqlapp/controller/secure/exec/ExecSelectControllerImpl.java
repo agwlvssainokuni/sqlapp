@@ -88,12 +88,12 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	}
 
 	@Override
-	public ModelAndView index(Integer hid, Authentication authentication,
+	public ModelAndView index(Integer ref, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		if (hid != null) {
-			SqlSelect sel = selectService.findById(hid);
+		if (ref != null) {
+			SqlSelect sel = selectService.findById(ref);
 			if (sel != null) {
 				mav.addObject(getForm(sel));
 			}
@@ -103,7 +103,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 	@Override
 	public ModelAndView request(ExecSelectForm form, BindingResult binding,
-			String pmap, int pageNo, int pageSz, Authentication authentication,
+			int pageNo, int pageSz, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
@@ -113,7 +113,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		}
 
 		SqlBuilder builder = getSqlBuilder(form);
-		Map<String, ?> paramMap = getParamMap(pmap);
+		Map<String, ?> paramMap = getParamMap(form.getParamMap());
 
 		int count = execService.count(dataSource, builder.buildCount(),
 				paramMap);
@@ -180,7 +180,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 	@Override
 	public ModelAndView requestId(int id, ExecSelectForm form,
-			BindingResult binding, String pmap, int pageNo, int pageSz,
+			BindingResult binding, int pageNo, int pageSz,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
@@ -194,7 +194,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		}
 
 		SqlBuilder builder = getSqlBuilder(form);
-		Map<String, ?> paramMap = getParamMap(pmap);
+		Map<String, ?> paramMap = getParamMap(form.getParamMap());
 
 		int count = execService.count(dataSource, builder.buildCount(),
 				paramMap);

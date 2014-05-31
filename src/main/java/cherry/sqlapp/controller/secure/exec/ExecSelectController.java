@@ -45,7 +45,7 @@ public interface ExecSelectController {
 
 	public static final String PATH_VAR = "id";
 
-	public static final String PARAM_H = "h";
+	public static final String PARAM_REF = "ref";
 
 	public static final String PARAM_PMAP = "pmap";
 
@@ -61,7 +61,7 @@ public interface ExecSelectController {
 
 	@RequestMapping()
 	ModelAndView index(
-			@RequestParam(value = PARAM_H, required = false, defaultValue = "") Integer hid,
+			@RequestParam(value = PARAM_REF, required = false, defaultValue = "") Integer ref,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
@@ -69,7 +69,6 @@ public interface ExecSelectController {
 	ModelAndView request(
 			@Validated ExecSelectForm form,
 			BindingResult binding,
-			@RequestParam(value = PARAM_PMAP, required = false, defaultValue = "") String pmap,
 			@RequestParam(value = PARAM_NO, required = false, defaultValue = "0") int pageNo,
 			@RequestParam(value = PARAM_SZ, required = false, defaultValue = "0") int pageSz,
 			Authentication authentication, Locale locale,
@@ -90,7 +89,6 @@ public interface ExecSelectController {
 			@PathVariable(PATH_VAR) int id,
 			@Validated ExecSelectForm form,
 			BindingResult binding,
-			@RequestParam(value = PARAM_PMAP, required = false, defaultValue = "") String pmap,
 			@RequestParam(value = PARAM_NO, required = false, defaultValue = "0") int pageNo,
 			@RequestParam(value = PARAM_SZ, required = false, defaultValue = "0") int pageSz,
 			Authentication authentication, Locale locale,
