@@ -19,6 +19,7 @@ package cherry.sqlapp.controller.secure.exec;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import cherry.sqlapp.controller.BaseForm;
+import cherry.sqlapp.validation.ParamMapSize;
 import cherry.sqlapp.validation.SqlClauseSize;
 
 public class ExecSelectForm extends BaseForm {
@@ -44,6 +45,9 @@ public class ExecSelectForm extends BaseForm {
 
 	@SqlClauseSize
 	private String orderBy;
+
+	@ParamMapSize
+	private String paramMap;
 
 	public String getSelect() {
 		return select;
@@ -91,6 +95,14 @@ public class ExecSelectForm extends BaseForm {
 
 	public void setOrderBy(String orderBy) {
 		this.orderBy = orderBy;
+	}
+
+	public String getParamMap() {
+		return paramMap;
+	}
+
+	public void setParamMap(String paramMap) {
+		this.paramMap = paramMap;
 	}
 
 }
