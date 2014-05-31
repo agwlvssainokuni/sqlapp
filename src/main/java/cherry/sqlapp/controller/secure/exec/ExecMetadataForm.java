@@ -34,7 +34,9 @@ public class ExecMetadataForm extends BaseForm {
 	@DescriptionSize
 	private String description;
 
-	private boolean publish;
+	private String ownedBy;
+
+	private boolean publishedFlg;
 
 	public String getName() {
 		return name;
@@ -52,12 +54,20 @@ public class ExecMetadataForm extends BaseForm {
 		this.description = description;
 	}
 
-	public boolean isPublish() {
-		return publish;
+	public String getOwnedBy() {
+		return ownedBy;
 	}
 
-	public void setPublish(boolean publish) {
-		this.publish = publish;
+	public void setOwnedBy(String ownedBy) {
+		this.ownedBy = ownedBy;
+	}
+
+	public boolean isPublishedFlg() {
+		return publishedFlg;
+	}
+
+	public void setPublishedFlg(boolean publishedFlg) {
+		this.publishedFlg = publishedFlg;
 	}
 
 }
