@@ -32,7 +32,7 @@ public class LoginControllerImpl implements LoginController {
 
 	public static final String VIEW_PATH = "login/index";
 
-	@ModelAttribute(LoginForm.NAME)
+	@ModelAttribute("loginForm")
 	@Override
 	public LoginForm getForm() {
 		return new LoginForm();

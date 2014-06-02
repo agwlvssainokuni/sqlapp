@@ -32,7 +32,7 @@ public interface LoginController {
 
 	public static final String URI_PATH = "/login";
 
-	@ModelAttribute(LoginForm.NAME)
+	@ModelAttribute("loginForm")
 	LoginForm getForm();
 
 	@RequestMapping()

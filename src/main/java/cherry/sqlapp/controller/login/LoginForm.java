@@ -22,12 +22,6 @@ public class LoginForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String NAME = "loginForm";
-	public static final String PREFIX = NAME + ".";
-
-	public static final String LOGIN_ID = "loginId";
-	public static final String PASSWORD = "password";
-
 	private String loginId;
 
 	private String password;
