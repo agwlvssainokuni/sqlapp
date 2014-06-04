@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.lib.tag;
+package cherry.spring.common.helper;
+
+import java.util.List;
 
 import javax.servlet.ServletContext;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-public class AppCtxTag {
+import cherry.spring.common.helper.navi.Navigator;
+import cherry.spring.common.helper.navi.Navigator.Node;
+
+public class AppTag {
 
 	public static ApplicationContext getAppCtx(ServletContext sc) {
 		return WebApplicationContextUtils.getRequiredWebApplicationContext(sc);
@@ -38,6 +43,14 @@ public class AppCtxTag {
 
 	public static <T> T getBeanByClass(ServletContext sc, Class<T> requiredType) {
 		return getAppCtx(sc).getBean(requiredType);
+	}
+
+	public static Navigator getNavigator(ServletContext sc) {
+		return getBeanByClass(sc, Navigator.class);
+	}
+
+	public static List<Node> navigate(ServletContext sc, String name) {
+		return getNavigator(sc).navigate(name);
 	}
 
 }

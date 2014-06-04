@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.lib.navi;
+package cherry.spring.common.helper.navi;
 
 import java.util.List;
 
