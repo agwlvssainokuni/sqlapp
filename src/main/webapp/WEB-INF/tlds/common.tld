@@ -12,7 +12,7 @@
 	<function>
 		<description>Get ApplicationContext</description>
 		<name>getAppCtx</name>
-		<function-class>cherry.spring.common.lib.tag.AppCtxTag</function-class>
+		<function-class>cherry.spring.common.helper.AppTag</function-class>
 		<function-signature>
 			org.springframework.context.ApplicationContext getAppCtx(javax.servlet.ServletContext)
 		</function-signature>
@@ -21,7 +21,7 @@
 	<function>
 		<description>Get Bean</description>
 		<name>getBean</name>
-		<function-class>cherry.spring.common.lib.tag.AppCtxTag</function-class>
+		<function-class>cherry.spring.common.helper.AppTag</function-class>
 		<function-signature>
 			java.lang.Object getBean(javax.servlet.ServletContext, java.lang.String, java.lang.Class)
 		</function-signature>
@@ -30,7 +30,7 @@
 	<function>
 		<description>Get Bean</description>
 		<name>getBeanByName</name>
-		<function-class>cherry.spring.common.lib.tag.AppCtxTag</function-class>
+		<function-class>cherry.spring.common.helper.AppTag</function-class>
 		<function-signature>
 			java.lang.Object getBeanByName(javax.servlet.ServletContext, java.lang.String)
 		</function-signature>
@@ -39,7 +39,7 @@
 	<function>
 		<description>Get Bean</description>
 		<name>getBeanByClass</name>
-		<function-class>cherry.spring.common.lib.tag.AppCtxTag</function-class>
+		<function-class>cherry.spring.common.helper.AppTag</function-class>
 		<function-signature>
 			java.lang.Object getBeanByClass(javax.servlet.ServletContext, java.lang.Class)
 		</function-signature>
@@ -48,7 +48,7 @@
 	<function>
 		<description>Navigate</description>
 		<name>navigate</name>
-		<function-class>cherry.spring.common.lib.navi.NavigatorTag</function-class>
+		<function-class>cherry.spring.common.helper.AppTag</function-class>
 		<function-signature>
 			java.util.List navigate(javax.servlet.ServletContext, java.lang.String)
 		</function-signature>
