@@ -47,7 +47,7 @@
 		<constructor-arg value="log" />
 	</bean>
 
-	<bean id="navigator" class="cherry.spring.common.helper.navi.NavigatorImplß">
+	<bean id="navigator" class="cherry.spring.common.helper.navi.NavigatorImpl">
 		<property name="navigationDef" value="classpath:navi.json" />
 	</bean>
 
