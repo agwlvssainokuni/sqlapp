@@ -47,11 +47,8 @@
 		<constructor-arg value="log" />
 	</bean>
 
-	<bean id="navigator" class="cherry.spring.common.lib.navi.NavigatorImpl">
+	<bean id="navigator" class="cherry.spring.common.helper.navi.NavigatorImplß">
 		<property name="navigationDef" value="classpath:navi.json" />
-		<property name="objectMapper">
-			<bean class="com.fasterxml.jackson.databind.ObjectMapper" />
-		</property>
 	</bean>
 
 	<bean id="paginator" class="cherry.spring.common.lib.paginate.PaginatorImpl">
