@@ -62,6 +62,8 @@
 		</property>
 	</bean>
 
+	<bean id="extractor" class="cherry.spring.common.lib.etl.ExtractorImpl" />
+
 	<tx:annotation-driven />
 
 	<aop:config>
