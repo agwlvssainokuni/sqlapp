@@ -20,44 +20,43 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import cherry.spring.common.lib.paginate.PageSet;
+
 public interface ExecService {
 
-	int count(DataSource dataSource, String sql, Map<String, ?> paramMap);
+	Result exec(DataSource dataSource, SqlBuilder sqlBuilder,
+			Map<String, ?> paramMap, int pageNo, int pageSize);
 
-	int query(DataSource dataSource, String sql, Map<String, ?> paramMap,
-			Consumer consumer);
+	public static class Result {
 
-	public static interface Consumer {
+		private PageSet pageSet;
 
-		void begin(Column[] col);
+		private ExecResult execResult;
 
-		void consume(Object[] record);
-
-		void end();
-	}
-
-	public static class Column {
-
-		/** カラムの型。 */
-		private int type;
-
-		/** カラムの表記名。 */
-		private String label;
-
-		public int getType() {
-			return type;
+		@Override
+		public String toString() {
+			return ToStringBuilder.reflectionToString(this,
+					ToStringStyle.SHORT_PREFIX_STYLE);
 		}
 
-		public void setType(int type) {
-			this.type = type;
+		public PageSet getPageSet() {
+			return pageSet;
 		}
 
-		public String getLabel() {
-			return label;
+		public void setPageSet(PageSet pageSet) {
+			this.pageSet = pageSet;
 		}
 
-		public void setLabel(String label) {
-			this.label = label;
+		public ExecResult getExecResult() {
+			return execResult;
+		}
+
+		public void setExecResult(ExecResult execResult) {
+			this.execResult = execResult;
 		}
 	}
+
 }

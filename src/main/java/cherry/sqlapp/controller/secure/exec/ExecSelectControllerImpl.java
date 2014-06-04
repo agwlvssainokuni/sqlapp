@@ -37,14 +37,15 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
-import cherry.spring.common.lib.paginate.PageSet;
+import cherry.spring.common.lib.etl.Extractor;
 import cherry.spring.common.lib.paginate.Paginator;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 import cherry.sqlapp.db.gen.dto.SqlSelect;
-import cherry.sqlapp.service.secure.exec.ExecResult;
 import cherry.sqlapp.service.secure.exec.ExecService;
+import cherry.sqlapp.service.secure.exec.ExecService.Result;
 import cherry.sqlapp.service.secure.exec.MetadataService;
 import cherry.sqlapp.service.secure.exec.SelectService;
+import cherry.sqlapp.service.secure.exec.SqlBuilder;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -65,6 +66,9 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 	@Autowired
 	private ExecService execService;
+
+	@Autowired
+	private Extractor extractor;
 
 	@Autowired
 	private MetadataService metadataService;
@@ -119,22 +123,12 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		SqlBuilder builder = getSqlBuilder(form);
 		Map<String, ?> paramMap = getParamMap(form.getParamMap());
 
-		int count = execService.count(dataSource, builder.buildCount(),
-				paramMap);
-		int pageSize = (pageSz <= 0 ? defaultPageSize : pageSz);
-		PageSet pageSet = paginator.paginate(pageNo, count, pageSize);
-
-		ExecResult execResult = new ExecResult();
-		int numOfItems = execService.query(dataSource,
-				builder.build(pageSize, pageSet.getCurrent().getFrom()),
-				paramMap, execResult);
-		if (numOfItems != pageSet.getCurrent().getCount()) {
-			throw new IllegalStateException();
-		}
+		Result result = execService.exec(dataSource, builder, paramMap, pageNo,
+				(pageSz <= 0 ? defaultPageSize : pageSz));
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		mav.addObject(pageSet);
-		mav.addObject(execResult);
+		mav.addObject(result.getPageSet());
+		mav.addObject(result.getExecResult());
 		return mav;
 	}
 
@@ -201,24 +195,14 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		SqlBuilder builder = getSqlBuilder(form);
 		Map<String, ?> paramMap = getParamMap(form.getParamMap());
 
-		int count = execService.count(dataSource, builder.buildCount(),
-				paramMap);
-		int pageSize = (pageSz <= 0 ? defaultPageSize : pageSz);
-		PageSet pageSet = paginator.paginate(pageNo, count, pageSize);
-
-		ExecResult execResult = new ExecResult();
-		int numOfItems = execService.query(dataSource,
-				builder.build(pageSize, pageSet.getCurrent().getFrom()),
-				paramMap, execResult);
-		if (numOfItems != pageSet.getCurrent().getCount()) {
-			throw new IllegalStateException();
-		}
+		Result result = execService.exec(dataSource, builder, paramMap, pageNo,
+				(pageSz <= 0 ? defaultPageSize : pageSz));
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
 		mav.addObject(mdForm);
-		mav.addObject(pageSet);
-		mav.addObject(execResult);
+		mav.addObject(result.getPageSet());
+		mav.addObject(result.getExecResult());
 		return mav;
 	}
 

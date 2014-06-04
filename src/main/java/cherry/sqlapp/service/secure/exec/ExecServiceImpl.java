@@ -16,65 +16,58 @@
 
 package cherry.sqlapp.service.secure.exec;
 
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import java.io.IOException;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
+import cherry.spring.common.lib.etl.Extractor;
+import cherry.spring.common.lib.etl.NoneLimiter;
+import cherry.spring.common.lib.paginate.PageSet;
+import cherry.spring.common.lib.paginate.Paginator;
+
 public class ExecServiceImpl implements ExecService {
+
+	@Autowired
+	private Extractor extractor;
+
+	@Autowired
+	private Paginator paginator;
 
 	@Transactional
 	@Override
-	public int count(DataSource dataSource, String sql, Map<String, ?> paramMap) {
+	public Result exec(DataSource dataSource, SqlBuilder sqlBuilder,
+			Map<String, ?> paramMap, int pageNo, int pageSize) {
+
+		int count = count(dataSource, sqlBuilder.buildCount(), paramMap);
+		PageSet pageSet = paginator.paginate(pageNo, count, pageSize);
+
+		ExecResult execResult = new ExecResult();
+		try {
+			int numOfItems = extractor.extract(dataSource,
+					sqlBuilder.build(pageSize, pageSet.getCurrent().getFrom()),
+					paramMap, execResult, new NoneLimiter());
+			if (numOfItems != pageSet.getCurrent().getCount()) {
+				throw new IllegalStateException();
+			}
+		} catch (IOException ex) {
+			throw new IllegalStateException(ex);
+		}
+
+		Result result = new Result();
+		result.setPageSet(pageSet);
+		result.setExecResult(execResult);
+		return result;
+	}
+
+	private int count(DataSource dataSource, String sql, Map<String, ?> paramMap) {
 		NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(
 				dataSource);
 		return template.queryForObject(sql, paramMap, Integer.class);
-	}
-
-	@Transactional
-	@Override
-	public int query(DataSource dataSource, String sql,
-			Map<String, ?> paramMap, final Consumer consumer) {
-
-		ResultSetExtractor<Integer> callback = new ResultSetExtractor<Integer>() {
-			@Override
-			public Integer extractData(ResultSet rs) throws SQLException {
-
-				ResultSetMetaData metaData = rs.getMetaData();
-				Column[] col = new Column[metaData.getColumnCount()];
-				for (int i = 1; i <= col.length; i++) {
-					col[i - 1] = new Column();
-					col[i - 1].setType(metaData.getColumnType(i));
-					col[i - 1].setLabel(metaData.getColumnLabel(i));
-				}
-
-				consumer.begin(col);
-
-				int count;
-				for (count = 0; rs.next(); count++) {
-
-					Object[] record = new Object[col.length];
-					for (int i = 1; i <= record.length; i++) {
-						record[i - 1] = rs.getObject(i);
-					}
-
-					consumer.consume(record);
-				}
-
-				consumer.end();
-				return count;
-			}
-		};
-
-		NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(
-				dataSource);
-		return template.query(sql, paramMap, callback);
 	}
 
 }

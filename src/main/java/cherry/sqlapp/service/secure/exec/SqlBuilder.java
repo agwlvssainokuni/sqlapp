@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.controller.secure.exec;
+package cherry.sqlapp.service.secure.exec;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class SqlBuilder {
 
@@ -67,6 +69,12 @@ public class SqlBuilder {
 		if (value != null) {
 			builder.append(clause).append(value);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 	public String getSelect() {

@@ -22,8 +22,8 @@ import java.util.List;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import cherry.sqlapp.service.secure.exec.ExecService.Column;
-import cherry.sqlapp.service.secure.exec.ExecService.Consumer;
+import cherry.spring.common.lib.etl.Column;
+import cherry.spring.common.lib.etl.Consumer;
 
 public class ExecResult implements Consumer {
 
