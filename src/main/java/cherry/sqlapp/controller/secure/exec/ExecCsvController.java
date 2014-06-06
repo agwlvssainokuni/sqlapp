@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -38,21 +37,17 @@ public interface ExecCsvController {
 
 	public static final String URI_PATH = "/secure/exec/csv";
 
-	public static final String URI_PATH_EXEC = "exec";
+	public static final String URI_PATH_REQ = "req";
 
 	public static final String URI_PATH_ID = "{id}";
 
+	public static final String URI_PATH_ID_REQ = "{id}/req";
+
 	public static final String URI_PATH_ID_METADATA = "{id}/metadata";
-
-	public static final String URI_PATH_ID_UPDATE = "{id}/update";
-
-	public static final String URI_PATH_ID_EXEC = "{id}/exec";
 
 	public static final String PATH_VAR = "id";
 
-	public static final String PARAM_H = "h";
-
-	public static final String PARAM_FILE = "file";
+	public static final String PARAM_REF = "ref";
 
 	@ModelAttribute("execMetadataForm")
 	ExecMetadataForm getMetadata();
@@ -62,36 +57,40 @@ public interface ExecCsvController {
 
 	@RequestMapping()
 	ModelAndView index(
-			@RequestParam(value = PARAM_H, required = false, defaultValue = "") Integer hid,
+			@RequestParam(value = PARAM_REF, required = false, defaultValue = "") Integer ref,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
-	@RequestMapping(URI_PATH_EXEC)
-	ModelAndView exec(@Validated ExecCsvForm form, BindingResult binding,
-			@RequestParam(value = PARAM_FILE) MultipartFile file,
+	@RequestMapping(URI_PATH_REQ)
+	ModelAndView request(@Validated ExecCsvForm form, BindingResult binding,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request);
+
+	@RequestMapping(value = URI_PATH_REQ, params = { "proc=create" })
+	ModelAndView create(@Validated ExecCsvForm form, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_ID)
-	ModelAndView edit(@PathVariable(PATH_VAR) int id,
+	ModelAndView indexId(@PathVariable(PATH_VAR) int id,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request);
+
+	@RequestMapping(URI_PATH_ID_REQ)
+	ModelAndView requestId(@PathVariable(PATH_VAR) int id,
+			@Validated ExecCsvForm form, BindingResult binding,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request);
+
+	@RequestMapping(value = URI_PATH_ID_REQ, params = { "proc=update" })
+	ModelAndView update(@PathVariable(PATH_VAR) int id,
+			@Validated ExecCsvForm form, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_ID_METADATA)
 	ModelAndView metadata(@PathVariable(PATH_VAR) int id,
 			@Validated ExecMetadataForm form, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
-
-	@RequestMapping(URI_PATH_ID_UPDATE)
-	ModelAndView update(@PathVariable(PATH_VAR) int id,
-			@Validated ExecCsvForm form, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
-
-	@RequestMapping(URI_PATH_ID_EXEC)
-	ModelAndView exec(@PathVariable(PATH_VAR) int id,
-			@RequestParam(value = PARAM_FILE) MultipartFile file,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
