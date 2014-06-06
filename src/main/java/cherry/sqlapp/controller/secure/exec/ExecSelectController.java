@@ -47,8 +47,6 @@ public interface ExecSelectController {
 
 	public static final String PARAM_REF = "ref";
 
-	public static final String PARAM_PMAP = "pmap";
-
 	public static final String PARAM_NO = "no";
 
 	public static final String PARAM_SZ = "sz";
