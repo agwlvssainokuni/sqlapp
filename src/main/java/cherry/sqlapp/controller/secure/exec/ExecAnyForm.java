@@ -19,6 +19,7 @@ package cherry.sqlapp.controller.secure.exec;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import cherry.sqlapp.controller.BaseForm;
+import cherry.sqlapp.validation.ParamMapSize;
 import cherry.sqlapp.validation.SqlStatementSize;
 
 public class ExecAnyForm extends BaseForm {
@@ -29,12 +30,23 @@ public class ExecAnyForm extends BaseForm {
 	@SqlStatementSize
 	private String sql;
 
+	@ParamMapSize
+	private String paramMap;
+
 	public String getSql() {
 		return sql;
 	}
 
 	public void setSql(String sql) {
 		this.sql = sql;
+	}
+
+	public String getParamMap() {
+		return paramMap;
+	}
+
+	public void setParamMap(String paramMap) {
+		this.paramMap = paramMap;
 	}
 
 }
