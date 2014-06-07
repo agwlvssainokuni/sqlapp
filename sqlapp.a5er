@@ -51,32 +51,70 @@ ShowCommonAttributes=0
 
 [Relation]
 Entity1=sql_metadata
-Entity2=SQL_SELECT
+Entity2=sql_any
 RelationType1=1
 RelationType2=3
 Fields1=id
 Fields2=id
 Cardinarity1=
 Cardinarity2=
-Position="MAIN",0,956,9044,901,R,R
+Position="MAIN",0,2946,4530,1564,R,R
+Dependence=1
+Caption=
+PName=
+LineMode=0
+Bar1=295
+Bar2=453
+Bar3=156
+TermPos1=R
+TermPos2=R
+
+[Entity]
+PName=sql_any
+LName=SQL文・一般クエリ
+Comment=
+TableOption=
+Page=MAIN
+Left=800
+Top=900
+Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="クエリ","auery","*SQL文","NOT NULL",,"","",$FFFFFFFF,""
+Field="パラメタMAP(JSON)","param_map","*パラメタMAP(JSON)",,,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20140607224056
+Position="MAIN",800,900
+
+[Relation]
+Entity1=sql_metadata
+Entity2=sql_select
+RelationType1=1
+RelationType2=3
+Fields1=id
+Fields2=id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,956,4436,947,R,R
 Dependence=1
 Caption=
 PName=
 LineMode=0
 Bar1=96
-Bar2=904
-Bar3=90
+Bar2=444
+Bar3=95
 TermPos1=R
 TermPos2=R
 
 [Entity]
-PName=SQL_SELECT
+PName=sql_select
 LName=SQL文・SELECT
 Comment=
 TableOption=
 Page=MAIN
 Left=300
-Top=800
+Top=900
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="SELECT句","select_clause","*SQL句","NOT NULL",,"","",$FFFFFFFF,""
 Field="FROM句","from_clause","*SQL句","NOT NULL",,"","",$FFFFFFFF,""
@@ -89,8 +127,8 @@ EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140601055852
-Position="MAIN",300,800
+ModifiedDateTime=20140607224103
+Position="MAIN",300,900
 
 [Entity]
 PName=sql_metadata
@@ -98,7 +136,7 @@ LName=SQLメタデータ
 Comment=
 TableOption=
 Page=MAIN
-Left=300
+Left=500
 Top=300
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="SQL種別","sql_type","*識別名","NOT NULL",,"","",$FFFFFFFF,""
@@ -110,5 +148,5 @@ EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140601063106
-Position="MAIN",300,300
+ModifiedDateTime=20140607224048
+Position="MAIN",500,300

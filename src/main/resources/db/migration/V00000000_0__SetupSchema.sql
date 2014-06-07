@@ -1,8 +1,19 @@
 -- Project Name : SqlApp
--- Date/Time    : 2014/06/01 6:31:22
+-- Date/Time    : 2014/06/07 22:44:20
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
+
+-- SQL文・一般クエリ
+CREATE TABLE sql_any( 
+	id INTEGER NOT NULL auto_increment, 
+	auery VARCHAR (5000) NOT NULL, 
+	param_map VARCHAR (5000), 
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
+	CONSTRAINT sql_any_pkc PRIMARY KEY (id)
+); 
 
 -- SQL文・SELECT
 CREATE TABLE sql_select( 
@@ -33,6 +44,27 @@ CREATE TABLE sql_metadata(
 	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
 	CONSTRAINT sql_metadata_pkc PRIMARY KEY (id)
 ); 
+
+COMMENT 
+	ON TABLE sql_any IS 'SQL文・一般クエリ'; 
+
+COMMENT 
+	ON COLUMN sql_any.id IS 'ID'; 
+
+COMMENT 
+	ON COLUMN sql_any.auery IS 'クエリ'; 
+
+COMMENT 
+	ON COLUMN sql_any.param_map IS 'パラメタMAP(JSON)'; 
+
+COMMENT 
+	ON COLUMN sql_any.updated_at IS '更新日時'; 
+
+COMMENT 
+	ON COLUMN sql_any.created_at IS '作成日時'; 
+
+COMMENT 
+	ON COLUMN sql_any.deleted_flg IS '削除フラグ'; 
 
 COMMENT 
 	ON TABLE sql_select IS 'SQL文・SELECT'; 
