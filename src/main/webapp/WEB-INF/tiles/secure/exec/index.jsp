@@ -10,7 +10,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <c:set var="hasResultList"
-	value="${sqlMetadataList != null && pageSet != null}" />
+	value="${sqlMetadataList != null && !sqlMetadataList.isEmpty()}" />
 <script type="text/javascript">
 	$(function() {
 		$(".accordion").accordion({
@@ -37,6 +37,11 @@
 				<f:errors path="execSearchForm.registeredTo" element="div" />
 			</div>
 		</s:hasBindErrors>
+		<c:if test="${sqlMetadataList != null && sqlMetadataList.isEmpty()}">
+			<div class="ui-state-error">
+				<s:message code="secure/exec/index.message.3" />
+			</div>
+		</c:if>
 		<f:form servletRelativeAction="/secure/exec/req" method="POST"
 			modelAttribute="execSearchForm">
 			<input type="hidden" id="sz" name="sz"
