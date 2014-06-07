@@ -22,6 +22,8 @@ public interface MetadataMapper {
 
 	int createSelect(SqlMetadata record);
 
+	int createAny(SqlMetadata record);
+
 	int update(SqlMetadata record);
 
 }

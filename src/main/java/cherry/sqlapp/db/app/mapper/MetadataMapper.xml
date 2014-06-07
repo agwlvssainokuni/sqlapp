@@ -16,6 +16,21 @@
 			#{ownedBy,jdbcType=VARCHAR}
 		)
 	</insert>
+	<insert id="createAny" parameterType="cherry.sqlapp.db.gen.dto.SqlMetadata"
+		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		INSERT INTO sql_metadata (
+			sql_type,
+			name,
+			description,
+			owned_by
+		)
+		VALUES (
+			'any',
+			DEFAULT,
+			#{description,jdbcType=VARCHAR},
+			#{ownedBy,jdbcType=VARCHAR}
+		)
+	</insert>
 	<update id="update" parameterType="cherry.sqlapp.db.gen.dto.SqlMetadata">
 		UPDATE sql_metadata
 		SET
