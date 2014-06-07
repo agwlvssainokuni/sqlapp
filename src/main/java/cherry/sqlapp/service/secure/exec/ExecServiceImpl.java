@@ -47,7 +47,8 @@ public class ExecServiceImpl implements ExecService {
 			ExecResult execResult = new ExecResult();
 			int numOfItems = extractor.extract(dataSource, sql, paramMap,
 					execResult, new NoneLimiter());
-			PageSet pageSet = paginator.paginate(0, numOfItems, numOfItems);
+			PageSet pageSet = paginator.paginate(0, numOfItems,
+					(numOfItems <= 0 ? 1 : numOfItems));
 
 			Result result = new Result();
 			result.setPageSet(pageSet);
