@@ -24,6 +24,8 @@ public interface MetadataMapper {
 
 	int createAny(SqlMetadata record);
 
+	int createCsv(SqlMetadata record);
+
 	int update(SqlMetadata record);
 
 }
