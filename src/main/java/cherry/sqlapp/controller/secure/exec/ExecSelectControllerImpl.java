@@ -92,9 +92,9 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			SqlMetadata md = metadataService.findById(ref,
 					authentication.getName());
 			if (md != null) {
-				SqlSelect sel = selectService.findById(ref);
-				if (sel != null) {
-					mav.addObject(getForm(sel));
+				SqlSelect record = selectService.findById(ref);
+				if (record != null) {
+					mav.addObject(getForm(record));
 				}
 			}
 		}
@@ -159,8 +159,8 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
 		ExecMetadataForm mdForm = getMdForm(md);
 
-		SqlSelect sel = selectService.findById(id);
-		ExecSelectForm form = getForm(sel);
+		SqlSelect record = selectService.findById(id);
+		ExecSelectForm form = getForm(record);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
@@ -180,6 +180,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
+			mav.addObject(PATH_VAR, id);
 			mav.addObject(mdForm);
 			return mav;
 		}
@@ -209,6 +210,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
+			mav.addObject(PATH_VAR, id);
 			mav.addObject(mdForm);
 			return mav;
 		}
@@ -238,22 +240,23 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
-		SqlSelect sel = selectService.findById(id);
-		ExecSelectForm form = getForm(sel);
+		SqlSelect record = selectService.findById(id);
+		ExecSelectForm form = getForm(record);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
+			mav.addObject(PATH_VAR, id);
 			mav.addObject(form);
 			return mav;
 		}
 
-		SqlMetadata record = new SqlMetadata();
-		record.setId(id);
-		record.setName(mdForm.getName());
-		record.setDescription(mdForm.getDescription());
-		record.setPublishedFlg(mdForm.isPublishedFlg() ? 1 : 0);
+		SqlMetadata md = new SqlMetadata();
+		md.setId(id);
+		md.setName(mdForm.getName());
+		md.setDescription(mdForm.getDescription());
+		md.setPublishedFlg(mdForm.isPublishedFlg() ? 1 : 0);
 
-		metadataService.update(record);
+		metadataService.update(md);
 
 		UriComponents uri = fromPath(URI_PATH).pathSegment(URI_PATH_ID)
 				.buildAndExpand(id);

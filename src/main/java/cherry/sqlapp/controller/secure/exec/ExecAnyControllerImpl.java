@@ -16,6 +16,8 @@
 
 package cherry.sqlapp.controller.secure.exec;
 
+import static org.springframework.web.util.UriComponentsBuilder.fromPath;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
@@ -32,7 +34,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponents;
 
+import cherry.sqlapp.db.gen.dto.SqlAny;
+import cherry.sqlapp.db.gen.dto.SqlMetadata;
+import cherry.sqlapp.service.secure.exec.AnyService;
 import cherry.sqlapp.service.secure.exec.ExecService;
 import cherry.sqlapp.service.secure.exec.ExecService.Result;
 import cherry.sqlapp.service.secure.exec.MetadataService;
@@ -57,6 +63,9 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 	@Autowired
 	private MetadataService metadataService;
 
+	@Autowired
+	private AnyService anyService;
+
 	private ObjectMapper objectMapper = new ObjectMapper();
 
 	@Override
@@ -74,6 +83,16 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		if (ref != null) {
+			SqlMetadata md = metadataService.findById(ref,
+					authentication.getName());
+			if (md != null) {
+				SqlAny record = anyService.findById(ref);
+				if (record != null) {
+					mav.addObject(getForm(record));
+				}
+			}
+		}
 		return mav;
 	}
 
@@ -106,7 +125,11 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 			return mav;
 		}
 
-		int id = 0;
+		SqlAny record = new SqlAny();
+		record.setQuery(form.getSql());
+		record.setParamMap(form.getParamMap());
+
+		int id = anyService.create(record, authentication.getName());
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(URI_PATH_ID));
@@ -118,8 +141,17 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 	public ModelAndView indexId(int id, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
+
+		SqlMetadata md = metadataService.findById(id, authentication.getName());
+		ExecMetadataForm mdForm = getMdForm(md);
+
+		SqlAny record = anyService.findById(id);
+		ExecAnyForm form = getForm(record);
+
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
+		mav.addObject(mdForm);
+		mav.addObject(form);
 		return mav;
 	}
 
@@ -129,14 +161,24 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
+		SqlMetadata md = metadataService.findById(id, authentication.getName());
+		ExecMetadataForm mdForm = getMdForm(md);
+
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 			mav.addObject(PATH_VAR, id);
+			mav.addObject(mdForm);
 			return mav;
 		}
 
+		Map<String, ?> paramMap = getParamMap(form.getParamMap());
+		Result result = execService.exec(dataSource, form.getSql(), paramMap);
+
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
+		mav.addObject(mdForm);
+		mav.addObject(result.getPageSet());
+		mav.addObject(result.getExecResult());
 		return mav;
 	}
 
@@ -145,34 +187,75 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
+		SqlMetadata md = metadataService.findById(id, authentication.getName());
+		ExecMetadataForm mdForm = getMdForm(md);
+
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 			mav.addObject(PATH_VAR, id);
+			mav.addObject(mdForm);
 			return mav;
 		}
 
+		SqlAny record = new SqlAny();
+		record.setId(id);
+		record.setQuery(form.getSql());
+		record.setParamMap(form.getParamMap());
+
+		anyService.update(record);
+
+		UriComponents uri = fromPath(URI_PATH).pathSegment(URI_PATH_ID)
+				.buildAndExpand(id);
 		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(URI_PATH_ID));
-		mav.addObject(PATH_VAR, id);
+		mav.setView(new RedirectView(uri.toUriString(), true));
 		return mav;
 	}
 
 	@Override
-	public ModelAndView metadata(int id, ExecMetadataForm form,
+	public ModelAndView metadata(int id, ExecMetadataForm mdForm,
 			BindingResult binding, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
+		SqlAny record = anyService.findById(id);
+		ExecAnyForm form = getForm(record);
+
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 			mav.addObject(PATH_VAR, id);
+			mav.addObject(form);
 			return mav;
 		}
 
+		SqlMetadata md = new SqlMetadata();
+		md.setId(id);
+		md.setName(mdForm.getName());
+		md.setDescription(mdForm.getDescription());
+		md.setPublishedFlg(mdForm.isPublishedFlg() ? 1 : 0);
+
+		metadataService.update(md);
+
+		UriComponents uri = fromPath(URI_PATH).pathSegment(URI_PATH_ID)
+				.buildAndExpand(id);
 		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(URI_PATH_ID));
-		mav.addObject(PATH_VAR, id);
+		mav.setView(new RedirectView(uri.toUriString(), true));
 		return mav;
+	}
+
+	private ExecMetadataForm getMdForm(SqlMetadata record) {
+		ExecMetadataForm mdForm = getMetadata();
+		mdForm.setName(record.getName());
+		mdForm.setDescription(record.getDescription());
+		mdForm.setOwnedBy(record.getOwnedBy());
+		mdForm.setPublishedFlg(record.getPublishedFlg() != 0);
+		return mdForm;
+	}
+
+	private ExecAnyForm getForm(SqlAny record) {
+		ExecAnyForm form = getForm();
+		form.setSql(record.getQuery());
+		form.setParamMap(record.getParamMap());
+		return form;
 	}
 
 	private Map<String, ?> getParamMap(String pmap) {
