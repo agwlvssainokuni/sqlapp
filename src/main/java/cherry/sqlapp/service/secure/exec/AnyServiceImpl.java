@@ -17,6 +17,7 @@
 package cherry.sqlapp.service.secure.exec;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.sqlapp.db.app.mapper.AnyMapper;
@@ -25,6 +26,7 @@ import cherry.sqlapp.db.gen.dto.SqlAny;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 import cherry.sqlapp.db.gen.mapper.SqlAnyMapper;
 
+@Component
 public class AnyServiceImpl implements AnyService {
 
 	@Autowired
