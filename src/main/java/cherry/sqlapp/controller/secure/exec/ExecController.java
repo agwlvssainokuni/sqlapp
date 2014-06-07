@@ -34,30 +34,22 @@ public interface ExecController {
 
 	public static final String URI_PATH = "/secure/exec";
 
-	public static final String URI_PATH_HISTORY = "history";
+	public static final String URI_PATH_REQ = "req";
 
 	public static final String PARAM_NO = "no";
 
 	public static final String PARAM_SZ = "sz";
 
 	@ModelAttribute("execSearchForm")
-	ExecSearchForm getSearchForm();
-
-	@ModelAttribute("execHistoryForm")
-	ExecHistoryForm getHistoryForm();
+	ExecSearchForm getForm();
 
 	@RequestMapping()
-	ModelAndView index(
-			@Validated ExecSearchForm form,
-			BindingResult binding,
-			@RequestParam(value = PARAM_NO, required = false, defaultValue = "0") int pageNo,
-			@RequestParam(value = PARAM_SZ, required = false, defaultValue = "0") int pageSz,
-			Authentication authentication, Locale locale,
+	ModelAndView index(Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
-	@RequestMapping(URI_PATH_HISTORY)
-	ModelAndView history(
-			@Validated ExecHistoryForm form,
+	@RequestMapping(URI_PATH_REQ)
+	ModelAndView request(
+			@Validated ExecSearchForm form,
 			BindingResult binding,
 			@RequestParam(value = PARAM_NO, required = false, defaultValue = "0") int pageNo,
 			@RequestParam(value = PARAM_SZ, required = false, defaultValue = "0") int pageSz,
