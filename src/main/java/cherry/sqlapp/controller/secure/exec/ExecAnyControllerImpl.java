@@ -16,10 +16,16 @@
 
 package cherry.sqlapp.controller.secure.exec;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -27,12 +33,31 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import cherry.sqlapp.service.secure.exec.ExecService;
+import cherry.sqlapp.service.secure.exec.ExecService.Result;
+import cherry.sqlapp.service.secure.exec.MetadataService;
+
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+
 @Controller
 public class ExecAnyControllerImpl implements ExecAnyController {
 
 	public static final String VIEW_PATH = "secure/exec/any/index";
 
 	public static final String VIEW_PATH_ID = "secure/exec/any/indexId";
+
+	@Autowired
+	private DataSource dataSource;
+
+	@Autowired
+	private ExecService execService;
+
+	@Autowired
+	private MetadataService metadataService;
+
+	private ObjectMapper objectMapper = new ObjectMapper();
 
 	@Override
 	public ExecMetadataForm getMetadata() {
@@ -62,7 +87,12 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 			return mav;
 		}
 
+		Map<String, ?> paramMap = getParamMap(form.getParamMap());
+		Result result = execService.exec(dataSource, form.getSql(), paramMap);
+
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		mav.addObject(result.getPageSet());
+		mav.addObject(result.getExecResult());
 		return mav;
 	}
 
@@ -143,6 +173,19 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 		mav.setView(new RedirectView(URI_PATH_ID));
 		mav.addObject(PATH_VAR, id);
 		return mav;
+	}
+
+	private Map<String, ?> getParamMap(String pmap) {
+		if (StringUtils.isBlank(pmap)) {
+			return new HashMap<>();
+		}
+		try {
+			JavaType type = TypeFactory.defaultInstance().constructMapType(
+					Map.class, String.class, Object.class);
+			return objectMapper.readValue(pmap, type);
+		} catch (IOException ex) {
+			return new HashMap<>();
+		}
 	}
 
 }

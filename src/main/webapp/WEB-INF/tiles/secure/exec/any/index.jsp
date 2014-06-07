@@ -80,27 +80,8 @@
 			<s:message code="secure/exec/any/index.message.2" />
 		</h1>
 		<div class="app-portion">
-			<f:form servletRelativeAction="/secure/exec/any/req" method="POST"
-				modelAttribute="execAnyForm" id="execAnyWithPage"
-				class="app-pager-form">
-				<input type="hidden" id="no2" name="no">
-				<input type="hidden" id="sz2" name="sz"
-					value="<c:out value="${param.sz}" />">
-				<f:hidden id="sql2" path="sql" />
-				<f:hidden id="paramMap2" path="paramMap" />
-			</f:form>
-			<div class="app-pager">
-				<div class="app-pager-desc">
-					<s:message code="common/pager.message.0"
-						arguments="${pageSet.last.to+1},${pageSet.current.from+1},${pageSet.current.to+1}" />
-				</div>
-				<app:pagerLink pageSet="${pageSet}" />
-			</div>
 			<app:execResult id="execResultList" execResult="${execResult}"
 				pageSet="${pageSet}" />
-			<div class="app-pager">
-				<app:pagerLink pageSet="${pageSet}" />
-			</div>
 		</div>
 	</div>
 </c:if>

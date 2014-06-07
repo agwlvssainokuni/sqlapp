@@ -27,6 +27,8 @@ import cherry.spring.common.lib.paginate.PageSet;
 
 public interface ExecService {
 
+	Result exec(DataSource dataSource, String sql, Map<String, ?> paramMap);
+
 	Result exec(DataSource dataSource, SqlBuilder sqlBuilder,
 			Map<String, ?> paramMap, int pageNo, int pageSize);
 

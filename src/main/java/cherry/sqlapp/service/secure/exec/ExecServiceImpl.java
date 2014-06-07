@@ -40,6 +40,26 @@ public class ExecServiceImpl implements ExecService {
 
 	@Transactional
 	@Override
+	public Result exec(DataSource dataSource, String sql,
+			Map<String, ?> paramMap) {
+		try {
+
+			ExecResult execResult = new ExecResult();
+			int numOfItems = extractor.extract(dataSource, sql, paramMap,
+					execResult, new NoneLimiter());
+			PageSet pageSet = paginator.paginate(0, numOfItems, numOfItems);
+
+			Result result = new Result();
+			result.setPageSet(pageSet);
+			result.setExecResult(execResult);
+			return result;
+		} catch (IOException ex) {
+			throw new IllegalStateException(ex);
+		}
+	}
+
+	@Transactional
+	@Override
 	public Result exec(DataSource dataSource, SqlBuilder sqlBuilder,
 			Map<String, ?> paramMap, int pageNo, int pageSize) {
 
