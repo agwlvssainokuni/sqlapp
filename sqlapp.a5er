@@ -76,7 +76,7 @@ Comment=
 TableOption=
 Page=MAIN
 Left=800
-Top=900
+Top=1000
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="クエリ","query","*SQL文","NOT NULL",,"","",$FFFFFFFF,""
 Field="パラメタMAP(JSON)","param_map","*パラメタMAP(JSON)",,,"","",$FFFFFFFF,""
@@ -85,7 +85,7 @@ Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
 ModifiedDateTime=20140607230552
-Position="MAIN",800,900
+Position="MAIN",800,1000
 
 [Relation]
 Entity1=sql_metadata
@@ -114,7 +114,7 @@ Comment=
 TableOption=
 Page=MAIN
 Left=300
-Top=900
+Top=1000
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="SELECT句","select_clause","*SQL句","NOT NULL",,"","",$FFFFFFFF,""
 Field="FROM句","from_clause","*SQL句","NOT NULL",,"","",$FFFFFFFF,""
@@ -128,7 +128,7 @@ Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
 ModifiedDateTime=20140607224103
-Position="MAIN",300,900
+Position="MAIN",300,1000
 
 [Entity]
 PName=sql_metadata
@@ -144,9 +144,10 @@ Field="表示名","name","*表示名","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFF
 Field="説明文","description","*説明文","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
 Field="所有者","owned_by","*識別名","NOT NULL",,"","",$FFFFFFFF,""
 Field="公開フラグ","published_flg","*フラグ","NOT NULL",,"0","",$FFFFFFFF,""
+Field="登録日時","registered_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF,""
 EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140607224048
+ModifiedDateTime=20140608070718
 Position="MAIN",500,300

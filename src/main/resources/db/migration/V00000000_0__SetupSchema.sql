@@ -1,5 +1,5 @@
 -- Project Name : SqlApp
--- Date/Time    : 2014/06/07 23:06:05
+-- Date/Time    : 2014/06/08 7:07:28
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -39,6 +39,7 @@ CREATE TABLE sql_metadata(
 	description VARCHAR (500) DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	owned_by VARCHAR (32) NOT NULL, 
 	published_flg INTEGER DEFAULT 0 NOT NULL, 
+	registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
@@ -122,6 +123,9 @@ COMMENT
 
 COMMENT 
 	ON COLUMN sql_metadata.published_flg IS '公開フラグ'; 
+
+COMMENT 
+	ON COLUMN sql_metadata.registered_at IS '登録日時'; 
 
 COMMENT 
 	ON COLUMN sql_metadata.updated_at IS '更新日時'; 
