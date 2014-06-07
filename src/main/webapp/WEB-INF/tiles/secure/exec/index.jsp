@@ -55,6 +55,31 @@
 								cssErrorClass="app-width20 ui-state-error" /></td>
 					</tr>
 					<tr>
+						<th><s:message code="secure/exec/index.message.10" /></th>
+						<td>
+							<ul class="app-flat">
+								<li><f:checkbox path="select" /><label for="select1"><s:message
+											code="secure/exec/index.message.11" /></label></li>
+								<li><f:checkbox path="any" /><label for="any1"><s:message
+											code="secure/exec/index.message.12" /></label></li>
+								<li><f:checkbox path="csv" /><label for="csv1"><s:message
+											code="secure/exec/index.message.13" /></label></li>
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<th><s:message code="secure/exec/index.message.20" /></th>
+						<td>
+							<ul class="app-flat">
+								<li><f:checkbox path="publish" /><label for="publish1"><s:message
+											code="secure/exec/index.message.21" /></label></li>
+								<li><f:checkbox path="notPublish" /><label
+									for="notPublish1"><s:message
+											code="secure/exec/index.message.22" /></label></li>
+							</ul>
+						</td>
+					</tr>
+					<tr>
 						<th><label for="registeredFrom"><s:message
 									code="execSearchForm.registeredFrom" /></label></th>
 						<td><f:input path="registeredFrom" cssClass="app-width20"
@@ -94,6 +119,11 @@
 				<input type="hidden" id="sz2" name="sz"
 					value="<c:out value="${param.sz}" />">
 				<f:hidden id="name2" path="name" />
+				<f:hidden id="select2" path="select" />
+				<f:hidden id="any2" path="any" />
+				<f:hidden id="csv2" path="csv" />
+				<f:hidden id="publish2" path="publish" />
+				<f:hidden id="notPublish2" path="notPublish" />
 				<f:hidden id="registeredFrom2" path="registeredFrom" />
 				<f:hidden id="registeredTo2" path="registeredTo" />
 			</f:form>
