@@ -37,8 +37,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
-import cherry.spring.common.lib.etl.Extractor;
-import cherry.spring.common.lib.paginate.Paginator;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 import cherry.sqlapp.db.gen.dto.SqlSelect;
 import cherry.sqlapp.service.secure.exec.ExecService;
@@ -68,16 +66,10 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	private ExecService execService;
 
 	@Autowired
-	private Extractor extractor;
-
-	@Autowired
 	private MetadataService metadataService;
 
 	@Autowired
 	private SelectService selectService;
-
-	@Autowired
-	private Paginator paginator;
 
 	private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -314,4 +306,5 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			return new HashMap<>();
 		}
 	}
+
 }
