@@ -21,5 +21,6 @@
 			type="XMLMAPPER" targetProject="src/main/java" />
 		<table tableName="sql_metadata" />
 		<table tableName="sql_select" />
+		<table tableName="sql_any" />
 	</context>
 </generatorConfiguration>
