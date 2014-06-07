@@ -1,5 +1,5 @@
 -- Project Name : SqlApp
--- Date/Time    : 2014/06/07 22:44:20
+-- Date/Time    : 2014/06/07 23:06:05
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -7,7 +7,7 @@
 -- SQL文・一般クエリ
 CREATE TABLE sql_any( 
 	id INTEGER NOT NULL auto_increment, 
-	auery VARCHAR (5000) NOT NULL, 
+	query VARCHAR (5000) NOT NULL, 
 	param_map VARCHAR (5000), 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
@@ -52,7 +52,7 @@ COMMENT
 	ON COLUMN sql_any.id IS 'ID'; 
 
 COMMENT 
-	ON COLUMN sql_any.auery IS 'クエリ'; 
+	ON COLUMN sql_any.query IS 'クエリ'; 
 
 COMMENT 
 	ON COLUMN sql_any.param_map IS 'パラメタMAP(JSON)'; 

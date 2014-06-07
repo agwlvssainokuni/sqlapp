@@ -78,13 +78,13 @@ Page=MAIN
 Left=800
 Top=900
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
-Field="クエリ","auery","*SQL文","NOT NULL",,"","",$FFFFFFFF,""
+Field="クエリ","query","*SQL文","NOT NULL",,"","",$FFFFFFFF,""
 Field="パラメタMAP(JSON)","param_map","*パラメタMAP(JSON)",,,"","",$FFFFFFFF,""
 EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140607224056
+ModifiedDateTime=20140607230552
 Position="MAIN",800,900
 
 [Relation]
