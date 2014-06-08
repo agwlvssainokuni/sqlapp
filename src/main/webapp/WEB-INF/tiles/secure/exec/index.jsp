@@ -10,7 +10,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <c:set var="hasResultList"
-	value="${sqlMetadataList != null && !sqlMetadataList.isEmpty()}" />
+	value="${result != null && !result.metadataList.isEmpty()}" />
 <script type="text/javascript">
 	$(function() {
 		$(".accordion").accordion({
@@ -37,7 +37,7 @@
 				<f:errors path="execSearchForm.registeredTo" element="div" />
 			</div>
 		</s:hasBindErrors>
-		<c:if test="${sqlMetadataList != null && sqlMetadataList.isEmpty()}">
+		<c:if test="${result != null && result.metadataList.isEmpty()}">
 			<div class="ui-state-error">
 				<s:message code="secure/exec/index.message.3" />
 			</div>
@@ -130,14 +130,42 @@
 			<div class="app-pager">
 				<div class="app-pager-desc">
 					<s:message code="common/pager.message.0"
-						arguments="${pageSet.last.to+1},${pageSet.current.from+1},${pageSet.current.to+1}" />
+						arguments="${result.pageSet.last.to+1},${result.pageSet.current.from+1},${result.pageSet.current.to+1}" />
 				</div>
-				<app:pagerLink pageSet="${pageSet}" />
+				<app:pagerLink pageSet="${result.pageSet}" />
 			</div>
-			<app:execResult id="execResultList" execResult="${execResult}"
-				pageSet="${pageSet}" />
+
+			<table id="execResultList" class="app-stripe app-width-full">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>name</th>
+						<th>type</th>
+						<th>registered at</th>
+						<th>published</th>
+						<th>owned by</th>
+						<th>description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="item" items="${result.metadataList}"
+						varStatus="status">
+						<tr>
+							<td><c:out
+									value="${result.pageSet.current.from + status.count}" /></td>
+							<td><c:out value="item.name" /></td>
+							<td><c:out value="item.sqlType" /></td>
+							<td><c:out value="item.registeredAt" /></td>
+							<td><c:out value="item.published_flg" /></td>
+							<td><c:out value="item.ownedBy" /></td>
+							<td><c:out value="item.description" /></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+
 			<div class="app-pager">
-				<app:pagerLink pageSet="${pageSet}" />
+				<app:pagerLink pageSet="${result.pageSet}" />
 			</div>
 		</div>
 	</div>
