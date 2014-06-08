@@ -211,6 +211,15 @@
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
+		<property name="typeHandlers">
+			<list>
+				<bean class="cherry.spring.common.custom.mybatis.JodaLocalDateTypeHandler" />
+				<bean class="cherry.spring.common.custom.mybatis.JodaLocalTimeTypeHandler" />
+				<bean
+					class="cherry.spring.common.custom.mybatis.JodaLocalDateTimeTypeHandler" />
+				<bean class="cherry.spring.common.custom.mybatis.JodaDateTimeTypeHandler" />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"

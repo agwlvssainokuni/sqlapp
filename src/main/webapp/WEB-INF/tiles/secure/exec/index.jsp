@@ -134,8 +134,7 @@
 				</div>
 				<app:pagerLink pageSet="${result.pageSet}" />
 			</div>
-
-			<table id="execResultList" class="app-stripe app-width-full">
+			<table id="searchResultList" class="app-stripe app-width-full">
 				<thead>
 					<tr>
 						<th>#</th>
@@ -150,20 +149,24 @@
 				<tbody>
 					<c:forEach var="item" items="${result.metadataList}"
 						varStatus="status">
+						<s:url var="uri" value="/secure/exec/{type}/{id}">
+							<s:param name="type" value="${item.sqlType}" />
+							<s:param name="id" value="${item.id}" />
+						</s:url>
 						<tr>
 							<td><c:out
 									value="${result.pageSet.current.from + status.count}" /></td>
-							<td><c:out value="item.name" /></td>
-							<td><c:out value="item.sqlType" /></td>
-							<td><c:out value="item.registeredAt" /></td>
-							<td><c:out value="item.published_flg" /></td>
-							<td><c:out value="item.ownedBy" /></td>
-							<td><c:out value="item.description" /></td>
+							<td><a href="${uri}" title="${item.name}"><c:out
+										value="${item.name}" /></a></td>
+							<td><c:out value="${item.sqlType}" /></td>
+							<td><c:out value="${item.registeredAt}" /></td>
+							<td><c:out value="${item.publishedFlg}" /></td>
+							<td><c:out value="${item.ownedBy}" /></td>
+							<td><c:out value="${item.description}" /></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
-
 			<div class="app-pager">
 				<app:pagerLink pageSet="${result.pageSet}" />
 			</div>
