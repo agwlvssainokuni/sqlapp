@@ -55,27 +55,27 @@
 								cssErrorClass="app-width20 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<th><s:message code="secure/exec/index.message.10" /></th>
+						<th><s:message code="secure/exec/index.form.type" /></th>
 						<td>
 							<ul class="app-flat">
 								<li><f:checkbox path="select" /><label for="select1"><s:message
-											code="secure/exec/index.message.11" /></label></li>
+											code="secure/exec/index.form.type.select" /></label></li>
 								<li><f:checkbox path="any" /><label for="any1"><s:message
-											code="secure/exec/index.message.12" /></label></li>
+											code="secure/exec/index.form.type.any" /></label></li>
 								<li><f:checkbox path="csv" /><label for="csv1"><s:message
-											code="secure/exec/index.message.13" /></label></li>
+											code="secure/exec/index.form.type.csv" /></label></li>
 							</ul>
 						</td>
 					</tr>
 					<tr>
-						<th><s:message code="secure/exec/index.message.20" /></th>
+						<th><s:message code="secure/exec/index.form.published" /></th>
 						<td>
 							<ul class="app-flat">
 								<li><f:checkbox path="publish" /><label for="publish1"><s:message
-											code="secure/exec/index.message.21" /></label></li>
+											code="secure/exec/index.form.published.public" /></label></li>
 								<li><f:checkbox path="notPublish" /><label
 									for="notPublish1"><s:message
-											code="secure/exec/index.message.22" /></label></li>
+											code="secure/exec/index.form.published.private" /></label></li>
 							</ul>
 						</td>
 					</tr>
@@ -138,12 +138,12 @@
 				<thead>
 					<tr>
 						<th>#</th>
-						<th>name</th>
-						<th>type</th>
-						<th>registered at</th>
-						<th>published</th>
-						<th>owned by</th>
-						<th>description</th>
+						<th><s:message code="secure/exec/index.column.name" /></th>
+						<th><s:message code="secure/exec/index.column.sqlType" /></th>
+						<th><s:message code="secure/exec/index.column.registeredAt" /></th>
+						<th><s:message code="secure/exec/index.column.publishedFlg" /></th>
+						<th><s:message code="secure/exec/index.column.ownedBy" /></th>
+						<th><s:message code="secure/exec/index.column.description" /></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -160,7 +160,14 @@
 										value="${item.name}" /></a></td>
 							<td><c:out value="${item.sqlType}" /></td>
 							<td><c:out value="${item.registeredAt}" /></td>
-							<td><c:out value="${item.publishedFlg}" /></td>
+							<td><c:choose>
+									<c:when test="${item.publishedFlg ==  0}">
+										<s:message code="secure/exec/index.column.publishedFlg.0" />
+									</c:when>
+									<c:otherwise>
+										<s:message code="secure/exec/index.column.publishedFlg.1" />
+									</c:otherwise>
+								</c:choose></td>
 							<td><c:out value="${item.ownedBy}" /></td>
 							<td><c:out value="${item.description}" /></td>
 						</tr>
