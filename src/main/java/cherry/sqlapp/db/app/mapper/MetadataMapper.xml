@@ -78,21 +78,20 @@
 		FROM
 			sql_metadata AS A
 		WHERE
-			A.deleted_at = 0
-			<if test="cond.name != null">AND A.name LIKE #{cond.name,jdbcType=VARCHAR}</if>
-			<if test="cond.registeredFrom">AND A.registered_at &gt;= #{cond.registeredFrom,jdbcType=TIMESTAMP}</if>
-			<if test="cond.registeredTo">AND A.registered_at &lt; #{cond.registeredTo,jdbcType=TIMESTAMP}</if>
-			AND (
+			<if test="cond.name != null">A.name LIKE #{cond.name,jdbcType=VARCHAR} AND</if>
+			<if test="cond.registeredFrom">A.registered_at &gt;= #{cond.registeredFrom,jdbcType=TIMESTAMP} AND</if>
+			<if test="cond.registeredTo">A.registered_at &lt; #{cond.registeredTo,jdbcType=TIMESTAMP} AND</if>
+			(
 			<choose>
 			<when test="cond.publish || cond.notPublish">
 				<trim prefixOverrides="OR">
-					<if test="cond.notPublish">A.published_flg = 0 AND A.owned_by = #{cond.loginId,jdbcType=VARCHAR}</if>
+					<if test="cond.notPublish">(A.published_flg = 0 AND A.owned_by = #{cond.loginId,jdbcType=VARCHAR})</if>
 					<if test="cond.publish">OR A.published_flg &lt;&gt; 0</if>
 				</trim>
 			</when>
 			<otherwise>A.published_flg &lt;&gt; 0 OR A.owned_by = #{cond.loginId,jdbcType=VARCHAR}</otherwise>
 			</choose>
-			)
+			) AND
 			<if test="cond.select || cond.any || cond.csv">
 			A.sql_type IN (
 			<trim suffixOverrides=",">
@@ -100,8 +99,9 @@
 				<if test="cond.any">'any',</if>
 				<if test="cond.csv">'csv'</if>
 			</trim>
-			)
+			) AND
 			</if>
+			A.deleted_flg = 0
 	</select>
 	<select id="search" resultMap="BaseResultMap">
 		SELECT
@@ -118,21 +118,20 @@
 		FROM
 			sql_metadata AS A
 		WHERE
-			A.deleted_at = 0
-			<if test="cond.name != null">AND A.name LIKE #{cond.name,jdbcType=VARCHAR}</if>
-			<if test="cond.registeredFrom">AND A.registered_at &gt;= #{cond.registeredFrom,jdbcType=TIMESTAMP}</if>
-			<if test="cond.registeredTo">AND A.registered_at &lt; #{cond.registeredTo,jdbcType=TIMESTAMP}</if>
-			AND (
+			<if test="cond.name != null">A.name LIKE #{cond.name,jdbcType=VARCHAR} AND</if>
+			<if test="cond.registeredFrom">A.registered_at &gt;= #{cond.registeredFrom,jdbcType=TIMESTAMP} AND</if>
+			<if test="cond.registeredTo">A.registered_at &lt; #{cond.registeredTo,jdbcType=TIMESTAMP} AND</if>
+			(
 			<choose>
 			<when test="cond.publish || cond.notPublish">
 				<trim prefixOverrides="OR">
-					<if test="cond.notPublish">A.published_flg = 0 AND A.owned_by = #{cond.loginId,jdbcType=VARCHAR}</if>
+					<if test="cond.notPublish">(A.published_flg = 0 AND A.owned_by = #{cond.loginId,jdbcType=VARCHAR})</if>
 					<if test="cond.publish">OR A.published_flg &lt;&gt; 0</if>
 				</trim>
 			</when>
 			<otherwise>A.published_flg &lt;&gt; 0 OR A.owned_by = #{cond.loginId,jdbcType=VARCHAR}</otherwise>
 			</choose>
-			)
+			) AND
 			<if test="cond.select || cond.any || cond.csv">
 			A.sql_type IN (
 			<trim suffixOverrides=",">
@@ -140,8 +139,9 @@
 				<if test="cond.any">'any',</if>
 				<if test="cond.csv">'csv'</if>
 			</trim>
-			)
+			) AND
 			</if>
+			A.deleted_flg = 0
 		LIMIT #{limit,jdbcType=INTEGER} OFFSET #{offset,jdbcType=INTEGER}
 	</select>
 </mapper>
