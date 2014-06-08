@@ -16,11 +16,16 @@
 
 package cherry.sqlapp.service.secure.exec;
 
+import java.util.List;
+
+import cherry.sqlapp.db.app.mapper.SqlCondition;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 
 public interface MetadataService {
 
-	SqlMetadata findById(int id, String ownedBy);
+	SqlMetadata findById(int id, String loginId);
+
+	List<SqlMetadata> search(SqlCondition cond);
 
 	void update(SqlMetadata record);
 

@@ -16,11 +16,14 @@
 
 package cherry.sqlapp.service.secure.exec;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.sqlapp.db.app.mapper.MetadataMapper;
+import cherry.sqlapp.db.app.mapper.SqlCondition;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 import cherry.sqlapp.db.gen.mapper.SqlMetadataMapper;
 
@@ -35,7 +38,7 @@ public class MetadataServiceImpl implements MetadataService {
 
 	@Transactional
 	@Override
-	public SqlMetadata findById(int id, String ownedBy) {
+	public SqlMetadata findById(int id, String loginId) {
 		SqlMetadata record = sqlMetadataMapper.selectByPrimaryKey(id);
 		if (0 != record.getDeletedFlg()) {
 			return null;
@@ -43,10 +46,17 @@ public class MetadataServiceImpl implements MetadataService {
 		if (0 != record.getPublishedFlg()) {
 			return record;
 		}
-		if (ownedBy.equals(record.getOwnedBy())) {
+		if (loginId.equals(record.getOwnedBy())) {
 			return record;
 		}
 		return null;
+	}
+
+	@Transactional
+	@Override
+	public List<SqlMetadata> search(SqlCondition cond) {
+		List<SqlMetadata> list = metadataMapper.search(cond);
+		return list;
 	}
 
 	@Transactional
