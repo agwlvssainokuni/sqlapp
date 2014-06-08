@@ -2,12 +2,16 @@
 	trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ attribute name="pageSet" required="true" rtexprvalue="true"
 	type="cherry.spring.common.lib.paginate.PageSet"%>
 <div class="app-pager-link">
 	<ul class="app-flat">
 		<li><span class="app-current" title="${pageSet.current.no+1}"></span></li>
-		<li><span class="app-page" title="${pageSet.prev.no+1}">&lt;</span></li>
+		<li><span class="app-page" title="${pageSet.prev.no+1}"><s:message
+					code="common/pager.link.prev" arguments="${pageSet.prev.count}" /></span></li>
+		<li><span class="app-page" title="${pageSet.next.no+1}"><s:message
+					code="common/pager.link.next" arguments="${pageSet.next.count}" /></span></li>
 		<c:choose>
 			<c:when test="${pageSet.first.no == pageSet.last.no}">
 				<li><span class="app-page" title="${pageSet.first.no+1}">${pageSet.first.no+1}</span></li>
@@ -27,6 +31,5 @@
 				<li><span class="app-page" title="${pageSet.last.no+1}">${pageSet.last.no+1}</span></li>
 			</c:otherwise>
 		</c:choose>
-		<li><span class="app-page" title="${pageSet.next.no+1}">&gt;</span></li>
 	</ul>
 </div>
