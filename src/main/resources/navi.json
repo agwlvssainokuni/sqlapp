@@ -3,6 +3,10 @@
 	"uri": "/secure/",
 	"children": [
 		{
+			"name": "secure/exec/index",
+			"uri": "/secure/exec"
+		},
+		{
 			"name": "secure/exec/select/index",
 			"uri": "/secure/exec/select"
 		},

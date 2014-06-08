@@ -13,6 +13,8 @@
 </h1>
 <div class="app-portion">
 	<ul>
+		<li><a href="<c:url value="/secure/exec" />"><s:message
+					code="secure/home/index.menu.search" /></a></li>
 		<li><a href="<c:url value="/secure/exec/select" />"><s:message
 					code="secure/home/index.menu.execSelect" /></a></li>
 		<li><a href="<c:url value="/secure/exec/any" />"><s:message
