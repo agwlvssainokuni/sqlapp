@@ -22,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import cherry.spring.common.lib.paginate.PageSet;
+import cherry.spring.common.lib.paginate.Paginator;
 import cherry.sqlapp.db.app.mapper.MetadataMapper;
 import cherry.sqlapp.db.app.mapper.SqlCondition;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
@@ -35,6 +37,9 @@ public class MetadataServiceImpl implements MetadataService {
 
 	@Autowired
 	private MetadataMapper metadataMapper;
+
+	@Autowired
+	private Paginator paginator;
 
 	@Transactional
 	@Override
@@ -54,19 +59,25 @@ public class MetadataServiceImpl implements MetadataService {
 
 	@Transactional
 	@Override
-	public List<SqlMetadata> search(SqlCondition cond) {
-		List<SqlMetadata> list = metadataMapper.search(cond);
-		return list;
-	}
-
-	@Transactional
-	@Override
 	public void update(SqlMetadata record) {
 		int count = metadataMapper.update(record);
 		if (count != 1) {
 			throw new IllegalArgumentException(
 					"sql_metadata is not updated; count=" + count);
 		}
+	}
+
+	@Transactional
+	@Override
+	public Result search(SqlCondition cond, int pageNo, int pageSize) {
+		int itemCount = metadataMapper.count(cond);
+		PageSet pageSet = paginator.paginate(pageNo, itemCount, pageSize);
+		List<SqlMetadata> list = metadataMapper.search(cond, pageSize, pageSet
+				.getCurrent().getFrom());
+		Result result = new Result();
+		result.setPageSet(pageSet);
+		result.setMetadataList(list);
+		return result;
 	}
 
 }

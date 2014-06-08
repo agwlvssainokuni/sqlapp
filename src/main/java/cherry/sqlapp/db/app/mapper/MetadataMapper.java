@@ -18,6 +18,8 @@ package cherry.sqlapp.db.app.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 
 public interface MetadataMapper {
@@ -30,6 +32,9 @@ public interface MetadataMapper {
 
 	int update(SqlMetadata record);
 
-	List<SqlMetadata> search(SqlCondition cond);
+	int count(@Param("cond") SqlCondition cond);
+
+	List<SqlMetadata> search(@Param("cond") SqlCondition cond, int limit,
+			int offset);
 
 }

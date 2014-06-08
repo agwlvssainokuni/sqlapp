@@ -18,6 +18,8 @@ package cherry.sqlapp.service.secure.exec;
 
 import java.util.List;
 
+import cherry.spring.common.lib.paginate.PageSet;
+import cherry.sqlapp.db.BaseDto;
 import cherry.sqlapp.db.app.mapper.SqlCondition;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 
@@ -25,8 +27,34 @@ public interface MetadataService {
 
 	SqlMetadata findById(int id, String loginId);
 
-	List<SqlMetadata> search(SqlCondition cond);
-
 	void update(SqlMetadata record);
+
+	Result search(SqlCondition cond, int pageNo, int pageSize);
+
+	public static class Result extends BaseDto {
+
+		private static final long serialVersionUID = 1L;
+
+		private PageSet pageSet;
+
+		private List<SqlMetadata> metadataList;
+
+		public PageSet getPageSet() {
+			return pageSet;
+		}
+
+		public void setPageSet(PageSet pageSet) {
+			this.pageSet = pageSet;
+		}
+
+		public List<SqlMetadata> getMetadataList() {
+			return metadataList;
+		}
+
+		public void setMetadataList(List<SqlMetadata> metadataList) {
+			this.metadataList = metadataList;
+		}
+
+	}
 
 }
