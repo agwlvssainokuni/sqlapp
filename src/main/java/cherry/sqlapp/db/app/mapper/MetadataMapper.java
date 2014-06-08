@@ -16,6 +16,8 @@
 
 package cherry.sqlapp.db.app.mapper;
 
+import java.util.List;
+
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 
 public interface MetadataMapper {
@@ -27,5 +29,7 @@ public interface MetadataMapper {
 	int createCsv(SqlMetadata record);
 
 	int update(SqlMetadata record);
+
+	List<SqlMetadata> search(SqlCondition cond);
 
 }
