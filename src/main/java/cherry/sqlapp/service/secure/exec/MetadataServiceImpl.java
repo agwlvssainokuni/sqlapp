@@ -18,12 +18,15 @@ package cherry.sqlapp.service.secure.exec;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.spring.common.lib.paginate.Paginator;
+import cherry.sqlapp.controller.secure.exec.ExecSearchForm;
 import cherry.sqlapp.db.app.mapper.MetadataMapper;
 import cherry.sqlapp.db.app.mapper.SqlCondition;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
@@ -69,15 +72,54 @@ public class MetadataServiceImpl implements MetadataService {
 
 	@Transactional
 	@Override
-	public Result search(SqlCondition cond, int pageNo, int pageSize) {
+	public Result search(ExecSearchForm form, String loginId, int pageNo,
+			int pageSize) {
+
+		SqlCondition cond = createSqlCondition(form, loginId);
 		int itemCount = metadataMapper.count(cond);
 		PageSet pageSet = paginator.paginate(pageNo, itemCount, pageSize);
-		List<SqlMetadata> list = metadataMapper.search(cond, pageSize, pageSet
-				.getCurrent().getFrom());
+		int offset = pageSet.getCurrent().getFrom();
+		List<SqlMetadata> list = metadataMapper.search(cond, pageSize, offset);
+
 		Result result = new Result();
 		result.setPageSet(pageSet);
 		result.setMetadataList(list);
 		return result;
+	}
+
+	private SqlCondition createSqlCondition(ExecSearchForm form, String loginId) {
+		SqlCondition cond = new SqlCondition();
+		cond.setName(stringCond(form.getName()));
+		cond.setSelect(form.isSelect());
+		cond.setAny(form.isAny());
+		cond.setCsv(form.isCsv());
+		cond.setPublish(form.isPublish());
+		cond.setNotPublish(form.isNotPublish());
+		cond.setRegisteredFrom(dateFromCond(form.getRegisteredFrom()));
+		cond.setRegisteredTo(dateToCond(form.getRegisteredTo()));
+		cond.setLoginId(loginId);
+		return cond;
+	}
+
+	private String stringCond(String string) {
+		if (StringUtils.isBlank(string)) {
+			return null;
+		}
+		return string.replaceAll("([%_\\\\])", "\\$1") + "%";
+	}
+
+	private LocalDateTime dateFromCond(LocalDateTime dt) {
+		if (dt == null) {
+			return null;
+		}
+		return dt;
+	}
+
+	private LocalDateTime dateToCond(LocalDateTime dt) {
+		if (dt == null) {
+			return null;
+		}
+		return dt.plusSeconds(1);
 	}
 
 }

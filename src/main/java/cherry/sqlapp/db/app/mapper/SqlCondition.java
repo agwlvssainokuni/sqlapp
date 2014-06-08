@@ -16,7 +16,7 @@
 
 package cherry.sqlapp.db.app.mapper;
 
-import java.util.Date;
+import org.joda.time.LocalDateTime;
 
 import cherry.sqlapp.db.BaseDto;
 
@@ -36,9 +36,9 @@ public class SqlCondition extends BaseDto {
 
 	private boolean notPublish;
 
-	private Date registeredFrom;
+	private LocalDateTime registeredFrom;
 
-	private Date registeredTo;
+	private LocalDateTime registeredTo;
 
 	private String loginId;
 
@@ -90,19 +90,19 @@ public class SqlCondition extends BaseDto {
 		this.notPublish = notPublish;
 	}
 
-	public Date getRegisteredFrom() {
+	public LocalDateTime getRegisteredFrom() {
 		return registeredFrom;
 	}
 
-	public void setRegisteredFrom(Date registeredFrom) {
+	public void setRegisteredFrom(LocalDateTime registeredFrom) {
 		this.registeredFrom = registeredFrom;
 	}
 
-	public Date getRegisteredTo() {
+	public LocalDateTime getRegisteredTo() {
 		return registeredTo;
 	}
 
-	public void setRegisteredTo(Date registeredTo) {
+	public void setRegisteredTo(LocalDateTime registeredTo) {
 		this.registeredTo = registeredTo;
 	}
 

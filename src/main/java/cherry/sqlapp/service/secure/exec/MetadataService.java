@@ -19,8 +19,8 @@ package cherry.sqlapp.service.secure.exec;
 import java.util.List;
 
 import cherry.spring.common.lib.paginate.PageSet;
+import cherry.sqlapp.controller.secure.exec.ExecSearchForm;
 import cherry.sqlapp.db.BaseDto;
-import cherry.sqlapp.db.app.mapper.SqlCondition;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 
 public interface MetadataService {
@@ -29,7 +29,7 @@ public interface MetadataService {
 
 	void update(SqlMetadata record);
 
-	Result search(SqlCondition cond, int pageNo, int pageSize);
+	Result search(ExecSearchForm form, String loginId, int pageNo, int pageSize);
 
 	public static class Result extends BaseDto {
 
