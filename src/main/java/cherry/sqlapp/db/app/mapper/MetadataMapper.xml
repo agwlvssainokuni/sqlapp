@@ -106,7 +106,7 @@
 	<select id="search" resultMap="BaseResultMap">
 		SELECT
 			A.id,
-			A.sqlType,
+			A.sql_type,
 			A.name,
 			A.description,
 			A.owned_by,

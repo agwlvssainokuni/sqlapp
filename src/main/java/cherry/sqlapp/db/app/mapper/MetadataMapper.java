@@ -34,7 +34,7 @@ public interface MetadataMapper {
 
 	int count(@Param("cond") SqlCondition cond);
 
-	List<SqlMetadata> search(@Param("cond") SqlCondition cond, int limit,
-			int offset);
+	List<SqlMetadata> search(@Param("cond") SqlCondition cond,
+			@Param("limit") int limit, @Param("offset") int offset);
 
 }
