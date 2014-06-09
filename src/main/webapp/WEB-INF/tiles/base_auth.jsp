@@ -55,7 +55,7 @@
 				<c:set var="sc" value="<%=application%>" />
 				<c:forEach var="node" items="${common:navigate(sc, name)}">
 					<s:url var="uri" value="${node.uri}">
-						<c:if test="${id != null}">
+						<c:if test="${node.uri.contains('{id}')}">
 							<s:param name="id" value="${id}" />
 						</c:if>
 					</s:url>
