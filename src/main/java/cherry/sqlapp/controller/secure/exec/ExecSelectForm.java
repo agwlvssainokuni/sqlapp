@@ -26,7 +26,8 @@ public class ExecSelectForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
 
-	private String dataSourceName;
+	@NotEmpty
+	private String databaseName;
 
 	@NotEmpty
 	@SqlClauseSize
@@ -51,12 +52,12 @@ public class ExecSelectForm extends BaseForm {
 	@ParamMapSize
 	private String paramMap;
 
-	public String getDataSourceName() {
-		return dataSourceName;
+	public String getDatabaseName() {
+		return databaseName;
 	}
 
-	public void setDataSourceName(String dataSourceName) {
-		this.dataSourceName = dataSourceName;
+	public void setDatabaseName(String databaseName) {
+		this.databaseName = databaseName;
 	}
 
 	public String getSelect() {

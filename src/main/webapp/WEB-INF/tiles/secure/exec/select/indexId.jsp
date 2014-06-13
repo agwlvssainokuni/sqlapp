@@ -88,6 +88,7 @@
 		<s:hasBindErrors name="execSelectForm">
 			<div class="ui-state-error">
 				<f:errors path="execSelectForm" element="div" />
+				<f:errors path="execSelectForm.databaseName" element="div" />
 				<f:errors path="execSelectForm.select" element="div" />
 				<f:errors path="execSelectForm.from" element="div" />
 				<f:errors path="execSelectForm.where" element="div" />
@@ -103,6 +104,15 @@
 				value="<c:out value="${param.sz}"/>">
 			<table class="app-collabel">
 				<tbody>
+					<tr>
+						<th><label for="databaseName"><s:message
+									code="execSelectForm.databaseName" /></label></th>
+						<td><f:select path="databaseName"
+								cssClass="app-width50 ui-widget"
+								cssErrorClass="app-width50 ui-widget ui-state-error">
+								<f:options items="${dataSourceDef.names}" />
+							</f:select></td>
+					</tr>
 					<tr>
 						<th><label for="select"><s:message
 									code="execSelectForm.select" /></label></th>
@@ -183,6 +193,7 @@
 				<input type="hidden" id="no2" name="no">
 				<input type="hidden" id="sz2" name="sz"
 					value="<c:out value="${param.sz}" />">
+				<f:hidden id="databaseName2" path="databaseName" />
 				<f:hidden id="select2" path="select" />
 				<f:hidden id="from2" path="from" />
 				<f:hidden id="where2" path="where" />

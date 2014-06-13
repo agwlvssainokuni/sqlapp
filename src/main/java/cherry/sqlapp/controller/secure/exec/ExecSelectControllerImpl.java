@@ -56,14 +56,11 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 	public static final String VIEW_PATH_ID = "secure/exec/select/indexId";
 
-	@Autowired
-	private Map<String, DataSource> dataSourceMap;
-
 	@Value("${sqlapp.app.paginator.pageSize}")
 	private int defaultPageSize;
 
 	@Autowired
-	private DataSource dataSource;
+	private DataSourceDef dataSourceDef;
 
 	@Autowired
 	private ExecService execService;
@@ -84,7 +81,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	@Override
 	public ExecSelectForm getForm() {
 		ExecSelectForm form = new ExecSelectForm();
-		form.setDataSourceName(dataSourceMap.keySet().iterator().next());
+		form.setDatabaseName(dataSourceDef.getDefaultName());
 		return form;
 	}
 
@@ -93,7 +90,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		mav.addObject(dataSourceMap);
+		mav.addObject(dataSourceDef);
 		if (ref != null) {
 			SqlMetadata md = metadataService.findById(ref,
 					authentication.getName());
@@ -115,9 +112,12 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(dataSourceMap);
+			mav.addObject(dataSourceDef);
 			return mav;
 		}
+
+		DataSource dataSource = dataSourceDef.getDataSource(form
+				.getDatabaseName());
 
 		SqlBuilder builder = getSqlBuilder(form);
 		Map<String, ?> paramMap = getParamMap(form.getParamMap());
@@ -126,7 +126,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 				(pageSz <= 0 ? defaultPageSize : pageSz));
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		mav.addObject(dataSourceMap);
+		mav.addObject(dataSourceDef);
 		mav.addObject(result.getPageSet());
 		mav.addObject(result.getExecResult());
 		return mav;
@@ -139,7 +139,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(dataSourceMap);
+			mav.addObject(dataSourceDef);
 			return mav;
 		}
 
@@ -173,7 +173,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
-		mav.addObject(dataSourceMap);
+		mav.addObject(dataSourceDef);
 		mav.addObject(mdForm);
 		mav.addObject(form);
 		return mav;
@@ -191,10 +191,13 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(dataSourceMap);
+			mav.addObject(dataSourceDef);
 			mav.addObject(mdForm);
 			return mav;
 		}
+
+		DataSource dataSource = dataSourceDef.getDataSource(form
+				.getDatabaseName());
 
 		SqlBuilder builder = getSqlBuilder(form);
 		Map<String, ?> paramMap = getParamMap(form.getParamMap());
@@ -204,7 +207,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
-		mav.addObject(dataSourceMap);
+		mav.addObject(dataSourceDef);
 		mav.addObject(mdForm);
 		mav.addObject(result.getPageSet());
 		mav.addObject(result.getExecResult());
@@ -223,7 +226,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(dataSourceMap);
+			mav.addObject(dataSourceDef);
 			mav.addObject(mdForm);
 			return mav;
 		}
@@ -259,7 +262,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(dataSourceMap);
+			mav.addObject(dataSourceDef);
 			mav.addObject(form);
 			return mav;
 		}
