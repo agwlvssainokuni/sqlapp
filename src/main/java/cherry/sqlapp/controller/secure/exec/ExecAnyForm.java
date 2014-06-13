@@ -27,11 +27,22 @@ public class ExecAnyForm extends BaseForm {
 	private static final long serialVersionUID = 1L;
 
 	@NotEmpty
+	private String databaseName;
+
+	@NotEmpty
 	@SqlStatementSize
 	private String sql;
 
 	@ParamMapSize
 	private String paramMap;
+
+	public String getDatabaseName() {
+		return databaseName;
+	}
+
+	public void setDatabaseName(String databaseName) {
+		this.databaseName = databaseName;
+	}
 
 	public String getSql() {
 		return sql;

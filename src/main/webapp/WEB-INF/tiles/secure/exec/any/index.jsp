@@ -32,6 +32,7 @@
 		<s:hasBindErrors name="execAnyForm">
 			<div class="ui-state-error">
 				<f:errors path="execAnyForm" element="div" />
+				<f:errors path="execAnyForm.databaseName" element="div" />
 				<f:errors path="execAnyForm.sql" element="div" />
 				<f:errors path="execAnyForm.paramMap" element="div" />
 			</div>
@@ -42,6 +43,15 @@
 				value="<c:out value="${param.sz}" />">
 			<table class="app-collabel">
 				<tbody>
+					<tr>
+						<th><label for="databaseName"><s:message
+									code="execAnyForm.databaseName" /></label></th>
+						<td><f:select path="databaseName"
+								cssClass="app-width50 ui-widget"
+								cssErrorClass="app-width50 ui-widget ui-state-error">
+								<f:options items="${dataSourceDef.names}" />
+							</f:select></td>
+					</tr>
 					<tr>
 						<th><label for="sql"><s:message
 									code="execAnyForm.sql" /></label></th>

@@ -55,7 +55,7 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 	public static final String VIEW_PATH_ID = "secure/exec/any/indexId";
 
 	@Autowired
-	private DataSource dataSource;
+	private DataSourceDef dataSourceDef;
 
 	@Autowired
 	private ExecService execService;
@@ -75,7 +75,9 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 
 	@Override
 	public ExecAnyForm getForm() {
-		return new ExecAnyForm();
+		ExecAnyForm form = new ExecAnyForm();
+		form.setDatabaseName(dataSourceDef.getDefaultName());
+		return form;
 	}
 
 	@Override
@@ -105,6 +107,9 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			return mav;
 		}
+
+		DataSource dataSource = dataSourceDef.getDataSource(form
+				.getDatabaseName());
 
 		Map<String, ?> paramMap = getParamMap(form.getParamMap());
 		Result result = execService.exec(dataSource, form.getSql(), paramMap);
@@ -170,6 +175,9 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 			mav.addObject(mdForm);
 			return mav;
 		}
+
+		DataSource dataSource = dataSourceDef.getDataSource(form
+				.getDatabaseName());
 
 		Map<String, ?> paramMap = getParamMap(form.getParamMap());
 		Result result = execService.exec(dataSource, form.getSql(), paramMap);
