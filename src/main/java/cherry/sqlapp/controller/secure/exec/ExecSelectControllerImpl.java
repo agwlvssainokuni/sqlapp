@@ -56,6 +56,9 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 	public static final String VIEW_PATH_ID = "secure/exec/select/indexId";
 
+	@Autowired
+	private Map<String, DataSource> dataSourceMap;
+
 	@Value("${sqlapp.app.paginator.pageSize}")
 	private int defaultPageSize;
 
@@ -80,7 +83,9 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 	@Override
 	public ExecSelectForm getForm() {
-		return new ExecSelectForm();
+		ExecSelectForm form = new ExecSelectForm();
+		form.setDataSourceName(dataSourceMap.keySet().iterator().next());
+		return form;
 	}
 
 	@Override
@@ -88,6 +93,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		mav.addObject(dataSourceMap);
 		if (ref != null) {
 			SqlMetadata md = metadataService.findById(ref,
 					authentication.getName());
@@ -109,6 +115,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(dataSourceMap);
 			return mav;
 		}
 
@@ -119,6 +126,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 				(pageSz <= 0 ? defaultPageSize : pageSz));
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		mav.addObject(dataSourceMap);
 		mav.addObject(result.getPageSet());
 		mav.addObject(result.getExecResult());
 		return mav;
@@ -131,6 +139,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(dataSourceMap);
 			return mav;
 		}
 
@@ -164,6 +173,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
+		mav.addObject(dataSourceMap);
 		mav.addObject(mdForm);
 		mav.addObject(form);
 		return mav;
@@ -181,6 +191,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 			mav.addObject(PATH_VAR, id);
+			mav.addObject(dataSourceMap);
 			mav.addObject(mdForm);
 			return mav;
 		}
@@ -193,6 +204,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
+		mav.addObject(dataSourceMap);
 		mav.addObject(mdForm);
 		mav.addObject(result.getPageSet());
 		mav.addObject(result.getExecResult());
@@ -211,6 +223,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 			mav.addObject(PATH_VAR, id);
+			mav.addObject(dataSourceMap);
 			mav.addObject(mdForm);
 			return mav;
 		}
@@ -246,6 +259,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 			mav.addObject(PATH_VAR, id);
+			mav.addObject(dataSourceMap);
 			mav.addObject(form);
 			return mav;
 		}

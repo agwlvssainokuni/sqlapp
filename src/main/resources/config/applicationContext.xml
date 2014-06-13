@@ -22,6 +22,19 @@
 	<context:component-scan base-package="cherry.spring" />
 	<context:component-scan base-package="cherry.sqlapp" />
 
+	<util:map id="dataSourceMap" key-type="java.lang.String"
+		value-type="javax.sql.DataSource">
+		<entry key="default" value-ref="dataSource" />
+		<entry key="guest">
+			<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+				destroy-method="close">
+				<property name="driverClassName" value="${sqlapp.jdbc.driverClassName}" />
+				<property name="url" value="${sqlapp.jdbc.url}" />
+				<property name="username" value="quest" />
+			</bean>
+		</entry>
+	</util:map>
+
 	<bean id="execServiceTarget" class="cherry.sqlapp.service.secure.exec.ExecServiceImpl"
 		scope="prototype" />
 	<bean id="execService" class="org.springframework.aop.framework.ProxyFactoryBean">
