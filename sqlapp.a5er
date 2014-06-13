@@ -78,13 +78,14 @@ Page=MAIN
 Left=800
 Top=1000
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="DB名","database_name","*表示名","NOT NULL",,"\qdefault\q","",$FFFFFFFF,""
 Field="クエリ","query","*SQL文","NOT NULL",,"","",$FFFFFFFF,""
 Field="パラメタMAP(JSON)","param_map","*パラメタMAP(JSON)",,,"","",$FFFFFFFF,""
 EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140607230552
+ModifiedDateTime=20140614064103
 Position="MAIN",800,1000
 
 [Relation]
@@ -113,9 +114,10 @@ LName=SQL文・SELECT
 Comment=
 TableOption=
 Page=MAIN
-Left=300
+Left=304
 Top=1000
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
+Field="DB名","database_name","*表示名","NOT NULL",,"\qdefault\q","",$FFFFFFFF,""
 Field="SELECT句","select_clause","*SQL句","NOT NULL",,"","",$FFFFFFFF,""
 Field="FROM句","from_clause","*SQL句","NOT NULL",,"","",$FFFFFFFF,""
 Field="WHERE句","where_clause","*SQL句",,,"","",$FFFFFFFF,""
@@ -127,8 +129,8 @@ EffectMode=None
 Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140607224103
-Position="MAIN",300,1000
+ModifiedDateTime=20140614064029
+Position="MAIN",304,1000
 
 [Entity]
 PName=sql_metadata

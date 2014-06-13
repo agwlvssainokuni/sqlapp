@@ -1,5 +1,5 @@
 -- Project Name : SqlApp
--- Date/Time    : 2014/06/08 7:07:28
+-- Date/Time    : 2014/06/14 6:41:51
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -7,6 +7,7 @@
 -- SQL文・一般クエリ
 CREATE TABLE sql_any( 
 	id INTEGER NOT NULL auto_increment, 
+	database_name VARCHAR (50) DEFAULT 'default' NOT NULL, 
 	query VARCHAR (5000) NOT NULL, 
 	param_map VARCHAR (5000), 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
@@ -18,6 +19,7 @@ CREATE TABLE sql_any(
 -- SQL文・SELECT
 CREATE TABLE sql_select( 
 	id INTEGER NOT NULL auto_increment, 
+	database_name VARCHAR (50) DEFAULT 'default' NOT NULL, 
 	select_clause VARCHAR (500) NOT NULL, 
 	from_clause VARCHAR (500) NOT NULL, 
 	where_clause VARCHAR (500), 
@@ -53,6 +55,9 @@ COMMENT
 	ON COLUMN sql_any.id IS 'ID'; 
 
 COMMENT 
+	ON COLUMN sql_any.database_name IS 'DB名'; 
+
+COMMENT 
 	ON COLUMN sql_any.query IS 'クエリ'; 
 
 COMMENT 
@@ -72,6 +77,9 @@ COMMENT
 
 COMMENT 
 	ON COLUMN sql_select.id IS 'ID'; 
+
+COMMENT 
+	ON COLUMN sql_select.database_name IS 'DB名'; 
 
 COMMENT 
 	ON COLUMN sql_select.select_clause IS 'SELECT句'; 
