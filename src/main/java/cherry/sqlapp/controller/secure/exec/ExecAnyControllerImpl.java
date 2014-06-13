@@ -135,6 +135,7 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 		}
 
 		SqlAny record = new SqlAny();
+		record.setDatabaseName(form.getDatabaseName());
 		record.setQuery(form.getSql());
 		record.setParamMap(form.getParamMap());
 
@@ -215,6 +216,7 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 
 		SqlAny record = new SqlAny();
 		record.setId(id);
+		record.setDatabaseName(record.getDatabaseName());
 		record.setQuery(form.getSql());
 		record.setParamMap(form.getParamMap());
 
@@ -270,6 +272,7 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 
 	private ExecAnyForm getForm(SqlAny record) {
 		ExecAnyForm form = getForm();
+		form.setDatabaseName(record.getDatabaseName());
 		form.setSql(record.getQuery());
 		form.setParamMap(record.getParamMap());
 		return form;

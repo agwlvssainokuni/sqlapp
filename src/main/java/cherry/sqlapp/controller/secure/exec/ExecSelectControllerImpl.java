@@ -144,6 +144,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		}
 
 		SqlSelect record = new SqlSelect();
+		record.setDatabaseName(form.getDatabaseName());
 		record.setSelectClause(form.getSelect());
 		record.setFromClause(form.getFrom());
 		record.setWhereClause(form.getWhere());
@@ -233,6 +234,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 		SqlSelect record = new SqlSelect();
 		record.setId(id);
+		record.setDatabaseName(form.getDatabaseName());
 		record.setSelectClause(form.getSelect());
 		record.setFromClause(form.getFrom());
 		record.setWhereClause(form.getWhere());
@@ -304,6 +306,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 
 	private ExecSelectForm getForm(SqlSelect record) {
 		ExecSelectForm form = getForm();
+		form.setDatabaseName(record.getDatabaseName());
 		form.setSelect(record.getSelectClause());
 		form.setFrom(record.getFromClause());
 		form.setWhere(record.getWhereClause());

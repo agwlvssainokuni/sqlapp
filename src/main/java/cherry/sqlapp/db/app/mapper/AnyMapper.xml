@@ -4,11 +4,13 @@
 	<insert id="create" parameterType="cherry.sqlapp.db.gen.dto.SqlAny">
 		INSERT INTO sql_any (
 			id,
+			database_name,
 			query,
 			param_map
 		)
 		VALUES (
 			#{id,jdbcType=INTEGER},
+			#{databaseName,jdbcType=VARCHAR},
 			#{query,jdbcType=VARCHAR},
 			#{paramMap,jdbcType=VARCHAR}
 		)
@@ -16,6 +18,7 @@
 	<update id="update" parameterType="cherry.sqlapp.db.gen.dto.SqlAny">
 		UPDATE sql_any
 		SET
+			database_name = #{databaseName,jdbcType=VARCHAR},
 			query = #{query,jdbcType=VARCHAR},
 			param_map = #{paramMap,jdbcType=VARCHAR},
 			updated_at = CURRENT_TIMESTAMP

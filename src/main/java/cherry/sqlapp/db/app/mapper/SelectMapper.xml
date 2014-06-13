@@ -4,6 +4,7 @@
 	<insert id="create" parameterType="cherry.sqlapp.db.gen.dto.SqlSelect">
 		INSERT INTO sql_select (
 			id,
+			database_name,
 			select_clause,
 			from_clause,
 			where_clause,
@@ -14,6 +15,7 @@
 		)
 		VALUES (
 			#{id,jdbcType=INTEGER},
+			#{databaseName,jdbcType=VARCHAR},
 			#{selectClause,jdbcType=VARCHAR},
 			#{fromClause,jdbcType=VARCHAR},
 			#{whereClause,jdbcType=VARCHAR},
@@ -26,6 +28,7 @@
 	<update id="update" parameterType="cherry.sqlapp.db.gen.dto.SqlSelect">
 		UPDATE sql_select
 		SET
+			database_name = #{databaseName,jdbcType=VARCHAR},
 			select_clause = #{selectClause,jdbcType=VARCHAR},
 			from_clause = #{fromClause,jdbcType=VARCHAR},
 			where_clause = #{whereClause,jdbcType=VARCHAR},
