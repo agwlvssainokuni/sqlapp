@@ -85,6 +85,7 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		mav.addObject(dataSourceDef);
 		if (ref != null) {
 			SqlMetadata md = metadataService.findById(ref,
 					authentication.getName());
@@ -105,6 +106,7 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(dataSourceDef);
 			return mav;
 		}
 
@@ -115,6 +117,7 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 		Result result = execService.exec(dataSource, form.getSql(), paramMap);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		mav.addObject(dataSourceDef);
 		mav.addObject(result.getPageSet());
 		mav.addObject(result.getExecResult());
 		return mav;
@@ -127,6 +130,7 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(dataSourceDef);
 			return mav;
 		}
 
@@ -155,6 +159,7 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
+		mav.addObject(dataSourceDef);
 		mav.addObject(mdForm);
 		mav.addObject(form);
 		return mav;
@@ -172,6 +177,7 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 			mav.addObject(PATH_VAR, id);
+			mav.addObject(dataSourceDef);
 			mav.addObject(mdForm);
 			return mav;
 		}
@@ -184,6 +190,7 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
+		mav.addObject(dataSourceDef);
 		mav.addObject(mdForm);
 		mav.addObject(result.getPageSet());
 		mav.addObject(result.getExecResult());
@@ -201,6 +208,7 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 			mav.addObject(PATH_VAR, id);
+			mav.addObject(dataSourceDef);
 			mav.addObject(mdForm);
 			return mav;
 		}
@@ -231,6 +239,7 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 			mav.addObject(PATH_VAR, id);
+			mav.addObject(dataSourceDef);
 			mav.addObject(form);
 			return mav;
 		}
