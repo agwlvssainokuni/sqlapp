@@ -32,5 +32,9 @@
 			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
 		</table>
+		<table tableName="sql_csv">
+			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
+			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
+		</table>
 	</context>
 </generatorConfiguration>

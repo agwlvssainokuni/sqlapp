@@ -1,8 +1,22 @@
 -- Project Name : SqlApp
--- Date/Time    : 2014/06/14 6:41:51
+-- Date/Time    : 2014/06/15 6:13:32
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
+
+-- SQL文・CSV取込み
+CREATE TABLE sql_csv( 
+	id INTEGER NOT NULL auto_increment, 
+	database_name VARCHAR (50) DEFAULT 'default' NOT NULL, 
+	query VARCHAR (5000) NOT NULL, 
+	query_alt_1 VARCHAR (5000), 
+	query_alt_2 VARCHAR (5000), 
+	param_map VARCHAR (5000), 
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
+	CONSTRAINT sql_csv_pkc PRIMARY KEY (id)
+); 
 
 -- SQL文・一般クエリ
 CREATE TABLE sql_any( 
@@ -47,6 +61,36 @@ CREATE TABLE sql_metadata(
 	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
 	CONSTRAINT sql_metadata_pkc PRIMARY KEY (id)
 ); 
+
+COMMENT 
+	ON TABLE sql_csv IS 'SQL文・CSV取込み'; 
+
+COMMENT 
+	ON COLUMN sql_csv.id IS 'ID'; 
+
+COMMENT 
+	ON COLUMN sql_csv.database_name IS 'DB名'; 
+
+COMMENT 
+	ON COLUMN sql_csv.query IS 'クエリ'; 
+
+COMMENT 
+	ON COLUMN sql_csv.query_alt_1 IS '代替クエリ1'; 
+
+COMMENT 
+	ON COLUMN sql_csv.query_alt_2 IS '代替クエリ2'; 
+
+COMMENT 
+	ON COLUMN sql_csv.param_map IS 'パラメタMAP(JSON)'; 
+
+COMMENT 
+	ON COLUMN sql_csv.updated_at IS '更新日時'; 
+
+COMMENT 
+	ON COLUMN sql_csv.created_at IS '作成日時'; 
+
+COMMENT 
+	ON COLUMN sql_csv.deleted_flg IS '削除フラグ'; 
 
 COMMENT 
 	ON TABLE sql_any IS 'SQL文・一般クエリ'; 
