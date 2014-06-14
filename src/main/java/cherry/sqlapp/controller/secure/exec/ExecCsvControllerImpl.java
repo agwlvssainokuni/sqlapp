@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -35,6 +36,7 @@ import cherry.sqlapp.service.secure.exec.MetadataService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Component
 public class ExecCsvControllerImpl implements ExecCsvController {
 
 	public static final String VIEW_PATH = "secure/exec/csv/index";
