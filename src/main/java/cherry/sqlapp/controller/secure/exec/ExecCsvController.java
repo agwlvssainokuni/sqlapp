@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequestMapping(ExecCsvController.URI_PATH)
 public interface ExecCsvController {
@@ -37,9 +38,13 @@ public interface ExecCsvController {
 
 	public static final String URI_PATH_REQ = "req";
 
+	public static final String URI_PATH_FIN = "fin";
+
 	public static final String URI_PATH_ID = "{id}";
 
 	public static final String URI_PATH_ID_REQ = "{id}/req";
+
+	public static final String URI_PATH_ID_FIN = "{id}/fin";
 
 	public static final String URI_PATH_ID_METADATA = "{id}/metadata";
 
@@ -61,6 +66,12 @@ public interface ExecCsvController {
 
 	@RequestMapping(URI_PATH_REQ)
 	ModelAndView request(@Validated ExecCsvForm form, BindingResult binding,
+			RedirectAttributes redirectAttributes,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request);
+
+	@RequestMapping(URI_PATH_FIN)
+	ModelAndView finish(RedirectAttributes redirectAttributes,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
@@ -77,6 +88,13 @@ public interface ExecCsvController {
 	@RequestMapping(URI_PATH_ID_REQ)
 	ModelAndView requestId(@PathVariable(PATH_VAR) int id,
 			@Validated ExecCsvForm form, BindingResult binding,
+			RedirectAttributes redirectAttributes,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request);
+
+	@RequestMapping(URI_PATH_ID_FIN)
+	ModelAndView finishId(@PathVariable(PATH_VAR) int id,
+			RedirectAttributes redirectAttributes,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 

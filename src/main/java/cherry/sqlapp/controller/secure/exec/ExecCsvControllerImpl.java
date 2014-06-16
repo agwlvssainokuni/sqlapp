@@ -19,6 +19,7 @@ package cherry.sqlapp.controller.secure.exec;
 import static org.springframework.web.util.UriComponentsBuilder.fromPath;
 
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,21 +28,27 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
 import cherry.sqlapp.service.secure.exec.ImpService;
 import cherry.sqlapp.service.secure.exec.MetadataService;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 @Component
 public class ExecCsvControllerImpl implements ExecCsvController {
 
 	public static final String VIEW_PATH = "secure/exec/csv/index";
 
+	public static final String VIEW_PATH_FIN = "secure/exec/csv/finish";
+
 	public static final String VIEW_PATH_ID = "secure/exec/csv/indexId";
+
+	public static final String VIEW_PATH_ID_FIN = "secure/exec/csv/finishId";
+
+	public static final String ASYNC_PARAM = "asyncParam";
 
 	@Autowired
 	private DataSourceDef dataSourceDef;
@@ -51,8 +58,6 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 
 	@Autowired
 	private MetadataService metadataService;
-
-	private ObjectMapper objectMapper = new ObjectMapper();
 
 	@Override
 	public ExecMetadataForm getMetadata() {
@@ -77,6 +82,7 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 
 	@Override
 	public ModelAndView request(ExecCsvForm form, BindingResult binding,
+			RedirectAttributes redirectAttributes,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
@@ -86,8 +92,25 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 			return mav;
 		}
 
-		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		Map<String, String> asyncParam = impService.launch(
+				form.getDatabaseName(), form.getSql(), form.getFile(),
+				authentication.getName());
+		redirectAttributes.addFlashAttribute(ASYNC_PARAM, asyncParam);
+
+		UriComponents uri = fromPath(URI_PATH).pathSegment(URI_PATH_FIN)
+				.build();
+		ModelAndView mav = new ModelAndView();
+		mav.setView(new RedirectView(uri.toUriString(), true));
+		return mav;
+	}
+
+	@Override
+	public ModelAndView finish(RedirectAttributes redirectAttributes,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
 		mav.addObject(dataSourceDef);
+		mav.addAllObjects(redirectAttributes.getFlashAttributes());
 		return mav;
 	}
 
@@ -104,9 +127,10 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 
 		int id = 0;
 
+		UriComponents uri = fromPath(URI_PATH).pathSegment(URI_PATH_ID)
+				.buildAndExpand(id);
 		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(URI_PATH_ID, true));
-		mav.addObject(PATH_VAR, id);
+		mav.setView(new RedirectView(uri.toUriString(), true));
 		return mav;
 	}
 
@@ -122,9 +146,9 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 
 	@Override
 	public ModelAndView requestId(int id, ExecCsvForm form,
-			BindingResult binding, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+			BindingResult binding, RedirectAttributes redirectAttributes,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -133,9 +157,27 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 			return mav;
 		}
 
-		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
+		Map<String, String> asyncParam = impService.launch(
+				form.getDatabaseName(), form.getSql(), form.getFile(),
+				authentication.getName());
+		redirectAttributes.addFlashAttribute(ASYNC_PARAM, asyncParam);
+
+		UriComponents uri = fromPath(URI_PATH).pathSegment(URI_PATH_ID_FIN)
+				.buildAndExpand(id);
+		ModelAndView mav = new ModelAndView();
+		mav.setView(new RedirectView(uri.toUriString(), true));
+		return mav;
+	}
+
+	@Override
+	public ModelAndView finishId(@PathVariable(PATH_VAR) int id,
+			RedirectAttributes redirectAttributes,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView(VIEW_PATH_ID_FIN);
 		mav.addObject(PATH_VAR, id);
 		mav.addObject(dataSourceDef);
+		mav.addAllObjects(redirectAttributes.getFlashAttributes());
 		return mav;
 	}
 
