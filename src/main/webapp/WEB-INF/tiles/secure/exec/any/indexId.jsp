@@ -95,8 +95,6 @@
 		</s:hasBindErrors>
 		<f:form servletRelativeAction="${baseUri}/req" method="POST"
 			modelAttribute="execAnyForm">
-			<input type="hidden" id="sz" name="sz"
-				value="<c:out value="${param.sz}"/>">
 			<table class="app-collabel">
 				<tbody>
 					<tr>
