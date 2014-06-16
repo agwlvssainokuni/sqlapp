@@ -35,9 +35,7 @@
 			</div>
 		</s:hasBindErrors>
 		<f:form servletRelativeAction="/secure/exec/csv/req" method="POST"
-			modelAttribute="execCsvForm">
-			<input type="hidden" id="sz" name="sz"
-				value="<c:out value="${param.sz}" />">
+			modelAttribute="execCsvForm" enctype="multipart/form-data">
 			<table class="app-collabel">
 				<tbody>
 					<tr>
