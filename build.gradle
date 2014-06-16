@@ -26,7 +26,7 @@ ext {
 	versionAopalliance = "1.0"
 	versionSpring = "4.0.5.RELEASE"
 	versionSpringSecurity = "3.2.4.RELEASE"
-	versionSpringMobile = "1.1.1.RELEASE"
+	versionSpringMobile = "1.1.2.RELEASE"
 	versionHibernateValidator = "5.1.1.Final"
 	versionJavaValidation = "1.1.0.Final"
 	versionTiles = "3.0.3"
