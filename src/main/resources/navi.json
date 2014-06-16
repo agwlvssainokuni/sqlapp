@@ -27,7 +27,15 @@
 			"uri": "/secure/exec/csv"
 		},
 		{
+			"name": "secure/exec/csv/finish",
+			"uri": "/secure/exec/csv"
+		},
+		{
 			"name": "secure/exec/csv/indexId",
+			"uri": "/secure/exec/csv/{id}"
+		},
+		{
+			"name": "secure/exec/csv/finishId",
 			"uri": "/secure/exec/csv/{id}"
 		}
 	]
