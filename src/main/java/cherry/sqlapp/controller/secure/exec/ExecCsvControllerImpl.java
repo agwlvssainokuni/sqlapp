@@ -34,6 +34,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
+import cherry.sqlapp.db.gen.dto.SqlCsv;
+import cherry.sqlapp.db.gen.dto.SqlMetadata;
+import cherry.sqlapp.service.secure.exec.CsvService;
 import cherry.sqlapp.service.secure.exec.ImpService;
 import cherry.sqlapp.service.secure.exec.MetadataService;
 
@@ -59,6 +62,9 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 	@Autowired
 	private MetadataService metadataService;
 
+	@Autowired
+	private CsvService csvService;
+
 	@Override
 	public ExecMetadataForm getMetadata() {
 		return new ExecMetadataForm();
@@ -77,6 +83,16 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(dataSourceDef);
+		if (ref != null) {
+			SqlMetadata md = metadataService.findById(ref,
+					authentication.getName());
+			if (md != null) {
+				SqlCsv record = csvService.findById(ref);
+				if (record != null) {
+					mav.addObject(getForm(record));
+				}
+			}
+		}
 		return mav;
 	}
 
@@ -125,7 +141,11 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 			return mav;
 		}
 
-		int id = 0;
+		SqlCsv record = new SqlCsv();
+		record.setDatabaseName(form.getDatabaseName());
+		record.setQuery(form.getSql());
+
+		int id = csvService.create(record, authentication.getName());
 
 		UriComponents uri = fromPath(URI_PATH).pathSegment(URI_PATH_ID)
 				.buildAndExpand(id);
@@ -138,9 +158,18 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 	public ModelAndView indexId(int id, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
+
+		SqlMetadata md = metadataService.findById(id, authentication.getName());
+		ExecMetadataForm mdForm = getMdForm(md);
+
+		SqlCsv record = csvService.findById(id);
+		ExecCsvForm form = getForm(record);
+
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
 		mav.addObject(dataSourceDef);
+		mav.addObject(mdForm);
+		mav.addObject(form);
 		return mav;
 	}
 
@@ -150,10 +179,14 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
+		SqlMetadata md = metadataService.findById(id, authentication.getName());
+		ExecMetadataForm mdForm = getMdForm(md);
+
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 			mav.addObject(PATH_VAR, id);
 			mav.addObject(dataSourceDef);
+			mav.addObject(mdForm);
 			return mav;
 		}
 
@@ -186,12 +219,23 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
+		SqlMetadata md = metadataService.findById(id, authentication.getName());
+		ExecMetadataForm mdForm = getMdForm(md);
+
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 			mav.addObject(PATH_VAR, id);
 			mav.addObject(dataSourceDef);
+			mav.addObject(mdForm);
 			return mav;
 		}
+
+		SqlCsv record = new SqlCsv();
+		record.setId(id);
+		record.setDatabaseName(record.getDatabaseName());
+		record.setQuery(form.getSql());
+
+		csvService.update(record);
 
 		UriComponents uri = fromPath(URI_PATH).pathSegment(URI_PATH_ID)
 				.buildAndExpand(id);
@@ -206,18 +250,46 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
+		SqlCsv record = csvService.findById(id);
+		ExecCsvForm form = getForm(record);
+
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 			mav.addObject(PATH_VAR, id);
 			mav.addObject(dataSourceDef);
+			mav.addObject(form);
 			return mav;
 		}
+
+		SqlMetadata md = new SqlMetadata();
+		md.setId(id);
+		md.setName(mdForm.getName());
+		md.setDescription(mdForm.getDescription());
+		md.setPublishedFlg(mdForm.isPublishedFlg() ? 1 : 0);
+
+		metadataService.update(md);
 
 		UriComponents uri = fromPath(URI_PATH).pathSegment(URI_PATH_ID)
 				.buildAndExpand(id);
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uri.toUriString(), true));
 		return mav;
+	}
+
+	private ExecMetadataForm getMdForm(SqlMetadata record) {
+		ExecMetadataForm mdForm = getMetadata();
+		mdForm.setName(record.getName());
+		mdForm.setDescription(record.getDescription());
+		mdForm.setOwnedBy(record.getOwnedBy());
+		mdForm.setPublishedFlg(record.getPublishedFlg() != 0);
+		return mdForm;
+	}
+
+	private ExecCsvForm getForm(SqlCsv record) {
+		ExecCsvForm form = getForm();
+		form.setDatabaseName(record.getDatabaseName());
+		form.setSql(record.getQuery());
+		return form;
 	}
 
 }
