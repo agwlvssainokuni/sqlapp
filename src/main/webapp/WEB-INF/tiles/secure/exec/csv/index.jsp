@@ -9,14 +9,13 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
-<c:set var="hasResult" value="${execResult != null}" />
 <script type="text/javascript">
 	$(function() {
 		$(".accordion").accordion({
 			collapsible : true,
 			animate : false,
 			heightStyle : "content",
-			active : ${hasResult ? 'false' : 0}
+			active : 0
 		}).removeClass("ui-widget");
 	});
 </script>
@@ -80,14 +79,3 @@
 		</f:form>
 	</div>
 </div>
-<c:if test="${hasResult}">
-	<div class="app-portion">
-		<h1 class="app-subject">
-			<s:message code="secure/exec/csv/index.message.2" />
-		</h1>
-		<div class="app-portion ui-state-highlight">
-			<s:message code="secure/exec/csv/indexId.message.3"
-				arguments="${execResult}" />
-		</div>
-	</div>
-</c:if>

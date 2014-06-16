@@ -12,14 +12,13 @@
 <s:url var="baseUri" value="/secure/exec/csv/{id}">
 	<s:param name="id" value="${id}" />
 </s:url>
-<c:set var="hasResult" value="${execResult != null}" />
 <script type="text/javascript">
 	$(function() {
 		$(".accordion").accordion({
 			collapsible : true,
 			animate : false,
 			heightStyle : "content",
-			active: ${hasResult ? 'false' : 1}
+			active : 1
 		}).removeClass("ui-widget");
 	});
 </script>
@@ -136,14 +135,3 @@
 		</f:form>
 	</div>
 </div>
-<c:if test="${hasResult}">
-	<div class="app-portion">
-		<h1 class="app-subject">
-			<s:message code="secure/exec/csv/indexId.message.3" />
-		</h1>
-		<div class="app-portion ui-state-highlight">
-			<s:message code="secure/exec/csv/indexId.message.4"
-				arguments="${execResult}" />
-		</div>
-	</div>
-</c:if>
