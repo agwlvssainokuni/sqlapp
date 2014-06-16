@@ -74,20 +74,17 @@ PName=sql_csv
 LName=SQL文・CSV取込み
 Comment=
 TableOption=
-Page=Main
+Page=MAIN
 Left=1400
 Top=1000
 Field="ID","id","*ID","NOT NULL",0,"","",$FFFFFFFF,"AUTO_INCREMENT"
 Field="DB名","database_name","*表示名","NOT NULL",,"\qdefault\q","",$FFFFFFFF,""
 Field="クエリ","query","*SQL文","NOT NULL",,"","",$FFFFFFFF,""
-Field="代替クエリ1","query_alt_1","*SQL文",,,"","",$FFFFFFFF,""
-Field="代替クエリ2","query_alt_2","*SQL文",,,"","",$FFFFFFFF,""
-Field="パラメタMAP(JSON)","param_map","*パラメタMAP(JSON)",,,"","",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20140615061201
-Position="Main",1400,1000
+ModifiedDateTime=20140617063841
+Position="MAIN",1400,1000
 
 [Relation]
 Entity1=sql_metadata

@@ -1,5 +1,5 @@
 -- Project Name : SqlApp
--- Date/Time    : 2014/06/15 6:13:32
+-- Date/Time    : 2014/06/17 6:39:12
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -9,9 +9,6 @@ CREATE TABLE sql_csv(
 	id INTEGER NOT NULL auto_increment, 
 	database_name VARCHAR (50) DEFAULT 'default' NOT NULL, 
 	query VARCHAR (5000) NOT NULL, 
-	query_alt_1 VARCHAR (5000), 
-	query_alt_2 VARCHAR (5000), 
-	param_map VARCHAR (5000), 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
@@ -73,15 +70,6 @@ COMMENT
 
 COMMENT 
 	ON COLUMN sql_csv.query IS 'クエリ'; 
-
-COMMENT 
-	ON COLUMN sql_csv.query_alt_1 IS '代替クエリ1'; 
-
-COMMENT 
-	ON COLUMN sql_csv.query_alt_2 IS '代替クエリ2'; 
-
-COMMENT 
-	ON COLUMN sql_csv.param_map IS 'パラメタMAP(JSON)'; 
 
 COMMENT 
 	ON COLUMN sql_csv.updated_at IS '更新日時'; 
