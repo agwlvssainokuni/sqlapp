@@ -20,7 +20,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 import cherry.sqlapp.controller.BaseForm;
-import cherry.sqlapp.validation.ParamMapSize;
 import cherry.sqlapp.validation.SqlStatementSize;
 
 public class ExecCsvForm extends BaseForm {
@@ -33,15 +32,6 @@ public class ExecCsvForm extends BaseForm {
 	@NotEmpty
 	@SqlStatementSize
 	private String sql;
-
-	@SqlStatementSize
-	private String sqlAlt1;
-
-	@SqlStatementSize
-	private String sqlAlt2;
-
-	@ParamMapSize
-	private String paramMap;
 
 	private MultipartFile file;
 
@@ -59,30 +49,6 @@ public class ExecCsvForm extends BaseForm {
 
 	public void setSql(String sql) {
 		this.sql = sql;
-	}
-
-	public String getSqlAlt1() {
-		return sqlAlt1;
-	}
-
-	public void setSqlAlt1(String sqlAlt1) {
-		this.sqlAlt1 = sqlAlt1;
-	}
-
-	public String getSqlAlt2() {
-		return sqlAlt2;
-	}
-
-	public void setSqlAlt2(String sqlAlt2) {
-		this.sqlAlt2 = sqlAlt2;
-	}
-
-	public String getParamMap() {
-		return paramMap;
-	}
-
-	public void setParamMap(String paramMap) {
-		this.paramMap = paramMap;
 	}
 
 	public MultipartFile getFile() {

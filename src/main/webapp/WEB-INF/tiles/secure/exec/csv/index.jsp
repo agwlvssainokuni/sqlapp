@@ -33,9 +33,6 @@
 				<f:errors path="execCsvForm" element="div" />
 				<f:errors path="execCsvForm.databaseName" element="div" />
 				<f:errors path="execCsvForm.sql" element="div" />
-				<f:errors path="execCsvForm.sqlAlt1" element="div" />
-				<f:errors path="execCsvForm.sqlAlt2" element="div" />
-				<f:errors path="execCsvForm.paramMap" element="div" />
 			</div>
 		</s:hasBindErrors>
 		<f:form servletRelativeAction="/secure/exec/csv/req" method="POST"
@@ -58,27 +55,6 @@
 									code="execCsvForm.sql" /></label></th>
 						<td><f:textarea path="sql" cssClass="app-width50 app-height5"
 								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
-					</tr>
-					<tr>
-						<th><label for="sqlAlt1"><s:message
-									code="execCsvForm.sqlAlt1" /></label></th>
-						<td><f:textarea path="sqlAlt1"
-								cssClass="app-width50 app-height5"
-								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
-					</tr>
-					<tr>
-						<th><label for="sqlAlt2"><s:message
-									code="execCsvForm.sqlAlt2" /></label></th>
-						<td><f:textarea path="sqlAlt2"
-								cssClass="app-width50 app-height5"
-								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
-					</tr>
-					<tr>
-						<th><label for="paramMap"><s:message
-									code="execCsvForm.paramMap" /></label></th>
-						<td><f:textarea path="paramMap"
-								cssClass="app-width50 app-height3"
-								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
 					<tr>
 						<th><label for="file"><s:message
