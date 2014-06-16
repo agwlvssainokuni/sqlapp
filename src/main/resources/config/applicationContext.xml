@@ -5,9 +5,12 @@
 	xmlns:security="http://www.springframework.org/schema/security"
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jms="http://www.springframework.org/schema/jms"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+		http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-4.0.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
@@ -27,14 +30,7 @@
 		<property name="dataSourceMap">
 			<map key-type="java.lang.String" value-type="javax.sql.DataSource">
 				<entry key="default" value-ref="dataSource" />
-				<entry key="another">
-					<bean class="org.apache.commons.dbcp.BasicDataSource"
-						destroy-method="close">
-						<property name="driverClassName" value="${sqlapp.jdbc.driverClassName}" />
-						<property name="url" value="${sqlapp.jdbc.url}" />
-						<property name="username" value="sa" />
-					</bean>
-				</entry>
+				<entry key="another" value-ref="basicDataSource" />
 			</map>
 		</property>
 	</bean>
@@ -80,6 +76,7 @@
 	</bean>
 
 	<bean id="extractor" class="cherry.spring.common.lib.etl.ExtractorImpl" />
+	<bean id="loader" class="cherry.spring.common.lib.etl.LoaderImpl" />
 
 	<tx:annotation-driven />
 
@@ -239,7 +236,9 @@
 		</property>
 	</bean>
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	<jee:jndi-lookup id="dataSource" jndi-name="${sqlapp.jdbc.dataSource}" />
+
+	<bean id="basicDataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="${sqlapp.jdbc.driverClassName}" />
 		<property name="url" value="${sqlapp.jdbc.url}" />
@@ -247,9 +246,27 @@
 		<property name="password" value="${sqlapp.jdbc.password}" />
 	</bean>
 
+	<jee:jndi-lookup id="connectionFactory" jndi-name="${sqlapp.jms.connectionFactory}" />
+
+	<bean id="destinationResolver"
+		class="org.springframework.jms.support.destination.JndiDestinationResolver" />
+
+	<bean id="jmsOperations" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destinationResolver" ref="destinationResolver" />
+	</bean>
+
+	<jms:listener-container destination-resolver="destinationResolver">
+		<jms:listener destination="${sqlapp.app.import.queue}"
+			ref="impServiceImpl" method="handle" />
+	</jms:listener-container>
+
 	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
+		class="org.springframework.transaction.jta.JtaTransactionManager">
+		<property name="userTransactionName" value="${sqlapp.jta.userTransaction}" />
+		<property name="transactionManagerName" value="${sqlapp.jta.transactionManager}" />
+		<property name="transactionSynchronizationRegistryName"
+			value="${sqlapp.jta.transactionSynchronizationRegistry}" />
 	</bean>
 
 	<bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
