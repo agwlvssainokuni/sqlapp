@@ -12,15 +12,14 @@
 <s:url var="baseUri" value="/secure/exec/csv/{id}">
 	<s:param name="id" value="${id}" />
 </s:url>
-<c:set var="hasResultList"
-	value="${execResult != null && pageSet != null}" />
+<c:set var="hasResult" value="${execResult != null}" />
 <script type="text/javascript">
 	$(function() {
 		$(".accordion").accordion({
 			collapsible : true,
 			animate : false,
 			heightStyle : "content",
-			active: ${hasResultList ? 'false' : 1}
+			active: ${hasResult ? 'false' : 1}
 		}).removeClass("ui-widget");
 	});
 </script>
@@ -137,6 +136,11 @@
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
+					<tr>
+						<th><label for="file"><s:message
+									code="execCsvForm.file" /></label></th>
+						<td><input id="file" name="file" type="file" /></td>
+					</tr>
 				</tbody>
 				<tfoot class="app-transparent">
 					<tr>
@@ -156,14 +160,14 @@
 		</f:form>
 	</div>
 </div>
-<c:if test="${hasResultList}">
+<c:if test="${hasResult}">
 	<div class="app-portion">
 		<h1 class="app-subject">
 			<s:message code="secure/exec/csv/indexId.message.3" />
 		</h1>
-		<div class="app-portion">
-			<app:execResult id="execResultList" execResult="${execResult}"
-				pageSet="${pageSet}" />
+		<div class="app-portion ui-state-highlight">
+			<s:message code="secure/exec/csv/indexId.message.4"
+				arguments="${execResult}" />
 		</div>
 	</div>
 </c:if>

@@ -9,15 +9,14 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
-<c:set var="hasResultList"
-	value="${execResult != null && pageSet != null}" />
+<c:set var="hasResult" value="${execResult != null}" />
 <script type="text/javascript">
 	$(function() {
 		$(".accordion").accordion({
 			collapsible : true,
 			animate : false,
 			heightStyle : "content",
-			active : ${hasResultList ? 'false' : 0}
+			active : ${hasResult ? 'false' : 0}
 		}).removeClass("ui-widget");
 	});
 </script>
@@ -63,13 +62,15 @@
 					<tr>
 						<th><label for="sqlAlt1"><s:message
 									code="execCsvForm.sqlAlt1" /></label></th>
-						<td><f:textarea path="sqlAlt1" cssClass="app-width50 app-height5"
+						<td><f:textarea path="sqlAlt1"
+								cssClass="app-width50 app-height5"
 								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
 					</tr>
 					<tr>
 						<th><label for="sqlAlt2"><s:message
 									code="execCsvForm.sqlAlt2" /></label></th>
-						<td><f:textarea path="sqlAlt2" cssClass="app-width50 app-height5"
+						<td><f:textarea path="sqlAlt2"
+								cssClass="app-width50 app-height5"
 								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
 					</tr>
 					<tr>
@@ -78,6 +79,11 @@
 						<td><f:textarea path="paramMap"
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
+					</tr>
+					<tr>
+						<th><label for="file"><s:message
+									code="execCsvForm.file" /></label></th>
+						<td><input id="file" name="file" type="file" /></td>
 					</tr>
 				</tbody>
 				<tfoot class="app-transparent">
@@ -98,14 +104,14 @@
 		</f:form>
 	</div>
 </div>
-<c:if test="${hasResultList}">
+<c:if test="${hasResult}">
 	<div class="app-portion">
 		<h1 class="app-subject">
 			<s:message code="secure/exec/csv/index.message.2" />
 		</h1>
-		<div class="app-portion">
-			<app:execResult id="execResultList" execResult="${execResult}"
-				pageSet="${pageSet}" />
+		<div class="app-portion ui-state-highlight">
+			<s:message code="secure/exec/csv/indexId.message.3"
+				arguments="${execResult}" />
 		</div>
 	</div>
 </c:if>
