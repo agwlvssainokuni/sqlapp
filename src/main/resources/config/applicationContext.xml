@@ -256,7 +256,11 @@
 		<property name="destinationResolver" ref="destinationResolver" />
 	</bean>
 
-	<jms:listener-container destination-resolver="destinationResolver">
+	<bean id="taskExecutor"
+		class="org.springframework.scheduling.concurrent.DefaultManagedTaskExecutor" />
+
+	<jms:listener-container destination-resolver="destinationResolver"
+		task-executor="taskExecutor">
 		<jms:listener destination="${sqlapp.app.import.queue}"
 			ref="impServiceImpl" method="handle" />
 	</jms:listener-container>
