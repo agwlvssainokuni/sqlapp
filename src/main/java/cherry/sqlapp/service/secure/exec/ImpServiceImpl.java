@@ -38,9 +38,14 @@ import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jms.core.JmsOperations;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.multipart.MultipartFile;
 
 import cherry.spring.common.helper.async.AsyncProcHelper;
@@ -185,10 +190,25 @@ public class ImpServiceImpl implements ImpService {
 
 	private LoadResult loadFile(DataSource dataSource, String sql, File file)
 			throws IOException {
+
+		PlatformTransactionManager txMgr = new DataSourceTransactionManager(
+				dataSource);
+		TransactionDefinition txDef = new DefaultTransactionDefinition();
+		TransactionStatus status = txMgr.getTransaction(txDef);
+
 		try (InputStream in = new FileInputStream(file);
 				Reader reader = new InputStreamReader(in, charset)) {
+
 			CsvProvider provider = new CsvProvider(reader, true);
-			return loader.load(dataSource, sql, provider, new NoneLimiter());
+			LoadResult result = loader.load(dataSource, sql, provider,
+					new NoneLimiter());
+
+			txMgr.commit(status);
+
+			return result;
+		} catch (IOException | RuntimeException ex) {
+			txMgr.rollback(status);
+			throw ex;
 		}
 	}
 
