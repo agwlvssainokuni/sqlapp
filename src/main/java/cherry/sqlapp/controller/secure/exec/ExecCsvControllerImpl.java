@@ -232,7 +232,7 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 
 		SqlCsv record = new SqlCsv();
 		record.setId(id);
-		record.setDatabaseName(record.getDatabaseName());
+		record.setDatabaseName(form.getDatabaseName());
 		record.setQuery(form.getSql());
 
 		csvService.update(record);
