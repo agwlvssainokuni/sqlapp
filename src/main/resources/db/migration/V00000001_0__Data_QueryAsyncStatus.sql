@@ -1,0 +1,32 @@
+INSERT INTO sql_metadata (
+	sql_type,
+	name,
+	description,
+	owned_by,
+	published_flg
+)
+VALUES (
+	'select',
+	'QueryAsyncStatus',
+	'QUERY ASYNC STATUS',
+	'administrator',
+	1
+);
+
+INSERT INTO sql_select (
+	id,
+	database_name,
+	select_clause,
+	from_clause,
+	where_clause,
+	order_by_clause
+)
+VALUES (
+	(SELECT id FROM sql_metadata WHERE name = 'QueryAsyncStatus'),
+	'default',
+	'*',
+	'async_procs',
+	'deleted_flg = 0',
+	'id DESC'
+)
+;
