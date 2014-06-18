@@ -5,7 +5,7 @@
 <%@ attribute name="id" required="true" rtexprvalue="true"
 	type="java.lang.String"%>
 <%@ attribute name="execResult" required="true" rtexprvalue="true"
-	type="cherry.sqlapp.service.secure.exec.ExecResult"%>
+	type="cherry.sqlapp.service.sqltool.ExecResult"%>
 <%@ attribute name="pageSet" required="true" rtexprvalue="true"
 	type="cherry.spring.common.lib.paginate.PageSet"%>
 <table id="${id}" class="app-stripe app-width-full">
