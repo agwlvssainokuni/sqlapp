@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.controller.sqltool;
+package cherry.sqlapp.controller.sqltool.load;
 
 import java.util.Locale;
 
@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import cherry.sqlapp.controller.sqltool.ExecMetadataForm;
 
 @RequestMapping(ExecCsvController.URI_PATH)
 public interface ExecCsvController {

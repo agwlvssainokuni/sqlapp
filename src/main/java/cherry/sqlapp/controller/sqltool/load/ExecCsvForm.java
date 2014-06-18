@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.controller.sqltool;
+package cherry.sqlapp.controller.sqltool.load;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;

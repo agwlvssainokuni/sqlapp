@@ -34,7 +34,7 @@
 				<f:errors path="execCsvForm.sql" element="div" />
 			</div>
 		</s:hasBindErrors>
-		<f:form servletRelativeAction="/secure/exec/csv/req" method="POST"
+		<f:form servletRelativeAction="/sqltool/load/req" method="POST"
 			modelAttribute="execCsvForm" enctype="multipart/form-data">
 			<table class="app-collabel">
 				<tbody>
