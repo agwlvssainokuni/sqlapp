@@ -35,12 +35,12 @@
 		</property>
 	</bean>
 
-	<bean id="execServiceTarget" class="cherry.sqlapp.service.sqltool.ExecServiceImpl"
+	<bean id="execQueryServiceTarget" class="cherry.sqlapp.service.sqltool.exec.ExecQueryServiceImpl"
 		scope="prototype" />
-	<bean id="execService" class="org.springframework.aop.framework.ProxyFactoryBean">
+	<bean id="execQueryService" class="org.springframework.aop.framework.ProxyFactoryBean">
 		<property name="targetSource">
 			<bean class="org.springframework.aop.target.CommonsPoolTargetSource">
-				<property name="targetBeanName" value="execServiceTarget" />
+				<property name="targetBeanName" value="execQueryServiceTarget" />
 				<property name="maxSize" value="10" />
 			</bean>
 		</property>
@@ -266,7 +266,7 @@
 	<jms:listener-container destination-resolver="destinationResolver"
 		task-executor="taskExecutor">
 		<jms:listener destination="${sqlapp.app.import.queue}"
-			ref="impServiceImpl" method="handle" />
+			ref="execLoadServiceImpl" method="handle" />
 	</jms:listener-container>
 
 	<bean id="transactionManager"
