@@ -35,7 +35,7 @@
 		</property>
 	</bean>
 
-	<bean id="execServiceTarget" class="cherry.sqlapp.service.secure.exec.ExecServiceImpl"
+	<bean id="execServiceTarget" class="cherry.sqlapp.service.sqltool.ExecServiceImpl"
 		scope="prototype" />
 	<bean id="execService" class="org.springframework.aop.framework.ProxyFactoryBean">
 		<property name="targetSource">
