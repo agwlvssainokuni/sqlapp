@@ -54,10 +54,10 @@ public interface SqltoolLoadController {
 
 	public static final String PARAM_REF = "ref";
 
-	@ModelAttribute("execMetadataForm")
+	@ModelAttribute("sqltoolMetadataForm")
 	SqltoolMetadataForm getMetadata();
 
-	@ModelAttribute("execCsvForm")
+	@ModelAttribute("sqltoolLoadForm")
 	SqltoolLoadForm getForm();
 
 	@RequestMapping()

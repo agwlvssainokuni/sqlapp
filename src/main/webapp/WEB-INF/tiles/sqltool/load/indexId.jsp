@@ -23,45 +23,45 @@
 	});
 </script>
 <h1 class="app-subject">
-	<s:message code="secure/exec/csv/indexId.message.0" />
+	<s:message code="sqltool/load/indexId.message.0" />
 </h1>
 <div class="app-portion accordion">
 	<h1>
-		<s:message code="secure/exec/csv/indexId.message.1" />
+		<s:message code="sqltool/load/indexId.message.1" />
 	</h1>
 	<div>
-		<s:hasBindErrors name="execMetadataForm">
+		<s:hasBindErrors name="sqltoolMetadataForm">
 			<div class="ui-state-error">
-				<f:errors path="execMetadataForm" element="div" />
-				<f:errors path="execMetadataForm.name" element="div" />
-				<f:errors path="execMetadataForm.description" element="div" />
+				<f:errors path="sqltoolMetadataForm" element="div" />
+				<f:errors path="sqltoolMetadataForm.name" element="div" />
+				<f:errors path="sqltoolMetadataForm.description" element="div" />
 			</div>
 		</s:hasBindErrors>
 		<f:form servletRelativeAction="${baseUri}/metadata" method="POST"
-			modelAttribute="execMetadataForm">
+			modelAttribute="sqltoolMetadataForm">
 			<table class="app-collabel">
 				<tbody>
 					<tr>
 						<th><label for="name"><s:message
-									code="execMetadataForm.name" /></label></th>
+									code="sqltoolMetadataForm.name" /></label></th>
 						<td><f:input path="name" cssClass="app-width50"
 								cssErrorClass="app-width50 ui-state-error" /></td>
 					</tr>
 					<tr>
 						<th><label for="description"><s:message
-									code="execMetadataForm.description" /></label></th>
+									code="sqltoolMetadataForm.description" /></label></th>
 						<td><f:textarea path="description"
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
 					<tr>
 						<th><label for="ownedBy"><s:message
-									code="execMetadataForm.ownedBy" /></label></th>
+									code="sqltoolMetadataForm.ownedBy" /></label></th>
 						<td><f:input path="ownedBy" disabled="true" /></td>
 					</tr>
 					<tr>
 						<th><label for="publishedFlg"><s:message
-									code="execMetadataForm.publishedFlg" /></label></th>
+									code="sqltoolMetadataForm.publishedFlg" /></label></th>
 						<td><f:checkbox path="publishedFlg" /></td>
 					</tr>
 				</tbody>
@@ -71,7 +71,7 @@
 						<td>
 							<button type="submit" name="proc" value="update"
 								class="app-button">
-								<s:message code="secure/exec/csv/indexId.updateButton" />
+								<s:message code="sqltool/load/indexId.updateButton" />
 							</button>
 						</td>
 					</tr>
@@ -80,23 +80,23 @@
 		</f:form>
 	</div>
 	<h1>
-		<s:message code="secure/exec/csv/indexId.message.2" />
+		<s:message code="sqltool/load/indexId.message.2" />
 	</h1>
 	<div>
-		<s:hasBindErrors name="execCsvForm">
+		<s:hasBindErrors name="sqltoolLoadForm">
 			<div class="ui-state-error">
-				<f:errors path="execCsvForm" element="div" />
-				<f:errors path="execCsvForm.databaseName" element="div" />
-				<f:errors path="execCsvForm.sql" element="div" />
+				<f:errors path="sqltoolLoadForm" element="div" />
+				<f:errors path="sqltoolLoadForm.databaseName" element="div" />
+				<f:errors path="sqltoolLoadForm.sql" element="div" />
 			</div>
 		</s:hasBindErrors>
 		<f:form servletRelativeAction="${baseUri}/req" method="POST"
-			modelAttribute="execCsvForm" enctype="multipart/form-data">
+			modelAttribute="sqltoolLoadForm" enctype="multipart/form-data">
 			<table class="app-collabel">
 				<tbody>
 					<tr>
 						<th><label for="databaseName"><s:message
-									code="execCsvForm.databaseName" /></label></th>
+									code="sqltoolLoadForm.databaseName" /></label></th>
 						<td><f:select path="databaseName"
 								cssClass="app-width50 ui-widget"
 								cssErrorClass="app-width50 ui-widget ui-state-error">
@@ -105,13 +105,13 @@
 					</tr>
 					<tr>
 						<th><label for="sql"><s:message
-									code="execCsvForm.sql" /></label></th>
+									code="sqltoolLoadForm.sql" /></label></th>
 						<td><f:textarea path="sql" cssClass="app-width50 app-height5"
 								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
 					</tr>
 					<tr>
 						<th><label for="file"><s:message
-									code="execCsvForm.file" /></label></th>
+									code="sqltoolLoadForm.file" /></label></th>
 						<td><input id="file" name="file" type="file" /></td>
 					</tr>
 				</tbody>
@@ -120,11 +120,11 @@
 						<td></td>
 						<td>
 							<button type="submit" name="proc" value="exec" class="app-button">
-								<s:message code="secure/exec/csv/indexId.execButton" />
+								<s:message code="sqltool/load/indexId.execButton" />
 							</button>
 							<button type="submit" name="proc" value="update"
 								class="app-button">
-								<s:message code="secure/exec/csv/indexId.updateButton" />
+								<s:message code="sqltool/load/indexId.updateButton" />
 							</button>
 						</td>
 					</tr>

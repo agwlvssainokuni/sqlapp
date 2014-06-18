@@ -9,11 +9,11 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <h1 class="app-subject">
-	<s:message code="secure/exec/csv/finishId.message.0" />
+	<s:message code="sqltool/load/finishId.message.0" />
 </h1>
 <div class="app-portion ui-state-highlight">
 	<div>
-		<s:message code="secure/exec/csv/finishId.message.1"
+		<s:message code="sqltool/load/finishId.message.1"
 			arguments="${asyncParam.procId}" />
 	</div>
 </div>
