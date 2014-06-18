@@ -30,10 +30,10 @@ import cherry.sqlapp.db.gen.mapper.SqlCsvMapper;
 public class LoadServiceImpl implements LoadService {
 
 	@Autowired
-	private SqlCsvMapper sqlCsvMapper;
+	private SqlCsvMapper sqlLoadMapper;
 
 	@Autowired
-	private CsvMapper csvMapper;
+	private CsvMapper loadMapper;
 
 	@Autowired
 	private MetadataMapper metadataMapper;
@@ -41,7 +41,7 @@ public class LoadServiceImpl implements LoadService {
 	@Transactional
 	@Override
 	public SqlCsv findById(int id) {
-		SqlCsv record = sqlCsvMapper.selectByPrimaryKey(id);
+		SqlCsv record = sqlLoadMapper.selectByPrimaryKey(id);
 		if (record.getDeletedFlg() != 0) {
 			return null;
 		}
@@ -60,7 +60,7 @@ public class LoadServiceImpl implements LoadService {
 					"sql_metadata is not created; count=" + count0);
 		}
 		record.setId(metadata.getId());
-		int count1 = csvMapper.create(record);
+		int count1 = loadMapper.create(record);
 		if (count1 != 1) {
 			throw new IllegalArgumentException("sql_csv is not created; count="
 					+ count1);
@@ -71,7 +71,7 @@ public class LoadServiceImpl implements LoadService {
 	@Transactional
 	@Override
 	public void update(SqlCsv record) {
-		int count = csvMapper.update(record);
+		int count = loadMapper.update(record);
 		if (count != 1) {
 			throw new IllegalArgumentException("sql_csv is not updated; count="
 					+ count);

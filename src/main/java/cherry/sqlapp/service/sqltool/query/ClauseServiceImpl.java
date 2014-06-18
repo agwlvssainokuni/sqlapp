@@ -30,10 +30,10 @@ import cherry.sqlapp.db.gen.mapper.SqlSelectMapper;
 public class ClauseServiceImpl implements ClauseService {
 
 	@Autowired
-	private SqlSelectMapper sqlSelectMapper;
+	private SqlSelectMapper sqlClauseMapper;
 
 	@Autowired
-	private SelectMapper selectMapper;
+	private SelectMapper clauseMapper;
 
 	@Autowired
 	private MetadataMapper metadataMapper;
@@ -41,7 +41,7 @@ public class ClauseServiceImpl implements ClauseService {
 	@Transactional
 	@Override
 	public SqlSelect findById(int id) {
-		SqlSelect record = sqlSelectMapper.selectByPrimaryKey(id);
+		SqlSelect record = sqlClauseMapper.selectByPrimaryKey(id);
 		if (record.getDeletedFlg() != 0) {
 			return null;
 		}
@@ -60,7 +60,7 @@ public class ClauseServiceImpl implements ClauseService {
 					"sql_metadata is not created; count=" + count0);
 		}
 		record.setId(metadata.getId());
-		int count1 = selectMapper.create(record);
+		int count1 = clauseMapper.create(record);
 		if (count1 != 1) {
 			throw new IllegalArgumentException(
 					"sql_select is not created; count=" + count1);
@@ -71,7 +71,7 @@ public class ClauseServiceImpl implements ClauseService {
 	@Transactional
 	@Override
 	public void update(SqlSelect record) {
-		int count = selectMapper.update(record);
+		int count = clauseMapper.update(record);
 		if (count != 1) {
 			throw new IllegalArgumentException(
 					"sql_select is not updated; count=" + count);

@@ -30,10 +30,10 @@ import cherry.sqlapp.db.gen.mapper.SqlAnyMapper;
 public class StatementServiceImpl implements StatementService {
 
 	@Autowired
-	private SqlAnyMapper sqlAnyMapper;
+	private SqlAnyMapper sqlStatementMapper;
 
 	@Autowired
-	private AnyMapper anyMapper;
+	private AnyMapper statementMapper;
 
 	@Autowired
 	private MetadataMapper metadataMapper;
@@ -41,7 +41,7 @@ public class StatementServiceImpl implements StatementService {
 	@Transactional
 	@Override
 	public SqlAny findById(int id) {
-		SqlAny record = sqlAnyMapper.selectByPrimaryKey(id);
+		SqlAny record = sqlStatementMapper.selectByPrimaryKey(id);
 		if (record.getDeletedFlg() != 0) {
 			return null;
 		}
@@ -60,7 +60,7 @@ public class StatementServiceImpl implements StatementService {
 					"sql_metadata is not created; count=" + count0);
 		}
 		record.setId(metadata.getId());
-		int count1 = anyMapper.create(record);
+		int count1 = statementMapper.create(record);
 		if (count1 != 1) {
 			throw new IllegalArgumentException("sql_any is not created; count="
 					+ count1);
@@ -71,7 +71,7 @@ public class StatementServiceImpl implements StatementService {
 	@Transactional
 	@Override
 	public void update(SqlAny record) {
-		int count = anyMapper.update(record);
+		int count = statementMapper.update(record);
 		if (count != 1) {
 			throw new IllegalArgumentException("sql_any is not updated; count="
 					+ count);
