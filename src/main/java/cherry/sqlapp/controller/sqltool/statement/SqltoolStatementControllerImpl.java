@@ -38,11 +38,11 @@ import cherry.sqlapp.controller.sqltool.ParamMapUtil;
 import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 import cherry.sqlapp.db.gen.dto.SqlAny;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
-import cherry.sqlapp.service.sqltool.AnyService;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
 import cherry.sqlapp.service.sqltool.ExecService;
 import cherry.sqlapp.service.sqltool.ExecService.Result;
 import cherry.sqlapp.service.sqltool.metadata.MetadataService;
+import cherry.sqlapp.service.sqltool.query.StatementService;
 
 @Controller
 public class SqltoolStatementControllerImpl implements
@@ -62,7 +62,7 @@ public class SqltoolStatementControllerImpl implements
 	private MetadataService metadataService;
 
 	@Autowired
-	private AnyService anyService;
+	private StatementService statementService;
 
 	@Autowired
 	private FormUtil formUtil;
@@ -95,7 +95,7 @@ public class SqltoolStatementControllerImpl implements
 			SqlMetadata md = metadataService.findById(ref,
 					authentication.getName());
 			if (md != null) {
-				SqlAny record = anyService.findById(ref);
+				SqlAny record = statementService.findById(ref);
 				if (record != null) {
 					mav.addObject(formUtil.getForm(record));
 				}
@@ -146,7 +146,7 @@ public class SqltoolStatementControllerImpl implements
 		record.setQuery(form.getSql());
 		record.setParamMap(form.getParamMap());
 
-		int id = anyService.create(record, authentication.getName());
+		int id = statementService.create(record, authentication.getName());
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(URI_PATH_ID));
@@ -162,7 +162,7 @@ public class SqltoolStatementControllerImpl implements
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
 		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
-		SqlAny record = anyService.findById(id);
+		SqlAny record = statementService.findById(id);
 		SqltoolStatementForm form = formUtil.getForm(record);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -228,7 +228,7 @@ public class SqltoolStatementControllerImpl implements
 		record.setQuery(form.getSql());
 		record.setParamMap(form.getParamMap());
 
-		anyService.update(record);
+		statementService.update(record);
 
 		UriComponents uri = fromPath(URI_PATH).pathSegment(URI_PATH_ID)
 				.buildAndExpand(id);
@@ -243,7 +243,7 @@ public class SqltoolStatementControllerImpl implements
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
-		SqlAny record = anyService.findById(id);
+		SqlAny record = statementService.findById(id);
 		SqltoolStatementForm form = formUtil.getForm(record);
 
 		if (binding.hasErrors()) {

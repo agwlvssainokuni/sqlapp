@@ -38,10 +38,10 @@ import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 import cherry.sqlapp.db.gen.dto.SqlCsv;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
-import cherry.sqlapp.service.sqltool.CsvService;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
 import cherry.sqlapp.service.sqltool.ImpService;
 import cherry.sqlapp.service.sqltool.metadata.MetadataService;
+import cherry.sqlapp.service.sqltool.query.LoadService;
 
 @Component
 public class SqltoolLoadControllerImpl implements SqltoolLoadController {
@@ -66,7 +66,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 	private MetadataService metadataService;
 
 	@Autowired
-	private CsvService csvService;
+	private LoadService loadService;
 
 	@Autowired
 	private FormUtil formUtil;
@@ -96,7 +96,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			SqlMetadata md = metadataService.findById(ref,
 					authentication.getName());
 			if (md != null) {
-				SqlCsv record = csvService.findById(ref);
+				SqlCsv record = loadService.findById(ref);
 				if (record != null) {
 					mav.addObject(formUtil.getForm(record));
 				}
@@ -154,7 +154,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 		record.setDatabaseName(form.getDatabaseName());
 		record.setQuery(form.getSql());
 
-		int id = csvService.create(record, authentication.getName());
+		int id = loadService.create(record, authentication.getName());
 
 		UriComponents uri = fromPath(URI_PATH).pathSegment(URI_PATH_ID)
 				.buildAndExpand(id);
@@ -171,7 +171,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
 		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
-		SqlCsv record = csvService.findById(id);
+		SqlCsv record = loadService.findById(id);
 		SqltoolLoadForm form = formUtil.getForm(record);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -245,7 +245,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 		record.setDatabaseName(form.getDatabaseName());
 		record.setQuery(form.getSql());
 
-		csvService.update(record);
+		loadService.update(record);
 
 		UriComponents uri = fromPath(URI_PATH).pathSegment(URI_PATH_ID)
 				.buildAndExpand(id);
@@ -260,7 +260,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
-		SqlCsv record = csvService.findById(id);
+		SqlCsv record = loadService.findById(id);
 		SqltoolLoadForm form = formUtil.getForm(record);
 
 		if (binding.hasErrors()) {

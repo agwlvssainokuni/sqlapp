@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.service.sqltool;
+package cherry.sqlapp.service.sqltool.query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,7 +27,7 @@ import cherry.sqlapp.db.gen.dto.SqlMetadata;
 import cherry.sqlapp.db.gen.mapper.SqlCsvMapper;
 
 @Component
-public class CsvServiceImpl implements CsvService {
+public class LoadServiceImpl implements LoadService {
 
 	@Autowired
 	private SqlCsvMapper sqlCsvMapper;

@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.service.sqltool;
+package cherry.sqlapp.service.sqltool.query;
 
-import cherry.sqlapp.db.gen.dto.SqlAny;
+import cherry.sqlapp.db.gen.dto.SqlCsv;
 
-public interface AnyService {
+public interface LoadService {
 
-	SqlAny findById(int id);
+	SqlCsv findById(int id);
 
-	int create(SqlAny record, String ownedBy);
+	int create(SqlCsv record, String ownedBy);
 
-	void update(SqlAny record);
+	void update(SqlCsv record);
 
 }

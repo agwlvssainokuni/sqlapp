@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.service.sqltool;
+package cherry.sqlapp.service.sqltool.query;
 
-import cherry.sqlapp.db.gen.dto.SqlSelect;
+import cherry.sqlapp.db.gen.dto.SqlAny;
 
-public interface SelectService {
+public interface StatementService {
 
-	SqlSelect findById(int id);
+	SqlAny findById(int id);
 
-	int create(SqlSelect record, String ownedBy);
+	int create(SqlAny record, String ownedBy);
 
-	void update(SqlSelect record);
+	void update(SqlAny record);
 
 }

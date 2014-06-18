@@ -42,9 +42,9 @@ import cherry.sqlapp.db.gen.dto.SqlSelect;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
 import cherry.sqlapp.service.sqltool.ExecService;
 import cherry.sqlapp.service.sqltool.ExecService.Result;
-import cherry.sqlapp.service.sqltool.metadata.MetadataService;
-import cherry.sqlapp.service.sqltool.SelectService;
 import cherry.sqlapp.service.sqltool.SqlBuilder;
+import cherry.sqlapp.service.sqltool.metadata.MetadataService;
+import cherry.sqlapp.service.sqltool.query.ClauseService;
 
 @Controller
 public class SqltoolClauseControllerImpl implements SqltoolClauseController {
@@ -66,7 +66,7 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 	private MetadataService metadataService;
 
 	@Autowired
-	private SelectService selectService;
+	private ClauseService clauseService;
 
 	@Autowired
 	private FormUtil formUtil;
@@ -99,7 +99,7 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 			SqlMetadata md = metadataService.findById(ref,
 					authentication.getName());
 			if (md != null) {
-				SqlSelect record = selectService.findById(ref);
+				SqlSelect record = clauseService.findById(ref);
 				if (record != null) {
 					mav.addObject(formUtil.getForm(record));
 				}
@@ -157,7 +157,7 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 		record.setOrderByClause(form.getOrderBy());
 		record.setParamMap(form.getParamMap());
 
-		int id = selectService.create(record, authentication.getName());
+		int id = clauseService.create(record, authentication.getName());
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(URI_PATH_ID, true));
@@ -173,7 +173,7 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
 		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
-		SqlSelect record = selectService.findById(id);
+		SqlSelect record = clauseService.findById(id);
 		SqltoolClauseForm form = formUtil.getForm(record);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -247,7 +247,7 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 		record.setOrderByClause(form.getOrderBy());
 		record.setParamMap(form.getParamMap());
 
-		selectService.update(record);
+		clauseService.update(record);
 
 		UriComponents uri = fromPath(URI_PATH).pathSegment(URI_PATH_ID)
 				.buildAndExpand(id);
@@ -262,7 +262,7 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
-		SqlSelect record = selectService.findById(id);
+		SqlSelect record = clauseService.findById(id);
 		SqltoolClauseForm form = formUtil.getForm(record);
 
 		if (binding.hasErrors()) {

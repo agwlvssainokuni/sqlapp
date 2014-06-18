@@ -14,34 +14,34 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.service.sqltool;
+package cherry.sqlapp.service.sqltool.query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.sqlapp.db.app.mapper.AnyMapper;
 import cherry.sqlapp.db.app.mapper.MetadataMapper;
-import cherry.sqlapp.db.gen.dto.SqlAny;
+import cherry.sqlapp.db.app.mapper.SelectMapper;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
-import cherry.sqlapp.db.gen.mapper.SqlAnyMapper;
+import cherry.sqlapp.db.gen.dto.SqlSelect;
+import cherry.sqlapp.db.gen.mapper.SqlSelectMapper;
 
 @Component
-public class AnyServiceImpl implements AnyService {
+public class ClauseServiceImpl implements ClauseService {
 
 	@Autowired
-	private SqlAnyMapper sqlAnyMapper;
+	private SqlSelectMapper sqlSelectMapper;
 
 	@Autowired
-	private AnyMapper anyMapper;
+	private SelectMapper selectMapper;
 
 	@Autowired
 	private MetadataMapper metadataMapper;
 
 	@Transactional
 	@Override
-	public SqlAny findById(int id) {
-		SqlAny record = sqlAnyMapper.selectByPrimaryKey(id);
+	public SqlSelect findById(int id) {
+		SqlSelect record = sqlSelectMapper.selectByPrimaryKey(id);
 		if (record.getDeletedFlg() != 0) {
 			return null;
 		}
@@ -50,31 +50,31 @@ public class AnyServiceImpl implements AnyService {
 
 	@Transactional
 	@Override
-	public int create(SqlAny record, String ownedBy) {
+	public int create(SqlSelect record, String ownedBy) {
 		SqlMetadata metadata = new SqlMetadata();
 		metadata.setDescription(ownedBy);
 		metadata.setOwnedBy(ownedBy);
-		int count0 = metadataMapper.createStatement(metadata);
+		int count0 = metadataMapper.createClause(metadata);
 		if (count0 != 1) {
 			throw new IllegalArgumentException(
 					"sql_metadata is not created; count=" + count0);
 		}
 		record.setId(metadata.getId());
-		int count1 = anyMapper.create(record);
+		int count1 = selectMapper.create(record);
 		if (count1 != 1) {
-			throw new IllegalArgumentException("sql_any is not created; count="
-					+ count1);
+			throw new IllegalArgumentException(
+					"sql_select is not created; count=" + count1);
 		}
 		return metadata.getId();
 	}
 
 	@Transactional
 	@Override
-	public void update(SqlAny record) {
-		int count = anyMapper.update(record);
+	public void update(SqlSelect record) {
+		int count = selectMapper.update(record);
 		if (count != 1) {
-			throw new IllegalArgumentException("sql_any is not updated; count="
-					+ count);
+			throw new IllegalArgumentException(
+					"sql_select is not updated; count=" + count);
 		}
 	}
 
