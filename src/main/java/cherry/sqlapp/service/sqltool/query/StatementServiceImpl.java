@@ -22,15 +22,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.sqlapp.db.app.mapper.StatementMapper;
 import cherry.sqlapp.db.app.mapper.MetadataMapper;
-import cherry.sqlapp.db.gen.dto.SqlAny;
-import cherry.sqlapp.db.gen.dto.SqlMetadata;
-import cherry.sqlapp.db.gen.mapper.SqlAnyMapper;
+import cherry.sqlapp.db.gen.dto.SqltoolStatement;
+import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
+import cherry.sqlapp.db.gen.mapper.SqltoolStatementMapper;
 
 @Component
 public class StatementServiceImpl implements StatementService {
 
 	@Autowired
-	private SqlAnyMapper sqlStatementMapper;
+	private SqltoolStatementMapper sqlStatementMapper;
 
 	@Autowired
 	private StatementMapper statementMapper;
@@ -40,8 +40,8 @@ public class StatementServiceImpl implements StatementService {
 
 	@Transactional
 	@Override
-	public SqlAny findById(int id) {
-		SqlAny record = sqlStatementMapper.selectByPrimaryKey(id);
+	public SqltoolStatement findById(int id) {
+		SqltoolStatement record = sqlStatementMapper.selectByPrimaryKey(id);
 		if (record.getDeletedFlg() != 0) {
 			return null;
 		}
@@ -50,8 +50,8 @@ public class StatementServiceImpl implements StatementService {
 
 	@Transactional
 	@Override
-	public int create(SqlAny record, String ownedBy) {
-		SqlMetadata metadata = new SqlMetadata();
+	public int create(SqltoolStatement record, String ownedBy) {
+		SqltoolMetadata metadata = new SqltoolMetadata();
 		metadata.setDescription(ownedBy);
 		metadata.setOwnedBy(ownedBy);
 		int count0 = metadataMapper.createStatement(metadata);
@@ -70,7 +70,7 @@ public class StatementServiceImpl implements StatementService {
 
 	@Transactional
 	@Override
-	public void update(SqlAny record) {
+	public void update(SqltoolStatement record) {
 		int count = statementMapper.update(record);
 		if (count != 1) {
 			throw new IllegalArgumentException("sql_any is not updated; count="

@@ -35,8 +35,8 @@ import org.springframework.web.util.UriComponents;
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.controller.sqltool.ParamMapUtil;
 import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
-import cherry.sqlapp.db.gen.dto.SqlAny;
-import cherry.sqlapp.db.gen.dto.SqlMetadata;
+import cherry.sqlapp.db.gen.dto.SqltoolStatement;
+import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
 import cherry.sqlapp.service.sqltool.exec.ExecQueryService;
 import cherry.sqlapp.service.sqltool.exec.Result;
@@ -91,10 +91,10 @@ public class SqltoolStatementControllerImpl implements
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(dataSourceDef);
 		if (ref != null) {
-			SqlMetadata md = metadataService.findById(ref,
+			SqltoolMetadata md = metadataService.findById(ref,
 					authentication.getName());
 			if (md != null) {
-				SqlAny record = statementService.findById(ref);
+				SqltoolStatement record = statementService.findById(ref);
 				if (record != null) {
 					mav.addObject(formUtil.getForm(record));
 				}
@@ -138,7 +138,7 @@ public class SqltoolStatementControllerImpl implements
 			return mav;
 		}
 
-		SqlAny record = new SqlAny();
+		SqltoolStatement record = new SqltoolStatement();
 		record.setDatabaseName(form.getDatabaseName());
 		record.setQuery(form.getSql());
 		record.setParamMap(form.getParamMap());
@@ -156,10 +156,10 @@ public class SqltoolStatementControllerImpl implements
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
-		SqlMetadata md = metadataService.findById(id, authentication.getName());
+		SqltoolMetadata md = metadataService.findById(id, authentication.getName());
 		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
-		SqlAny record = statementService.findById(id);
+		SqltoolStatement record = statementService.findById(id);
 		SqltoolStatementForm form = formUtil.getForm(record);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -176,7 +176,7 @@ public class SqltoolStatementControllerImpl implements
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
-		SqlMetadata md = metadataService.findById(id, authentication.getName());
+		SqltoolMetadata md = metadataService.findById(id, authentication.getName());
 		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		if (binding.hasErrors()) {
@@ -206,7 +206,7 @@ public class SqltoolStatementControllerImpl implements
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
-		SqlMetadata md = metadataService.findById(id, authentication.getName());
+		SqltoolMetadata md = metadataService.findById(id, authentication.getName());
 		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		if (binding.hasErrors()) {
@@ -217,7 +217,7 @@ public class SqltoolStatementControllerImpl implements
 			return mav;
 		}
 
-		SqlAny record = new SqlAny();
+		SqltoolStatement record = new SqltoolStatement();
 		record.setId(id);
 		record.setDatabaseName(form.getDatabaseName());
 		record.setQuery(form.getSql());
@@ -238,7 +238,7 @@ public class SqltoolStatementControllerImpl implements
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
-		SqlAny record = statementService.findById(id);
+		SqltoolStatement record = statementService.findById(id);
 		SqltoolStatementForm form = formUtil.getForm(record);
 
 		if (binding.hasErrors()) {
@@ -249,7 +249,7 @@ public class SqltoolStatementControllerImpl implements
 			return mav;
 		}
 
-		SqlMetadata md = new SqlMetadata();
+		SqltoolMetadata md = new SqltoolMetadata();
 		md.setId(id);
 		md.setName(mdForm.getName());
 		md.setDescription(mdForm.getDescription());

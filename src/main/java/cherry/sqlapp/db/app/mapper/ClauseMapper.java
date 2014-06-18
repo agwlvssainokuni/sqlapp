@@ -16,12 +16,12 @@
 
 package cherry.sqlapp.db.app.mapper;
 
-import cherry.sqlapp.db.gen.dto.SqlSelect;
+import cherry.sqlapp.db.gen.dto.SqltoolClause;
 
 public interface ClauseMapper {
 
-	int create(SqlSelect record);
+	int create(SqltoolClause record);
 
-	int update(SqlSelect record);
+	int update(SqltoolClause record);
 
 }

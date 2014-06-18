@@ -18,12 +18,12 @@ package cherry.sqlapp.controller.sqltool;
 
 import org.springframework.stereotype.Component;
 
-import cherry.sqlapp.db.gen.dto.SqlMetadata;
+import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
 
 @Component("metadataFormUtil")
 public class MdFormUtil {
 
-	public SqltoolMetadataForm getMdForm(SqlMetadata record) {
+	public SqltoolMetadataForm getMdForm(SqltoolMetadata record) {
 		SqltoolMetadataForm mdForm = new SqltoolMetadataForm();
 		mdForm.setName(record.getName());
 		mdForm.setDescription(record.getDescription());

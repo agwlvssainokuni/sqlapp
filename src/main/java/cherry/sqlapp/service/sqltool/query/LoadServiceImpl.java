@@ -22,15 +22,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.sqlapp.db.app.mapper.LoadMapper;
 import cherry.sqlapp.db.app.mapper.MetadataMapper;
-import cherry.sqlapp.db.gen.dto.SqlCsv;
-import cherry.sqlapp.db.gen.dto.SqlMetadata;
-import cherry.sqlapp.db.gen.mapper.SqlCsvMapper;
+import cherry.sqlapp.db.gen.dto.SqltoolLoad;
+import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
+import cherry.sqlapp.db.gen.mapper.SqltoolLoadMapper;
 
 @Component
 public class LoadServiceImpl implements LoadService {
 
 	@Autowired
-	private SqlCsvMapper sqlLoadMapper;
+	private SqltoolLoadMapper sqlLoadMapper;
 
 	@Autowired
 	private LoadMapper loadMapper;
@@ -40,8 +40,8 @@ public class LoadServiceImpl implements LoadService {
 
 	@Transactional
 	@Override
-	public SqlCsv findById(int id) {
-		SqlCsv record = sqlLoadMapper.selectByPrimaryKey(id);
+	public SqltoolLoad findById(int id) {
+		SqltoolLoad record = sqlLoadMapper.selectByPrimaryKey(id);
 		if (record.getDeletedFlg() != 0) {
 			return null;
 		}
@@ -50,8 +50,8 @@ public class LoadServiceImpl implements LoadService {
 
 	@Transactional
 	@Override
-	public int create(SqlCsv record, String ownedBy) {
-		SqlMetadata metadata = new SqlMetadata();
+	public int create(SqltoolLoad record, String ownedBy) {
+		SqltoolMetadata metadata = new SqltoolMetadata();
 		metadata.setDescription(ownedBy);
 		metadata.setOwnedBy(ownedBy);
 		int count0 = metadataMapper.createLoad(metadata);
@@ -70,7 +70,7 @@ public class LoadServiceImpl implements LoadService {
 
 	@Transactional
 	@Override
-	public void update(SqlCsv record) {
+	public void update(SqltoolLoad record) {
 		int count = loadMapper.update(record);
 		if (count != 1) {
 			throw new IllegalArgumentException("sql_csv is not updated; count="

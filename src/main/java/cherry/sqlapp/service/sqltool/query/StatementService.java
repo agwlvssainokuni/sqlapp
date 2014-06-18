@@ -16,14 +16,14 @@
 
 package cherry.sqlapp.service.sqltool.query;
 
-import cherry.sqlapp.db.gen.dto.SqlAny;
+import cherry.sqlapp.db.gen.dto.SqltoolStatement;
 
 public interface StatementService {
 
-	SqlAny findById(int id);
+	SqltoolStatement findById(int id);
 
-	int create(SqlAny record, String ownedBy);
+	int create(SqltoolStatement record, String ownedBy);
 
-	void update(SqlAny record);
+	void update(SqltoolStatement record);
 
 }

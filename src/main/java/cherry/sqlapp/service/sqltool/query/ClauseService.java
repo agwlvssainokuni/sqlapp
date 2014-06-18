@@ -16,14 +16,14 @@
 
 package cherry.sqlapp.service.sqltool.query;
 
-import cherry.sqlapp.db.gen.dto.SqlSelect;
+import cherry.sqlapp.db.gen.dto.SqltoolClause;
 
 public interface ClauseService {
 
-	SqlSelect findById(int id);
+	SqltoolClause findById(int id);
 
-	int create(SqlSelect record, String ownedBy);
+	int create(SqltoolClause record, String ownedBy);
 
-	void update(SqlSelect record);
+	void update(SqltoolClause record);
 
 }

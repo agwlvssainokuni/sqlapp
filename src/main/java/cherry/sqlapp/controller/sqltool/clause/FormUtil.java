@@ -18,12 +18,12 @@ package cherry.sqlapp.controller.sqltool.clause;
 
 import org.springframework.stereotype.Component;
 
-import cherry.sqlapp.db.gen.dto.SqlSelect;
+import cherry.sqlapp.db.gen.dto.SqltoolClause;
 
 @Component("clauseFormUtil")
 public class FormUtil {
 
-	public SqltoolClauseForm getForm(SqlSelect record) {
+	public SqltoolClauseForm getForm(SqltoolClause record) {
 		SqltoolClauseForm form = new SqltoolClauseForm();
 		form.setDatabaseName(record.getDatabaseName());
 		form.setSelect(record.getSelectClause());

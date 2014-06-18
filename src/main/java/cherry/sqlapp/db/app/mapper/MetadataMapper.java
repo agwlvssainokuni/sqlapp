@@ -20,21 +20,21 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import cherry.sqlapp.db.gen.dto.SqlMetadata;
+import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
 
 public interface MetadataMapper {
 
-	int createClause(SqlMetadata record);
+	int createClause(SqltoolMetadata record);
 
-	int createStatement(SqlMetadata record);
+	int createStatement(SqltoolMetadata record);
 
-	int createLoad(SqlMetadata record);
+	int createLoad(SqltoolMetadata record);
 
-	int update(SqlMetadata record);
+	int update(SqltoolMetadata record);
 
 	int count(@Param("cond") MetadataCondition cond);
 
-	List<SqlMetadata> search(@Param("cond") MetadataCondition cond,
+	List<SqltoolMetadata> search(@Param("cond") MetadataCondition cond,
 			@Param("limit") int limit, @Param("offset") int offset);
 
 }

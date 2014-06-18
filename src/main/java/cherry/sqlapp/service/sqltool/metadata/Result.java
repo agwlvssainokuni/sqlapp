@@ -4,7 +4,7 @@ import java.util.List;
 
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.sqlapp.db.BaseDto;
-import cherry.sqlapp.db.gen.dto.SqlMetadata;
+import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
 
 public class Result extends BaseDto {
 
@@ -12,7 +12,7 @@ public class Result extends BaseDto {
 
 	private PageSet pageSet;
 
-	private List<SqlMetadata> metadataList;
+	private List<SqltoolMetadata> metadataList;
 
 	public PageSet getPageSet() {
 		return pageSet;
@@ -22,11 +22,11 @@ public class Result extends BaseDto {
 		this.pageSet = pageSet;
 	}
 
-	public List<SqlMetadata> getMetadataList() {
+	public List<SqltoolMetadata> getMetadataList() {
 		return metadataList;
 	}
 
-	public void setMetadataList(List<SqlMetadata> metadataList) {
+	public void setMetadataList(List<SqltoolMetadata> metadataList) {
 		this.metadataList = metadataList;
 	}
 

@@ -18,12 +18,12 @@ package cherry.sqlapp.controller.sqltool.statement;
 
 import org.springframework.stereotype.Component;
 
-import cherry.sqlapp.db.gen.dto.SqlAny;
+import cherry.sqlapp.db.gen.dto.SqltoolStatement;
 
 @Component("statementFormUtil")
 public class FormUtil {
 
-	public SqltoolStatementForm getForm(SqlAny record) {
+	public SqltoolStatementForm getForm(SqltoolStatement record) {
 		SqltoolStatementForm form = new SqltoolStatementForm();
 		form.setDatabaseName(record.getDatabaseName());
 		form.setSql(record.getQuery());

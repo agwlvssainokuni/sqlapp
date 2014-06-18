@@ -22,15 +22,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.sqlapp.db.app.mapper.MetadataMapper;
 import cherry.sqlapp.db.app.mapper.ClauseMapper;
-import cherry.sqlapp.db.gen.dto.SqlMetadata;
-import cherry.sqlapp.db.gen.dto.SqlSelect;
-import cherry.sqlapp.db.gen.mapper.SqlSelectMapper;
+import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
+import cherry.sqlapp.db.gen.dto.SqltoolClause;
+import cherry.sqlapp.db.gen.mapper.SqltoolClauseMapper;
 
 @Component
 public class ClauseServiceImpl implements ClauseService {
 
 	@Autowired
-	private SqlSelectMapper sqlClauseMapper;
+	private SqltoolClauseMapper sqlClauseMapper;
 
 	@Autowired
 	private ClauseMapper clauseMapper;
@@ -40,8 +40,8 @@ public class ClauseServiceImpl implements ClauseService {
 
 	@Transactional
 	@Override
-	public SqlSelect findById(int id) {
-		SqlSelect record = sqlClauseMapper.selectByPrimaryKey(id);
+	public SqltoolClause findById(int id) {
+		SqltoolClause record = sqlClauseMapper.selectByPrimaryKey(id);
 		if (record.getDeletedFlg() != 0) {
 			return null;
 		}
@@ -50,8 +50,8 @@ public class ClauseServiceImpl implements ClauseService {
 
 	@Transactional
 	@Override
-	public int create(SqlSelect record, String ownedBy) {
-		SqlMetadata metadata = new SqlMetadata();
+	public int create(SqltoolClause record, String ownedBy) {
+		SqltoolMetadata metadata = new SqltoolMetadata();
 		metadata.setDescription(ownedBy);
 		metadata.setOwnedBy(ownedBy);
 		int count0 = metadataMapper.createClause(metadata);
@@ -70,7 +70,7 @@ public class ClauseServiceImpl implements ClauseService {
 
 	@Transactional
 	@Override
-	public void update(SqlSelect record) {
+	public void update(SqltoolClause record) {
 		int count = clauseMapper.update(record);
 		if (count != 1) {
 			throw new IllegalArgumentException(

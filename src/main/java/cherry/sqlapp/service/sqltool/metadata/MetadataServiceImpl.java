@@ -26,14 +26,14 @@ import cherry.spring.common.lib.paginate.PageSet;
 import cherry.spring.common.lib.paginate.Paginator;
 import cherry.sqlapp.db.app.mapper.MetadataCondition;
 import cherry.sqlapp.db.app.mapper.MetadataMapper;
-import cherry.sqlapp.db.gen.dto.SqlMetadata;
-import cherry.sqlapp.db.gen.mapper.SqlMetadataMapper;
+import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
+import cherry.sqlapp.db.gen.mapper.SqltoolMetadataMapper;
 
 @Component
 public class MetadataServiceImpl implements MetadataService {
 
 	@Autowired
-	private SqlMetadataMapper sqlMetadataMapper;
+	private SqltoolMetadataMapper sqlMetadataMapper;
 
 	@Autowired
 	private MetadataMapper metadataMapper;
@@ -43,8 +43,8 @@ public class MetadataServiceImpl implements MetadataService {
 
 	@Transactional
 	@Override
-	public SqlMetadata findById(int id, String loginId) {
-		SqlMetadata record = sqlMetadataMapper.selectByPrimaryKey(id);
+	public SqltoolMetadata findById(int id, String loginId) {
+		SqltoolMetadata record = sqlMetadataMapper.selectByPrimaryKey(id);
 		if (0 != record.getDeletedFlg()) {
 			return null;
 		}
@@ -59,7 +59,7 @@ public class MetadataServiceImpl implements MetadataService {
 
 	@Transactional
 	@Override
-	public void update(SqlMetadata record) {
+	public void update(SqltoolMetadata record) {
 		int count = metadataMapper.update(record);
 		if (count != 1) {
 			throw new IllegalArgumentException(
@@ -74,7 +74,7 @@ public class MetadataServiceImpl implements MetadataService {
 		int itemCount = metadataMapper.count(cond);
 		PageSet pageSet = paginator.paginate(pageNo, itemCount, pageSz);
 		int offset = pageSet.getCurrent().getFrom();
-		List<SqlMetadata> list = metadataMapper.search(cond, pageSz, offset);
+		List<SqltoolMetadata> list = metadataMapper.search(cond, pageSz, offset);
 
 		Result result = new Result();
 		result.setPageSet(pageSet);

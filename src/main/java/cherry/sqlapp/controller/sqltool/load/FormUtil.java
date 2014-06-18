@@ -18,12 +18,12 @@ package cherry.sqlapp.controller.sqltool.load;
 
 import org.springframework.stereotype.Component;
 
-import cherry.sqlapp.db.gen.dto.SqlCsv;
+import cherry.sqlapp.db.gen.dto.SqltoolLoad;
 
 @Component("loadFormUtil")
 public class FormUtil {
 
-	public SqltoolLoadForm getForm(SqlCsv record) {
+	public SqltoolLoadForm getForm(SqltoolLoad record) {
 		SqltoolLoadForm form = new SqltoolLoadForm();
 		form.setDatabaseName(record.getDatabaseName());
 		form.setSql(record.getQuery());

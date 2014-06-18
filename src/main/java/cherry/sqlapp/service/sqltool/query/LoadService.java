@@ -16,14 +16,14 @@
 
 package cherry.sqlapp.service.sqltool.query;
 
-import cherry.sqlapp.db.gen.dto.SqlCsv;
+import cherry.sqlapp.db.gen.dto.SqltoolLoad;
 
 public interface LoadService {
 
-	SqlCsv findById(int id);
+	SqltoolLoad findById(int id);
 
-	int create(SqlCsv record, String ownedBy);
+	int create(SqltoolLoad record, String ownedBy);
 
-	void update(SqlCsv record);
+	void update(SqltoolLoad record);
 
 }

@@ -16,12 +16,12 @@
 
 package cherry.sqlapp.db.app.mapper;
 
-import cherry.sqlapp.db.gen.dto.SqlCsv;
+import cherry.sqlapp.db.gen.dto.SqltoolLoad;
 
 public interface LoadMapper {
 
-	int create(SqlCsv record);
+	int create(SqltoolLoad record);
 
-	int update(SqlCsv record);
+	int update(SqltoolLoad record);
 
 }

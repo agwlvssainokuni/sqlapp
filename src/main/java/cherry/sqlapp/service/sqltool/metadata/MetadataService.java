@@ -17,13 +17,13 @@
 package cherry.sqlapp.service.sqltool.metadata;
 
 import cherry.sqlapp.db.app.mapper.MetadataCondition;
-import cherry.sqlapp.db.gen.dto.SqlMetadata;
+import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
 
 public interface MetadataService {
 
-	SqlMetadata findById(int id, String loginId);
+	SqltoolMetadata findById(int id, String loginId);
 
-	void update(SqlMetadata record);
+	void update(SqltoolMetadata record);
 
 	Result search(MetadataCondition cond, int pageNo, int pageSz);
 

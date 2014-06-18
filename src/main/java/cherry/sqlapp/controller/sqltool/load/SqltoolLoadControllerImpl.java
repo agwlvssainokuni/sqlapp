@@ -36,8 +36,8 @@ import org.springframework.web.util.UriComponents;
 
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
-import cherry.sqlapp.db.gen.dto.SqlCsv;
-import cherry.sqlapp.db.gen.dto.SqlMetadata;
+import cherry.sqlapp.db.gen.dto.SqltoolLoad;
+import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
 import cherry.sqlapp.service.sqltool.exec.ExecLoadService;
 import cherry.sqlapp.service.sqltool.metadata.MetadataService;
@@ -93,10 +93,10 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(dataSourceDef);
 		if (ref != null) {
-			SqlMetadata md = metadataService.findById(ref,
+			SqltoolMetadata md = metadataService.findById(ref,
 					authentication.getName());
 			if (md != null) {
-				SqlCsv record = loadService.findById(ref);
+				SqltoolLoad record = loadService.findById(ref);
 				if (record != null) {
 					mav.addObject(formUtil.getForm(record));
 				}
@@ -150,7 +150,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			return mav;
 		}
 
-		SqlCsv record = new SqlCsv();
+		SqltoolLoad record = new SqltoolLoad();
 		record.setDatabaseName(form.getDatabaseName());
 		record.setQuery(form.getSql());
 
@@ -168,10 +168,10 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
-		SqlMetadata md = metadataService.findById(id, authentication.getName());
+		SqltoolMetadata md = metadataService.findById(id, authentication.getName());
 		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
-		SqlCsv record = loadService.findById(id);
+		SqltoolLoad record = loadService.findById(id);
 		SqltoolLoadForm form = formUtil.getForm(record);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -188,7 +188,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
-		SqlMetadata md = metadataService.findById(id, authentication.getName());
+		SqltoolMetadata md = metadataService.findById(id, authentication.getName());
 		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		if (binding.hasErrors()) {
@@ -229,7 +229,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
-		SqlMetadata md = metadataService.findById(id, authentication.getName());
+		SqltoolMetadata md = metadataService.findById(id, authentication.getName());
 		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		if (binding.hasErrors()) {
@@ -240,7 +240,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			return mav;
 		}
 
-		SqlCsv record = new SqlCsv();
+		SqltoolLoad record = new SqltoolLoad();
 		record.setId(id);
 		record.setDatabaseName(form.getDatabaseName());
 		record.setQuery(form.getSql());
@@ -260,7 +260,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
-		SqlCsv record = loadService.findById(id);
+		SqltoolLoad record = loadService.findById(id);
 		SqltoolLoadForm form = formUtil.getForm(record);
 
 		if (binding.hasErrors()) {
@@ -271,7 +271,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			return mav;
 		}
 
-		SqlMetadata md = new SqlMetadata();
+		SqltoolMetadata md = new SqltoolMetadata();
 		md.setId(id);
 		md.setName(mdForm.getName());
 		md.setDescription(mdForm.getDescription());
