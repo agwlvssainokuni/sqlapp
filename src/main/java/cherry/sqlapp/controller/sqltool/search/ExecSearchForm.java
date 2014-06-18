@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.controller.sqltool;
+package cherry.sqlapp.controller.sqltool.search;
 
 import org.joda.time.LocalDateTime;
 

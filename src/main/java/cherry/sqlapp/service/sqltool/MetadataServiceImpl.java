@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.spring.common.lib.paginate.Paginator;
-import cherry.sqlapp.controller.sqltool.ExecSearchForm;
+import cherry.sqlapp.controller.sqltool.search.ExecSearchForm;
 import cherry.sqlapp.db.app.mapper.MetadataMapper;
 import cherry.sqlapp.db.app.mapper.SqlCondition;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;

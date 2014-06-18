@@ -42,7 +42,7 @@
 				<s:message code="secure/exec/index.message.3" />
 			</div>
 		</c:if>
-		<f:form servletRelativeAction="/secure/exec/req" method="POST"
+		<f:form servletRelativeAction="/sqltool/search/req" method="POST"
 			modelAttribute="execSearchForm">
 			<input type="hidden" id="sz" name="sz"
 				value="<c:out value="${param.sz}" />">
@@ -112,7 +112,7 @@
 			<s:message code="secure/exec/index.message.2" />
 		</h1>
 		<div class="app-portion">
-			<f:form servletRelativeAction="/secure/exec/req" method="POST"
+			<f:form servletRelativeAction="/sqltool/search/req" method="POST"
 				modelAttribute="execSearchForm" id="execSearchWithPage"
 				class="app-pager-form">
 				<input type="hidden" id="no2" name="no">
@@ -149,7 +149,7 @@
 				<tbody>
 					<c:forEach var="item" items="${result.metadataList}"
 						varStatus="status">
-						<s:url var="uri" value="/secure/exec/{type}/{id}">
+						<s:url var="uri" value="/sqltool/{type}/{id}">
 							<s:param name="type" value="${item.sqlType}" />
 							<s:param name="id" value="${item.id}" />
 						</s:url>

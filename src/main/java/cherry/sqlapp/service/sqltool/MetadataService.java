@@ -19,7 +19,7 @@ package cherry.sqlapp.service.sqltool;
 import java.util.List;
 
 import cherry.spring.common.lib.paginate.PageSet;
-import cherry.sqlapp.controller.sqltool.ExecSearchForm;
+import cherry.sqlapp.controller.sqltool.search.ExecSearchForm;
 import cherry.sqlapp.db.BaseDto;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 
