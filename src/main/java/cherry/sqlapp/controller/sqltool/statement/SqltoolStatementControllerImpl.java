@@ -36,7 +36,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
-import cherry.sqlapp.controller.sqltool.ExecMetadataForm;
+import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 import cherry.sqlapp.db.gen.dto.SqlAny;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 import cherry.sqlapp.service.sqltool.AnyService;
@@ -50,7 +50,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 @Controller
-public class ExecAnyControllerImpl implements ExecAnyController {
+public class SqltoolStatementControllerImpl implements SqltoolStatementController {
 
 	public static final String VIEW_PATH = "secure/exec/any/index";
 
@@ -71,13 +71,13 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 	private ObjectMapper objectMapper = new ObjectMapper();
 
 	@Override
-	public ExecMetadataForm getMetadata() {
-		return new ExecMetadataForm();
+	public SqltoolMetadataForm getMetadata() {
+		return new SqltoolMetadataForm();
 	}
 
 	@Override
-	public ExecAnyForm getForm() {
-		ExecAnyForm form = new ExecAnyForm();
+	public SqltoolStatementForm getForm() {
+		SqltoolStatementForm form = new SqltoolStatementForm();
 		form.setDatabaseName(dataSourceDef.getDefaultName());
 		return form;
 	}
@@ -102,7 +102,7 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 	}
 
 	@Override
-	public ModelAndView request(ExecAnyForm form, BindingResult binding,
+	public ModelAndView request(SqltoolStatementForm form, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
@@ -126,7 +126,7 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 	}
 
 	@Override
-	public ModelAndView create(ExecAnyForm form, BindingResult binding,
+	public ModelAndView create(SqltoolStatementForm form, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
@@ -155,10 +155,10 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 			HttpServletRequest request) {
 
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
-		ExecMetadataForm mdForm = getMdForm(md);
+		SqltoolMetadataForm mdForm = getMdForm(md);
 
 		SqlAny record = anyService.findById(id);
-		ExecAnyForm form = getForm(record);
+		SqltoolStatementForm form = getForm(record);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
@@ -169,13 +169,13 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 	}
 
 	@Override
-	public ModelAndView requestId(int id, ExecAnyForm form,
+	public ModelAndView requestId(int id, SqltoolStatementForm form,
 			BindingResult binding, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
-		ExecMetadataForm mdForm = getMdForm(md);
+		SqltoolMetadataForm mdForm = getMdForm(md);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -201,12 +201,12 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 	}
 
 	@Override
-	public ModelAndView update(int id, ExecAnyForm form, BindingResult binding,
+	public ModelAndView update(int id, SqltoolStatementForm form, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
-		ExecMetadataForm mdForm = getMdForm(md);
+		SqltoolMetadataForm mdForm = getMdForm(md);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -232,13 +232,13 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 	}
 
 	@Override
-	public ModelAndView metadata(int id, ExecMetadataForm mdForm,
+	public ModelAndView metadata(int id, SqltoolMetadataForm mdForm,
 			BindingResult binding, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
 		SqlAny record = anyService.findById(id);
-		ExecAnyForm form = getForm(record);
+		SqltoolStatementForm form = getForm(record);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -263,8 +263,8 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 		return mav;
 	}
 
-	private ExecMetadataForm getMdForm(SqlMetadata record) {
-		ExecMetadataForm mdForm = getMetadata();
+	private SqltoolMetadataForm getMdForm(SqlMetadata record) {
+		SqltoolMetadataForm mdForm = getMetadata();
 		mdForm.setName(record.getName());
 		mdForm.setDescription(record.getDescription());
 		mdForm.setOwnedBy(record.getOwnedBy());
@@ -272,8 +272,8 @@ public class ExecAnyControllerImpl implements ExecAnyController {
 		return mdForm;
 	}
 
-	private ExecAnyForm getForm(SqlAny record) {
-		ExecAnyForm form = getForm();
+	private SqltoolStatementForm getForm(SqlAny record) {
+		SqltoolStatementForm form = getForm();
 		form.setDatabaseName(record.getDatabaseName());
 		form.setSql(record.getQuery());
 		form.setParamMap(record.getParamMap());

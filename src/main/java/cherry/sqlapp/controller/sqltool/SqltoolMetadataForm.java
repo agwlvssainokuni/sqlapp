@@ -22,7 +22,7 @@ import cherry.sqlapp.controller.BaseForm;
 import cherry.sqlapp.validation.DescriptionSize;
 import cherry.sqlapp.validation.NameSize;
 
-public class ExecMetadataForm extends BaseForm {
+public class SqltoolMetadataForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
 

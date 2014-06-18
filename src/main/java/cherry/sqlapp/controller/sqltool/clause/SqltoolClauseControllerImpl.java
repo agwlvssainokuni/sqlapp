@@ -37,7 +37,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
-import cherry.sqlapp.controller.sqltool.ExecMetadataForm;
+import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 import cherry.sqlapp.db.gen.dto.SqlSelect;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
@@ -52,7 +52,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 @Controller
-public class ExecSelectControllerImpl implements ExecSelectController {
+public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 
 	public static final String VIEW_PATH = "secure/exec/select/index";
 
@@ -76,13 +76,13 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	private ObjectMapper objectMapper = new ObjectMapper();
 
 	@Override
-	public ExecMetadataForm getMetadata() {
-		return new ExecMetadataForm();
+	public SqltoolMetadataForm getMetadata() {
+		return new SqltoolMetadataForm();
 	}
 
 	@Override
-	public ExecSelectForm getForm() {
-		ExecSelectForm form = new ExecSelectForm();
+	public SqltoolClauseForm getForm() {
+		SqltoolClauseForm form = new SqltoolClauseForm();
 		form.setDatabaseName(dataSourceDef.getDefaultName());
 		return form;
 	}
@@ -107,7 +107,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	}
 
 	@Override
-	public ModelAndView request(ExecSelectForm form, BindingResult binding,
+	public ModelAndView request(SqltoolClauseForm form, BindingResult binding,
 			int pageNo, int pageSz, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
@@ -135,7 +135,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	}
 
 	@Override
-	public ModelAndView create(ExecSelectForm form, BindingResult binding,
+	public ModelAndView create(SqltoolClauseForm form, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
@@ -169,10 +169,10 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 			HttpServletRequest request) {
 
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
-		ExecMetadataForm mdForm = getMdForm(md);
+		SqltoolMetadataForm mdForm = getMdForm(md);
 
 		SqlSelect record = selectService.findById(id);
-		ExecSelectForm form = getForm(record);
+		SqltoolClauseForm form = getForm(record);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
@@ -183,13 +183,13 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	}
 
 	@Override
-	public ModelAndView requestId(int id, ExecSelectForm form,
+	public ModelAndView requestId(int id, SqltoolClauseForm form,
 			BindingResult binding, int pageNo, int pageSz,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
-		ExecMetadataForm mdForm = getMdForm(md);
+		SqltoolMetadataForm mdForm = getMdForm(md);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -218,13 +218,13 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	}
 
 	@Override
-	public ModelAndView update(int id, ExecSelectForm form,
+	public ModelAndView update(int id, SqltoolClauseForm form,
 			BindingResult binding, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
-		ExecMetadataForm mdForm = getMdForm(md);
+		SqltoolMetadataForm mdForm = getMdForm(md);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -255,13 +255,13 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 	}
 
 	@Override
-	public ModelAndView metadata(int id, ExecMetadataForm mdForm,
+	public ModelAndView metadata(int id, SqltoolMetadataForm mdForm,
 			BindingResult binding, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
 		SqlSelect record = selectService.findById(id);
-		ExecSelectForm form = getForm(record);
+		SqltoolClauseForm form = getForm(record);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -286,7 +286,7 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		return mav;
 	}
 
-	private SqlBuilder getSqlBuilder(ExecSelectForm form) {
+	private SqlBuilder getSqlBuilder(SqltoolClauseForm form) {
 		SqlBuilder builder = new SqlBuilder();
 		builder.setSelect(form.getSelect());
 		builder.setFrom(form.getFrom());
@@ -297,8 +297,8 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		return builder;
 	}
 
-	private ExecMetadataForm getMdForm(SqlMetadata record) {
-		ExecMetadataForm mdForm = getMetadata();
+	private SqltoolMetadataForm getMdForm(SqlMetadata record) {
+		SqltoolMetadataForm mdForm = getMetadata();
 		mdForm.setName(record.getName());
 		mdForm.setDescription(record.getDescription());
 		mdForm.setOwnedBy(record.getOwnedBy());
@@ -306,8 +306,8 @@ public class ExecSelectControllerImpl implements ExecSelectController {
 		return mdForm;
 	}
 
-	private ExecSelectForm getForm(SqlSelect record) {
-		ExecSelectForm form = getForm();
+	private SqltoolClauseForm getForm(SqlSelect record) {
+		SqltoolClauseForm form = getForm();
 		form.setDatabaseName(record.getDatabaseName());
 		form.setSelect(record.getSelectClause());
 		form.setFrom(record.getFromClause());

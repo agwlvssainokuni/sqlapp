@@ -34,7 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
-import cherry.sqlapp.controller.sqltool.ExecMetadataForm;
+import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 import cherry.sqlapp.db.gen.dto.SqlCsv;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 import cherry.sqlapp.service.sqltool.CsvService;
@@ -43,7 +43,7 @@ import cherry.sqlapp.service.sqltool.ImpService;
 import cherry.sqlapp.service.sqltool.MetadataService;
 
 @Component
-public class ExecCsvControllerImpl implements ExecCsvController {
+public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 
 	public static final String VIEW_PATH = "secure/exec/csv/index";
 
@@ -68,13 +68,13 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 	private CsvService csvService;
 
 	@Override
-	public ExecMetadataForm getMetadata() {
-		return new ExecMetadataForm();
+	public SqltoolMetadataForm getMetadata() {
+		return new SqltoolMetadataForm();
 	}
 
 	@Override
-	public ExecCsvForm getForm() {
-		ExecCsvForm form = new ExecCsvForm();
+	public SqltoolLoadForm getForm() {
+		SqltoolLoadForm form = new SqltoolLoadForm();
 		form.setDatabaseName(dataSourceDef.getDefaultName());
 		return form;
 	}
@@ -99,7 +99,7 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 	}
 
 	@Override
-	public ModelAndView request(ExecCsvForm form, BindingResult binding,
+	public ModelAndView request(SqltoolLoadForm form, BindingResult binding,
 			RedirectAttributes redirectAttributes,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
@@ -133,7 +133,7 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 	}
 
 	@Override
-	public ModelAndView create(ExecCsvForm form, BindingResult binding,
+	public ModelAndView create(SqltoolLoadForm form, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
@@ -162,10 +162,10 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 			HttpServletRequest request) {
 
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
-		ExecMetadataForm mdForm = getMdForm(md);
+		SqltoolMetadataForm mdForm = getMdForm(md);
 
 		SqlCsv record = csvService.findById(id);
-		ExecCsvForm form = getForm(record);
+		SqltoolLoadForm form = getForm(record);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
@@ -176,13 +176,13 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 	}
 
 	@Override
-	public ModelAndView requestId(int id, ExecCsvForm form,
+	public ModelAndView requestId(int id, SqltoolLoadForm form,
 			BindingResult binding, RedirectAttributes redirectAttributes,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
-		ExecMetadataForm mdForm = getMdForm(md);
+		SqltoolMetadataForm mdForm = getMdForm(md);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -217,12 +217,12 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 	}
 
 	@Override
-	public ModelAndView update(int id, ExecCsvForm form, BindingResult binding,
+	public ModelAndView update(int id, SqltoolLoadForm form, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
-		ExecMetadataForm mdForm = getMdForm(md);
+		SqltoolMetadataForm mdForm = getMdForm(md);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -247,13 +247,13 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 	}
 
 	@Override
-	public ModelAndView metadata(int id, ExecMetadataForm mdForm,
+	public ModelAndView metadata(int id, SqltoolMetadataForm mdForm,
 			BindingResult binding, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
 		SqlCsv record = csvService.findById(id);
-		ExecCsvForm form = getForm(record);
+		SqltoolLoadForm form = getForm(record);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -278,8 +278,8 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 		return mav;
 	}
 
-	private ExecMetadataForm getMdForm(SqlMetadata record) {
-		ExecMetadataForm mdForm = getMetadata();
+	private SqltoolMetadataForm getMdForm(SqlMetadata record) {
+		SqltoolMetadataForm mdForm = getMetadata();
 		mdForm.setName(record.getName());
 		mdForm.setDescription(record.getDescription());
 		mdForm.setOwnedBy(record.getOwnedBy());
@@ -287,8 +287,8 @@ public class ExecCsvControllerImpl implements ExecCsvController {
 		return mdForm;
 	}
 
-	private ExecCsvForm getForm(SqlCsv record) {
-		ExecCsvForm form = getForm();
+	private SqltoolLoadForm getForm(SqlCsv record) {
+		SqltoolLoadForm form = getForm();
 		form.setDatabaseName(record.getDatabaseName());
 		form.setSql(record.getQuery());
 		return form;

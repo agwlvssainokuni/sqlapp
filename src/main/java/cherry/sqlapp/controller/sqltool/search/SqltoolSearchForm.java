@@ -23,7 +23,7 @@ import cherry.spring.common.custom.format.CustomDateTimeFormat.Range;
 import cherry.sqlapp.controller.BaseForm;
 import cherry.sqlapp.validation.NameSize;
 
-public class ExecSearchForm extends BaseForm {
+public class SqltoolSearchForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
 

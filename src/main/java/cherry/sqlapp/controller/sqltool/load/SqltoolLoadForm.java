@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import cherry.sqlapp.controller.BaseForm;
 import cherry.sqlapp.validation.SqlStatementSize;
 
-public class ExecCsvForm extends BaseForm {
+public class SqltoolLoadForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
 

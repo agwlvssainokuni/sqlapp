@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.controller.sqltool.statement;
+package cherry.sqlapp.controller.sqltool.clause;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 import cherry.sqlapp.controller.BaseForm;
 import cherry.sqlapp.validation.ParamMapSize;
-import cherry.sqlapp.validation.SqlStatementSize;
+import cherry.sqlapp.validation.SqlClauseSize;
 
-public class ExecAnyForm extends BaseForm {
+public class SqltoolClauseForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,8 +30,24 @@ public class ExecAnyForm extends BaseForm {
 	private String databaseName;
 
 	@NotEmpty
-	@SqlStatementSize
-	private String sql;
+	@SqlClauseSize
+	private String select;
+
+	@NotEmpty
+	@SqlClauseSize
+	private String from;
+
+	@SqlClauseSize
+	private String where;
+
+	@SqlClauseSize
+	private String groupBy;
+
+	@SqlClauseSize
+	private String having;
+
+	@SqlClauseSize
+	private String orderBy;
 
 	@ParamMapSize
 	private String paramMap;
@@ -44,12 +60,52 @@ public class ExecAnyForm extends BaseForm {
 		this.databaseName = databaseName;
 	}
 
-	public String getSql() {
-		return sql;
+	public String getSelect() {
+		return select;
 	}
 
-	public void setSql(String sql) {
-		this.sql = sql;
+	public void setSelect(String select) {
+		this.select = select;
+	}
+
+	public String getFrom() {
+		return from;
+	}
+
+	public void setFrom(String from) {
+		this.from = from;
+	}
+
+	public String getWhere() {
+		return where;
+	}
+
+	public void setWhere(String where) {
+		this.where = where;
+	}
+
+	public String getGroupBy() {
+		return groupBy;
+	}
+
+	public void setGroupBy(String groupBy) {
+		this.groupBy = groupBy;
+	}
+
+	public String getHaving() {
+		return having;
+	}
+
+	public void setHaving(String having) {
+		this.having = having;
+	}
+
+	public String getOrderBy() {
+		return orderBy;
+	}
+
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
 	}
 
 	public String getParamMap() {

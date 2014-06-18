@@ -29,8 +29,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-@RequestMapping(ExecController.URI_PATH)
-public interface ExecController {
+@RequestMapping(SqltoolSearchController.URI_PATH)
+public interface SqltoolSearchController {
 
 	public static final String URI_PATH = "/sqltool/search";
 
@@ -41,7 +41,7 @@ public interface ExecController {
 	public static final String PARAM_SZ = "sz";
 
 	@ModelAttribute("execSearchForm")
-	ExecSearchForm getForm();
+	SqltoolSearchForm getForm();
 
 	@RequestMapping()
 	ModelAndView index(Authentication authentication, Locale locale,
@@ -49,7 +49,7 @@ public interface ExecController {
 
 	@RequestMapping(URI_PATH_REQ)
 	ModelAndView request(
-			@Validated ExecSearchForm form,
+			@Validated SqltoolSearchForm form,
 			BindingResult binding,
 			@RequestParam(value = PARAM_NO, required = false, defaultValue = "0") int pageNo,
 			@RequestParam(value = PARAM_SZ, required = false, defaultValue = "0") int pageSz,

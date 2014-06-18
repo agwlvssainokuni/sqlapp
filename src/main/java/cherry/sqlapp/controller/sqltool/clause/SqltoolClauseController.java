@@ -30,10 +30,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import cherry.sqlapp.controller.sqltool.ExecMetadataForm;
+import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 
-@RequestMapping(ExecSelectController.URI_PATH)
-public interface ExecSelectController {
+@RequestMapping(SqltoolClauseController.URI_PATH)
+public interface SqltoolClauseController {
 
 	public static final String URI_PATH = "/sqltool/clause";
 
@@ -54,10 +54,10 @@ public interface ExecSelectController {
 	public static final String PARAM_SZ = "sz";
 
 	@ModelAttribute("execMetadataForm")
-	ExecMetadataForm getMetadata();
+	SqltoolMetadataForm getMetadata();
 
 	@ModelAttribute("execSelectForm")
-	ExecSelectForm getForm();
+	SqltoolClauseForm getForm();
 
 	@RequestMapping()
 	ModelAndView index(
@@ -67,7 +67,7 @@ public interface ExecSelectController {
 
 	@RequestMapping(URI_PATH_REQ)
 	ModelAndView request(
-			@Validated ExecSelectForm form,
+			@Validated SqltoolClauseForm form,
 			BindingResult binding,
 			@RequestParam(value = PARAM_NO, required = false, defaultValue = "0") int pageNo,
 			@RequestParam(value = PARAM_SZ, required = false, defaultValue = "0") int pageSz,
@@ -75,7 +75,7 @@ public interface ExecSelectController {
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(value = URI_PATH_REQ, params = { "proc=create" })
-	ModelAndView create(@Validated ExecSelectForm form, BindingResult binding,
+	ModelAndView create(@Validated SqltoolClauseForm form, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
@@ -87,7 +87,7 @@ public interface ExecSelectController {
 	@RequestMapping(URI_PATH_ID_REQ)
 	ModelAndView requestId(
 			@PathVariable(PATH_VAR) int id,
-			@Validated ExecSelectForm form,
+			@Validated SqltoolClauseForm form,
 			BindingResult binding,
 			@RequestParam(value = PARAM_NO, required = false, defaultValue = "0") int pageNo,
 			@RequestParam(value = PARAM_SZ, required = false, defaultValue = "0") int pageSz,
@@ -96,13 +96,13 @@ public interface ExecSelectController {
 
 	@RequestMapping(value = URI_PATH_ID_REQ, params = { "proc=update" })
 	ModelAndView update(@PathVariable(PATH_VAR) int id,
-			@Validated ExecSelectForm form, BindingResult binding,
+			@Validated SqltoolClauseForm form, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_ID_METADATA)
 	ModelAndView metadata(@PathVariable(PATH_VAR) int id,
-			@Validated ExecMetadataForm mdForm, BindingResult binding,
+			@Validated SqltoolMetadataForm mdForm, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 

@@ -19,7 +19,7 @@ package cherry.sqlapp.service.sqltool;
 import java.util.List;
 
 import cherry.spring.common.lib.paginate.PageSet;
-import cherry.sqlapp.controller.sqltool.search.ExecSearchForm;
+import cherry.sqlapp.controller.sqltool.search.SqltoolSearchForm;
 import cherry.sqlapp.db.BaseDto;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 
@@ -29,7 +29,7 @@ public interface MetadataService {
 
 	void update(SqlMetadata record);
 
-	Result search(ExecSearchForm form, String loginId, int pageNo, int pageSize);
+	Result search(SqltoolSearchForm form, String loginId, int pageNo, int pageSize);
 
 	public static class Result extends BaseDto {
 

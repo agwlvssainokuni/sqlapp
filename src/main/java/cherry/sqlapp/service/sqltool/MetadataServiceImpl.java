@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.spring.common.lib.paginate.Paginator;
-import cherry.sqlapp.controller.sqltool.search.ExecSearchForm;
+import cherry.sqlapp.controller.sqltool.search.SqltoolSearchForm;
 import cherry.sqlapp.db.app.mapper.MetadataMapper;
 import cherry.sqlapp.db.app.mapper.SqlCondition;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
@@ -72,7 +72,7 @@ public class MetadataServiceImpl implements MetadataService {
 
 	@Transactional
 	@Override
-	public Result search(ExecSearchForm form, String loginId, int pageNo,
+	public Result search(SqltoolSearchForm form, String loginId, int pageNo,
 			int pageSize) {
 
 		SqlCondition cond = createSqlCondition(form, loginId);
@@ -87,7 +87,7 @@ public class MetadataServiceImpl implements MetadataService {
 		return result;
 	}
 
-	private SqlCondition createSqlCondition(ExecSearchForm form, String loginId) {
+	private SqlCondition createSqlCondition(SqltoolSearchForm form, String loginId) {
 		SqlCondition cond = new SqlCondition();
 		cond.setName(stringCond(form.getName()));
 		cond.setSelect(form.isSelect());

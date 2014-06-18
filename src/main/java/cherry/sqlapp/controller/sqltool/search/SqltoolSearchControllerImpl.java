@@ -34,7 +34,7 @@ import cherry.sqlapp.service.sqltool.MetadataService;
 import cherry.sqlapp.service.sqltool.MetadataService.Result;
 
 @Controller
-public class ExecControllerImpl implements ExecController {
+public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 
 	private static final String VIEW_PATH = "secure/exec/index";
 
@@ -48,8 +48,8 @@ public class ExecControllerImpl implements ExecController {
 	private MetadataService metadataService;
 
 	@Override
-	public ExecSearchForm getForm() {
-		ExecSearchForm form = new ExecSearchForm();
+	public SqltoolSearchForm getForm() {
+		SqltoolSearchForm form = new SqltoolSearchForm();
 		form.setRegisteredFrom(LocalDate.now().minusDays(defaultFromDays)
 				.toLocalDateTime(LocalTime.MIDNIGHT));
 		return form;
@@ -63,7 +63,7 @@ public class ExecControllerImpl implements ExecController {
 	}
 
 	@Override
-	public ModelAndView request(ExecSearchForm form, BindingResult binding,
+	public ModelAndView request(SqltoolSearchForm form, BindingResult binding,
 			int pageNo, int pageSz, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {

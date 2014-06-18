@@ -31,10 +31,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import cherry.sqlapp.controller.sqltool.ExecMetadataForm;
+import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 
-@RequestMapping(ExecCsvController.URI_PATH)
-public interface ExecCsvController {
+@RequestMapping(SqltoolLoadController.URI_PATH)
+public interface SqltoolLoadController {
 
 	public static final String URI_PATH = "/sqltool/load";
 
@@ -55,10 +55,10 @@ public interface ExecCsvController {
 	public static final String PARAM_REF = "ref";
 
 	@ModelAttribute("execMetadataForm")
-	ExecMetadataForm getMetadata();
+	SqltoolMetadataForm getMetadata();
 
 	@ModelAttribute("execCsvForm")
-	ExecCsvForm getForm();
+	SqltoolLoadForm getForm();
 
 	@RequestMapping()
 	ModelAndView index(
@@ -67,7 +67,7 @@ public interface ExecCsvController {
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@Validated ExecCsvForm form, BindingResult binding,
+	ModelAndView request(@Validated SqltoolLoadForm form, BindingResult binding,
 			RedirectAttributes redirectAttributes,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
@@ -78,7 +78,7 @@ public interface ExecCsvController {
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(value = URI_PATH_REQ, params = { "proc=create" })
-	ModelAndView create(@Validated ExecCsvForm form, BindingResult binding,
+	ModelAndView create(@Validated SqltoolLoadForm form, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
@@ -89,7 +89,7 @@ public interface ExecCsvController {
 
 	@RequestMapping(URI_PATH_ID_REQ)
 	ModelAndView requestId(@PathVariable(PATH_VAR) int id,
-			@Validated ExecCsvForm form, BindingResult binding,
+			@Validated SqltoolLoadForm form, BindingResult binding,
 			RedirectAttributes redirectAttributes,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
@@ -102,13 +102,13 @@ public interface ExecCsvController {
 
 	@RequestMapping(value = URI_PATH_ID_REQ, params = { "proc=update" })
 	ModelAndView update(@PathVariable(PATH_VAR) int id,
-			@Validated ExecCsvForm form, BindingResult binding,
+			@Validated SqltoolLoadForm form, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_ID_METADATA)
 	ModelAndView metadata(@PathVariable(PATH_VAR) int id,
-			@Validated ExecMetadataForm mdForm, BindingResult binding,
+			@Validated SqltoolMetadataForm mdForm, BindingResult binding,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
