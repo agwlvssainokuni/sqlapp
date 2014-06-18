@@ -40,7 +40,7 @@ public interface SqltoolSearchController {
 
 	public static final String PARAM_SZ = "sz";
 
-	@ModelAttribute("execSearchForm")
+	@ModelAttribute("sqltoolSearchForm")
 	SqltoolSearchForm getForm();
 
 	@RequestMapping()

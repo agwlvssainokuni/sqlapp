@@ -22,72 +22,72 @@
 	});
 </script>
 <h1 class="app-subject">
-	<s:message code="secure/exec/index.message.0" />
+	<s:message code="sqltool/search/index.message.0" />
 </h1>
 <div class="app-portion accordion">
 	<h1>
-		<s:message code="secure/exec/index.message.1" />
+		<s:message code="sqltool/search/index.message.1" />
 	</h1>
 	<div>
-		<s:hasBindErrors name="execSearchForm">
+		<s:hasBindErrors name="sqltoolSearchForm">
 			<div class="ui-state-error">
-				<f:errors path="execSearchForm" element="div" />
-				<f:errors path="execSearchForm.name" element="div" />
-				<f:errors path="execSearchForm.registeredFrom" element="div" />
-				<f:errors path="execSearchForm.registeredTo" element="div" />
+				<f:errors path="sqltoolSearchForm" element="div" />
+				<f:errors path="sqltoolSearchForm.name" element="div" />
+				<f:errors path="sqltoolSearchForm.registeredFrom" element="div" />
+				<f:errors path="sqltoolSearchForm.registeredTo" element="div" />
 			</div>
 		</s:hasBindErrors>
 		<c:if test="${result != null && result.metadataList.isEmpty()}">
 			<div class="ui-state-error">
-				<s:message code="secure/exec/index.message.3" />
+				<s:message code="sqltool/search/index.message.3" />
 			</div>
 		</c:if>
 		<f:form servletRelativeAction="/sqltool/search/req" method="POST"
-			modelAttribute="execSearchForm">
+			modelAttribute="sqltoolSearchForm">
 			<input type="hidden" id="sz" name="sz"
 				value="<c:out value="${param.sz}" />">
 			<table class="app-collabel">
 				<tbody>
 					<tr>
 						<th><label for="name"><s:message
-									code="execSearchForm.name" /></label></th>
+									code="sqltoolSearchForm.name" /></label></th>
 						<td><f:input path="name" cssClass="app-width20"
 								cssErrorClass="app-width20 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<th><s:message code="secure/exec/index.form.type" /></th>
+						<th><s:message code="sqltool/search/index.form.type" /></th>
 						<td>
 							<ul class="app-flat">
 								<li><f:checkbox path="select" /><label for="select1"><s:message
-											code="secure/exec/index.form.type.select" /></label></li>
+											code="sqltool/search/index.form.type.select" /></label></li>
 								<li><f:checkbox path="any" /><label for="any1"><s:message
-											code="secure/exec/index.form.type.any" /></label></li>
+											code="sqltool/search/index.form.type.any" /></label></li>
 								<li><f:checkbox path="csv" /><label for="csv1"><s:message
-											code="secure/exec/index.form.type.csv" /></label></li>
+											code="sqltool/search/index.form.type.csv" /></label></li>
 							</ul>
 						</td>
 					</tr>
 					<tr>
-						<th><s:message code="secure/exec/index.form.published" /></th>
+						<th><s:message code="sqltool/search/index.form.published" /></th>
 						<td>
 							<ul class="app-flat">
 								<li><f:checkbox path="publish" /><label for="publish1"><s:message
-											code="secure/exec/index.form.published.public" /></label></li>
+											code="sqltool/search/index.form.published.public" /></label></li>
 								<li><f:checkbox path="notPublish" /><label
 									for="notPublish1"><s:message
-											code="secure/exec/index.form.published.private" /></label></li>
+											code="sqltool/search/index.form.published.private" /></label></li>
 							</ul>
 						</td>
 					</tr>
 					<tr>
 						<th><label for="registeredFrom"><s:message
-									code="execSearchForm.registeredFrom" /></label></th>
+									code="sqltoolSearchForm.registeredFrom" /></label></th>
 						<td><f:input path="registeredFrom" cssClass="app-width20"
 								cssErrorClass="app-width20 ui-state-error" /></td>
 					</tr>
 					<tr>
 						<th><label for="registeredTo"><s:message
-									code="execSearchForm.registeredTo" /></label></th>
+									code="sqltoolSearchForm.registeredTo" /></label></th>
 						<td><f:input path="registeredTo" cssClass="app-width20"
 								cssErrorClass="app-width20 ui-state-error" /></td>
 					</tr>
@@ -97,7 +97,7 @@
 						<td></td>
 						<td>
 							<button type="submit" class="app-button">
-								<s:message code="secure/exec/index.searchButton" />
+								<s:message code="sqltool/search/index.searchButton" />
 							</button>
 						</td>
 					</tr>
@@ -109,11 +109,11 @@
 <c:if test="${hasResultList}">
 	<div class="app-portion">
 		<h1 class="app-subject">
-			<s:message code="secure/exec/index.message.2" />
+			<s:message code="sqltool/search/index.message.2" />
 		</h1>
 		<div class="app-portion">
 			<f:form servletRelativeAction="/sqltool/search/req" method="POST"
-				modelAttribute="execSearchForm" id="execSearchWithPage"
+				modelAttribute="sqltoolSearchForm" id="sqltoolSearchWithPage"
 				class="app-pager-form">
 				<input type="hidden" id="no2" name="no">
 				<input type="hidden" id="sz2" name="sz"
@@ -138,12 +138,14 @@
 				<thead>
 					<tr>
 						<th>#</th>
-						<th><s:message code="secure/exec/index.column.name" /></th>
-						<th><s:message code="secure/exec/index.column.sqlType" /></th>
-						<th><s:message code="secure/exec/index.column.registeredAt" /></th>
-						<th><s:message code="secure/exec/index.column.publishedFlg" /></th>
-						<th><s:message code="secure/exec/index.column.ownedBy" /></th>
-						<th><s:message code="secure/exec/index.column.description" /></th>
+						<th><s:message code="sqltool/search/index.column.name" /></th>
+						<th><s:message code="sqltool/search/index.column.sqlType" /></th>
+						<th><s:message
+								code="sqltool/search/index.column.registeredAt" /></th>
+						<th><s:message
+								code="sqltool/search/index.column.publishedFlg" /></th>
+						<th><s:message code="sqltool/search/index.column.ownedBy" /></th>
+						<th><s:message code="sqltool/search/index.column.description" /></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -162,10 +164,10 @@
 							<td><c:out value="${item.registeredAt}" /></td>
 							<td><c:choose>
 									<c:when test="${item.publishedFlg ==  0}">
-										<s:message code="secure/exec/index.column.publishedFlg.0" />
+										<s:message code="sqltool/search/index.column.publishedFlg.0" />
 									</c:when>
 									<c:otherwise>
-										<s:message code="secure/exec/index.column.publishedFlg.1" />
+										<s:message code="sqltool/search/index.column.publishedFlg.1" />
 									</c:otherwise>
 								</c:choose></td>
 							<td><c:out value="${item.ownedBy}" /></td>
