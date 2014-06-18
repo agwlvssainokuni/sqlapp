@@ -1,4 +1,4 @@
-INSERT INTO sql_metadata (
+INSERT INTO sqltool_metadata (
 	sql_type,
 	name,
 	description,
@@ -13,7 +13,7 @@ VALUES (
 	1
 );
 
-INSERT INTO sql_select (
+INSERT INTO sqltool_clause (
 	id,
 	database_name,
 	select_clause,
@@ -22,7 +22,7 @@ INSERT INTO sql_select (
 	order_by_clause
 )
 VALUES (
-	(SELECT id FROM sql_metadata WHERE name = 'QueryAsyncStatus'),
+	(SELECT id FROM sqltool_metadata WHERE name = 'QueryAsyncStatus'),
 	'default',
 	'*',
 	'async_procs',

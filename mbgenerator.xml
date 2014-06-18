@@ -19,20 +19,20 @@
 			targetProject="src/main/java" />
 		<javaClientGenerator targetPackage="cherry.sqlapp.db.gen.mapper"
 			type="XMLMAPPER" targetProject="src/main/java" />
-		<table tableName="sql_metadata">
+		<table tableName="sqltool_metadata">
 			<columnOverride column="registered_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
 		</table>
-		<table tableName="sql_select">
+		<table tableName="sqltool_clause">
 			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
 		</table>
-		<table tableName="sql_any">
+		<table tableName="sqltool_statement">
 			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
 		</table>
-		<table tableName="sql_csv">
+		<table tableName="sqltool_load">
 			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
 		</table>
