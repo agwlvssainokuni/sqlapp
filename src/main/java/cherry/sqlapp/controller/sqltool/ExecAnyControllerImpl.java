@@ -39,6 +39,7 @@ import org.springframework.web.util.UriComponents;
 import cherry.sqlapp.db.gen.dto.SqlAny;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 import cherry.sqlapp.service.sqltool.AnyService;
+import cherry.sqlapp.service.sqltool.DataSourceDef;
 import cherry.sqlapp.service.sqltool.ExecService;
 import cherry.sqlapp.service.sqltool.MetadataService;
 import cherry.sqlapp.service.sqltool.ExecService.Result;

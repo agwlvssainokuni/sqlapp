@@ -57,7 +57,6 @@ import cherry.spring.common.lib.etl.Loader;
 import cherry.spring.common.lib.etl.NoneLimiter;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
-import cherry.sqlapp.controller.sqltool.DataSourceDef;
 
 @Component
 public class ImpServiceImpl implements ImpService {
