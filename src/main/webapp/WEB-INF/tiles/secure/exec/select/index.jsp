@@ -42,7 +42,7 @@
 				<f:errors path="execSelectForm.paramMap" element="div" />
 			</div>
 		</s:hasBindErrors>
-		<f:form servletRelativeAction="/secure/exec/select/req" method="POST"
+		<f:form servletRelativeAction="/sqltool/clause/req" method="POST"
 			modelAttribute="execSelectForm">
 			<input type="hidden" id="sz" name="sz"
 				value="<c:out value="${param.sz}" />">
@@ -131,7 +131,7 @@
 			<s:message code="secure/exec/select/index.message.2" />
 		</h1>
 		<div class="app-portion">
-			<f:form servletRelativeAction="/secure/exec/select/req" method="POST"
+			<f:form servletRelativeAction="/sqltool/clause/req" method="POST"
 				modelAttribute="execSelectForm" id="execSelectWithPage"
 				class="app-pager-form">
 				<input type="hidden" id="no2" name="no">

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.controller.sqltool;
+package cherry.sqlapp.controller.sqltool.clause;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
