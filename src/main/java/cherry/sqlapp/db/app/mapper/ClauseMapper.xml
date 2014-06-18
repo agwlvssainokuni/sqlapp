@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cherry.sqlapp.db.app.mapper.ClauseMapper">
-	<insert id="create" parameterType="cherry.sqlapp.db.gen.dto.SqlSelect">
-		INSERT INTO sql_select (
+	<insert id="create" parameterType="cherry.sqlapp.db.gen.dto.SqltoolClause">
+		INSERT INTO sqltool_clause (
 			id,
 			database_name,
 			select_clause,
@@ -25,8 +25,8 @@
 			#{paramMap,jdbcType=VARCHAR}
 		)
 	</insert>
-	<update id="update" parameterType="cherry.sqlapp.db.gen.dto.SqlSelect">
-		UPDATE sql_select
+	<update id="update" parameterType="cherry.sqlapp.db.gen.dto.SqltoolClause">
+		UPDATE sqltool_clause
 		SET
 			database_name = #{databaseName,jdbcType=VARCHAR},
 			select_clause = #{selectClause,jdbcType=VARCHAR},
