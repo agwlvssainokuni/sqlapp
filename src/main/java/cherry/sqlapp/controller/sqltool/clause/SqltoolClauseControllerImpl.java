@@ -22,7 +22,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -120,14 +119,11 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 			return mav;
 		}
 
-		DataSource dataSource = dataSourceDef.getDataSource(form
-				.getDatabaseName());
-
-		QueryBuilder builder = getSqlBuilder(form);
+		QueryBuilder builder = getQueryBuilder(form);
 		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
 
-		Result result = execQueryService.exec(dataSource, builder, paramMap,
-				pageNo, (pageSz <= 0 ? defaultPageSize : pageSz));
+		Result result = execQueryService.query(form.getDatabaseName(), builder,
+				paramMap, pageNo, (pageSz <= 0 ? defaultPageSize : pageSz));
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(dataSourceDef);
@@ -201,14 +197,11 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 			return mav;
 		}
 
-		DataSource dataSource = dataSourceDef.getDataSource(form
-				.getDatabaseName());
-
-		QueryBuilder builder = getSqlBuilder(form);
+		QueryBuilder builder = getQueryBuilder(form);
 		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
 
-		Result result = execQueryService.exec(dataSource, builder, paramMap,
-				pageNo, (pageSz <= 0 ? defaultPageSize : pageSz));
+		Result result = execQueryService.query(form.getDatabaseName(), builder,
+				paramMap, pageNo, (pageSz <= 0 ? defaultPageSize : pageSz));
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
@@ -288,7 +281,7 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 		return mav;
 	}
 
-	private QueryBuilder getSqlBuilder(SqltoolClauseForm form) {
+	private QueryBuilder getQueryBuilder(SqltoolClauseForm form) {
 		QueryBuilder builder = new QueryBuilder();
 		builder.setSelect(form.getSelect());
 		builder.setFrom(form.getFrom());

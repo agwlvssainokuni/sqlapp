@@ -22,7 +22,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.site.SitePreference;
@@ -116,12 +115,9 @@ public class SqltoolStatementControllerImpl implements
 			return mav;
 		}
 
-		DataSource dataSource = dataSourceDef.getDataSource(form
-				.getDatabaseName());
-
 		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
-		Result result = execQueryService.exec(dataSource, form.getSql(),
-				paramMap);
+		Result result = execQueryService.query(form.getDatabaseName(),
+				form.getSql(), paramMap);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(dataSourceDef);
@@ -191,12 +187,9 @@ public class SqltoolStatementControllerImpl implements
 			return mav;
 		}
 
-		DataSource dataSource = dataSourceDef.getDataSource(form
-				.getDatabaseName());
-
 		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
-		Result result = execQueryService.exec(dataSource, form.getSql(),
-				paramMap);
+		Result result = execQueryService.query(form.getDatabaseName(),
+				form.getSql(), paramMap);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);

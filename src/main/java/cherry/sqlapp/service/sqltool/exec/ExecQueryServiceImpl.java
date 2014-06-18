@@ -29,8 +29,12 @@ import cherry.spring.common.lib.etl.Extractor;
 import cherry.spring.common.lib.etl.NoneLimiter;
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.spring.common.lib.paginate.Paginator;
+import cherry.sqlapp.service.sqltool.DataSourceDef;
 
 public class ExecQueryServiceImpl implements ExecQueryService {
+
+	@Autowired
+	private DataSourceDef dataSourceDef;
 
 	@Autowired
 	private Extractor extractor;
@@ -40,8 +44,10 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 
 	@Transactional
 	@Override
-	public Result exec(DataSource dataSource, String sql,
-			Map<String, ?> paramMap) {
+	public Result query(String databaseName, String sql, Map<String, ?> paramMap) {
+
+		DataSource dataSource = dataSourceDef.getDataSource(databaseName);
+
 		try {
 
 			ResultSet resultSet = new ResultSet();
@@ -61,16 +67,18 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 
 	@Transactional
 	@Override
-	public Result exec(DataSource dataSource, QueryBuilder sqlBuilder,
-			Map<String, ?> paramMap, int pageNo, int pageSize) {
+	public Result query(String databaseName, QueryBuilder queryBuilder,
+			Map<String, ?> paramMap, int pageNo, int pageSz) {
 
-		int count = count(dataSource, sqlBuilder.buildCount(), paramMap);
-		PageSet pageSet = paginator.paginate(pageNo, count, pageSize);
+		DataSource dataSource = dataSourceDef.getDataSource(databaseName);
+
+		int count = count(dataSource, queryBuilder.buildCount(), paramMap);
+		PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
 
 		ResultSet resultSet = new ResultSet();
 		try {
 			int numOfItems = extractor.extract(dataSource,
-					sqlBuilder.build(pageSize, pageSet.getCurrent().getFrom()),
+					queryBuilder.build(pageSz, pageSet.getCurrent().getFrom()),
 					paramMap, resultSet, new NoneLimiter());
 			if (numOfItems != pageSet.getCurrent().getCount()) {
 				throw new IllegalStateException();

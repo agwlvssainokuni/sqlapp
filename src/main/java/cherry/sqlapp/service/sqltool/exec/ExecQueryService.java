@@ -18,13 +18,11 @@ package cherry.sqlapp.service.sqltool.exec;
 
 import java.util.Map;
 
-import javax.sql.DataSource;
-
 public interface ExecQueryService {
 
-	Result exec(DataSource dataSource, String sql, Map<String, ?> paramMap);
+	Result query(String databaseName, String sql, Map<String, ?> paramMap);
 
-	Result exec(DataSource dataSource, QueryBuilder sqlBuilder,
-			Map<String, ?> paramMap, int pageNo, int pageSize);
+	Result query(String databaseName, QueryBuilder queryBuilder,
+			Map<String, ?> paramMap, int pageNo, int pageSz);
 
 }
