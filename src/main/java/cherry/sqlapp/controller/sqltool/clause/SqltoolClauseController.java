@@ -53,10 +53,10 @@ public interface SqltoolClauseController {
 
 	public static final String PARAM_SZ = "sz";
 
-	@ModelAttribute("execMetadataForm")
+	@ModelAttribute("sqltoolMetadataForm")
 	SqltoolMetadataForm getMetadata();
 
-	@ModelAttribute("execSelectForm")
+	@ModelAttribute("sqltoolClauseForm")
 	SqltoolClauseForm getForm();
 
 	@RequestMapping()
