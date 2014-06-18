@@ -40,9 +40,9 @@ import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 import cherry.sqlapp.db.gen.dto.SqlSelect;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
-import cherry.sqlapp.service.sqltool.ExecService;
-import cherry.sqlapp.service.sqltool.ExecService.Result;
-import cherry.sqlapp.service.sqltool.SqlBuilder;
+import cherry.sqlapp.service.sqltool.exec.ExecQueryService;
+import cherry.sqlapp.service.sqltool.exec.QueryBuilder;
+import cherry.sqlapp.service.sqltool.exec.Result;
 import cherry.sqlapp.service.sqltool.metadata.MetadataService;
 import cherry.sqlapp.service.sqltool.query.ClauseService;
 
@@ -60,7 +60,7 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 	private DataSourceDef dataSourceDef;
 
 	@Autowired
-	private ExecService execService;
+	private ExecQueryService execQueryService;
 
 	@Autowired
 	private MetadataService metadataService;
@@ -123,16 +123,16 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 		DataSource dataSource = dataSourceDef.getDataSource(form
 				.getDatabaseName());
 
-		SqlBuilder builder = getSqlBuilder(form);
+		QueryBuilder builder = getSqlBuilder(form);
 		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
 
-		Result result = execService.exec(dataSource, builder, paramMap, pageNo,
-				(pageSz <= 0 ? defaultPageSize : pageSz));
+		Result result = execQueryService.exec(dataSource, builder, paramMap,
+				pageNo, (pageSz <= 0 ? defaultPageSize : pageSz));
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(dataSourceDef);
 		mav.addObject(result.getPageSet());
-		mav.addObject(result.getExecResult());
+		mav.addObject(result.getResultSet());
 		return mav;
 	}
 
@@ -204,18 +204,18 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 		DataSource dataSource = dataSourceDef.getDataSource(form
 				.getDatabaseName());
 
-		SqlBuilder builder = getSqlBuilder(form);
+		QueryBuilder builder = getSqlBuilder(form);
 		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
 
-		Result result = execService.exec(dataSource, builder, paramMap, pageNo,
-				(pageSz <= 0 ? defaultPageSize : pageSz));
+		Result result = execQueryService.exec(dataSource, builder, paramMap,
+				pageNo, (pageSz <= 0 ? defaultPageSize : pageSz));
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
 		mav.addObject(dataSourceDef);
 		mav.addObject(mdForm);
 		mav.addObject(result.getPageSet());
-		mav.addObject(result.getExecResult());
+		mav.addObject(result.getResultSet());
 		return mav;
 	}
 
@@ -288,8 +288,8 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 		return mav;
 	}
 
-	private SqlBuilder getSqlBuilder(SqltoolClauseForm form) {
-		SqlBuilder builder = new SqlBuilder();
+	private QueryBuilder getSqlBuilder(SqltoolClauseForm form) {
+		QueryBuilder builder = new QueryBuilder();
 		builder.setSelect(form.getSelect());
 		builder.setFrom(form.getFrom());
 		builder.setWhere(form.getWhere());

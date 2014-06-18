@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.service.sqltool;
+package cherry.sqlapp.service.sqltool.exec;
 
 import static java.io.File.createTempFile;
 import static java.lang.Integer.parseInt;
@@ -57,9 +57,10 @@ import cherry.spring.common.lib.etl.Loader;
 import cherry.spring.common.lib.etl.NoneLimiter;
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
+import cherry.sqlapp.service.sqltool.DataSourceDef;
 
 @Component
-public class ImpServiceImpl implements ImpService {
+public class ExecLoadServiceImpl implements ExecLoadService {
 
 	public static final String PROC_ID = "procId";
 
@@ -107,7 +108,7 @@ public class ImpServiceImpl implements ImpService {
 	@Override
 	public Map<String, String> launch(String databaseName, String sql,
 			MultipartFile file, String launcherId) {
-		String name = ImpService.class.getSimpleName();
+		String name = ExecLoadService.class.getSimpleName();
 		Integer procId = asyncProcHelper.createAsyncProc(name, launcherId);
 		try {
 			File tempFile = createFile(file);

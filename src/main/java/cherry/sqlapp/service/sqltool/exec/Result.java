@@ -14,17 +14,33 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.service.sqltool;
+package cherry.sqlapp.service.sqltool.exec;
 
-import java.util.Map;
+import cherry.spring.common.lib.paginate.PageSet;
+import cherry.sqlapp.db.BaseDto;
 
-import org.springframework.web.multipart.MultipartFile;
+public class Result extends BaseDto {
 
-public interface ImpService {
+	private static final long serialVersionUID = 1L;
 
-	Map<String, String> launch(String databaseName, String sql,
-			MultipartFile file, String launcherId);
+	private PageSet pageSet;
 
-	void handle(Map<String, String> message);
+	private ResultSet resultSet;
+
+	public PageSet getPageSet() {
+		return pageSet;
+	}
+
+	public void setPageSet(PageSet pageSet) {
+		this.pageSet = pageSet;
+	}
+
+	public ResultSet getResultSet() {
+		return resultSet;
+	}
+
+	public void setResultSet(ResultSet resultSet) {
+		this.resultSet = resultSet;
+	}
 
 }

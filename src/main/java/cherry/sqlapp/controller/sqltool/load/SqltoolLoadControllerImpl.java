@@ -39,7 +39,7 @@ import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 import cherry.sqlapp.db.gen.dto.SqlCsv;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
-import cherry.sqlapp.service.sqltool.ImpService;
+import cherry.sqlapp.service.sqltool.exec.ExecLoadService;
 import cherry.sqlapp.service.sqltool.metadata.MetadataService;
 import cherry.sqlapp.service.sqltool.query.LoadService;
 
@@ -60,7 +60,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 	private DataSourceDef dataSourceDef;
 
 	@Autowired
-	private ImpService impService;
+	private ExecLoadService execLoadService;
 
 	@Autowired
 	private MetadataService metadataService;
@@ -117,7 +117,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			return mav;
 		}
 
-		Map<String, String> asyncParam = impService.launch(
+		Map<String, String> asyncParam = execLoadService.launch(
 				form.getDatabaseName(), form.getSql(), form.getFile(),
 				authentication.getName());
 		redirectAttributes.addFlashAttribute(ASYNC_PARAM, asyncParam);
@@ -199,7 +199,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			return mav;
 		}
 
-		Map<String, String> asyncParam = impService.launch(
+		Map<String, String> asyncParam = execLoadService.launch(
 				form.getDatabaseName(), form.getSql(), form.getFile(),
 				authentication.getName());
 		redirectAttributes.addFlashAttribute(ASYNC_PARAM, asyncParam);

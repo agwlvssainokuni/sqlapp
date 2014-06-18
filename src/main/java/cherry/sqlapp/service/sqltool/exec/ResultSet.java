@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.service.sqltool;
+package cherry.sqlapp.service.sqltool.exec;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,7 +25,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import cherry.spring.common.lib.etl.Column;
 import cherry.spring.common.lib.etl.Consumer;
 
-public class ExecResult implements Consumer {
+public class ResultSet implements Consumer {
 
 	private Column[] header;
 

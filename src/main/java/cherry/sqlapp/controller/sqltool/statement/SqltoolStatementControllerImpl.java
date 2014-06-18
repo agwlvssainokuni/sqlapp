@@ -39,8 +39,8 @@ import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 import cherry.sqlapp.db.gen.dto.SqlAny;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
-import cherry.sqlapp.service.sqltool.ExecService;
-import cherry.sqlapp.service.sqltool.ExecService.Result;
+import cherry.sqlapp.service.sqltool.exec.ExecQueryService;
+import cherry.sqlapp.service.sqltool.exec.Result;
 import cherry.sqlapp.service.sqltool.metadata.MetadataService;
 import cherry.sqlapp.service.sqltool.query.StatementService;
 
@@ -56,7 +56,7 @@ public class SqltoolStatementControllerImpl implements
 	private DataSourceDef dataSourceDef;
 
 	@Autowired
-	private ExecService execService;
+	private ExecQueryService execQueryService;
 
 	@Autowired
 	private MetadataService metadataService;
@@ -120,12 +120,13 @@ public class SqltoolStatementControllerImpl implements
 				.getDatabaseName());
 
 		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
-		Result result = execService.exec(dataSource, form.getSql(), paramMap);
+		Result result = execQueryService.exec(dataSource, form.getSql(),
+				paramMap);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(dataSourceDef);
 		mav.addObject(result.getPageSet());
-		mav.addObject(result.getExecResult());
+		mav.addObject(result.getResultSet());
 		return mav;
 	}
 
@@ -194,14 +195,15 @@ public class SqltoolStatementControllerImpl implements
 				.getDatabaseName());
 
 		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
-		Result result = execService.exec(dataSource, form.getSql(), paramMap);
+		Result result = execQueryService.exec(dataSource, form.getSql(),
+				paramMap);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
 		mav.addObject(dataSourceDef);
 		mav.addObject(mdForm);
 		mav.addObject(result.getPageSet());
-		mav.addObject(result.getExecResult());
+		mav.addObject(result.getResultSet());
 		return mav;
 	}
 

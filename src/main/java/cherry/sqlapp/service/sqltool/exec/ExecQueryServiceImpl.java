@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.service.sqltool;
+package cherry.sqlapp.service.sqltool.exec;
 
 import java.io.IOException;
 import java.util.Map;
@@ -30,7 +30,7 @@ import cherry.spring.common.lib.etl.NoneLimiter;
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.spring.common.lib.paginate.Paginator;
 
-public class ExecServiceImpl implements ExecService {
+public class ExecQueryServiceImpl implements ExecQueryService {
 
 	@Autowired
 	private Extractor extractor;
@@ -44,15 +44,15 @@ public class ExecServiceImpl implements ExecService {
 			Map<String, ?> paramMap) {
 		try {
 
-			ExecResult execResult = new ExecResult();
+			ResultSet resultSet = new ResultSet();
 			int numOfItems = extractor.extract(dataSource, sql, paramMap,
-					execResult, new NoneLimiter());
+					resultSet, new NoneLimiter());
 			PageSet pageSet = paginator.paginate(0, numOfItems,
 					(numOfItems <= 0 ? 1 : numOfItems));
 
 			Result result = new Result();
 			result.setPageSet(pageSet);
-			result.setExecResult(execResult);
+			result.setResultSet(resultSet);
 			return result;
 		} catch (IOException ex) {
 			throw new IllegalStateException(ex);
@@ -61,17 +61,17 @@ public class ExecServiceImpl implements ExecService {
 
 	@Transactional
 	@Override
-	public Result exec(DataSource dataSource, SqlBuilder sqlBuilder,
+	public Result exec(DataSource dataSource, QueryBuilder sqlBuilder,
 			Map<String, ?> paramMap, int pageNo, int pageSize) {
 
 		int count = count(dataSource, sqlBuilder.buildCount(), paramMap);
 		PageSet pageSet = paginator.paginate(pageNo, count, pageSize);
 
-		ExecResult execResult = new ExecResult();
+		ResultSet resultSet = new ResultSet();
 		try {
 			int numOfItems = extractor.extract(dataSource,
 					sqlBuilder.build(pageSize, pageSet.getCurrent().getFrom()),
-					paramMap, execResult, new NoneLimiter());
+					paramMap, resultSet, new NoneLimiter());
 			if (numOfItems != pageSet.getCurrent().getCount()) {
 				throw new IllegalStateException();
 			}
@@ -81,7 +81,7 @@ public class ExecServiceImpl implements ExecService {
 
 		Result result = new Result();
 		result.setPageSet(pageSet);
-		result.setExecResult(execResult);
+		result.setResultSet(resultSet);
 		return result;
 	}
 
