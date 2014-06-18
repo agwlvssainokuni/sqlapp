@@ -224,7 +224,7 @@ public class SqltoolStatementControllerImpl implements
 
 		SqlAny record = new SqlAny();
 		record.setId(id);
-		record.setDatabaseName(record.getDatabaseName());
+		record.setDatabaseName(form.getDatabaseName());
 		record.setQuery(form.getSql());
 		record.setParamMap(form.getParamMap());
 

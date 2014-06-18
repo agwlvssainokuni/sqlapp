@@ -62,14 +62,16 @@ public interface SqltoolStatementController {
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@Validated SqltoolStatementForm form, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+	ModelAndView request(@Validated SqltoolStatementForm form,
+			BindingResult binding, Authentication authentication,
+			Locale locale, SitePreference sitePreference,
+			HttpServletRequest request);
 
 	@RequestMapping(value = URI_PATH_REQ, params = { "proc=create" })
-	ModelAndView create(@Validated SqltoolStatementForm form, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+	ModelAndView create(@Validated SqltoolStatementForm form,
+			BindingResult binding, Authentication authentication,
+			Locale locale, SitePreference sitePreference,
+			HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_ID)
 	ModelAndView indexId(@PathVariable(PATH_VAR) int id,

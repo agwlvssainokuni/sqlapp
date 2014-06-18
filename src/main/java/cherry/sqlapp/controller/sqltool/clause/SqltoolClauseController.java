@@ -75,9 +75,10 @@ public interface SqltoolClauseController {
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(value = URI_PATH_REQ, params = { "proc=create" })
-	ModelAndView create(@Validated SqltoolClauseForm form, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+	ModelAndView create(@Validated SqltoolClauseForm form,
+			BindingResult binding, Authentication authentication,
+			Locale locale, SitePreference sitePreference,
+			HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_ID)
 	ModelAndView indexId(@PathVariable(PATH_VAR) int id,

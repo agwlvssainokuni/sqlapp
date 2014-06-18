@@ -67,8 +67,8 @@ public interface SqltoolLoadController {
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@Validated SqltoolLoadForm form, BindingResult binding,
-			RedirectAttributes redirectAttributes,
+	ModelAndView request(@Validated SqltoolLoadForm form,
+			BindingResult binding, RedirectAttributes redirectAttributes,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
