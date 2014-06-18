@@ -80,4 +80,5 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 		mav.addObject(result);
 		return mav;
 	}
+
 }

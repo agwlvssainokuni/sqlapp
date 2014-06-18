@@ -34,6 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
+import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 import cherry.sqlapp.db.gen.dto.SqlCsv;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
@@ -67,6 +68,12 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 	@Autowired
 	private CsvService csvService;
 
+	@Autowired
+	private FormUtil formUtil;
+
+	@Autowired
+	private MdFormUtil mdFormUtil;
+
 	@Override
 	public SqltoolMetadataForm getMetadata() {
 		return new SqltoolMetadataForm();
@@ -91,7 +98,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			if (md != null) {
 				SqlCsv record = csvService.findById(ref);
 				if (record != null) {
-					mav.addObject(getForm(record));
+					mav.addObject(formUtil.getForm(record));
 				}
 			}
 		}
@@ -162,10 +169,10 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			HttpServletRequest request) {
 
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
-		SqltoolMetadataForm mdForm = getMdForm(md);
+		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		SqlCsv record = csvService.findById(id);
-		SqltoolLoadForm form = getForm(record);
+		SqltoolLoadForm form = formUtil.getForm(record);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
@@ -182,7 +189,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			SitePreference sitePreference, HttpServletRequest request) {
 
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
-		SqltoolMetadataForm mdForm = getMdForm(md);
+		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -217,12 +224,13 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 	}
 
 	@Override
-	public ModelAndView update(int id, SqltoolLoadForm form, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+	public ModelAndView update(int id, SqltoolLoadForm form,
+			BindingResult binding, Authentication authentication,
+			Locale locale, SitePreference sitePreference,
+			HttpServletRequest request) {
 
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
-		SqltoolMetadataForm mdForm = getMdForm(md);
+		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -253,7 +261,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			HttpServletRequest request) {
 
 		SqlCsv record = csvService.findById(id);
-		SqltoolLoadForm form = getForm(record);
+		SqltoolLoadForm form = formUtil.getForm(record);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -276,22 +284,6 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uri.toUriString(), true));
 		return mav;
-	}
-
-	private SqltoolMetadataForm getMdForm(SqlMetadata record) {
-		SqltoolMetadataForm mdForm = getMetadata();
-		mdForm.setName(record.getName());
-		mdForm.setDescription(record.getDescription());
-		mdForm.setOwnedBy(record.getOwnedBy());
-		mdForm.setPublishedFlg(record.getPublishedFlg() != 0);
-		return mdForm;
-	}
-
-	private SqltoolLoadForm getForm(SqlCsv record) {
-		SqltoolLoadForm form = getForm();
-		form.setDatabaseName(record.getDatabaseName());
-		form.setSql(record.getQuery());
-		return form;
 	}
 
 }

@@ -18,15 +18,12 @@ package cherry.sqlapp.controller.sqltool.clause;
 
 import static org.springframework.web.util.UriComponentsBuilder.fromPath;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.site.SitePreference;
@@ -37,19 +34,17 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
+import cherry.sqlapp.controller.sqltool.MdFormUtil;
+import cherry.sqlapp.controller.sqltool.ParamMapUtil;
 import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 import cherry.sqlapp.db.gen.dto.SqlSelect;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
 import cherry.sqlapp.service.sqltool.ExecService;
+import cherry.sqlapp.service.sqltool.ExecService.Result;
 import cherry.sqlapp.service.sqltool.MetadataService;
 import cherry.sqlapp.service.sqltool.SelectService;
 import cherry.sqlapp.service.sqltool.SqlBuilder;
-import cherry.sqlapp.service.sqltool.ExecService.Result;
-
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 
 @Controller
 public class SqltoolClauseControllerImpl implements SqltoolClauseController {
@@ -73,7 +68,14 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 	@Autowired
 	private SelectService selectService;
 
-	private ObjectMapper objectMapper = new ObjectMapper();
+	@Autowired
+	private FormUtil formUtil;
+
+	@Autowired
+	private MdFormUtil mdFormUtil;
+
+	@Autowired
+	private ParamMapUtil paramMapUtil;
 
 	@Override
 	public SqltoolMetadataForm getMetadata() {
@@ -99,7 +101,7 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 			if (md != null) {
 				SqlSelect record = selectService.findById(ref);
 				if (record != null) {
-					mav.addObject(getForm(record));
+					mav.addObject(formUtil.getForm(record));
 				}
 			}
 		}
@@ -122,7 +124,7 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 				.getDatabaseName());
 
 		SqlBuilder builder = getSqlBuilder(form);
-		Map<String, ?> paramMap = getParamMap(form.getParamMap());
+		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
 
 		Result result = execService.exec(dataSource, builder, paramMap, pageNo,
 				(pageSz <= 0 ? defaultPageSize : pageSz));
@@ -169,10 +171,10 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 			HttpServletRequest request) {
 
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
-		SqltoolMetadataForm mdForm = getMdForm(md);
+		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		SqlSelect record = selectService.findById(id);
-		SqltoolClauseForm form = getForm(record);
+		SqltoolClauseForm form = formUtil.getForm(record);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
@@ -189,7 +191,7 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 			SitePreference sitePreference, HttpServletRequest request) {
 
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
-		SqltoolMetadataForm mdForm = getMdForm(md);
+		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -203,7 +205,7 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 				.getDatabaseName());
 
 		SqlBuilder builder = getSqlBuilder(form);
-		Map<String, ?> paramMap = getParamMap(form.getParamMap());
+		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
 
 		Result result = execService.exec(dataSource, builder, paramMap, pageNo,
 				(pageSz <= 0 ? defaultPageSize : pageSz));
@@ -224,7 +226,7 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 			HttpServletRequest request) {
 
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
-		SqltoolMetadataForm mdForm = getMdForm(md);
+		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -261,7 +263,7 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 			HttpServletRequest request) {
 
 		SqlSelect record = selectService.findById(id);
-		SqltoolClauseForm form = getForm(record);
+		SqltoolClauseForm form = formUtil.getForm(record);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -295,41 +297,6 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 		builder.setHaving(form.getHaving());
 		builder.setOrderBy(form.getOrderBy());
 		return builder;
-	}
-
-	private SqltoolMetadataForm getMdForm(SqlMetadata record) {
-		SqltoolMetadataForm mdForm = getMetadata();
-		mdForm.setName(record.getName());
-		mdForm.setDescription(record.getDescription());
-		mdForm.setOwnedBy(record.getOwnedBy());
-		mdForm.setPublishedFlg(record.getPublishedFlg() != 0);
-		return mdForm;
-	}
-
-	private SqltoolClauseForm getForm(SqlSelect record) {
-		SqltoolClauseForm form = getForm();
-		form.setDatabaseName(record.getDatabaseName());
-		form.setSelect(record.getSelectClause());
-		form.setFrom(record.getFromClause());
-		form.setWhere(record.getWhereClause());
-		form.setGroupBy(record.getGroupByClause());
-		form.setHaving(record.getHavingClause());
-		form.setOrderBy(record.getOrderByClause());
-		form.setParamMap(record.getParamMap());
-		return form;
-	}
-
-	private Map<String, ?> getParamMap(String pmap) {
-		if (StringUtils.isBlank(pmap)) {
-			return new HashMap<>();
-		}
-		try {
-			JavaType type = TypeFactory.defaultInstance().constructMapType(
-					Map.class, String.class, Object.class);
-			return objectMapper.readValue(pmap, type);
-		} catch (IOException ex) {
-			return new HashMap<>();
-		}
 	}
 
 }

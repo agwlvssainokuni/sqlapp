@@ -18,15 +18,12 @@ package cherry.sqlapp.controller.sqltool.statement;
 
 import static org.springframework.web.util.UriComponentsBuilder.fromPath;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
@@ -36,21 +33,20 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
+import cherry.sqlapp.controller.sqltool.MdFormUtil;
+import cherry.sqlapp.controller.sqltool.ParamMapUtil;
 import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 import cherry.sqlapp.db.gen.dto.SqlAny;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 import cherry.sqlapp.service.sqltool.AnyService;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
 import cherry.sqlapp.service.sqltool.ExecService;
-import cherry.sqlapp.service.sqltool.MetadataService;
 import cherry.sqlapp.service.sqltool.ExecService.Result;
-
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
+import cherry.sqlapp.service.sqltool.MetadataService;
 
 @Controller
-public class SqltoolStatementControllerImpl implements SqltoolStatementController {
+public class SqltoolStatementControllerImpl implements
+		SqltoolStatementController {
 
 	public static final String VIEW_PATH = "secure/exec/any/index";
 
@@ -68,7 +64,14 @@ public class SqltoolStatementControllerImpl implements SqltoolStatementControlle
 	@Autowired
 	private AnyService anyService;
 
-	private ObjectMapper objectMapper = new ObjectMapper();
+	@Autowired
+	private FormUtil formUtil;
+
+	@Autowired
+	private MdFormUtil mdFormUtil;
+
+	@Autowired
+	private ParamMapUtil paramMapUtil;
 
 	@Override
 	public SqltoolMetadataForm getMetadata() {
@@ -94,7 +97,7 @@ public class SqltoolStatementControllerImpl implements SqltoolStatementControlle
 			if (md != null) {
 				SqlAny record = anyService.findById(ref);
 				if (record != null) {
-					mav.addObject(getForm(record));
+					mav.addObject(formUtil.getForm(record));
 				}
 			}
 		}
@@ -102,9 +105,10 @@ public class SqltoolStatementControllerImpl implements SqltoolStatementControlle
 	}
 
 	@Override
-	public ModelAndView request(SqltoolStatementForm form, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+	public ModelAndView request(SqltoolStatementForm form,
+			BindingResult binding, Authentication authentication,
+			Locale locale, SitePreference sitePreference,
+			HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
@@ -115,7 +119,7 @@ public class SqltoolStatementControllerImpl implements SqltoolStatementControlle
 		DataSource dataSource = dataSourceDef.getDataSource(form
 				.getDatabaseName());
 
-		Map<String, ?> paramMap = getParamMap(form.getParamMap());
+		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
 		Result result = execService.exec(dataSource, form.getSql(), paramMap);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
@@ -126,9 +130,10 @@ public class SqltoolStatementControllerImpl implements SqltoolStatementControlle
 	}
 
 	@Override
-	public ModelAndView create(SqltoolStatementForm form, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+	public ModelAndView create(SqltoolStatementForm form,
+			BindingResult binding, Authentication authentication,
+			Locale locale, SitePreference sitePreference,
+			HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
@@ -155,10 +160,10 @@ public class SqltoolStatementControllerImpl implements SqltoolStatementControlle
 			HttpServletRequest request) {
 
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
-		SqltoolMetadataForm mdForm = getMdForm(md);
+		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		SqlAny record = anyService.findById(id);
-		SqltoolStatementForm form = getForm(record);
+		SqltoolStatementForm form = formUtil.getForm(record);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
 		mav.addObject(PATH_VAR, id);
@@ -175,7 +180,7 @@ public class SqltoolStatementControllerImpl implements SqltoolStatementControlle
 			HttpServletRequest request) {
 
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
-		SqltoolMetadataForm mdForm = getMdForm(md);
+		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -188,7 +193,7 @@ public class SqltoolStatementControllerImpl implements SqltoolStatementControlle
 		DataSource dataSource = dataSourceDef.getDataSource(form
 				.getDatabaseName());
 
-		Map<String, ?> paramMap = getParamMap(form.getParamMap());
+		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
 		Result result = execService.exec(dataSource, form.getSql(), paramMap);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -201,12 +206,13 @@ public class SqltoolStatementControllerImpl implements SqltoolStatementControlle
 	}
 
 	@Override
-	public ModelAndView update(int id, SqltoolStatementForm form, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+	public ModelAndView update(int id, SqltoolStatementForm form,
+			BindingResult binding, Authentication authentication,
+			Locale locale, SitePreference sitePreference,
+			HttpServletRequest request) {
 
 		SqlMetadata md = metadataService.findById(id, authentication.getName());
-		SqltoolMetadataForm mdForm = getMdForm(md);
+		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -238,7 +244,7 @@ public class SqltoolStatementControllerImpl implements SqltoolStatementControlle
 			HttpServletRequest request) {
 
 		SqlAny record = anyService.findById(id);
-		SqltoolStatementForm form = getForm(record);
+		SqltoolStatementForm form = formUtil.getForm(record);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH_ID);
@@ -261,36 +267,6 @@ public class SqltoolStatementControllerImpl implements SqltoolStatementControlle
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uri.toUriString(), true));
 		return mav;
-	}
-
-	private SqltoolMetadataForm getMdForm(SqlMetadata record) {
-		SqltoolMetadataForm mdForm = getMetadata();
-		mdForm.setName(record.getName());
-		mdForm.setDescription(record.getDescription());
-		mdForm.setOwnedBy(record.getOwnedBy());
-		mdForm.setPublishedFlg(record.getPublishedFlg() != 0);
-		return mdForm;
-	}
-
-	private SqltoolStatementForm getForm(SqlAny record) {
-		SqltoolStatementForm form = getForm();
-		form.setDatabaseName(record.getDatabaseName());
-		form.setSql(record.getQuery());
-		form.setParamMap(record.getParamMap());
-		return form;
-	}
-
-	private Map<String, ?> getParamMap(String pmap) {
-		if (StringUtils.isBlank(pmap)) {
-			return new HashMap<>();
-		}
-		try {
-			JavaType type = TypeFactory.defaultInstance().constructMapType(
-					Map.class, String.class, Object.class);
-			return objectMapper.readValue(pmap, type);
-		} catch (IOException ex) {
-			return new HashMap<>();
-		}
 	}
 
 }
