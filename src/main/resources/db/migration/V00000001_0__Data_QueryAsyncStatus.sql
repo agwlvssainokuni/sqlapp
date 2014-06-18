@@ -6,7 +6,7 @@ INSERT INTO sql_metadata (
 	published_flg
 )
 VALUES (
-	'select',
+	'clause',
 	'QueryAsyncStatus',
 	'QUERY ASYNC STATUS',
 	'administrator',

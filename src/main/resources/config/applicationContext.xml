@@ -25,7 +25,7 @@
 	<context:component-scan base-package="cherry.spring" />
 	<context:component-scan base-package="cherry.sqlapp" />
 
-	<bean id="dataSourceDef" class="cherry.sqlapp.controller.secure.exec.DataSourceDefImpl">
+	<bean id="dataSourceDef" class="cherry.sqlapp.service.sqltool.DataSourceDefImpl">
 		<property name="defaultName" value="default" />
 		<property name="dataSourceMap">
 			<map key-type="java.lang.String" value-type="javax.sql.DataSource">
@@ -35,12 +35,12 @@
 		</property>
 	</bean>
 
-	<bean id="execServiceTarget" class="cherry.sqlapp.service.secure.exec.ExecServiceImpl"
+	<bean id="execQueryServiceTarget" class="cherry.sqlapp.service.sqltool.exec.ExecQueryServiceImpl"
 		scope="prototype" />
-	<bean id="execService" class="org.springframework.aop.framework.ProxyFactoryBean">
+	<bean id="execQueryService" class="org.springframework.aop.framework.ProxyFactoryBean">
 		<property name="targetSource">
 			<bean class="org.springframework.aop.target.CommonsPoolTargetSource">
-				<property name="targetBeanName" value="execServiceTarget" />
+				<property name="targetBeanName" value="execQueryServiceTarget" />
 				<property name="maxSize" value="10" />
 			</bean>
 		</property>
@@ -51,6 +51,7 @@
 		<property name="basenames">
 			<list>
 				<value>message/error</value>
+				<value>message/form</value>
 				<value>message/page</value>
 			</list>
 		</property>
@@ -158,6 +159,8 @@
 		authentication-manager-ref="authenticationManager">
 		<security:intercept-url pattern="/secure/**"
 			access="IS_AUTHENTICATED_FULLY" />
+		<security:intercept-url pattern="/sqltool/**"
+			access="IS_AUTHENTICATED_FULLY" />
 		<security:form-login login-page="/login"
 			login-processing-url="/login/req" authentication-failure-url="/login?err=login"
 			default-target-url="/secure/" always-use-default-target="false"
@@ -172,6 +175,7 @@
 			<mvc:mapping path="/login/**" />
 			<mvc:mapping path="/logout/**" />
 			<mvc:mapping path="/secure/**" />
+			<mvc:mapping path="/sqltool/**" />
 			<bean class="cherry.spring.common.log.web.OperationLogHandlerInterceptor" />
 		</mvc:interceptor>
 		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
@@ -262,7 +266,7 @@
 	<jms:listener-container destination-resolver="destinationResolver"
 		task-executor="taskExecutor">
 		<jms:listener destination="${sqlapp.app.import.queue}"
-			ref="impServiceImpl" method="handle" />
+			ref="execLoadServiceImpl" method="handle" />
 	</jms:listener-container>
 
 	<bean id="transactionManager"

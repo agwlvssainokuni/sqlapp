@@ -9,17 +9,11 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <h1 class="app-subject">
-	<s:message code="secure/home/index.message.0" />
+	<s:message code="sqltool/load/finish.message.0" />
 </h1>
-<div class="app-portion">
-	<ul>
-		<li><a href="<c:url value="/sqltool/search" />"><s:message
-					code="secure/home/index.menu.search" /></a></li>
-		<li><a href="<c:url value="/sqltool/clause" />"><s:message
-					code="secure/home/index.menu.execSelect" /></a></li>
-		<li><a href="<c:url value="/sqltool/statement" />"><s:message
-					code="secure/home/index.menu.execAny" /></a></li>
-		<li><a href="<c:url value="/sqltool/load" />"><s:message
-					code="secure/home/index.menu.execCsv" /></a></li>
-	</ul>
+<div class="app-portion ui-state-highlight">
+	<div>
+		<s:message code="sqltool/load/finish.message.1"
+			arguments="${asyncParam.procId}" />
+	</div>
 </div>

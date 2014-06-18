@@ -16,25 +16,12 @@
 
 package cherry.sqlapp.db.app.mapper;
 
-import java.util.List;
+import cherry.sqlapp.db.gen.dto.SqltoolStatement;
 
-import org.apache.ibatis.annotations.Param;
+public interface StatementMapper {
 
-import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
+	int create(SqltoolStatement record);
 
-public interface MetadataMapper {
-
-	int createClause(SqltoolMetadata record);
-
-	int createStatement(SqltoolMetadata record);
-
-	int createLoad(SqltoolMetadata record);
-
-	int update(SqltoolMetadata record);
-
-	int count(@Param("cond") MetadataCondition cond);
-
-	List<SqltoolMetadata> search(@Param("cond") MetadataCondition cond,
-			@Param("limit") int limit, @Param("offset") int offset);
+	int update(SqltoolStatement record);
 
 }

@@ -14,27 +14,17 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.db.app.mapper;
+package cherry.sqlapp.service.sqltool.exec;
 
-import java.util.List;
+import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
 
-import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
+public interface ExecLoadService {
 
-public interface MetadataMapper {
+	Map<String, String> launch(String databaseName, String sql,
+			MultipartFile file, String launcherId);
 
-	int createClause(SqltoolMetadata record);
-
-	int createStatement(SqltoolMetadata record);
-
-	int createLoad(SqltoolMetadata record);
-
-	int update(SqltoolMetadata record);
-
-	int count(@Param("cond") MetadataCondition cond);
-
-	List<SqltoolMetadata> search(@Param("cond") MetadataCondition cond,
-			@Param("limit") int limit, @Param("offset") int offset);
+	void handle(Map<String, String> message);
 
 }

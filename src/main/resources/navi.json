@@ -3,40 +3,40 @@
 	"uri": "/secure/",
 	"children": [
 		{
-			"name": "secure/exec/index",
-			"uri": "/secure/exec"
+			"name": "sqltool/search/index",
+			"uri": "/sqltool/search"
 		},
 		{
-			"name": "secure/exec/select/index",
-			"uri": "/secure/exec/select"
+			"name": "sqltool/clause/index",
+			"uri": "/sqltool/clause"
 		},
 		{
-			"name": "secure/exec/select/indexId",
-			"uri": "/secure/exec/select/{id}"
+			"name": "sqltool/clause/indexId",
+			"uri": "/sqltool/clause/{id}"
 		},
 		{
-			"name": "secure/exec/any/index",
-			"uri": "/secure/exec/any"
+			"name": "sqltool/statement/index",
+			"uri": "/sqltool/statement"
 		},
 		{
-			"name": "secure/exec/any/indexId",
-			"uri": "/secure/exec/any/{id}"
+			"name": "sqltool/statement/indexId",
+			"uri": "/sqltool/statement/{id}"
 		},
 		{
-			"name": "secure/exec/csv/index",
-			"uri": "/secure/exec/csv"
+			"name": "sqltool/load/index",
+			"uri": "/sqltool/load"
 		},
 		{
-			"name": "secure/exec/csv/finish",
-			"uri": "/secure/exec/csv"
+			"name": "sqltool/load/finish",
+			"uri": "/sqltool/load"
 		},
 		{
-			"name": "secure/exec/csv/indexId",
-			"uri": "/secure/exec/csv/{id}"
+			"name": "sqltool/load/indexId",
+			"uri": "/sqltool/load/{id}"
 		},
 		{
-			"name": "secure/exec/csv/finishId",
-			"uri": "/secure/exec/csv/{id}"
+			"name": "sqltool/load/finishId",
+			"uri": "/sqltool/load/{id}"
 		}
 	]
 }

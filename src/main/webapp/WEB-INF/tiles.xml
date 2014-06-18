@@ -16,4 +16,10 @@
 			value="/WEB-INF/tiles/secure/{1}.jsp" />
 	</definition>
 
+	<definition name="sqltool/**" template="/WEB-INF/tiles/base_auth.jsp">
+		<put-attribute name="name" value="sqltool/{1}" />
+		<put-attribute name="content"
+			value="/WEB-INF/tiles/sqltool/{1}.jsp" />
+	</definition>
+
 </tiles-definitions>

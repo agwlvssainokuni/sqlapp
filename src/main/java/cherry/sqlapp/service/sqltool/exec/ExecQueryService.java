@@ -14,27 +14,15 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.db.app.mapper;
+package cherry.sqlapp.service.sqltool.exec;
 
-import java.util.List;
+import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
+public interface ExecQueryService {
 
-import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
+	Result query(String databaseName, String sql, Map<String, ?> paramMap);
 
-public interface MetadataMapper {
-
-	int createClause(SqltoolMetadata record);
-
-	int createStatement(SqltoolMetadata record);
-
-	int createLoad(SqltoolMetadata record);
-
-	int update(SqltoolMetadata record);
-
-	int count(@Param("cond") MetadataCondition cond);
-
-	List<SqltoolMetadata> search(@Param("cond") MetadataCondition cond,
-			@Param("limit") int limit, @Param("offset") int offset);
+	Result query(String databaseName, QueryBuilder queryBuilder,
+			Map<String, ?> paramMap, int pageNo, int pageSz);
 
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cherry.sqlapp.db.app.mapper.ClauseMapper">
+	<insert id="create" parameterType="cherry.sqlapp.db.gen.dto.SqlSelect">
+		INSERT INTO sql_select (
+			id,
+			database_name,
+			select_clause,
+			from_clause,
+			where_clause,
+			group_by_clause,
+			having_clause,
+			order_by_clause,
+			param_map
+		)
+		VALUES (
+			#{id,jdbcType=INTEGER},
+			#{databaseName,jdbcType=VARCHAR},
+			#{selectClause,jdbcType=VARCHAR},
+			#{fromClause,jdbcType=VARCHAR},
+			#{whereClause,jdbcType=VARCHAR},
+			#{groupByClause,jdbcType=VARCHAR},
+			#{havingClause,jdbcType=VARCHAR},
+			#{orderByClause,jdbcType=VARCHAR},
+			#{paramMap,jdbcType=VARCHAR}
+		)
+	</insert>
+	<update id="update" parameterType="cherry.sqlapp.db.gen.dto.SqlSelect">
+		UPDATE sql_select
+		SET
+			database_name = #{databaseName,jdbcType=VARCHAR},
+			select_clause = #{selectClause,jdbcType=VARCHAR},
+			from_clause = #{fromClause,jdbcType=VARCHAR},
+			where_clause = #{whereClause,jdbcType=VARCHAR},
+			group_by_clause = #{groupByClause,jdbcType=VARCHAR},
+			having_clause = #{havingClause,jdbcType=VARCHAR},
+			order_by_clause = #{orderByClause,jdbcType=VARCHAR},
+			param_map = #{paramMap,jdbcType=VARCHAR},
+			updated_at = CURRENT_TIMESTAMP
+		WHERE
+			id = #{id,jdbcType=INTEGER}
+			AND
+			deleted_flg = 0
+	</update>
+</mapper>

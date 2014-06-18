@@ -14,27 +14,21 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.db.app.mapper;
+package cherry.sqlapp.controller.sqltool.statement;
 
-import java.util.List;
+import org.springframework.stereotype.Component;
 
-import org.apache.ibatis.annotations.Param;
+import cherry.sqlapp.db.gen.dto.SqltoolStatement;
 
-import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
+@Component("statementFormUtil")
+public class FormUtil {
 
-public interface MetadataMapper {
-
-	int createClause(SqltoolMetadata record);
-
-	int createStatement(SqltoolMetadata record);
-
-	int createLoad(SqltoolMetadata record);
-
-	int update(SqltoolMetadata record);
-
-	int count(@Param("cond") MetadataCondition cond);
-
-	List<SqltoolMetadata> search(@Param("cond") MetadataCondition cond,
-			@Param("limit") int limit, @Param("offset") int offset);
+	public SqltoolStatementForm getForm(SqltoolStatement record) {
+		SqltoolStatementForm form = new SqltoolStatementForm();
+		form.setDatabaseName(record.getDatabaseName());
+		form.setSql(record.getQuery());
+		form.setParamMap(record.getParamMap());
+		return form;
+	}
 
 }

@@ -14,27 +14,33 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.db.app.mapper;
+package cherry.sqlapp.service.sqltool.exec;
 
-import java.util.List;
+import cherry.spring.common.lib.paginate.PageSet;
+import cherry.sqlapp.db.BaseDto;
 
-import org.apache.ibatis.annotations.Param;
+public class Result extends BaseDto {
 
-import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
+	private static final long serialVersionUID = 1L;
 
-public interface MetadataMapper {
+	private PageSet pageSet;
 
-	int createClause(SqltoolMetadata record);
+	private ResultSet resultSet;
 
-	int createStatement(SqltoolMetadata record);
+	public PageSet getPageSet() {
+		return pageSet;
+	}
 
-	int createLoad(SqltoolMetadata record);
+	public void setPageSet(PageSet pageSet) {
+		this.pageSet = pageSet;
+	}
 
-	int update(SqltoolMetadata record);
+	public ResultSet getResultSet() {
+		return resultSet;
+	}
 
-	int count(@Param("cond") MetadataCondition cond);
-
-	List<SqltoolMetadata> search(@Param("cond") MetadataCondition cond,
-			@Param("limit") int limit, @Param("offset") int offset);
+	public void setResultSet(ResultSet resultSet) {
+		this.resultSet = resultSet;
+	}
 
 }

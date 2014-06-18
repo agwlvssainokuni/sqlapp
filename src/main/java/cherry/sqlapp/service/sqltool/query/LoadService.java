@@ -14,27 +14,16 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.db.app.mapper;
+package cherry.sqlapp.service.sqltool.query;
 
-import java.util.List;
+import cherry.sqlapp.db.gen.dto.SqltoolLoad;
 
-import org.apache.ibatis.annotations.Param;
+public interface LoadService {
 
-import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
+	SqltoolLoad findById(int id);
 
-public interface MetadataMapper {
+	int create(SqltoolLoad record, String ownedBy);
 
-	int createClause(SqltoolMetadata record);
-
-	int createStatement(SqltoolMetadata record);
-
-	int createLoad(SqltoolMetadata record);
-
-	int update(SqltoolMetadata record);
-
-	int count(@Param("cond") MetadataCondition cond);
-
-	List<SqltoolMetadata> search(@Param("cond") MetadataCondition cond,
-			@Param("limit") int limit, @Param("offset") int offset);
+	void update(SqltoolLoad record);
 
 }
