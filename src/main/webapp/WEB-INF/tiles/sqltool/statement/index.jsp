@@ -10,7 +10,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <c:set var="hasResultList"
-	value="${execResult != null && pageSet != null}" />
+	value="${resultSet != null && pageSet != null}" />
 <script type="text/javascript">
 	$(function() {
 		$(".accordion").accordion({
@@ -88,7 +88,7 @@
 			<s:message code="sqltool/statement/index.message.2" />
 		</h1>
 		<div class="app-portion">
-			<app:execResult id="execResultList" execResult="${execResult}"
+			<app:resultSet id="resultSetList" resultSet="${resultSet}"
 				pageSet="${pageSet}" />
 		</div>
 	</div>

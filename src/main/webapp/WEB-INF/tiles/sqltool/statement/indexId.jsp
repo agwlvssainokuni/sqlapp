@@ -13,7 +13,7 @@
 	<s:param name="id" value="${id}" />
 </s:url>
 <c:set var="hasResultList"
-	value="${execResult != null && pageSet != null}" />
+	value="${resultSet != null && pageSet != null}" />
 <script type="text/javascript">
 	$(function() {
 		$(".accordion").accordion({
@@ -144,7 +144,7 @@
 			<s:message code="sqltool/statement/indexId.message.3" />
 		</h1>
 		<div class="app-portion">
-			<app:execResult id="execResultList" execResult="${execResult}"
+			<app:resultSet id="resultSetList" resultSet="${resultSet}"
 				pageSet="${pageSet}" />
 		</div>
 	</div>

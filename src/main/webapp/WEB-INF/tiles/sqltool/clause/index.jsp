@@ -10,7 +10,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <c:set var="hasResultList"
-	value="${execResult != null && pageSet != null}" />
+	value="${resultSet != null && pageSet != null}" />
 <script type="text/javascript">
 	$(function() {
 		$(".accordion").accordion({
@@ -153,7 +153,7 @@
 				</div>
 				<app:pagerLink pageSet="${pageSet}" />
 			</div>
-			<app:execResult id="execResultList" execResult="${execResult}"
+			<app:resultSet id="resultSetList" resultSet="${resultSet}"
 				pageSet="${pageSet}" />
 			<div class="app-pager">
 				<app:pagerLink pageSet="${pageSet}" />
