@@ -49,9 +49,9 @@ import cherry.sqlapp.service.sqltool.SqlBuilder;
 @Controller
 public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 
-	public static final String VIEW_PATH = "secure/exec/select/index";
+	public static final String VIEW_PATH = "sqltool/clause/index";
 
-	public static final String VIEW_PATH_ID = "secure/exec/select/indexId";
+	public static final String VIEW_PATH_ID = "sqltool/clause/indexId";
 
 	@Value("${sqlapp.app.paginator.pageSize}")
 	private int defaultPageSize;

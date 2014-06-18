@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 
-@Component
+@Component("metadataFormUtil")
 public class MdFormUtil {
 
 	public SqltoolMetadataForm getMdForm(SqlMetadata record) {

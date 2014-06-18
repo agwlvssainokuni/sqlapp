@@ -36,7 +36,7 @@ import cherry.sqlapp.service.sqltool.MetadataService.Result;
 @Controller
 public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 
-	private static final String VIEW_PATH = "secure/exec/index";
+	private static final String VIEW_PATH = "sqltool/search/index";
 
 	@Value("${sqlapp.app.search.defaultFromDays}")
 	private Integer defaultFromDays;

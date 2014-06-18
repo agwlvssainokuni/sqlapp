@@ -48,9 +48,9 @@ import cherry.sqlapp.service.sqltool.MetadataService;
 public class SqltoolStatementControllerImpl implements
 		SqltoolStatementController {
 
-	public static final String VIEW_PATH = "secure/exec/any/index";
+	public static final String VIEW_PATH = "sqltool/statement/index";
 
-	public static final String VIEW_PATH_ID = "secure/exec/any/indexId";
+	public static final String VIEW_PATH_ID = "sqltool/statement/indexId";
 
 	@Autowired
 	private DataSourceDef dataSourceDef;

@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 import cherry.sqlapp.db.gen.dto.SqlCsv;
 
-@Component
+@Component("loadFormUtil")
 public class FormUtil {
 
 	public SqltoolLoadForm getForm(SqlCsv record) {

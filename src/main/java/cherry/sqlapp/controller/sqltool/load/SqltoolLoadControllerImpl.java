@@ -46,13 +46,13 @@ import cherry.sqlapp.service.sqltool.MetadataService;
 @Component
 public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 
-	public static final String VIEW_PATH = "secure/exec/csv/index";
+	public static final String VIEW_PATH = "sqltool/load/index";
 
-	public static final String VIEW_PATH_FIN = "secure/exec/csv/finish";
+	public static final String VIEW_PATH_FIN = "sqltool/load/finish";
 
-	public static final String VIEW_PATH_ID = "secure/exec/csv/indexId";
+	public static final String VIEW_PATH_ID = "sqltool/load/indexId";
 
-	public static final String VIEW_PATH_ID_FIN = "secure/exec/csv/finishId";
+	public static final String VIEW_PATH_ID_FIN = "sqltool/load/finishId";
 
 	public static final String ASYNC_PARAM = "asyncParam";
 

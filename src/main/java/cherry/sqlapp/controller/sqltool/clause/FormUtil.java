@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 import cherry.sqlapp.db.gen.dto.SqlSelect;
 
-@Component
+@Component("clauseFormUtil")
 public class FormUtil {
 
 	public SqltoolClauseForm getForm(SqlSelect record) {

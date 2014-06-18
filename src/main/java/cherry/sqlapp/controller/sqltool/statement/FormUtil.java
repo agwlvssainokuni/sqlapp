@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 import cherry.sqlapp.db.gen.dto.SqlAny;
 
-@Component
+@Component("statementFormUtil")
 public class FormUtil {
 
 	public SqltoolStatementForm getForm(SqlAny record) {

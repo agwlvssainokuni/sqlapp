@@ -3,39 +3,39 @@
 	"uri": "/secure/",
 	"children": [
 		{
-			"name": "secure/exec/index",
+			"name": "sqltool/search/index",
 			"uri": "/sqltool/search"
 		},
 		{
-			"name": "secure/exec/select/index",
+			"name": "sqltool/clause/index",
 			"uri": "/sqltool/clause"
 		},
 		{
-			"name": "secure/exec/select/indexId",
+			"name": "sqltool/clause/indexId",
 			"uri": "/sqltool/clause/{id}"
 		},
 		{
-			"name": "secure/exec/any/index",
+			"name": "sqltool/statement/index",
 			"uri": "/sqltool/statement"
 		},
 		{
-			"name": "secure/exec/any/indexId",
+			"name": "sqltool/statement/indexId",
 			"uri": "/sqltool/statement/{id}"
 		},
 		{
-			"name": "secure/exec/csv/index",
+			"name": "sqltool/load/index",
 			"uri": "/sqltool/load"
 		},
 		{
-			"name": "secure/exec/csv/finish",
+			"name": "sqltool/load/finish",
 			"uri": "/sqltool/load"
 		},
 		{
-			"name": "secure/exec/csv/indexId",
+			"name": "sqltool/load/indexId",
 			"uri": "/sqltool/load/{id}"
 		},
 		{
-			"name": "secure/exec/csv/finishId",
+			"name": "sqltool/load/finishId",
 			"uri": "/sqltool/load/{id}"
 		}
 	]
