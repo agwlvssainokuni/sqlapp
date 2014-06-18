@@ -49,10 +49,10 @@ public interface SqltoolStatementController {
 
 	public static final String PARAM_REF = "ref";
 
-	@ModelAttribute("execMetadataForm")
+	@ModelAttribute("sqltoolMetadataForm")
 	SqltoolMetadataForm getMetadata();
 
-	@ModelAttribute("execAnyForm")
+	@ModelAttribute("sqltoolStatementForm")
 	SqltoolStatementForm getForm();
 
 	@RequestMapping()

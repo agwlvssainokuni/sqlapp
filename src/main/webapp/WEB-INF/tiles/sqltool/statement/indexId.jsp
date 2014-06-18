@@ -25,45 +25,45 @@
 	});
 </script>
 <h1 class="app-subject">
-	<s:message code="secure/exec/any/indexId.message.0" />
+	<s:message code="sqltool/statement/indexId.message.0" />
 </h1>
 <div class="app-portion accordion">
 	<h1>
-		<s:message code="secure/exec/any/indexId.message.1" />
+		<s:message code="sqltool/statement/indexId.message.1" />
 	</h1>
 	<div>
-		<s:hasBindErrors name="execMetadataForm">
+		<s:hasBindErrors name="sqltoolMetadataForm">
 			<div class="ui-state-error">
-				<f:errors path="execMetadataForm" element="div" />
-				<f:errors path="execMetadataForm.name" element="div" />
-				<f:errors path="execMetadataForm.description" element="div" />
+				<f:errors path="sqltoolMetadataForm" element="div" />
+				<f:errors path="sqltoolMetadataForm.name" element="div" />
+				<f:errors path="sqltoolMetadataForm.description" element="div" />
 			</div>
 		</s:hasBindErrors>
 		<f:form servletRelativeAction="${baseUri}/metadata" method="POST"
-			modelAttribute="execMetadataForm">
+			modelAttribute="sqltoolMetadataForm">
 			<table class="app-collabel">
 				<tbody>
 					<tr>
 						<th><label for="name"><s:message
-									code="execMetadataForm.name" /></label></th>
+									code="sqltoolMetadataForm.name" /></label></th>
 						<td><f:input path="name" cssClass="app-width50"
 								cssErrorClass="app-width50 ui-state-error" /></td>
 					</tr>
 					<tr>
 						<th><label for="description"><s:message
-									code="execMetadataForm.description" /></label></th>
+									code="sqltoolMetadataForm.description" /></label></th>
 						<td><f:textarea path="description"
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
 					<tr>
 						<th><label for="ownedBy"><s:message
-									code="execMetadataForm.ownedBy" /></label></th>
+									code="sqltoolMetadataForm.ownedBy" /></label></th>
 						<td><f:input path="ownedBy" disabled="true" /></td>
 					</tr>
 					<tr>
 						<th><label for="publishedFlg"><s:message
-									code="execMetadataForm.publishedFlg" /></label></th>
+									code="sqltoolMetadataForm.publishedFlg" /></label></th>
 						<td><f:checkbox path="publishedFlg" /></td>
 					</tr>
 				</tbody>
@@ -73,7 +73,7 @@
 						<td>
 							<button type="submit" name="proc" value="update"
 								class="app-button">
-								<s:message code="secure/exec/any/indexId.updateButton" />
+								<s:message code="sqltool/statement/indexId.updateButton" />
 							</button>
 						</td>
 					</tr>
@@ -82,24 +82,24 @@
 		</f:form>
 	</div>
 	<h1>
-		<s:message code="secure/exec/any/indexId.message.2" />
+		<s:message code="sqltool/statement/indexId.message.2" />
 	</h1>
 	<div>
-		<s:hasBindErrors name="execAnyForm">
+		<s:hasBindErrors name="sqltoolStatementForm">
 			<div class="ui-state-error">
-				<f:errors path="execAnyForm" element="div" />
-				<f:errors path="execAnyForm.databaseName" element="div" />
-				<f:errors path="execAnyForm.sql" element="div" />
-				<f:errors path="execAnyForm.paramMap" element="div" />
+				<f:errors path="sqltoolStatementForm" element="div" />
+				<f:errors path="sqltoolStatementForm.databaseName" element="div" />
+				<f:errors path="sqltoolStatementForm.sql" element="div" />
+				<f:errors path="sqltoolStatementForm.paramMap" element="div" />
 			</div>
 		</s:hasBindErrors>
 		<f:form servletRelativeAction="${baseUri}/req" method="POST"
-			modelAttribute="execAnyForm">
+			modelAttribute="sqltoolStatementForm">
 			<table class="app-collabel">
 				<tbody>
 					<tr>
 						<th><label for="databaseName"><s:message
-									code="execAnyForm.databaseName" /></label></th>
+									code="sqltoolStatementForm.databaseName" /></label></th>
 						<td><f:select path="databaseName"
 								cssClass="app-width50 ui-widget"
 								cssErrorClass="app-width50 ui-widget ui-state-error">
@@ -108,13 +108,13 @@
 					</tr>
 					<tr>
 						<th><label for="sql"><s:message
-									code="execAnyForm.sql" /></label></th>
+									code="sqltoolStatementForm.sql" /></label></th>
 						<td><f:textarea path="sql" cssClass="app-width50 app-height5"
 								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
 					</tr>
 					<tr>
 						<th><label for="paramMap"><s:message
-									code="execAnyForm.paramMap" /></label></th>
+									code="sqltoolStatementForm.paramMap" /></label></th>
 						<td><f:textarea path="paramMap"
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
@@ -125,11 +125,11 @@
 						<td></td>
 						<td>
 							<button type="submit" name="proc" value="exec" class="app-button">
-								<s:message code="secure/exec/any/indexId.execButton" />
+								<s:message code="sqltool/statement/indexId.execButton" />
 							</button>
 							<button type="submit" name="proc" value="update"
 								class="app-button">
-								<s:message code="secure/exec/any/indexId.updateButton" />
+								<s:message code="sqltool/statement/indexId.updateButton" />
 							</button>
 						</td>
 					</tr>
@@ -141,7 +141,7 @@
 <c:if test="${hasResultList}">
 	<div class="app-portion">
 		<h1 class="app-subject">
-			<s:message code="secure/exec/any/indexId.message.3" />
+			<s:message code="sqltool/statement/indexId.message.3" />
 		</h1>
 		<div class="app-portion">
 			<app:execResult id="execResultList" execResult="${execResult}"

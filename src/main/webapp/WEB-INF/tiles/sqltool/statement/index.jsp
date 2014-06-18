@@ -22,28 +22,28 @@
 	});
 </script>
 <h1 class="app-subject">
-	<s:message code="secure/exec/any/index.message.0" />
+	<s:message code="sqltool/statement/index.message.0" />
 </h1>
 <div class="app-portion accordion">
 	<h1>
-		<s:message code="secure/exec/any/index.message.1" />
+		<s:message code="sqltool/statement/index.message.1" />
 	</h1>
 	<div>
-		<s:hasBindErrors name="execAnyForm">
+		<s:hasBindErrors name="sqltoolStatementForm">
 			<div class="ui-state-error">
-				<f:errors path="execAnyForm" element="div" />
-				<f:errors path="execAnyForm.databaseName" element="div" />
-				<f:errors path="execAnyForm.sql" element="div" />
-				<f:errors path="execAnyForm.paramMap" element="div" />
+				<f:errors path="sqltoolStatementForm" element="div" />
+				<f:errors path="sqltoolStatementForm.databaseName" element="div" />
+				<f:errors path="sqltoolStatementForm.sql" element="div" />
+				<f:errors path="sqltoolStatementForm.paramMap" element="div" />
 			</div>
 		</s:hasBindErrors>
 		<f:form servletRelativeAction="/sqltool/statement/req" method="POST"
-			modelAttribute="execAnyForm">
+			modelAttribute="sqltoolStatementForm">
 			<table class="app-collabel">
 				<tbody>
 					<tr>
 						<th><label for="databaseName"><s:message
-									code="execAnyForm.databaseName" /></label></th>
+									code="sqltoolStatementForm.databaseName" /></label></th>
 						<td><f:select path="databaseName"
 								cssClass="app-width50 ui-widget"
 								cssErrorClass="app-width50 ui-widget ui-state-error">
@@ -52,13 +52,13 @@
 					</tr>
 					<tr>
 						<th><label for="sql"><s:message
-									code="execAnyForm.sql" /></label></th>
+									code="sqltoolStatementForm.sql" /></label></th>
 						<td><f:textarea path="sql" cssClass="app-width50 app-height5"
 								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
 					</tr>
 					<tr>
 						<th><label for="paramMap"><s:message
-									code="execAnyForm.paramMap" /></label></th>
+									code="sqltoolStatementForm.paramMap" /></label></th>
 						<td><f:textarea path="paramMap"
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
@@ -69,11 +69,11 @@
 						<td></td>
 						<td>
 							<button type="submit" name="proc" value="exec" class="app-button">
-								<s:message code="secure/exec/any/index.execButton" />
+								<s:message code="sqltool/statement/index.execButton" />
 							</button>
 							<button type="submit" name="proc" value="create"
 								class="app-button">
-								<s:message code="secure/exec/any/index.createButton" />
+								<s:message code="sqltool/statement/index.createButton" />
 							</button>
 						</td>
 					</tr>
@@ -85,7 +85,7 @@
 <c:if test="${hasResultList}">
 	<div class="app-portion">
 		<h1 class="app-subject">
-			<s:message code="secure/exec/any/index.message.2" />
+			<s:message code="sqltool/statement/index.message.2" />
 		</h1>
 		<div class="app-portion">
 			<app:execResult id="execResultList" execResult="${execResult}"
