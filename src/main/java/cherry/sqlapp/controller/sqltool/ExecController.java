@@ -32,7 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(ExecController.URI_PATH)
 public interface ExecController {
 
-	public static final String URI_PATH = "/secure/exec";
+	public static final String URI_PATH = "/sqltool/search";
 
 	public static final String URI_PATH_REQ = "req";
 

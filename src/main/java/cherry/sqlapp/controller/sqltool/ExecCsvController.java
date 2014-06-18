@@ -34,7 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping(ExecCsvController.URI_PATH)
 public interface ExecCsvController {
 
-	public static final String URI_PATH = "/secure/exec/csv";
+	public static final String URI_PATH = "/sqltool/load";
 
 	public static final String URI_PATH_REQ = "req";
 

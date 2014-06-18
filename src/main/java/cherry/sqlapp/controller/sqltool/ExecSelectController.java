@@ -33,7 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(ExecSelectController.URI_PATH)
 public interface ExecSelectController {
 
-	public static final String URI_PATH = "/secure/exec/select";
+	public static final String URI_PATH = "/sqltool/clause";
 
 	public static final String URI_PATH_REQ = "req";
 

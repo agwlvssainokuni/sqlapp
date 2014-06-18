@@ -158,6 +158,8 @@
 		authentication-manager-ref="authenticationManager">
 		<security:intercept-url pattern="/secure/**"
 			access="IS_AUTHENTICATED_FULLY" />
+		<security:intercept-url pattern="/sqltool/**"
+			access="IS_AUTHENTICATED_FULLY" />
 		<security:form-login login-page="/login"
 			login-processing-url="/login/req" authentication-failure-url="/login?err=login"
 			default-target-url="/secure/" always-use-default-target="false"
@@ -172,6 +174,7 @@
 			<mvc:mapping path="/login/**" />
 			<mvc:mapping path="/logout/**" />
 			<mvc:mapping path="/secure/**" />
+			<mvc:mapping path="/sqltool/**" />
 			<bean class="cherry.spring.common.log.web.OperationLogHandlerInterceptor" />
 		</mvc:interceptor>
 		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />

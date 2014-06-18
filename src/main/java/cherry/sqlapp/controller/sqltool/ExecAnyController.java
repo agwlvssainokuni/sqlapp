@@ -33,7 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(ExecAnyController.URI_PATH)
 public interface ExecAnyController {
 
-	public static final String URI_PATH = "/secure/exec/any";
+	public static final String URI_PATH = "/sqltool/statement";
 
 	public static final String URI_PATH_REQ = "req";
 
