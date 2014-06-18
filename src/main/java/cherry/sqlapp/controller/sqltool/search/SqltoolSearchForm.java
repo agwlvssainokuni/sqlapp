@@ -36,11 +36,11 @@ public class SqltoolSearchForm extends BaseForm {
 	@CustomDateTimeFormat(Range.TO)
 	private LocalDateTime registeredTo;
 
-	private boolean select = true;
+	private boolean clause = true;
 
-	private boolean any = true;
+	private boolean statement = true;
 
-	private boolean csv = true;
+	private boolean load = true;
 
 	private boolean publish = true;
 
@@ -70,28 +70,28 @@ public class SqltoolSearchForm extends BaseForm {
 		this.registeredTo = registeredTo;
 	}
 
-	public boolean isSelect() {
-		return select;
+	public boolean isClause() {
+		return clause;
 	}
 
-	public void setSelect(boolean select) {
-		this.select = select;
+	public void setClause(boolean clause) {
+		this.clause = clause;
 	}
 
-	public boolean isAny() {
-		return any;
+	public boolean isStatement() {
+		return statement;
 	}
 
-	public void setAny(boolean any) {
-		this.any = any;
+	public void setStatement(boolean statement) {
+		this.statement = statement;
 	}
 
-	public boolean isCsv() {
-		return csv;
+	public boolean isLoad() {
+		return load;
 	}
 
-	public void setCsv(boolean csv) {
-		this.csv = csv;
+	public void setLoad(boolean load) {
+		this.load = load;
 	}
 
 	public boolean isPublish() {

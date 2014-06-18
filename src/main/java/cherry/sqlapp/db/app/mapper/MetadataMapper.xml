@@ -15,7 +15,7 @@
 		<result column="CREATED_AT" jdbcType="TIMESTAMP" property="createdAt" />
 		<result column="DELETED_FLG" jdbcType="INTEGER" property="deletedFlg" />
 	</resultMap>
-	<insert id="createSelect" parameterType="cherry.sqlapp.db.gen.dto.SqlMetadata"
+	<insert id="createClause" parameterType="cherry.sqlapp.db.gen.dto.SqlMetadata"
 		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
 		INSERT INTO sql_metadata (
 			sql_type,
@@ -24,13 +24,13 @@
 			owned_by
 		)
 		VALUES (
-			'select',
+			'clause',
 			DEFAULT,
 			#{description,jdbcType=VARCHAR},
 			#{ownedBy,jdbcType=VARCHAR}
 		)
 	</insert>
-	<insert id="createAny" parameterType="cherry.sqlapp.db.gen.dto.SqlMetadata"
+	<insert id="createStatement" parameterType="cherry.sqlapp.db.gen.dto.SqlMetadata"
 		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
 		INSERT INTO sql_metadata (
 			sql_type,
@@ -39,13 +39,13 @@
 			owned_by
 		)
 		VALUES (
-			'any',
+			'statement',
 			DEFAULT,
 			#{description,jdbcType=VARCHAR},
 			#{ownedBy,jdbcType=VARCHAR}
 		)
 	</insert>
-	<insert id="createCsv" parameterType="cherry.sqlapp.db.gen.dto.SqlMetadata"
+	<insert id="createLoad" parameterType="cherry.sqlapp.db.gen.dto.SqlMetadata"
 		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
 		INSERT INTO sql_metadata (
 			sql_type,
@@ -54,7 +54,7 @@
 			owned_by
 		)
 		VALUES (
-			'csv',
+			'load',
 			DEFAULT,
 			#{description,jdbcType=VARCHAR},
 			#{ownedBy,jdbcType=VARCHAR}
@@ -92,12 +92,12 @@
 			<otherwise>A.published_flg &lt;&gt; 0 OR A.owned_by = #{cond.loginId,jdbcType=VARCHAR}</otherwise>
 			</choose>
 			) AND
-			<if test="cond.select || cond.any || cond.csv">
+			<if test="cond.clause || cond.statement || cond.load">
 			A.sql_type IN (
 			<trim suffixOverrides=",">
-				<if test="cond.select">'select',</if>
-				<if test="cond.any">'any',</if>
-				<if test="cond.csv">'csv'</if>
+				<if test="cond.clause">'clause',</if>
+				<if test="cond.statement">'statement',</if>
+				<if test="cond.load">'load'</if>
 			</trim>
 			) AND
 			</if>
@@ -132,12 +132,12 @@
 			<otherwise>A.published_flg &lt;&gt; 0 OR A.owned_by = #{cond.loginId,jdbcType=VARCHAR}</otherwise>
 			</choose>
 			) AND
-			<if test="cond.select || cond.any || cond.csv">
+			<if test="cond.clause || cond.statement || cond.load">
 			A.sql_type IN (
 			<trim suffixOverrides=",">
-				<if test="cond.select">'select',</if>
-				<if test="cond.any">'any',</if>
-				<if test="cond.csv">'csv'</if>
+				<if test="cond.clause">'clause',</if>
+				<if test="cond.statement">'statement',</if>
+				<if test="cond.load">'load'</if>
 			</trim>
 			) AND
 			</if>

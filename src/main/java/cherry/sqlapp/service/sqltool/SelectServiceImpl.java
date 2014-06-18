@@ -54,7 +54,7 @@ public class SelectServiceImpl implements SelectService {
 		SqlMetadata metadata = new SqlMetadata();
 		metadata.setDescription(ownedBy);
 		metadata.setOwnedBy(ownedBy);
-		int count0 = metadataMapper.createSelect(metadata);
+		int count0 = metadataMapper.createClause(metadata);
 		if (count0 != 1) {
 			throw new IllegalArgumentException(
 					"sql_metadata is not created; count=" + count0);

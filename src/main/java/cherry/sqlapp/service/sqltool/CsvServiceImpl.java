@@ -54,7 +54,7 @@ public class CsvServiceImpl implements CsvService {
 		SqlMetadata metadata = new SqlMetadata();
 		metadata.setDescription(ownedBy);
 		metadata.setOwnedBy(ownedBy);
-		int count0 = metadataMapper.createCsv(metadata);
+		int count0 = metadataMapper.createLoad(metadata);
 		if (count0 != 1) {
 			throw new IllegalArgumentException(
 					"sql_metadata is not created; count=" + count0);

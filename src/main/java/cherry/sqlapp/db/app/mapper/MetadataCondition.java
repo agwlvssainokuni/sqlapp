@@ -26,11 +26,11 @@ public class MetadataCondition extends BaseDto {
 
 	private String name;
 
-	private boolean select;
+	private boolean clause;
 
-	private boolean any;
+	private boolean statement;
 
-	private boolean csv;
+	private boolean load;
 
 	private boolean publish;
 
@@ -50,28 +50,28 @@ public class MetadataCondition extends BaseDto {
 		this.name = name;
 	}
 
-	public boolean isSelect() {
-		return select;
+	public boolean isClause() {
+		return clause;
 	}
 
-	public void setSelect(boolean select) {
-		this.select = select;
+	public void setClause(boolean clause) {
+		this.clause = clause;
 	}
 
-	public boolean isAny() {
-		return any;
+	public boolean isStatement() {
+		return statement;
 	}
 
-	public void setAny(boolean any) {
-		this.any = any;
+	public void setStatement(boolean statement) {
+		this.statement = statement;
 	}
 
-	public boolean isCsv() {
-		return csv;
+	public boolean isLoad() {
+		return load;
 	}
 
-	public void setCsv(boolean csv) {
-		this.csv = csv;
+	public void setLoad(boolean load) {
+		this.load = load;
 	}
 
 	public boolean isPublish() {

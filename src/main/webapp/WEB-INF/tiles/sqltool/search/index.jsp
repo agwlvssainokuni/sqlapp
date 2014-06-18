@@ -58,12 +58,12 @@
 						<th><s:message code="sqltool/search/index.form.type" /></th>
 						<td>
 							<ul class="app-flat">
-								<li><f:checkbox path="select" /><label for="select1"><s:message
-											code="sqltool/search/index.form.type.select" /></label></li>
-								<li><f:checkbox path="any" /><label for="any1"><s:message
-											code="sqltool/search/index.form.type.any" /></label></li>
-								<li><f:checkbox path="csv" /><label for="csv1"><s:message
-											code="sqltool/search/index.form.type.csv" /></label></li>
+								<li><f:checkbox path="clause" /><label for="clause1"><s:message
+											code="sqltool/search/index.form.type.clause" /></label></li>
+								<li><f:checkbox path="statement" /><label for="statement1"><s:message
+											code="sqltool/search/index.form.type.statement" /></label></li>
+								<li><f:checkbox path="load" /><label for="load1"><s:message
+											code="sqltool/search/index.form.type.load" /></label></li>
 							</ul>
 						</td>
 					</tr>
@@ -119,9 +119,9 @@
 				<input type="hidden" id="sz2" name="sz"
 					value="<c:out value="${param.sz}" />">
 				<f:hidden id="name2" path="name" />
-				<f:hidden id="select2" path="select" />
-				<f:hidden id="any2" path="any" />
-				<f:hidden id="csv2" path="csv" />
+				<f:hidden id="clause2" path="clause" />
+				<f:hidden id="statement2" path="statement" />
+				<f:hidden id="load2" path="load" />
 				<f:hidden id="publish2" path="publish" />
 				<f:hidden id="notPublish2" path="notPublish" />
 				<f:hidden id="registeredFrom2" path="registeredFrom" />

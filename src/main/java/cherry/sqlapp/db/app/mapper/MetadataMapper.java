@@ -24,11 +24,11 @@ import cherry.sqlapp.db.gen.dto.SqlMetadata;
 
 public interface MetadataMapper {
 
-	int createSelect(SqlMetadata record);
+	int createClause(SqlMetadata record);
 
-	int createAny(SqlMetadata record);
+	int createStatement(SqlMetadata record);
 
-	int createCsv(SqlMetadata record);
+	int createLoad(SqlMetadata record);
 
 	int update(SqlMetadata record);
 

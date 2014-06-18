@@ -29,9 +29,9 @@ public class FormUtil {
 			String loginId) {
 		MetadataCondition cond = new MetadataCondition();
 		cond.setName(stringCond(form.getName()));
-		cond.setSelect(form.isSelect());
-		cond.setAny(form.isAny());
-		cond.setCsv(form.isCsv());
+		cond.setClause(form.isClause());
+		cond.setStatement(form.isStatement());
+		cond.setLoad(form.isLoad());
 		cond.setPublish(form.isPublish());
 		cond.setNotPublish(form.isNotPublish());
 		cond.setRegisteredFrom(dateFromCond(form.getRegisteredFrom()));
