@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<bean id="dataSourceDef" class="cherry.sqlapp.service.sqltool.DataSourceDefImpl">
+		<property name="defaultName" value="default" />
+		<property name="dataSourceMap">
+			<map key-type="java.lang.String" value-type="javax.sql.DataSource">
+				<entry key="default" value-ref="dataSource" />
+				<entry key="another" value-ref="basicDataSource" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="execQueryServiceTarget" class="cherry.sqlapp.service.sqltool.exec.ExecQueryServiceImpl"
+		scope="prototype" />
+	<bean id="execQueryService" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="targetSource">
+			<bean class="org.springframework.aop.target.CommonsPoolTargetSource">
+				<property name="targetBeanName" value="execQueryServiceTarget" />
+				<property name="maxSize" value="10" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="paginator" class="cherry.spring.common.lib.paginate.PaginatorImpl">
+		<property name="paginateStrategy">
+			<bean class="cherry.spring.common.lib.paginate.TotalCountStrategy">
+				<property name="totalCount" value="${sqlapp.app.paginator.totalCount}" />
+				<property name="lowerSideHint" value="${sqlapp.app.paginator.lowerSideHint}" />
+				<property name="lowerTrim" value="1" />
+				<property name="upperTrim" value="1" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="extractor" class="cherry.spring.common.lib.etl.ExtractorImpl" />
+	<bean id="loader" class="cherry.spring.common.lib.etl.LoaderImpl" />
+
+</beans>
