@@ -20,7 +20,7 @@ import org.joda.time.LocalDateTime;
 
 import cherry.sqlapp.db.BaseDto;
 
-public class SqlCondition extends BaseDto {
+public class MetadataCondition extends BaseDto {
 
 	private static final long serialVersionUID = 1L;
 

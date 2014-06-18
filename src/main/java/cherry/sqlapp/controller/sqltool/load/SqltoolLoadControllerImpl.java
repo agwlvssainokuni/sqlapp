@@ -41,7 +41,7 @@ import cherry.sqlapp.db.gen.dto.SqlMetadata;
 import cherry.sqlapp.service.sqltool.CsvService;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
 import cherry.sqlapp.service.sqltool.ImpService;
-import cherry.sqlapp.service.sqltool.MetadataService;
+import cherry.sqlapp.service.sqltool.metadata.MetadataService;
 
 @Component
 public class SqltoolLoadControllerImpl implements SqltoolLoadController {

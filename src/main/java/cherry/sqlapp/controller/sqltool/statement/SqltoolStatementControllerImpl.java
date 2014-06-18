@@ -42,7 +42,7 @@ import cherry.sqlapp.service.sqltool.AnyService;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
 import cherry.sqlapp.service.sqltool.ExecService;
 import cherry.sqlapp.service.sqltool.ExecService.Result;
-import cherry.sqlapp.service.sqltool.MetadataService;
+import cherry.sqlapp.service.sqltool.metadata.MetadataService;
 
 @Controller
 public class SqltoolStatementControllerImpl implements

@@ -30,8 +30,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
-import cherry.sqlapp.service.sqltool.MetadataService;
-import cherry.sqlapp.service.sqltool.MetadataService.Result;
+import cherry.sqlapp.db.app.mapper.MetadataCondition;
+import cherry.sqlapp.service.sqltool.metadata.MetadataService;
+import cherry.sqlapp.service.sqltool.metadata.Result;
 
 @Controller
 public class SqltoolSearchControllerImpl implements SqltoolSearchController {
@@ -46,6 +47,9 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 
 	@Autowired
 	private MetadataService metadataService;
+
+	@Autowired
+	private FormUtil formUtil;
 
 	@Override
 	public SqltoolSearchForm getForm() {
@@ -73,8 +77,10 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 			return mav;
 		}
 
-		Result result = metadataService.search(form, authentication.getName(),
-				pageNo, (pageSz <= 0 ? defaultPageSize : pageSz));
+		MetadataCondition cond = formUtil.createSqlCondition(form,
+				authentication.getName());
+		Result result = metadataService.search(cond, pageNo,
+				(pageSz <= 0 ? defaultPageSize : pageSz));
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(result);

@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.service.sqltool;
+package cherry.sqlapp.service.sqltool.metadata;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.spring.common.lib.paginate.Paginator;
-import cherry.sqlapp.controller.sqltool.search.SqltoolSearchForm;
 import cherry.sqlapp.db.app.mapper.MetadataMapper;
-import cherry.sqlapp.db.app.mapper.SqlCondition;
+import cherry.sqlapp.db.app.mapper.MetadataCondition;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 import cherry.sqlapp.db.gen.mapper.SqlMetadataMapper;
 
@@ -72,54 +69,17 @@ public class MetadataServiceImpl implements MetadataService {
 
 	@Transactional
 	@Override
-	public Result search(SqltoolSearchForm form, String loginId, int pageNo,
-			int pageSize) {
+	public Result search(MetadataCondition cond, int pageNo, int pageSz) {
 
-		SqlCondition cond = createSqlCondition(form, loginId);
 		int itemCount = metadataMapper.count(cond);
-		PageSet pageSet = paginator.paginate(pageNo, itemCount, pageSize);
+		PageSet pageSet = paginator.paginate(pageNo, itemCount, pageSz);
 		int offset = pageSet.getCurrent().getFrom();
-		List<SqlMetadata> list = metadataMapper.search(cond, pageSize, offset);
+		List<SqlMetadata> list = metadataMapper.search(cond, pageSz, offset);
 
 		Result result = new Result();
 		result.setPageSet(pageSet);
 		result.setMetadataList(list);
 		return result;
-	}
-
-	private SqlCondition createSqlCondition(SqltoolSearchForm form, String loginId) {
-		SqlCondition cond = new SqlCondition();
-		cond.setName(stringCond(form.getName()));
-		cond.setSelect(form.isSelect());
-		cond.setAny(form.isAny());
-		cond.setCsv(form.isCsv());
-		cond.setPublish(form.isPublish());
-		cond.setNotPublish(form.isNotPublish());
-		cond.setRegisteredFrom(dateFromCond(form.getRegisteredFrom()));
-		cond.setRegisteredTo(dateToCond(form.getRegisteredTo()));
-		cond.setLoginId(loginId);
-		return cond;
-	}
-
-	private String stringCond(String string) {
-		if (StringUtils.isBlank(string)) {
-			return null;
-		}
-		return string.replaceAll("([%_\\\\])", "\\$1") + "%";
-	}
-
-	private LocalDateTime dateFromCond(LocalDateTime dt) {
-		if (dt == null) {
-			return null;
-		}
-		return dt;
-	}
-
-	private LocalDateTime dateToCond(LocalDateTime dt) {
-		if (dt == null) {
-			return null;
-		}
-		return dt.plusSeconds(1);
 	}
 
 }
