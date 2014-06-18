@@ -16,12 +16,12 @@
 
 package cherry.sqlapp.db.app.mapper;
 
-import cherry.sqlapp.db.gen.dto.SqlAny;
+import cherry.sqlapp.db.gen.dto.SqlSelect;
 
-public interface AnyMapper {
+public interface ClauseMapper {
 
-	int create(SqlAny record);
+	int create(SqlSelect record);
 
-	int update(SqlAny record);
+	int update(SqlSelect record);
 
 }

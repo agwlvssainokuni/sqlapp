@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cherry.sqlapp.db.app.mapper.SelectMapper">
+<mapper namespace="cherry.sqlapp.db.app.mapper.ClauseMapper">
 	<insert id="create" parameterType="cherry.sqlapp.db.gen.dto.SqlSelect">
 		INSERT INTO sql_select (
 			id,

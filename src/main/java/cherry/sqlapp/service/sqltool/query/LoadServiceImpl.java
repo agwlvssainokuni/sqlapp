@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.sqlapp.db.app.mapper.CsvMapper;
+import cherry.sqlapp.db.app.mapper.LoadMapper;
 import cherry.sqlapp.db.app.mapper.MetadataMapper;
 import cherry.sqlapp.db.gen.dto.SqlCsv;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
@@ -33,7 +33,7 @@ public class LoadServiceImpl implements LoadService {
 	private SqlCsvMapper sqlLoadMapper;
 
 	@Autowired
-	private CsvMapper loadMapper;
+	private LoadMapper loadMapper;
 
 	@Autowired
 	private MetadataMapper metadataMapper;

@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.sqlapp.db.app.mapper.AnyMapper;
+import cherry.sqlapp.db.app.mapper.StatementMapper;
 import cherry.sqlapp.db.app.mapper.MetadataMapper;
 import cherry.sqlapp.db.gen.dto.SqlAny;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
@@ -33,7 +33,7 @@ public class StatementServiceImpl implements StatementService {
 	private SqlAnyMapper sqlStatementMapper;
 
 	@Autowired
-	private AnyMapper statementMapper;
+	private StatementMapper statementMapper;
 
 	@Autowired
 	private MetadataMapper metadataMapper;

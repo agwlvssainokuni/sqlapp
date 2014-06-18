@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.sqlapp.db.app.mapper.MetadataMapper;
-import cherry.sqlapp.db.app.mapper.SelectMapper;
+import cherry.sqlapp.db.app.mapper.ClauseMapper;
 import cherry.sqlapp.db.gen.dto.SqlMetadata;
 import cherry.sqlapp.db.gen.dto.SqlSelect;
 import cherry.sqlapp.db.gen.mapper.SqlSelectMapper;
@@ -33,7 +33,7 @@ public class ClauseServiceImpl implements ClauseService {
 	private SqlSelectMapper sqlClauseMapper;
 
 	@Autowired
-	private SelectMapper clauseMapper;
+	private ClauseMapper clauseMapper;
 
 	@Autowired
 	private MetadataMapper metadataMapper;
