@@ -9,7 +9,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
-<s:url var="baseUri" value="/secure/exec/any/{id}">
+<s:url var="baseUri" value="/sqltool/statement/{id}">
 	<s:param name="id" value="${id}" />
 </s:url>
 <c:set var="hasResultList"

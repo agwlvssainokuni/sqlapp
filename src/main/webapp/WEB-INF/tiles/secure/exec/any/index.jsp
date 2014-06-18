@@ -37,7 +37,7 @@
 				<f:errors path="execAnyForm.paramMap" element="div" />
 			</div>
 		</s:hasBindErrors>
-		<f:form servletRelativeAction="/secure/exec/any/req" method="POST"
+		<f:form servletRelativeAction="/sqltool/statement/req" method="POST"
 			modelAttribute="execAnyForm">
 			<table class="app-collabel">
 				<tbody>
