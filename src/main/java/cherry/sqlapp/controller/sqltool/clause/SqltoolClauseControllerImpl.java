@@ -30,6 +30,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import cherry.spring.common.lib.paginate.PageSet;
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.controller.sqltool.ParamMapUtil;
 import cherry.sqlapp.db.gen.dto.SqltoolClause;
@@ -37,7 +38,7 @@ import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
 import cherry.sqlapp.service.sqltool.exec.ExecQueryService;
 import cherry.sqlapp.service.sqltool.exec.QueryBuilder;
-import cherry.sqlapp.service.sqltool.exec.Result;
+import cherry.sqlapp.service.sqltool.exec.ResultSet;
 import cherry.sqlapp.service.sqltool.metadata.MetadataService;
 import cherry.sqlapp.service.sqltool.query.ClauseService;
 
@@ -111,13 +112,15 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 		QueryBuilder builder = formUtil.getQueryBuilder(form);
 		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
 
-		Result result = execQueryService.query(form.getDatabaseName(), builder,
-				paramMap, pageNo, (pageSz <= 0 ? defaultPageSize : pageSz));
+		ResultSet resultSet = new ResultSet();
+		PageSet pageSet = execQueryService.query(form.getDatabaseName(),
+				builder, paramMap, pageNo, (pageSz <= 0 ? defaultPageSize
+						: pageSz), resultSet);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(dataSourceDef);
-		mav.addObject(result.getPageSet());
-		mav.addObject(result.getResultSet());
+		mav.addObject(pageSet);
+		mav.addObject(resultSet);
 		return mav;
 	}
 

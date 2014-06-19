@@ -29,13 +29,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import cherry.spring.common.lib.paginate.PageSet;
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.controller.sqltool.ParamMapUtil;
 import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
 import cherry.sqlapp.db.gen.dto.SqltoolStatement;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
 import cherry.sqlapp.service.sqltool.exec.ExecQueryService;
-import cherry.sqlapp.service.sqltool.exec.Result;
+import cherry.sqlapp.service.sqltool.exec.ResultSet;
 import cherry.sqlapp.service.sqltool.metadata.MetadataService;
 import cherry.sqlapp.service.sqltool.query.StatementService;
 
@@ -105,13 +106,15 @@ public class SqltoolStatementControllerImpl implements
 		}
 
 		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
-		Result result = execQueryService.query(form.getDatabaseName(),
-				form.getSql(), paramMap);
+
+		ResultSet resultSet = new ResultSet();
+		PageSet pageSet = execQueryService.query(form.getDatabaseName(),
+				form.getSql(), paramMap, resultSet);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(dataSourceDef);
-		mav.addObject(result.getPageSet());
-		mav.addObject(result.getResultSet());
+		mav.addObject(pageSet);
+		mav.addObject(resultSet);
 		return mav;
 	}
 
