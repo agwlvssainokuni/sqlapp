@@ -25,38 +25,50 @@ import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-@RequestMapping(SqltoolStatementController.URI_PATH)
-public interface SqltoolStatementController {
+import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 
-	public static final String URI_PATH = "/sqltool/statement";
+@RequestMapping(SqltoolStatementIdController.URI_PATH)
+public interface SqltoolStatementIdController {
+
+	public static final String URI_PATH = "/sqltool/statement/{id}";
 
 	public static final String URI_PATH_REQ = "req";
 
-	public static final String PARAM_REF = "ref";
+	public static final String URI_PATH_METADATA = "metadata";
+
+	public static final String PATH_VAR = "id";
+
+	@ModelAttribute("sqltoolMetadataForm")
+	SqltoolMetadataForm getMetadata();
 
 	@ModelAttribute("sqltoolStatementForm")
 	SqltoolStatementForm getForm();
 
 	@RequestMapping()
-	ModelAndView index(
-			@RequestParam(value = PARAM_REF, required = false, defaultValue = "") Integer ref,
+	ModelAndView index(@PathVariable(PATH_VAR) int id,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@Validated SqltoolStatementForm form,
-			BindingResult binding, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request);
+	ModelAndView request(@PathVariable(PATH_VAR) int id,
+			@Validated SqltoolStatementForm form, BindingResult binding,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request);
 
-	@RequestMapping(value = URI_PATH_REQ, params = { "proc=create" })
-	ModelAndView create(@Validated SqltoolStatementForm form,
-			BindingResult binding, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request);
+	@RequestMapping(value = URI_PATH_REQ, params = { "proc=update" })
+	ModelAndView update(@PathVariable(PATH_VAR) int id,
+			@Validated SqltoolStatementForm form, BindingResult binding,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request);
+
+	@RequestMapping(URI_PATH_METADATA)
+	ModelAndView metadata(@PathVariable(PATH_VAR) int id,
+			@Validated SqltoolMetadataForm mdForm, BindingResult binding,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request);
 
 }
