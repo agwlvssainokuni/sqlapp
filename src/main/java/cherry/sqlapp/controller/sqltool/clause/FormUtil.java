@@ -19,6 +19,7 @@ package cherry.sqlapp.controller.sqltool.clause;
 import org.springframework.stereotype.Component;
 
 import cherry.sqlapp.db.gen.dto.SqltoolClause;
+import cherry.sqlapp.service.sqltool.exec.QueryBuilder;
 
 @Component("clauseFormUtil")
 public class FormUtil {
@@ -34,6 +35,17 @@ public class FormUtil {
 		form.setOrderBy(record.getOrderByClause());
 		form.setParamMap(record.getParamMap());
 		return form;
+	}
+
+	public QueryBuilder getQueryBuilder(SqltoolClauseForm form) {
+		QueryBuilder builder = new QueryBuilder();
+		builder.setSelect(form.getSelect());
+		builder.setFrom(form.getFrom());
+		builder.setWhere(form.getWhere());
+		builder.setGroupBy(form.getGroupBy());
+		builder.setHaving(form.getHaving());
+		builder.setOrderBy(form.getOrderBy());
+		return builder;
 	}
 
 }

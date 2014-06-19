@@ -26,11 +26,13 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
+import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 import cherry.sqlapp.db.gen.dto.SqltoolLoad;
 import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
@@ -39,11 +41,11 @@ import cherry.sqlapp.service.sqltool.metadata.MetadataService;
 import cherry.sqlapp.service.sqltool.query.LoadService;
 
 @Component
-public class SqltoolLoadControllerImpl implements SqltoolLoadController {
+public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 
-	public static final String VIEW_PATH = "sqltool/load/index";
+	public static final String VIEW_PATH = "sqltool/load/indexId";
 
-	public static final String VIEW_PATH_FIN = "sqltool/load/finish";
+	public static final String VIEW_PATH_FIN = "sqltool/load/finishId";
 
 	public static final String ASYNC_PARAM = "asyncParam";
 
@@ -66,6 +68,11 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 	private MdFormUtil mdFormUtil;
 
 	@Override
+	public SqltoolMetadataForm getMetadata() {
+		return new SqltoolMetadataForm();
+	}
+
+	@Override
 	public SqltoolLoadForm getForm() {
 		SqltoolLoadForm form = new SqltoolLoadForm();
 		form.setDatabaseName(dataSourceDef.getDefaultName());
@@ -73,33 +80,40 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 	}
 
 	@Override
-	public ModelAndView index(Integer ref, Authentication authentication,
+	public ModelAndView index(int id, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
+
+		SqltoolMetadata md = metadataService.findById(id,
+				authentication.getName());
+		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
+
+		SqltoolLoad record = loadService.findById(id);
+		SqltoolLoadForm form = formUtil.getForm(record);
+
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		mav.addObject(PATH_VAR, id);
 		mav.addObject(dataSourceDef);
-		if (ref != null) {
-			SqltoolMetadata md = metadataService.findById(ref,
-					authentication.getName());
-			if (md != null) {
-				SqltoolLoad record = loadService.findById(ref);
-				if (record != null) {
-					mav.addObject(formUtil.getForm(record));
-				}
-			}
-		}
+		mav.addObject(mdForm);
+		mav.addObject(form);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView request(SqltoolLoadForm form, BindingResult binding,
-			RedirectAttributes redirectAttributes,
+	public ModelAndView request(int id, SqltoolLoadForm form,
+			BindingResult binding, RedirectAttributes redirectAttributes,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 
+		SqltoolMetadata md = metadataService.findById(id,
+				authentication.getName());
+		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
+
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(PATH_VAR, id);
 			mav.addObject(dataSourceDef);
+			mav.addObject(mdForm);
 			return mav;
 		}
 
@@ -114,35 +128,76 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 	}
 
 	@Override
-	public ModelAndView finish(RedirectAttributes redirectAttributes,
+	public ModelAndView finish(@PathVariable(PATH_VAR) int id,
+			RedirectAttributes redirectAttributes,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
+		mav.addObject(PATH_VAR, id);
 		mav.addObject(dataSourceDef);
 		mav.addAllObjects(redirectAttributes.getFlashAttributes());
 		return mav;
 	}
 
 	@Override
-	public ModelAndView create(SqltoolLoadForm form, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+	public ModelAndView update(int id, SqltoolLoadForm form,
+			BindingResult binding, Authentication authentication,
+			Locale locale, SitePreference sitePreference,
+			HttpServletRequest request) {
+
+		SqltoolMetadata md = metadataService.findById(id,
+				authentication.getName());
+		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(PATH_VAR, id);
 			mav.addObject(dataSourceDef);
+			mav.addObject(mdForm);
 			return mav;
 		}
 
 		SqltoolLoad record = new SqltoolLoad();
+		record.setId(id);
 		record.setDatabaseName(form.getDatabaseName());
 		record.setQuery(form.getSql());
 
-		int id = loadService.create(record, authentication.getName());
+		loadService.update(record);
 
 		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(SqltoolLoadIdController.URI_PATH, true));
-		mav.addObject(SqltoolLoadIdController.PATH_VAR, id);
+		mav.setView(new RedirectView(URI_PATH, true));
+		mav.addObject(PATH_VAR, id);
+		return mav;
+	}
+
+	@Override
+	public ModelAndView metadata(int id, SqltoolMetadataForm mdForm,
+			BindingResult binding, Authentication authentication,
+			Locale locale, SitePreference sitePreference,
+			HttpServletRequest request) {
+
+		SqltoolLoad record = loadService.findById(id);
+		SqltoolLoadForm form = formUtil.getForm(record);
+
+		if (binding.hasErrors()) {
+			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(PATH_VAR, id);
+			mav.addObject(dataSourceDef);
+			mav.addObject(form);
+			return mav;
+		}
+
+		SqltoolMetadata md = new SqltoolMetadata();
+		md.setId(id);
+		md.setName(mdForm.getName());
+		md.setDescription(mdForm.getDescription());
+		md.setPublishedFlg(mdForm.isPublishedFlg() ? 1 : 0);
+
+		metadataService.update(md);
+
+		ModelAndView mav = new ModelAndView();
+		mav.setView(new RedirectView(URI_PATH, true));
+		mav.addObject(PATH_VAR, id);
 		return mav;
 	}
 
