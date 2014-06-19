@@ -32,6 +32,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.controller.sqltool.ParamMapUtil;
+import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 import cherry.sqlapp.db.gen.dto.SqltoolClause;
 import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
@@ -42,9 +43,9 @@ import cherry.sqlapp.service.sqltool.metadata.MetadataService;
 import cherry.sqlapp.service.sqltool.query.ClauseService;
 
 @Controller
-public class SqltoolClauseControllerImpl implements SqltoolClauseController {
+public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController {
 
-	public static final String VIEW_PATH = "sqltool/clause/index";
+	public static final String VIEW_PATH = "sqltool/clause/indexId";
 
 	@Value("${sqlapp.app.paginator.pageSize}")
 	private int defaultPageSize;
@@ -71,6 +72,11 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 	private ParamMapUtil paramMapUtil;
 
 	@Override
+	public SqltoolMetadataForm getMetadata() {
+		return new SqltoolMetadataForm();
+	}
+
+	@Override
 	public SqltoolClauseForm getForm() {
 		SqltoolClauseForm form = new SqltoolClauseForm();
 		form.setDatabaseName(dataSourceDef.getDefaultName());
@@ -78,33 +84,40 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 	}
 
 	@Override
-	public ModelAndView index(Integer ref, Authentication authentication,
+	public ModelAndView index(int id, Authentication authentication,
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
+
+		SqltoolMetadata md = metadataService.findById(id,
+				authentication.getName());
+		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
+
+		SqltoolClause record = clauseService.findById(id);
+		SqltoolClauseForm form = formUtil.getForm(record);
+
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		mav.addObject(PATH_VAR, id);
 		mav.addObject(dataSourceDef);
-		if (ref != null) {
-			SqltoolMetadata md = metadataService.findById(ref,
-					authentication.getName());
-			if (md != null) {
-				SqltoolClause record = clauseService.findById(ref);
-				if (record != null) {
-					mav.addObject(formUtil.getForm(record));
-				}
-			}
-		}
+		mav.addObject(mdForm);
+		mav.addObject(form);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView request(SqltoolClauseForm form, BindingResult binding,
-			int pageNo, int pageSz, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+	public ModelAndView request(int id, SqltoolClauseForm form,
+			BindingResult binding, int pageNo, int pageSz,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request) {
+
+		SqltoolMetadata md = metadataService.findById(id,
+				authentication.getName());
+		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(PATH_VAR, id);
 			mav.addObject(dataSourceDef);
+			mav.addObject(mdForm);
 			return mav;
 		}
 
@@ -115,24 +128,34 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 				paramMap, pageNo, (pageSz <= 0 ? defaultPageSize : pageSz));
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		mav.addObject(PATH_VAR, id);
 		mav.addObject(dataSourceDef);
+		mav.addObject(mdForm);
 		mav.addObject(result.getPageSet());
 		mav.addObject(result.getResultSet());
 		return mav;
 	}
 
 	@Override
-	public ModelAndView create(SqltoolClauseForm form, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+	public ModelAndView update(int id, SqltoolClauseForm form,
+			BindingResult binding, Authentication authentication,
+			Locale locale, SitePreference sitePreference,
+			HttpServletRequest request) {
+
+		SqltoolMetadata md = metadataService.findById(id,
+				authentication.getName());
+		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(PATH_VAR, id);
 			mav.addObject(dataSourceDef);
+			mav.addObject(mdForm);
 			return mav;
 		}
 
 		SqltoolClause record = new SqltoolClause();
+		record.setId(id);
 		record.setDatabaseName(form.getDatabaseName());
 		record.setSelectClause(form.getSelect());
 		record.setFromClause(form.getFrom());
@@ -142,11 +165,42 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 		record.setOrderByClause(form.getOrderBy());
 		record.setParamMap(form.getParamMap());
 
-		int id = clauseService.create(record, authentication.getName());
+		clauseService.update(record);
 
 		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(SqltoolClauseIdController.URI_PATH, true));
-		mav.addObject(SqltoolClauseIdController.PATH_VAR, id);
+		mav.setView(new RedirectView(URI_PATH, true));
+		mav.addObject(PATH_VAR, id);
+		return mav;
+	}
+
+	@Override
+	public ModelAndView metadata(int id, SqltoolMetadataForm mdForm,
+			BindingResult binding, Authentication authentication,
+			Locale locale, SitePreference sitePreference,
+			HttpServletRequest request) {
+
+		SqltoolClause record = clauseService.findById(id);
+		SqltoolClauseForm form = formUtil.getForm(record);
+
+		if (binding.hasErrors()) {
+			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(PATH_VAR, id);
+			mav.addObject(dataSourceDef);
+			mav.addObject(form);
+			return mav;
+		}
+
+		SqltoolMetadata md = new SqltoolMetadata();
+		md.setId(id);
+		md.setName(mdForm.getName());
+		md.setDescription(mdForm.getDescription());
+		md.setPublishedFlg(mdForm.isPublishedFlg() ? 1 : 0);
+
+		metadataService.update(md);
+
+		ModelAndView mav = new ModelAndView();
+		mav.setView(new RedirectView(URI_PATH, true));
+		mav.addObject(PATH_VAR, id);
 		return mav;
 	}
 
