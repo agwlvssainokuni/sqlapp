@@ -84,32 +84,6 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 		}
 	}
 
-	@Override
-	public Result query(String databaseName, String sql, Map<String, ?> paramMap) {
-
-		ResultSet resultSet = new ResultSet();
-		PageSet pageSet = query(databaseName, sql, paramMap, resultSet);
-
-		Result result = new Result();
-		result.setPageSet(pageSet);
-		result.setResultSet(resultSet);
-		return result;
-	}
-
-	@Override
-	public Result query(String databaseName, QueryBuilder queryBuilder,
-			Map<String, ?> paramMap, int pageNo, int pageSz) {
-
-		ResultSet resultSet = new ResultSet();
-		PageSet pageSet = query(databaseName, queryBuilder, paramMap, pageNo,
-				pageSz, resultSet);
-
-		Result result = new Result();
-		result.setPageSet(pageSet);
-		result.setResultSet(resultSet);
-		return result;
-	}
-
 	private int count(DataSource dataSource, String sql, Map<String, ?> paramMap) {
 		NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(
 				dataSource);
