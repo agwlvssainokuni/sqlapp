@@ -18,11 +18,15 @@ package cherry.sqlapp.service.sqltool.exec;
 
 import java.util.Map;
 
+import cherry.spring.common.lib.etl.Consumer;
+import cherry.spring.common.lib.paginate.PageSet;
+
 public interface ExecQueryService {
 
-	Result query(String databaseName, String sql, Map<String, ?> paramMap);
+	PageSet query(String databaseName, String sql, Map<String, ?> paramMap,
+			Consumer consumer);
 
-	Result query(String databaseName, QueryBuilder queryBuilder,
-			Map<String, ?> paramMap, int pageNo, int pageSz);
+	PageSet query(String databaseName, QueryBuilder queryBuilder,
+			Map<String, ?> paramMap, int pageNo, int pageSz, Consumer consumer);
 
 }

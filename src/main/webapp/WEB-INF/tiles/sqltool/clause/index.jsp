@@ -114,6 +114,10 @@
 							<button type="submit" name="proc" value="exec" class="app-button">
 								<s:message code="sqltool/clause/index.execButton" />
 							</button>
+							<button type="submit" name="proc" value="download"
+								class="app-button">
+								<s:message code="sqltool/clause/index.downloadButton" />
+							</button>
 							<button type="submit" name="proc" value="create"
 								class="app-button">
 								<s:message code="sqltool/clause/index.createButton" />

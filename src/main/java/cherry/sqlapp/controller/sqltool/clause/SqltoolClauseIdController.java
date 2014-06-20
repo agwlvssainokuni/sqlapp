@@ -19,6 +19,7 @@ package cherry.sqlapp.controller.sqltool.clause;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
@@ -67,6 +68,13 @@ public interface SqltoolClauseIdController {
 			@RequestParam(value = PARAM_SZ, required = false, defaultValue = "0") int pageSz,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
+
+	@RequestMapping(value = URI_PATH_REQ, params = { "proc=download" })
+	ModelAndView download(@PathVariable(PATH_VAR) int id,
+			@Validated SqltoolClauseForm form, BindingResult binding,
+			Authentication authentication, Locale locale,
+			SitePreference sitePreference, HttpServletRequest request,
+			HttpServletResponse response);
 
 	@RequestMapping(value = URI_PATH_REQ, params = { "proc=update" })
 	ModelAndView update(@PathVariable(PATH_VAR) int id,

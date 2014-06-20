@@ -16,12 +16,22 @@
 
 package cherry.sqlapp.controller.sqltool.statement;
 
+import static java.text.MessageFormat.format;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -29,6 +39,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import cherry.spring.common.lib.etl.CsvConsumer;
+import cherry.spring.common.lib.paginate.PageSet;
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.controller.sqltool.ParamMapUtil;
 import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
@@ -36,7 +48,7 @@ import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
 import cherry.sqlapp.db.gen.dto.SqltoolStatement;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
 import cherry.sqlapp.service.sqltool.exec.ExecQueryService;
-import cherry.sqlapp.service.sqltool.exec.Result;
+import cherry.sqlapp.service.sqltool.exec.ResultSet;
 import cherry.sqlapp.service.sqltool.metadata.MetadataService;
 import cherry.sqlapp.service.sqltool.query.StatementService;
 
@@ -45,6 +57,21 @@ public class SqltoolStatementIdControllerImpl implements
 		SqltoolStatementIdController {
 
 	public static final String VIEW_PATH = "sqltool/statement/indexId";
+
+	@Value("${sqlapp.app.export.contentType}")
+	private String contentType;
+
+	@Value("${sqlapp.app.export.charset}")
+	private Charset charset;
+
+	@Value("${sqlapp.app.export.headerName}")
+	private String headerName;
+
+	@Value("${sqlapp.app.export.headerValue}")
+	private String headerValue;
+
+	@Value("${sqlapp.app.export.filename}")
+	private String filename;
 
 	@Autowired
 	private DataSourceDef dataSourceDef;
@@ -118,16 +145,54 @@ public class SqltoolStatementIdControllerImpl implements
 		}
 
 		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
-		Result result = execQueryService.query(form.getDatabaseName(),
-				form.getSql(), paramMap);
+
+		ResultSet resultSet = new ResultSet();
+		PageSet pageSet = execQueryService.query(form.getDatabaseName(),
+				form.getSql(), paramMap, resultSet);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(PATH_VAR, id);
 		mav.addObject(dataSourceDef);
 		mav.addObject(mdForm);
-		mav.addObject(result.getPageSet());
-		mav.addObject(result.getResultSet());
+		mav.addObject(pageSet);
+		mav.addObject(resultSet);
 		return mav;
+	}
+
+	@Override
+	public ModelAndView download(int id, SqltoolStatementForm form,
+			BindingResult binding, Authentication authentication,
+			Locale locale, SitePreference sitePreference,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		SqltoolMetadata md = metadataService.findById(id,
+				authentication.getName());
+		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
+
+		if (binding.hasErrors()) {
+			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(PATH_VAR, id);
+			mav.addObject(dataSourceDef);
+			mav.addObject(mdForm);
+			return mav;
+		}
+
+		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
+
+		response.setContentType(contentType);
+		response.setCharacterEncoding(charset.name());
+		String fname = format(filename, LocalDateTime.now().toDate());
+		response.setHeader(headerName, format(headerValue, fname));
+
+		try (OutputStream out = response.getOutputStream();
+				Writer writer = new OutputStreamWriter(out, charset)) {
+			execQueryService.query(form.getDatabaseName(), form.getSql(),
+					paramMap, new CsvConsumer(writer, true));
+		} catch (IOException ex) {
+			throw new IllegalStateException(ex);
+		}
+
+		return null;
 	}
 
 	@Override

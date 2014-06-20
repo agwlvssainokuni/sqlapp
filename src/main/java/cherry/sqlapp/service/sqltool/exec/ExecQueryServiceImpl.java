@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
+import cherry.spring.common.lib.etl.Consumer;
 import cherry.spring.common.lib.etl.Extractor;
 import cherry.spring.common.lib.etl.NoneLimiter;
 import cherry.spring.common.lib.paginate.PageSet;
@@ -44,22 +45,17 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 
 	@Transactional
 	@Override
-	public Result query(String databaseName, String sql, Map<String, ?> paramMap) {
-
+	public PageSet query(String databaseName, String sql,
+			Map<String, ?> paramMap, Consumer consumer) {
 		DataSource dataSource = dataSourceDef.getDataSource(databaseName);
-
 		try {
 
-			ResultSet resultSet = new ResultSet();
 			int numOfItems = extractor.extract(dataSource, sql, paramMap,
-					resultSet, new NoneLimiter());
+					consumer, new NoneLimiter());
 			PageSet pageSet = paginator.paginate(0, numOfItems,
 					(numOfItems <= 0 ? 1 : numOfItems));
 
-			Result result = new Result();
-			result.setPageSet(pageSet);
-			result.setResultSet(resultSet);
-			return result;
+			return pageSet;
 		} catch (IOException ex) {
 			throw new IllegalStateException(ex);
 		}
@@ -67,30 +63,25 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 
 	@Transactional
 	@Override
-	public Result query(String databaseName, QueryBuilder queryBuilder,
-			Map<String, ?> paramMap, int pageNo, int pageSz) {
-
+	public PageSet query(String databaseName, QueryBuilder queryBuilder,
+			Map<String, ?> paramMap, int pageNo, int pageSz, Consumer consumer) {
 		DataSource dataSource = dataSourceDef.getDataSource(databaseName);
-
-		int count = count(dataSource, queryBuilder.buildCount(), paramMap);
-		PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
-
-		ResultSet resultSet = new ResultSet();
 		try {
+
+			int count = count(dataSource, queryBuilder.buildCount(), paramMap);
+			PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
+
 			int numOfItems = extractor.extract(dataSource,
 					queryBuilder.build(pageSz, pageSet.getCurrent().getFrom()),
-					paramMap, resultSet, new NoneLimiter());
+					paramMap, consumer, new NoneLimiter());
 			if (numOfItems != pageSet.getCurrent().getCount()) {
 				throw new IllegalStateException();
 			}
+
+			return pageSet;
 		} catch (IOException ex) {
 			throw new IllegalStateException(ex);
 		}
-
-		Result result = new Result();
-		result.setPageSet(pageSet);
-		result.setResultSet(resultSet);
-		return result;
 	}
 
 	private int count(DataSource dataSource, String sql, Map<String, ?> paramMap) {

@@ -34,6 +34,17 @@ public class QueryBuilder {
 
 	private String orderBy = null;
 
+	public String build() {
+		StringBuilder builder = new StringBuilder();
+		append(builder, "SELECT ", select);
+		append(builder, " FROM ", from);
+		append(builder, " WHERE ", where);
+		append(builder, " GROUP BY ", groupBy);
+		append(builder, " HAVING ", having);
+		append(builder, " ORDER BY ", orderBy);
+		return builder.toString();
+	}
+
 	public String build(Integer limit, Integer offset) {
 		StringBuilder builder = new StringBuilder();
 		append(builder, "SELECT ", select);
