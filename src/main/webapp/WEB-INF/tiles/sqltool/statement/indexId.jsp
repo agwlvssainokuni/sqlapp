@@ -127,6 +127,10 @@
 							<button type="submit" name="proc" value="exec" class="app-button">
 								<s:message code="sqltool/statement/indexId.execButton" />
 							</button>
+							<button type="submit" name="proc" value="download"
+								class="app-button">
+								<s:message code="sqltool/statement/indexId.downloadButton" />
+							</button>
 							<button type="submit" name="proc" value="update"
 								class="app-button">
 								<s:message code="sqltool/statement/indexId.updateButton" />
