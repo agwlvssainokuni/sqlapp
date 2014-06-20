@@ -172,7 +172,7 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 		try (OutputStream out = response.getOutputStream();
 				Writer writer = new OutputStreamWriter(out, charset)) {
 			execQueryService.query(form.getDatabaseName(), builder.build(),
-					paramMap, new CsvConsumer(writer, "\r\n", true));
+					paramMap, new CsvConsumer(writer, true));
 		} catch (IOException ex) {
 			throw new IllegalStateException(ex);
 		}
