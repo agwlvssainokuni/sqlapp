@@ -16,10 +16,17 @@
 
 package cherry.sqlapp.service.sqltool.exec;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+import org.apache.commons.lang3.StringUtils;
+
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = false)
 public class QueryBuilder {
 
 	private String select = "*";
@@ -80,60 +87,6 @@ public class QueryBuilder {
 		if (value != null) {
 			builder.append(clause).append(value);
 		}
-	}
-
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.SHORT_PREFIX_STYLE);
-	}
-
-	public String getSelect() {
-		return select;
-	}
-
-	public void setSelect(String select) {
-		this.select = select;
-	}
-
-	public String getFrom() {
-		return from;
-	}
-
-	public void setFrom(String from) {
-		this.from = from;
-	}
-
-	public String getWhere() {
-		return where;
-	}
-
-	public void setWhere(String where) {
-		this.where = where;
-	}
-
-	public String getGroupBy() {
-		return groupBy;
-	}
-
-	public void setGroupBy(String groupBy) {
-		this.groupBy = groupBy;
-	}
-
-	public String getHaving() {
-		return having;
-	}
-
-	public void setHaving(String having) {
-		this.having = having;
-	}
-
-	public String getOrderBy() {
-		return orderBy;
-	}
-
-	public void setOrderBy(String orderBy) {
-		this.orderBy = orderBy;
 	}
 
 }

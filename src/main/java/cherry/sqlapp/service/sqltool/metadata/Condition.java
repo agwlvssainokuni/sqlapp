@@ -16,13 +16,18 @@
 
 package cherry.sqlapp.service.sqltool.metadata;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import org.joda.time.LocalDateTime;
 
-import cherry.sqlapp.db.BaseDto;
-
-public class Condition extends BaseDto {
-
-	private static final long serialVersionUID = 1L;
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = false)
+public class Condition {
 
 	private String name;
 
@@ -39,69 +44,5 @@ public class Condition extends BaseDto {
 	private boolean publish = true;
 
 	private boolean notPublish = true;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public LocalDateTime getRegisteredFrom() {
-		return registeredFrom;
-	}
-
-	public void setRegisteredFrom(LocalDateTime registeredFrom) {
-		this.registeredFrom = registeredFrom;
-	}
-
-	public LocalDateTime getRegisteredTo() {
-		return registeredTo;
-	}
-
-	public void setRegisteredTo(LocalDateTime registeredTo) {
-		this.registeredTo = registeredTo;
-	}
-
-	public boolean isClause() {
-		return clause;
-	}
-
-	public void setClause(boolean clause) {
-		this.clause = clause;
-	}
-
-	public boolean isStatement() {
-		return statement;
-	}
-
-	public void setStatement(boolean statement) {
-		this.statement = statement;
-	}
-
-	public boolean isLoad() {
-		return load;
-	}
-
-	public void setLoad(boolean load) {
-		this.load = load;
-	}
-
-	public boolean isPublish() {
-		return publish;
-	}
-
-	public void setPublish(boolean publish) {
-		this.publish = publish;
-	}
-
-	public boolean isNotPublish() {
-		return notPublish;
-	}
-
-	public void setNotPublish(boolean notPublish) {
-		this.notPublish = notPublish;
-	}
 
 }

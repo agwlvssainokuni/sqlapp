@@ -16,12 +16,19 @@
 
 package cherry.sqlapp.controller.sqltool.statement;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 import cherry.sqlapp.controller.BaseForm;
 import cherry.sqlapp.validation.ParamMapSize;
 import cherry.sqlapp.validation.SqlStatementSize;
 
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
 public class SqltoolStatementForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
@@ -35,29 +42,5 @@ public class SqltoolStatementForm extends BaseForm {
 
 	@ParamMapSize
 	private String paramMap;
-
-	public String getDatabaseName() {
-		return databaseName;
-	}
-
-	public void setDatabaseName(String databaseName) {
-		this.databaseName = databaseName;
-	}
-
-	public String getSql() {
-		return sql;
-	}
-
-	public void setSql(String sql) {
-		this.sql = sql;
-	}
-
-	public String getParamMap() {
-		return paramMap;
-	}
-
-	public void setParamMap(String paramMap) {
-		this.paramMap = paramMap;
-	}
 
 }

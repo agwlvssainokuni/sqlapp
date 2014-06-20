@@ -19,12 +19,15 @@ package cherry.sqlapp.service.sqltool.exec;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 import cherry.spring.common.lib.etl.Column;
 import cherry.spring.common.lib.etl.Consumer;
 
+@Getter
+@EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = false)
 public class ResultSet implements Consumer {
 
 	private Column[] header;
@@ -44,20 +47,6 @@ public class ResultSet implements Consumer {
 	@Override
 	public void end() {
 		// NOTHING TO DO
-	}
-
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.SHORT_PREFIX_STYLE);
-	}
-
-	public Column[] getHeader() {
-		return header;
-	}
-
-	public List<Object[]> getRecordSet() {
-		return recordSet;
 	}
 
 }

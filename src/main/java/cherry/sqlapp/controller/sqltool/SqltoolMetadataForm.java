@@ -16,12 +16,19 @@
 
 package cherry.sqlapp.controller.sqltool;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 import cherry.sqlapp.controller.BaseForm;
 import cherry.sqlapp.validation.DescriptionSize;
 import cherry.sqlapp.validation.NameSize;
 
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
 public class SqltoolMetadataForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
@@ -37,37 +44,5 @@ public class SqltoolMetadataForm extends BaseForm {
 	private String ownedBy;
 
 	private boolean publishedFlg;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getOwnedBy() {
-		return ownedBy;
-	}
-
-	public void setOwnedBy(String ownedBy) {
-		this.ownedBy = ownedBy;
-	}
-
-	public boolean isPublishedFlg() {
-		return publishedFlg;
-	}
-
-	public void setPublishedFlg(boolean publishedFlg) {
-		this.publishedFlg = publishedFlg;
-	}
 
 }

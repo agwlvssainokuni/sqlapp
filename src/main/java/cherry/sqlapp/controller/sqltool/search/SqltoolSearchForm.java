@@ -16,6 +16,10 @@
 
 package cherry.sqlapp.controller.sqltool.search;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.joda.time.LocalDateTime;
 
 import cherry.spring.common.custom.format.CustomDateTimeFormat;
@@ -23,6 +27,9 @@ import cherry.spring.common.custom.format.CustomDateTimeFormat.Range;
 import cherry.sqlapp.controller.BaseForm;
 import cherry.sqlapp.validation.NameSize;
 
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
 public class SqltoolSearchForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
@@ -45,69 +52,5 @@ public class SqltoolSearchForm extends BaseForm {
 	private boolean publish = true;
 
 	private boolean notPublish = true;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public LocalDateTime getRegisteredFrom() {
-		return registeredFrom;
-	}
-
-	public void setRegisteredFrom(LocalDateTime registeredFrom) {
-		this.registeredFrom = registeredFrom;
-	}
-
-	public LocalDateTime getRegisteredTo() {
-		return registeredTo;
-	}
-
-	public void setRegisteredTo(LocalDateTime registeredTo) {
-		this.registeredTo = registeredTo;
-	}
-
-	public boolean isClause() {
-		return clause;
-	}
-
-	public void setClause(boolean clause) {
-		this.clause = clause;
-	}
-
-	public boolean isStatement() {
-		return statement;
-	}
-
-	public void setStatement(boolean statement) {
-		this.statement = statement;
-	}
-
-	public boolean isLoad() {
-		return load;
-	}
-
-	public void setLoad(boolean load) {
-		this.load = load;
-	}
-
-	public boolean isPublish() {
-		return publish;
-	}
-
-	public void setPublish(boolean publish) {
-		this.publish = publish;
-	}
-
-	public boolean isNotPublish() {
-		return notPublish;
-	}
-
-	public void setNotPublish(boolean notPublish) {
-		this.notPublish = notPublish;
-	}
 
 }

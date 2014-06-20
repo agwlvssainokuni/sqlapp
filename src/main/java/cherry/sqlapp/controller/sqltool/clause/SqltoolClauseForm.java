@@ -16,12 +16,19 @@
 
 package cherry.sqlapp.controller.sqltool.clause;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 import cherry.sqlapp.controller.BaseForm;
 import cherry.sqlapp.validation.ParamMapSize;
 import cherry.sqlapp.validation.SqlClauseSize;
 
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
 public class SqltoolClauseForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
@@ -51,69 +58,5 @@ public class SqltoolClauseForm extends BaseForm {
 
 	@ParamMapSize
 	private String paramMap;
-
-	public String getDatabaseName() {
-		return databaseName;
-	}
-
-	public void setDatabaseName(String databaseName) {
-		this.databaseName = databaseName;
-	}
-
-	public String getSelect() {
-		return select;
-	}
-
-	public void setSelect(String select) {
-		this.select = select;
-	}
-
-	public String getFrom() {
-		return from;
-	}
-
-	public void setFrom(String from) {
-		this.from = from;
-	}
-
-	public String getWhere() {
-		return where;
-	}
-
-	public void setWhere(String where) {
-		this.where = where;
-	}
-
-	public String getGroupBy() {
-		return groupBy;
-	}
-
-	public void setGroupBy(String groupBy) {
-		this.groupBy = groupBy;
-	}
-
-	public String getHaving() {
-		return having;
-	}
-
-	public void setHaving(String having) {
-		this.having = having;
-	}
-
-	public String getOrderBy() {
-		return orderBy;
-	}
-
-	public void setOrderBy(String orderBy) {
-		this.orderBy = orderBy;
-	}
-
-	public String getParamMap() {
-		return paramMap;
-	}
-
-	public void setParamMap(String paramMap) {
-		this.paramMap = paramMap;
-	}
 
 }

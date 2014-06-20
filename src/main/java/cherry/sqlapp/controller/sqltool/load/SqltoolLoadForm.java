@@ -16,12 +16,19 @@
 
 package cherry.sqlapp.controller.sqltool.load;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 import cherry.sqlapp.controller.BaseForm;
 import cherry.sqlapp.validation.SqlStatementSize;
 
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
 public class SqltoolLoadForm extends BaseForm {
 
 	private static final long serialVersionUID = 1L;
@@ -34,29 +41,5 @@ public class SqltoolLoadForm extends BaseForm {
 	private String sql;
 
 	private MultipartFile file;
-
-	public String getDatabaseName() {
-		return databaseName;
-	}
-
-	public void setDatabaseName(String databaseName) {
-		this.databaseName = databaseName;
-	}
-
-	public String getSql() {
-		return sql;
-	}
-
-	public void setSql(String sql) {
-		this.sql = sql;
-	}
-
-	public MultipartFile getFile() {
-		return file;
-	}
-
-	public void setFile(MultipartFile file) {
-		this.file = file;
-	}
 
 }
