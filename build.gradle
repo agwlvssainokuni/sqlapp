@@ -35,6 +35,7 @@ ext {
 	versionJavaJsp = "2.2.1"
 	versionJavaJms = "1.1-rev-1"
 	versionJavaTransaction = "1.1-rev-1"
+	versionLombok = "1.14.2"
 	versionJunit = "4.11"
 	versionMockito = "1.9.5"
 }
@@ -90,6 +91,7 @@ dependencies {
 	providedCompile "javax.servlet.jsp:javax.servlet.jsp-api:${versionJavaJsp}"
 	providedCompile "javax.jms:jms-api:${versionJavaJms}"
 	providedCompile "javax.transaction:transaction-api:${versionJavaTransaction}"
+	providedCompile "org.projectlombok:lombok:${versionLombok}"
 	testCompile "junit:junit:${versionJunit}"
 	testCompile "org.mockito:mockito-all:${versionMockito}"
 }
