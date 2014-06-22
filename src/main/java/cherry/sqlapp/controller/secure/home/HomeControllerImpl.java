@@ -23,16 +23,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(HomeController.URI_PATH)
 public class HomeControllerImpl implements HomeController {
 
 	public static final String VIEW_PATH = "secure/home/index";
 
-	@RequestMapping()
 	@Override
 	public ModelAndView index(Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
