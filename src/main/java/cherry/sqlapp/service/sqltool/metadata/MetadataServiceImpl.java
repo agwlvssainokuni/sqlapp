@@ -19,6 +19,8 @@ package cherry.sqlapp.service.sqltool.metadata;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +43,7 @@ public class MetadataServiceImpl implements MetadataService {
 	@Autowired
 	private Paginator paginator;
 
+	@Cacheable(value = "SqltoolMetadata", key = "#id")
 	@Transactional
 	@Override
 	public SqltoolMetadata findById(int id, String loginId) {
@@ -57,6 +60,7 @@ public class MetadataServiceImpl implements MetadataService {
 		return null;
 	}
 
+	@CacheEvict(value = "SqltoolMetadata", key = "#record.id")
 	@Transactional
 	@Override
 	public void update(SqltoolMetadata record) {
@@ -74,7 +78,8 @@ public class MetadataServiceImpl implements MetadataService {
 		int itemCount = metadataMapper.count(cond);
 		PageSet pageSet = paginator.paginate(pageNo, itemCount, pageSz);
 		int offset = pageSet.getCurrent().getFrom();
-		List<SqltoolMetadata> list = metadataMapper.search(cond, pageSz, offset);
+		List<SqltoolMetadata> list = metadataMapper
+				.search(cond, pageSz, offset);
 
 		Result result = new Result();
 		result.setPageSet(pageSet);
