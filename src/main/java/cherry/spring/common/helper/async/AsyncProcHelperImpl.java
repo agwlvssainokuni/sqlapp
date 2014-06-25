@@ -19,10 +19,8 @@ package cherry.spring.common.helper.async;
 import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-@Component
 public class AsyncProcHelperImpl implements AsyncProcHelper {
 
 	@Autowired

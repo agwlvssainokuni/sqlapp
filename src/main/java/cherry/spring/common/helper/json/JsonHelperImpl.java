@@ -21,19 +21,19 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Component
 public class JsonHelperImpl implements JsonHelper {
 
 	@Value("${common.helper.json.throwableMaxLength}")
 	private Integer throwableMaxlength;
 
-	private ObjectMapper mapper = new ObjectMapper();
+	@Autowired
+	private ObjectMapper mapper;
 
 	@Override
 	public String fromMap(Map<?, ?> map) {

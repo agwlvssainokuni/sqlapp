@@ -15,6 +15,14 @@
 
 	<bean id="loader" class="cherry.spring.common.lib.etl.LoaderImpl" />
 
+	<bean id="asyncProcDao" class="cherry.spring.common.helper.async.AsyncProcDaoImpl" />
+
+	<bean id="asyncProcHelper" class="cherry.spring.common.helper.async.AsyncProcHelperImpl" />
+
+	<bean id="jsonHelper" class="cherry.spring.common.helper.json.JsonHelperImpl" />
+
+	<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
+
 	<bean id="navigator" class="cherry.spring.common.helper.navi.NavigatorImpl">
 		<property name="navigationDef" value="classpath:navi.json" />
 	</bean>
