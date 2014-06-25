@@ -17,11 +17,6 @@
 package cherry.spring.common.helper.async;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,28 +29,18 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
+import cherry.spring.common.helper.sql.SqlLoader;
+
 public class AsyncProcDaoImpl implements AsyncProcDao, InitializingBean {
 
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcOperations;
 
-	@Value("classpath:cherry/spring/common/helper/async/AsyncProcDaoImpl_createAsyncProc.sql")
-	private Resource resourceCreateAsyncProc;
+	@Autowired
+	private SqlLoader sqlLoader;
 
-	@Value("classpath:cherry/spring/common/helper/async/AsyncProcDaoImpl_invokeAsyncProc.sql")
-	private Resource resourceInvokeAsyncProc;
-
-	@Value("classpath:cherry/spring/common/helper/async/AsyncProcDaoImpl_startAsyncProc.sql")
-	private Resource resourceStartAsyncProc;
-
-	@Value("classpath:cherry/spring/common/helper/async/AsyncProcDaoImpl_successAsyncProc.sql")
-	private Resource resourceSuccessAsyncProc;
-
-	@Value("classpath:cherry/spring/common/helper/async/AsyncProcDaoImpl_errorAsyncProc.sql")
-	private Resource resourceErrorAsyncProc;
-
-	@Value("UTF-8")
-	private Charset charset;
+	@Value("classpath:cherry/spring/common/helper/async/AsyncProcDaoImpl.sql")
+	private Resource sqlResource;
 
 	private String sqlCreateAsyncProc;
 
@@ -69,11 +54,12 @@ public class AsyncProcDaoImpl implements AsyncProcDao, InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws IOException {
-		sqlCreateAsyncProc = resToStr(resourceCreateAsyncProc, charset);
-		sqlInvokeAsyncProc = resToStr(resourceInvokeAsyncProc, charset);
-		sqlStartAsyncProc = resToStr(resourceStartAsyncProc, charset);
-		sqlSuccessAsyncProc = resToStr(resourceSuccessAsyncProc, charset);
-		sqlErrorAsyncProc = resToStr(resourceErrorAsyncProc, charset);
+		Map<String, String> sqlmap = sqlLoader.load(sqlResource);
+		sqlCreateAsyncProc = sqlmap.get("createAsyncProc");
+		sqlInvokeAsyncProc = sqlmap.get("invokeAsyncProc");
+		sqlStartAsyncProc = sqlmap.get("startAsyncProc");
+		sqlSuccessAsyncProc = sqlmap.get("successAsyncProc");
+		sqlErrorAsyncProc = sqlmap.get("errorAsyncProc");
 	}
 
 	@Override
@@ -120,19 +106,6 @@ public class AsyncProcDaoImpl implements AsyncProcDao, InitializingBean {
 		paramMap.put("id", id);
 		paramMap.put("result", result);
 		return namedParameterJdbcOperations.update(sqlErrorAsyncProc, paramMap);
-	}
-
-	private String resToStr(Resource res, Charset cs) throws IOException {
-		try (StringWriter writer = new StringWriter();
-				InputStream in = res.getInputStream();
-				Reader reader = new InputStreamReader(in, cs)) {
-			int len;
-			char[] buff = new char[4096];
-			while ((len = reader.read(buff, 0, buff.length)) >= 0) {
-				writer.write(buff, 0, len);
-			}
-			return writer.toString();
-		}
 	}
 
 }
