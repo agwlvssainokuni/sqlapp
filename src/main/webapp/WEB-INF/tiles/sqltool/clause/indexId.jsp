@@ -8,6 +8,7 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@ taglib prefix="sqlapp" uri="urn:sqlapp"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <s:url var="baseUri" value="/sqltool/clause/{id}">
 	<s:param name="id" value="${id}" />
@@ -114,6 +115,8 @@
 						<td><f:select path="databaseName"
 								cssClass="app-width50 ui-widget"
 								cssErrorClass="app-width50 ui-widget ui-state-error">
+								<c:set var="sc" value="<%=application%>" />
+								<c:set var="dataSourceDef" value="${sqlapp:dataSourceDef(sc)}" />
 								<f:options items="${dataSourceDef.names}" />
 							</f:select></td>
 					</tr>

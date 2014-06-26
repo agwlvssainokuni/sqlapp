@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+	version="2.1">
+
+	<description>SqlApp Tag Library</description>
+	<display-name>SqlApp Tag Library</display-name>
+	<tlib-version>1.0</tlib-version>
+	<short-name>sqlapp</short-name>
+	<uri>urn:sqlapp</uri>
+
+	<function>
+		<description>DataSourceDef</description>
+		<name>dataSourceDef</name>
+		<function-class>cherry.sqlapp.service.sqltool.DataSourceDefTag</function-class>
+		<function-signature>
+			cherry.sqlapp.service.sqltool.DataSourceDef getDataSourceDef(javax.servlet.ServletContext)
+		</function-signature>
+	</function>
+
+</taglib>
