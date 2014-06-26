@@ -37,6 +37,7 @@
 				<f:errors path="sqltoolMetadataForm" element="div" />
 				<f:errors path="sqltoolMetadataForm.name" element="div" />
 				<f:errors path="sqltoolMetadataForm.description" element="div" />
+				<f:errors path="sqltoolMetadataForm.lockVersion" element="div" />
 			</div>
 		</s:hasBindErrors>
 		<f:form servletRelativeAction="${baseUri}/metadata" method="POST"

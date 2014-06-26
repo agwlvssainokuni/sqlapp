@@ -32,10 +32,12 @@
 				<f:errors path="sqltoolLoadForm" element="div" />
 				<f:errors path="sqltoolLoadForm.databaseName" element="div" />
 				<f:errors path="sqltoolLoadForm.sql" element="div" />
+				<f:errors path="sqltoolLoadForm.lockVersion" element="div" />
 			</div>
 		</s:hasBindErrors>
 		<f:form servletRelativeAction="/sqltool/load/req" method="POST"
 			modelAttribute="sqltoolLoadForm" enctype="multipart/form-data">
+			<f:hidden path="lockVersion" />
 			<table class="app-collabel">
 				<tbody>
 					<tr>
