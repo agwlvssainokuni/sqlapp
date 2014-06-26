@@ -105,7 +105,6 @@ public class SqltoolStatementControllerImpl implements
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		mav.addObject(dataSourceDef);
 		if (ref != null) {
 			SqltoolMetadata md = metadataService.findById(ref,
 					authentication.getName());
@@ -127,7 +126,6 @@ public class SqltoolStatementControllerImpl implements
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(dataSourceDef);
 			return mav;
 		}
 
@@ -138,7 +136,6 @@ public class SqltoolStatementControllerImpl implements
 				form.getSql(), paramMap, resultSet);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		mav.addObject(dataSourceDef);
 		mav.addObject(pageSet);
 		mav.addObject(resultSet);
 		return mav;
@@ -152,7 +149,6 @@ public class SqltoolStatementControllerImpl implements
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(dataSourceDef);
 			return mav;
 		}
 
@@ -182,7 +178,6 @@ public class SqltoolStatementControllerImpl implements
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(dataSourceDef);
 			return mav;
 		}
 

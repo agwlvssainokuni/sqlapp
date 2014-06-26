@@ -123,7 +123,6 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(PATH_VAR, id);
-		mav.addObject(dataSourceDef);
 		mav.addObject(mdForm);
 		mav.addObject(form);
 		return mav;
@@ -142,7 +141,6 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(dataSourceDef);
 			mav.addObject(mdForm);
 			return mav;
 		}
@@ -157,7 +155,6 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(PATH_VAR, id);
-		mav.addObject(dataSourceDef);
 		mav.addObject(mdForm);
 		mav.addObject(pageSet);
 		mav.addObject(resultSet);
@@ -177,7 +174,6 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(dataSourceDef);
 			mav.addObject(mdForm);
 			return mav;
 		}
@@ -214,7 +210,6 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(dataSourceDef);
 			mav.addObject(mdForm);
 			return mav;
 		}
@@ -250,7 +245,6 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(dataSourceDef);
 			mav.addObject(form);
 			return mav;
 		}

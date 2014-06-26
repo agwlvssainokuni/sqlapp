@@ -108,7 +108,6 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		mav.addObject(dataSourceDef);
 		if (ref != null) {
 			SqltoolMetadata md = metadataService.findById(ref,
 					authentication.getName());
@@ -130,7 +129,6 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(dataSourceDef);
 			return mav;
 		}
 
@@ -143,7 +141,6 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 						: pageSz), resultSet);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		mav.addObject(dataSourceDef);
 		mav.addObject(pageSet);
 		mav.addObject(resultSet);
 		return mav;
@@ -157,7 +154,6 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(dataSourceDef);
 			return mav;
 		}
 
@@ -187,7 +183,6 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(dataSourceDef);
 			return mav;
 		}
 

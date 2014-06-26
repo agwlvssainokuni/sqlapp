@@ -77,7 +77,6 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		mav.addObject(dataSourceDef);
 		if (ref != null) {
 			SqltoolMetadata md = metadataService.findById(ref,
 					authentication.getName());
@@ -99,7 +98,6 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(dataSourceDef);
 			return mav;
 		}
 
@@ -118,7 +116,6 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
-		mav.addObject(dataSourceDef);
 		mav.addAllObjects(redirectAttributes.getFlashAttributes());
 		return mav;
 	}
@@ -130,7 +127,6 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(dataSourceDef);
 			return mav;
 		}
 

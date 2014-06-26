@@ -93,7 +93,6 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(PATH_VAR, id);
-		mav.addObject(dataSourceDef);
 		mav.addObject(mdForm);
 		mav.addObject(form);
 		return mav;
@@ -112,7 +111,6 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(dataSourceDef);
 			mav.addObject(mdForm);
 			return mav;
 		}
@@ -134,7 +132,6 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 			SitePreference sitePreference, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
 		mav.addObject(PATH_VAR, id);
-		mav.addObject(dataSourceDef);
 		mav.addAllObjects(redirectAttributes.getFlashAttributes());
 		return mav;
 	}
@@ -152,7 +149,6 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(dataSourceDef);
 			mav.addObject(mdForm);
 			return mav;
 		}
@@ -182,7 +178,6 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(dataSourceDef);
 			mav.addObject(form);
 			return mav;
 		}
