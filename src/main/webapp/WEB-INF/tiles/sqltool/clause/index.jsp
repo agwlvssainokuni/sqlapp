@@ -40,12 +40,14 @@
 				<f:errors path="sqltoolClauseForm.having" element="div" />
 				<f:errors path="sqltoolClauseForm.orderBy" element="div" />
 				<f:errors path="sqltoolClauseForm.paramMap" element="div" />
+				<f:errors path="sqltoolClauseForm.lockVersion" element="div" />
 			</div>
 		</s:hasBindErrors>
 		<f:form servletRelativeAction="/sqltool/clause/req" method="POST"
 			modelAttribute="sqltoolClauseForm">
 			<input type="hidden" id="sz" name="sz"
 				value="<c:out value="${param.sz}" />">
+			<f:hidden path="lockVersion" />
 			<table class="app-collabel">
 				<tbody>
 					<tr>
@@ -141,6 +143,7 @@
 				<input type="hidden" id="no2" name="no">
 				<input type="hidden" id="sz2" name="sz"
 					value="<c:out value="${param.sz}" />">
+				<f:hidden id="lockVersion2" path="lockVersion" />
 				<f:hidden id="databaseName2" path="databaseName" />
 				<f:hidden id="select2" path="select" />
 				<f:hidden id="from2" path="from" />
