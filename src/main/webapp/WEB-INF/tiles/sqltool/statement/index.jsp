@@ -35,10 +35,12 @@
 				<f:errors path="sqltoolStatementForm.databaseName" element="div" />
 				<f:errors path="sqltoolStatementForm.sql" element="div" />
 				<f:errors path="sqltoolStatementForm.paramMap" element="div" />
+				<f:errors path="sqltoolStatementForm.lockVersion" element="div" />
 			</div>
 		</s:hasBindErrors>
 		<f:form servletRelativeAction="/sqltool/statement/req" method="POST"
 			modelAttribute="sqltoolStatementForm">
+			<f:hidden path="lockVersion" />
 			<table class="app-collabel">
 				<tbody>
 					<tr>

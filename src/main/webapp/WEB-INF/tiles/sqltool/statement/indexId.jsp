@@ -37,10 +37,12 @@
 				<f:errors path="sqltoolMetadataForm" element="div" />
 				<f:errors path="sqltoolMetadataForm.name" element="div" />
 				<f:errors path="sqltoolMetadataForm.description" element="div" />
+				<f:errors path="sqltoolMetadataForm.lockVersion" element="div" />
 			</div>
 		</s:hasBindErrors>
 		<f:form servletRelativeAction="${baseUri}/metadata" method="POST"
 			modelAttribute="sqltoolMetadataForm">
+			<f:hidden path="lockVersion" />
 			<table class="app-collabel">
 				<tbody>
 					<tr>
@@ -91,10 +93,12 @@
 				<f:errors path="sqltoolStatementForm.databaseName" element="div" />
 				<f:errors path="sqltoolStatementForm.sql" element="div" />
 				<f:errors path="sqltoolStatementForm.paramMap" element="div" />
+				<f:errors path="sqltoolStatementForm.lockVersion" element="div" />
 			</div>
 		</s:hasBindErrors>
 		<f:form servletRelativeAction="${baseUri}/req" method="POST"
 			modelAttribute="sqltoolStatementForm">
+			<f:hidden path="lockVersion" />
 			<table class="app-collabel">
 				<tbody>
 					<tr>
