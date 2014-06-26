@@ -59,4 +59,6 @@ public class SqltoolClauseForm extends BaseForm {
 	@ParamMapSize
 	private String paramMap;
 
+	private Integer lockVersion;
+
 }

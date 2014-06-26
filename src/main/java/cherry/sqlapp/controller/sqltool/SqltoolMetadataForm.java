@@ -45,4 +45,6 @@ public class SqltoolMetadataForm extends BaseForm {
 
 	private boolean publishedFlg;
 
+	private Integer lockVersion;
+
 }

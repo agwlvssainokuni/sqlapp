@@ -43,4 +43,6 @@ public class SqltoolStatementForm extends BaseForm {
 	@ParamMapSize
 	private String paramMap;
 
+	private Integer lockVersion;
+
 }

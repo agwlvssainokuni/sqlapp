@@ -42,4 +42,6 @@ public class SqltoolLoadForm extends BaseForm {
 
 	private MultipartFile file;
 
+	private Integer lockVersion;
+
 }
