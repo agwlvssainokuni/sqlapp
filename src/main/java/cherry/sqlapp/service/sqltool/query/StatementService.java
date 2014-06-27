@@ -24,6 +24,6 @@ public interface StatementService {
 
 	int create(SqltoolStatement record, String ownedBy);
 
-	void update(SqltoolStatement record);
+	boolean update(SqltoolStatement record);
 
 }

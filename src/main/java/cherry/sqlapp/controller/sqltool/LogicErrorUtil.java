@@ -33,6 +33,11 @@ public class LogicErrorUtil {
 				LogicError.BadSqlGrammer.name());
 	}
 
+	public void rejectOnOptimisticLockingFailure(BindingResult binding) {
+		binding.reject(LogicError.OptimisticLockingFailure.name(),
+				new Object[] {}, LogicError.OptimisticLockingFailure.name());
+	}
+
 	private Throwable getRootCause(Throwable ex) {
 		Throwable result = ex;
 		while (result.getCause() != null) {

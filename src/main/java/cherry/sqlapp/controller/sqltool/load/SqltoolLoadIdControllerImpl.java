@@ -31,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import cherry.sqlapp.controller.sqltool.LogicErrorUtil;
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 import cherry.sqlapp.db.gen.dto.SqltoolLoad;
@@ -66,6 +67,9 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 
 	@Autowired
 	private MdFormUtil mdFormUtil;
+
+	@Autowired
+	private LogicErrorUtil logicErrorUtil;
 
 	@Override
 	public SqltoolMetadataForm getMetadata() {
@@ -159,12 +163,18 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 		record.setQuery(form.getSql());
 		record.setLockVersion(form.getLockVersion());
 
-		loadService.update(record);
-
-		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(URI_PATH, true));
-		mav.addObject(PATH_VAR, id);
-		return mav;
+		if (loadService.update(record)) {
+			ModelAndView mav = new ModelAndView();
+			mav.setView(new RedirectView(URI_PATH, true));
+			mav.addObject(PATH_VAR, id);
+			return mav;
+		} else {
+			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
+			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(PATH_VAR, id);
+			mav.addObject(mdForm);
+			return mav;
+		}
 	}
 
 	@Override
@@ -190,12 +200,18 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 		md.setPublishedFlg(mdForm.isPublishedFlg() ? 1 : 0);
 		md.setLockVersion(mdForm.getLockVersion());
 
-		metadataService.update(md);
-
-		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(URI_PATH, true));
-		mav.addObject(PATH_VAR, id);
-		return mav;
+		if (metadataService.update(md)) {
+			ModelAndView mav = new ModelAndView();
+			mav.setView(new RedirectView(URI_PATH, true));
+			mav.addObject(PATH_VAR, id);
+			return mav;
+		} else {
+			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
+			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(PATH_VAR, id);
+			mav.addObject(form);
+			return mav;
+		}
 	}
 
 }

@@ -24,6 +24,6 @@ public interface ClauseService {
 
 	int create(SqltoolClause record, String ownedBy);
 
-	void update(SqltoolClause record);
+	boolean update(SqltoolClause record);
 
 }

@@ -23,7 +23,7 @@ public interface MetadataService {
 
 	SqltoolMetadata findById(int id, String loginId);
 
-	void update(SqltoolMetadata record);
+	boolean update(SqltoolMetadata record);
 
 	Result search(MetadataCondition cond, int pageNo, int pageSz);
 

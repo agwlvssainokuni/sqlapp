@@ -70,12 +70,9 @@ public class LoadServiceImpl implements LoadService {
 
 	@Transactional
 	@Override
-	public void update(SqltoolLoad record) {
+	public boolean update(SqltoolLoad record) {
 		int count = loadMapper.update(record);
-		if (count != 1) {
-			throw new IllegalArgumentException("sql_csv is not updated; count="
-					+ count);
-		}
+		return count == 1;
 	}
 
 }

@@ -240,12 +240,18 @@ public class SqltoolStatementIdControllerImpl implements
 		record.setParamMap(form.getParamMap());
 		record.setLockVersion(form.getLockVersion());
 
-		statementService.update(record);
-
-		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(URI_PATH, true));
-		mav.addObject(PATH_VAR, id);
-		return mav;
+		if (statementService.update(record)) {
+			ModelAndView mav = new ModelAndView();
+			mav.setView(new RedirectView(URI_PATH, true));
+			mav.addObject(PATH_VAR, id);
+			return mav;
+		} else {
+			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
+			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(PATH_VAR, id);
+			mav.addObject(mdForm);
+			return mav;
+		}
 	}
 
 	@Override
@@ -271,12 +277,18 @@ public class SqltoolStatementIdControllerImpl implements
 		md.setPublishedFlg(mdForm.isPublishedFlg() ? 1 : 0);
 		md.setLockVersion(mdForm.getLockVersion());
 
-		metadataService.update(md);
-
-		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(URI_PATH, true));
-		mav.addObject(PATH_VAR, id);
-		return mav;
+		if (metadataService.update(md)) {
+			ModelAndView mav = new ModelAndView();
+			mav.setView(new RedirectView(URI_PATH, true));
+			mav.addObject(PATH_VAR, id);
+			return mav;
+		} else {
+			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
+			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(PATH_VAR, id);
+			mav.addObject(form);
+			return mav;
+		}
 	}
 
 }

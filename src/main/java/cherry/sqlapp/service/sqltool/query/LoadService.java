@@ -24,6 +24,6 @@ public interface LoadService {
 
 	int create(SqltoolLoad record, String ownedBy);
 
-	void update(SqltoolLoad record);
+	boolean update(SqltoolLoad record);
 
 }

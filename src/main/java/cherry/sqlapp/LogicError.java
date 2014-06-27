@@ -19,6 +19,8 @@ package cherry.sqlapp;
 public enum LogicError {
 	/** SQL実行：SQL文不正。 */
 	BadSqlGrammer,
+	/** SQL更新：楽観ロックエラー。 */
+	OptimisticLockingFailure,
 	// ダミー
 	DUMMY
 }

@@ -20,10 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.sqlapp.db.app.mapper.MetadataMapper;
 import cherry.sqlapp.db.app.mapper.ClauseMapper;
-import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
+import cherry.sqlapp.db.app.mapper.MetadataMapper;
 import cherry.sqlapp.db.gen.dto.SqltoolClause;
+import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
 import cherry.sqlapp.db.gen.mapper.SqltoolClauseMapper;
 
 @Component
@@ -70,12 +70,9 @@ public class ClauseServiceImpl implements ClauseService {
 
 	@Transactional
 	@Override
-	public void update(SqltoolClause record) {
+	public boolean update(SqltoolClause record) {
 		int count = clauseMapper.update(record);
-		if (count != 1) {
-			throw new IllegalArgumentException(
-					"sql_select is not updated; count=" + count);
-		}
+		return count == 1;
 	}
 
 }

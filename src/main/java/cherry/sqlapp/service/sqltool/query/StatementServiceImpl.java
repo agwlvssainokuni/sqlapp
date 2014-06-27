@@ -20,10 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.sqlapp.db.app.mapper.StatementMapper;
 import cherry.sqlapp.db.app.mapper.MetadataMapper;
-import cherry.sqlapp.db.gen.dto.SqltoolStatement;
+import cherry.sqlapp.db.app.mapper.StatementMapper;
 import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
+import cherry.sqlapp.db.gen.dto.SqltoolStatement;
 import cherry.sqlapp.db.gen.mapper.SqltoolStatementMapper;
 
 @Component
@@ -70,12 +70,9 @@ public class StatementServiceImpl implements StatementService {
 
 	@Transactional
 	@Override
-	public void update(SqltoolStatement record) {
+	public boolean update(SqltoolStatement record) {
 		int count = statementMapper.update(record);
-		if (count != 1) {
-			throw new IllegalArgumentException("sql_any is not updated; count="
-					+ count);
-		}
+		return count == 1;
 	}
 
 }

@@ -63,12 +63,9 @@ public class MetadataServiceImpl implements MetadataService {
 	@CacheEvict(value = "SqltoolMetadata", key = "#record.id")
 	@Transactional
 	@Override
-	public void update(SqltoolMetadata record) {
+	public boolean update(SqltoolMetadata record) {
 		int count = metadataMapper.update(record);
-		if (count != 1) {
-			throw new IllegalArgumentException(
-					"sql_metadata is not updated; count=" + count);
-		}
+		return count == 1;
 	}
 
 	@Transactional
