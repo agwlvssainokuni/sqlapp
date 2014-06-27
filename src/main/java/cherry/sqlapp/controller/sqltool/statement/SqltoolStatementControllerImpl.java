@@ -41,6 +41,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import cherry.spring.common.lib.etl.CsvConsumer;
 import cherry.spring.common.lib.paginate.PageSet;
+import cherry.sqlapp.controller.sqltool.LogicErrorUtil;
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.controller.sqltool.ParamMapUtil;
 import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
@@ -92,6 +93,9 @@ public class SqltoolStatementControllerImpl implements
 
 	@Autowired
 	private ParamMapUtil paramMapUtil;
+
+	@Autowired
+	private LogicErrorUtil logicErrorUtil;
 
 	@Override
 	public SqltoolStatementForm getForm() {
