@@ -31,7 +31,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import cherry.sqlapp.controller.sqltool.LogicErrorUtil;
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 import cherry.sqlapp.db.gen.dto.SqltoolLoad;
@@ -67,9 +66,6 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 
 	@Autowired
 	private MdFormUtil mdFormUtil;
-
-	@Autowired
-	private LogicErrorUtil logicErrorUtil;
 
 	@Override
 	public SqltoolMetadataForm getMetadata() {
