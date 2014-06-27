@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -152,17 +153,27 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 		QueryBuilder builder = formUtil.getQueryBuilder(form);
 		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
 
-		ResultSet resultSet = new ResultSet();
-		PageSet pageSet = execQueryService.query(form.getDatabaseName(),
-				builder, paramMap, pageNo, (pageSz <= 0 ? defaultPageSize
-						: pageSz), resultSet);
+		try {
 
-		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		mav.addObject(PATH_VAR, id);
-		mav.addObject(mdForm);
-		mav.addObject(pageSet);
-		mav.addObject(resultSet);
-		return mav;
+			ResultSet resultSet = new ResultSet();
+			PageSet pageSet = execQueryService.query(form.getDatabaseName(),
+					builder, paramMap, pageNo, (pageSz <= 0 ? defaultPageSize
+							: pageSz), resultSet);
+
+			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(PATH_VAR, id);
+			mav.addObject(mdForm);
+			mav.addObject(pageSet);
+			mav.addObject(resultSet);
+			return mav;
+
+		} catch (BadSqlGrammarException ex) {
+			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
+			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(PATH_VAR, id);
+			mav.addObject(mdForm);
+			return mav;
+		}
 	}
 
 	@Override
@@ -185,20 +196,30 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 		QueryBuilder builder = formUtil.getQueryBuilder(form);
 		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
 
-		response.setContentType(contentType);
-		response.setCharacterEncoding(charset.name());
-		String fname = format(filename, LocalDateTime.now().toDate());
-		response.setHeader(headerName, format(headerValue, fname));
+		try {
 
-		try (OutputStream out = response.getOutputStream();
-				Writer writer = new OutputStreamWriter(out, charset)) {
-			execQueryService.query(form.getDatabaseName(), builder.build(),
-					paramMap, new CsvConsumer(writer, true));
-		} catch (IOException ex) {
-			throw new IllegalStateException(ex);
+			response.setContentType(contentType);
+			response.setCharacterEncoding(charset.name());
+			String fname = format(filename, LocalDateTime.now().toDate());
+			response.setHeader(headerName, format(headerValue, fname));
+
+			try (OutputStream out = response.getOutputStream();
+					Writer writer = new OutputStreamWriter(out, charset)) {
+				execQueryService.query(form.getDatabaseName(), builder.build(),
+						paramMap, new CsvConsumer(writer, true));
+			} catch (IOException ex) {
+				throw new IllegalStateException(ex);
+			}
+
+			return null;
+
+		} catch (BadSqlGrammarException ex) {
+			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
+			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			mav.addObject(PATH_VAR, id);
+			mav.addObject(mdForm);
+			return mav;
 		}
-
-		return null;
 	}
 
 	@Override
