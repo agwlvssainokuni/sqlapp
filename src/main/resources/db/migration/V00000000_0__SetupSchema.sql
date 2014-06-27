@@ -1,5 +1,5 @@
 -- Project Name : SqlApp
--- Date/Time    : 2014/06/19 0:14:42
+-- Date/Time    : 2014/06/28 6:37:37
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -11,6 +11,7 @@ CREATE TABLE sqltool_load(
 	query VARCHAR (5000) NOT NULL, 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	lock_version INTEGER DEFAULT 1 NOT NULL, 
 	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
 	CONSTRAINT sqltool_load_pkc PRIMARY KEY (id)
 ); 
@@ -23,6 +24,7 @@ CREATE TABLE sqltool_statement(
 	param_map VARCHAR (5000), 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	lock_version INTEGER DEFAULT 1 NOT NULL, 
 	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
 	CONSTRAINT sqltool_statement_pkc PRIMARY KEY (id)
 ); 
@@ -40,6 +42,7 @@ CREATE TABLE sqltool_clause(
 	param_map VARCHAR (5000), 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	lock_version INTEGER DEFAULT 1 NOT NULL, 
 	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
 	CONSTRAINT sqltool_clause_pkc PRIMARY KEY (id)
 ); 
@@ -55,6 +58,7 @@ CREATE TABLE sqltool_metadata(
 	registered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	lock_version INTEGER DEFAULT 1 NOT NULL, 
 	deleted_flg INTEGER DEFAULT 0 NOT NULL, 
 	CONSTRAINT sqltool_metadata_pkc PRIMARY KEY (id)
 ); 
@@ -76,6 +80,9 @@ COMMENT
 
 COMMENT 
 	ON COLUMN sqltool_load.created_at IS '作成日時'; 
+
+COMMENT 
+	ON COLUMN sqltool_load.lock_version IS 'ロックバージョン'; 
 
 COMMENT 
 	ON COLUMN sqltool_load.deleted_flg IS '削除フラグ'; 
@@ -100,6 +107,9 @@ COMMENT
 
 COMMENT 
 	ON COLUMN sqltool_statement.created_at IS '作成日時'; 
+
+COMMENT 
+	ON COLUMN sqltool_statement.lock_version IS 'ロックバージョン'; 
 
 COMMENT 
 	ON COLUMN sqltool_statement.deleted_flg IS '削除フラグ'; 
@@ -141,6 +151,9 @@ COMMENT
 	ON COLUMN sqltool_clause.created_at IS '作成日時'; 
 
 COMMENT 
+	ON COLUMN sqltool_clause.lock_version IS 'ロックバージョン'; 
+
+COMMENT 
 	ON COLUMN sqltool_clause.deleted_flg IS '削除フラグ'; 
 
 COMMENT 
@@ -172,6 +185,9 @@ COMMENT
 
 COMMENT 
 	ON COLUMN sqltool_metadata.created_at IS '作成日時'; 
+
+COMMENT 
+	ON COLUMN sqltool_metadata.lock_version IS 'ロックバージョン'; 
 
 COMMENT 
 	ON COLUMN sqltool_metadata.deleted_flg IS '削除フラグ'; 

@@ -40,6 +40,7 @@ RDBMSType=1
 RDBMSTypeName=IBM DB2
 CommonField="更新日時","updated_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF
 CommonField="作成日時","created_at","*日時","NOT NULL",,"CURRENT_TIMESTAMP","",$FFFFFFFF
+CommonField="ロックバージョン","lock_version","*フラグ","NOT NULL",,"1","",$FFFFFFFF
 CommonField="削除フラグ","deleted_flg","*フラグ","NOT NULL",,"0","",$FFFFFFFF
 DefaultPkName=%0:s_PKC
 DefaultPkIndexName=%0:s_PKI
