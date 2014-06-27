@@ -18,7 +18,8 @@ UPDATE async_procs
 SET
 	status = 'INVOKED',
 	invoked_at = CURRENT_TIMESTAMP,
-	updated_at = CURRENT_TIMESTAMP
+	updated_at = CURRENT_TIMESTAMP,
+	lock_version = lock_version + 1
 WHERE
 	id = :id
 	AND
@@ -30,7 +31,8 @@ UPDATE async_procs
 SET
 	status = 'PROCESSING',
 	started_at = CURRENT_TIMESTAMP,
-	updated_at = CURRENT_TIMESTAMP
+	updated_at = CURRENT_TIMESTAMP,
+	lock_version = lock_version + 1
 WHERE
 	id = :id
 	AND
@@ -43,7 +45,8 @@ SET
 	status = 'SUCCESS',
 	finished_at = CURRENT_TIMESTAMP,
 	result = :result,
-	updated_at = CURRENT_TIMESTAMP
+	updated_at = CURRENT_TIMESTAMP,
+	lock_version = lock_version + 1
 WHERE
 	id = :id
 	AND
@@ -56,7 +59,8 @@ SET
 	status = 'ERROR',
 	finished_at = CURRENT_TIMESTAMP,
 	result = :result,
-	updated_at = CURRENT_TIMESTAMP
+	updated_at = CURRENT_TIMESTAMP,
+	lock_version = lock_version + 1
 WHERE
 	id = :id
 	AND
