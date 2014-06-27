@@ -249,6 +249,7 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 		record.setHavingClause(form.getHaving());
 		record.setOrderByClause(form.getOrderBy());
 		record.setParamMap(form.getParamMap());
+		record.setLockVersion(form.getLockVersion());
 
 		clauseService.update(record);
 
@@ -279,6 +280,7 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 		md.setName(mdForm.getName());
 		md.setDescription(mdForm.getDescription());
 		md.setPublishedFlg(mdForm.isPublishedFlg() ? 1 : 0);
+		md.setLockVersion(mdForm.getLockVersion());
 
 		metadataService.update(md);
 

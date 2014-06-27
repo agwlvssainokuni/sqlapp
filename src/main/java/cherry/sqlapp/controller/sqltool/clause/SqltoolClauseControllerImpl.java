@@ -216,6 +216,7 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 		record.setHavingClause(form.getHaving());
 		record.setOrderByClause(form.getOrderBy());
 		record.setParamMap(form.getParamMap());
+		record.setLockVersion(form.getLockVersion());
 
 		int id = clauseService.create(record, authentication.getName());
 

@@ -27,6 +27,7 @@ public class FormUtil {
 		SqltoolLoadForm form = new SqltoolLoadForm();
 		form.setDatabaseName(record.getDatabaseName());
 		form.setSql(record.getQuery());
+		form.setLockVersion(record.getLockVersion());
 		return form;
 	}
 

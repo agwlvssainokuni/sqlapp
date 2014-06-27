@@ -34,6 +34,7 @@ public class FormUtil {
 		form.setHaving(record.getHavingClause());
 		form.setOrderBy(record.getOrderByClause());
 		form.setParamMap(record.getParamMap());
+		form.setLockVersion(record.getLockVersion());
 		return form;
 	}
 

@@ -206,6 +206,7 @@ public class SqltoolStatementControllerImpl implements
 		record.setDatabaseName(form.getDatabaseName());
 		record.setQuery(form.getSql());
 		record.setParamMap(form.getParamMap());
+		record.setLockVersion(form.getLockVersion());
 
 		int id = statementService.create(record, authentication.getName());
 

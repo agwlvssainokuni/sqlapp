@@ -133,6 +133,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 		SqltoolLoad record = new SqltoolLoad();
 		record.setDatabaseName(form.getDatabaseName());
 		record.setQuery(form.getSql());
+		record.setLockVersion(form.getLockVersion());
 
 		int id = loadService.create(record, authentication.getName());
 

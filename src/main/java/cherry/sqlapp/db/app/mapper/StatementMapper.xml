@@ -21,9 +21,12 @@
 			database_name = #{databaseName,jdbcType=VARCHAR},
 			query = #{query,jdbcType=VARCHAR},
 			param_map = #{paramMap,jdbcType=VARCHAR},
-			updated_at = CURRENT_TIMESTAMP
+			updated_at = CURRENT_TIMESTAMP,
+			lock_version = lock_version + 1
 		WHERE
 			id = #{id,jdbcType=INTEGER}
+			AND
+			lock_version = #{lockVersion,jdbcType=INTEGER}
 			AND
 			deleted_flg = 0
 	</update>

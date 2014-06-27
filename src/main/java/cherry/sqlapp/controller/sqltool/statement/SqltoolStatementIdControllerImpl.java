@@ -238,6 +238,7 @@ public class SqltoolStatementIdControllerImpl implements
 		record.setDatabaseName(form.getDatabaseName());
 		record.setQuery(form.getSql());
 		record.setParamMap(form.getParamMap());
+		record.setLockVersion(form.getLockVersion());
 
 		statementService.update(record);
 
@@ -268,6 +269,7 @@ public class SqltoolStatementIdControllerImpl implements
 		md.setName(mdForm.getName());
 		md.setDescription(mdForm.getDescription());
 		md.setPublishedFlg(mdForm.isPublishedFlg() ? 1 : 0);
+		md.setLockVersion(mdForm.getLockVersion());
 
 		metadataService.update(md);
 

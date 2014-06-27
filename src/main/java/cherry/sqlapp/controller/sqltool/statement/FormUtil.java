@@ -28,6 +28,7 @@ public class FormUtil {
 		form.setDatabaseName(record.getDatabaseName());
 		form.setSql(record.getQuery());
 		form.setParamMap(record.getParamMap());
+		form.setLockVersion(record.getLockVersion());
 		return form;
 	}
 
