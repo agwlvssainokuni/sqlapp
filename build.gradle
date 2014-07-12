@@ -24,7 +24,7 @@ ext {
 	versionJackson = "2.3.3"
 	versionAspectJ = "1.7.4"
 	versionAopalliance = "1.0"
-	versionSpring = "4.0.5.RELEASE"
+	versionSpring = "4.0.6.RELEASE"
 	versionSpringSecurity = "3.2.4.RELEASE"
 	versionSpringMobile = "1.1.2.RELEASE"
 	versionHibernateValidator = "5.1.1.Final"
