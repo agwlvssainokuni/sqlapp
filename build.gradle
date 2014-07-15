@@ -92,6 +92,7 @@ dependencies {
 	providedCompile "javax.jms:jms-api:${versionJavaJms}"
 	providedCompile "javax.transaction:transaction-api:${versionJavaTransaction}"
 	providedCompile "org.projectlombok:lombok:${versionLombok}"
+	testCompile "org.springframework:spring-test:${versionSpring}"
 	testCompile "junit:junit:${versionJunit}"
 	testCompile "org.mockito:mockito-all:${versionMockito}"
 }
@@ -103,17 +104,11 @@ configurations {
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
-sourceSets. main.resources {
-	srcDir "src/main/java"
-}
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
 
-compileJava {
-	options.encoding = "UTF-8"
-}
-
-compileTestJava {
-	options.encoding = "UTF-8"
-}
+sourceSets.main.resources.srcDir "src/main/java"
+sourceSets.test.resources.srcDir "src/test/java"
 
 eclipse.wtp.facet {
 	facet name: "java", version: "1.7"
