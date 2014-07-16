@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.db.dto;
-
-import java.io.Serializable;
+package cherry.sqlapp.db.mapper;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,34 +23,28 @@ import lombok.ToString;
 
 import org.joda.time.LocalDateTime;
 
-@Setter
 @Getter
+@Setter
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = false)
-public class SqltoolMetadata implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	private Integer id;
-
-	private String sqlType;
+public class MetadataCondition {
 
 	private String name;
 
-	private String description;
+	private boolean clause;
 
-	private String ownedBy;
+	private boolean statement;
 
-	private Integer publishedFlg;
+	private boolean load;
 
-	private LocalDateTime registeredAt;
+	private boolean publish;
 
-	private LocalDateTime updatedAt;
+	private boolean notPublish;
 
-	private LocalDateTime createdAt;
+	private LocalDateTime registeredFrom;
 
-	private Integer lockVersion;
+	private LocalDateTime registeredTo;
 
-	private Integer deletedFlg;
+	private String loginId;
 
 }

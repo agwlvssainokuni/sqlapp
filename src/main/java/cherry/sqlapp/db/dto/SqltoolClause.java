@@ -27,8 +27,8 @@ import org.joda.time.LocalDateTime;
 
 @Setter
 @Getter
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = false)
 public class SqltoolClause implements Serializable {
 
 	private static final long serialVersionUID = 1L;

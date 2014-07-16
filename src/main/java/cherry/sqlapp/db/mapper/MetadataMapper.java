@@ -14,37 +14,19 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.db.dto;
+package cherry.sqlapp.db.mapper;
 
-import java.io.Serializable;
+import java.util.List;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import org.apache.ibatis.annotations.Param;
 
-import org.joda.time.LocalDateTime;
+import cherry.sqlapp.db.dto.SqltoolMetadata;
 
-@Setter
-@Getter
-@EqualsAndHashCode(callSuper = false)
-@ToString(callSuper = false)
-public class SqltoolLoad implements Serializable {
+public interface MetadataMapper {
 
-	private static final long serialVersionUID = 1L;
+	int count(@Param("cond") MetadataCondition cond);
 
-	private Integer id;
-
-	private String databaseName;
-
-	private String query;
-
-	private LocalDateTime updatedAt;
-
-	private LocalDateTime createdAt;
-
-	private Integer lockVersion;
-
-	private Integer deletedFlg;
+	List<SqltoolMetadata> search(@Param("cond") MetadataCondition cond,
+			@Param("limit") int limit, @Param("offset") int offset);
 
 }
