@@ -16,7 +16,7 @@
 
 package cherry.sqlapp.service.sqltool.query;
 
-import cherry.sqlapp.db.gen.dto.SqltoolStatement;
+import cherry.sqlapp.db.dto.SqltoolStatement;
 
 public interface StatementService {
 

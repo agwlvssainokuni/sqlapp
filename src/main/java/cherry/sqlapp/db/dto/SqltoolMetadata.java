@@ -14,28 +14,45 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.db;
+package cherry.sqlapp.db.dto;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-/**
- * DTOのスーパークラス。
- */
-public abstract class BaseDto implements Serializable {
+import org.joda.time.LocalDateTime;
 
-	/** シリアルバージョン。 */
+@Setter
+@Getter
+@EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = false)
+public class SqltoolMetadata implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * DTOの文字列表記。Commons Lang3の{@link ToStringBuilder}を使用。
-	 */
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.SHORT_PREFIX_STYLE);
-	}
+	private Integer id;
+
+	private String sqlType;
+
+	private String name;
+
+	private String description;
+
+	private String ownedBy;
+
+	private Integer publishedFlg;
+
+	private LocalDateTime registeredAt;
+
+	private LocalDateTime updatedAt;
+
+	private LocalDateTime createdAt;
+
+	private Integer lockVersion;
+
+	private Integer deletedFlg;
 
 }

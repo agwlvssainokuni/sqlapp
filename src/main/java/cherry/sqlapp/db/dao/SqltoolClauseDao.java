@@ -14,14 +14,16 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.db.app.mapper;
+package cherry.sqlapp.db.dao;
 
-import cherry.sqlapp.db.gen.dto.SqltoolStatement;
+import cherry.sqlapp.db.dto.SqltoolClause;
 
-public interface StatementMapper {
+public interface SqltoolClauseDao {
 
-	int create(SqltoolStatement record);
+	SqltoolClause findById(Integer id);
 
-	int update(SqltoolStatement record);
+	int create(SqltoolClause record);
+
+	int update(SqltoolClause record);
 
 }

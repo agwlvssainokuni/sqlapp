@@ -20,20 +20,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.sqlapp.db.app.mapper.MetadataMapper;
-import cherry.sqlapp.db.app.mapper.StatementMapper;
-import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
-import cherry.sqlapp.db.gen.dto.SqltoolStatement;
-import cherry.sqlapp.db.gen.mapper.SqltoolStatementMapper;
+import cherry.sqlapp.db.dao.SqltoolMetadataDao;
+import cherry.sqlapp.db.dao.SqltoolStatementDao;
+import cherry.sqlapp.db.dto.SqltoolMetadata;
+import cherry.sqlapp.db.dto.SqltoolStatement;
+import cherry.sqlapp.db.mapper.MetadataMapper;
 
 @Component
 public class StatementServiceImpl implements StatementService {
 
 	@Autowired
-	private SqltoolStatementMapper sqlStatementMapper;
+	private SqltoolStatementDao sqltoolStatementDao;
 
 	@Autowired
-	private StatementMapper statementMapper;
+	private SqltoolMetadataDao sqltoolMetadataDao;
 
 	@Autowired
 	private MetadataMapper metadataMapper;
@@ -41,29 +41,26 @@ public class StatementServiceImpl implements StatementService {
 	@Transactional
 	@Override
 	public SqltoolStatement findById(int id) {
-		SqltoolStatement record = sqlStatementMapper.selectByPrimaryKey(id);
-		if (record.getDeletedFlg() != 0) {
-			return null;
-		}
-		return record;
+		return sqltoolStatementDao.findById(id);
 	}
 
 	@Transactional
 	@Override
 	public int create(SqltoolStatement record, String ownedBy) {
 		SqltoolMetadata metadata = new SqltoolMetadata();
+		metadata.setSqlType("statement");
 		metadata.setDescription(ownedBy);
 		metadata.setOwnedBy(ownedBy);
-		int count0 = metadataMapper.createStatement(metadata);
+		int count0 = sqltoolMetadataDao.create(metadata);
 		if (count0 != 1) {
 			throw new IllegalArgumentException(
-					"sql_metadata is not created; count=" + count0);
+					"sqltool_metadata is not created; count=" + count0);
 		}
 		record.setId(metadata.getId());
-		int count1 = statementMapper.create(record);
+		int count1 = sqltoolStatementDao.create(record);
 		if (count1 != 1) {
-			throw new IllegalArgumentException("sql_any is not created; count="
-					+ count1);
+			throw new IllegalArgumentException(
+					"sqltool_statement is not created; count=" + count1);
 		}
 		return metadata.getId();
 	}
@@ -71,7 +68,7 @@ public class StatementServiceImpl implements StatementService {
 	@Transactional
 	@Override
 	public boolean update(SqltoolStatement record) {
-		int count = statementMapper.update(record);
+		int count = sqltoolStatementDao.update(record);
 		return count == 1;
 	}
 

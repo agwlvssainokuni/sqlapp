@@ -14,37 +14,25 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.db.app.mapper;
+package cherry.sqlapp.db.dao;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.core.convert.ConversionService;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
-import org.joda.time.LocalDateTime;
+public class DaoRowMapper<T> extends BeanPropertyRowMapper<T> {
 
-@Getter
-@Setter
-@EqualsAndHashCode(callSuper = false)
-@ToString(callSuper = false)
-public class MetadataCondition {
+	private ConversionService conversionService;
 
-	private String name;
+	public DaoRowMapper(Class<T> mappedClass,
+			ConversionService conversionService) {
+		super(mappedClass);
+		this.conversionService = conversionService;
+	}
 
-	private boolean clause;
-
-	private boolean statement;
-
-	private boolean load;
-
-	private boolean publish;
-
-	private boolean notPublish;
-
-	private LocalDateTime registeredFrom;
-
-	private LocalDateTime registeredTo;
-
-	private String loginId;
+	@Override
+	protected void initBeanWrapper(BeanWrapper bw) {
+		bw.setConversionService(conversionService);
+	}
 
 }

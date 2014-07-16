@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.service.sqltool.query;
+package cherry.sqlapp.db.dao;
 
-import cherry.sqlapp.db.dto.SqltoolLoad;
+import cherry.sqlapp.db.dto.SqltoolMetadata;
 
-public interface LoadService {
+public interface SqltoolMetadataDao {
 
-	SqltoolLoad findById(int id);
+	SqltoolMetadata findById(Integer id, String loginId);
 
-	int create(SqltoolLoad record, String ownedBy);
+	int create(SqltoolMetadata record);
 
-	boolean update(SqltoolLoad record);
+	int update(SqltoolMetadata record);
 
 }

@@ -16,7 +16,7 @@
 
 package cherry.sqlapp.service.sqltool.query;
 
-import cherry.sqlapp.db.gen.dto.SqltoolClause;
+import cherry.sqlapp.db.dto.SqltoolClause;
 
 public interface ClauseService {
 

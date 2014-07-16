@@ -14,16 +14,37 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.service.sqltool.query;
+package cherry.sqlapp.db.mapper;
 
-import cherry.sqlapp.db.dto.SqltoolLoad;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-public interface LoadService {
+import org.joda.time.LocalDateTime;
 
-	SqltoolLoad findById(int id);
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = false)
+public class MetadataCondition {
 
-	int create(SqltoolLoad record, String ownedBy);
+	private String name;
 
-	boolean update(SqltoolLoad record);
+	private boolean clause;
+
+	private boolean statement;
+
+	private boolean load;
+
+	private boolean publish;
+
+	private boolean notPublish;
+
+	private LocalDateTime registeredFrom;
+
+	private LocalDateTime registeredTo;
+
+	private String loginId;
 
 }

@@ -20,7 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Component;
 
-import cherry.sqlapp.db.app.mapper.MetadataCondition;
+import cherry.sqlapp.db.mapper.MetadataCondition;
 
 @Component("searchFormUtil")
 public class FormUtil {

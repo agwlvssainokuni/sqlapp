@@ -31,8 +31,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
-import cherry.sqlapp.db.gen.dto.SqltoolLoad;
-import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
+import cherry.sqlapp.db.dto.SqltoolLoad;
+import cherry.sqlapp.db.dto.SqltoolMetadata;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
 import cherry.sqlapp.service.sqltool.exec.ExecLoadService;
 import cherry.sqlapp.service.sqltool.metadata.MetadataService;

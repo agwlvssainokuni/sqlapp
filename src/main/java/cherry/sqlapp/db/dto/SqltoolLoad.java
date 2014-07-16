@@ -14,14 +14,37 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.db.app.mapper;
+package cherry.sqlapp.db.dto;
 
-import cherry.sqlapp.db.gen.dto.SqltoolClause;
+import java.io.Serializable;
 
-public interface ClauseMapper {
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-	int create(SqltoolClause record);
+import org.joda.time.LocalDateTime;
 
-	int update(SqltoolClause record);
+@Setter
+@Getter
+@EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = false)
+public class SqltoolLoad implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private Integer id;
+
+	private String databaseName;
+
+	private String query;
+
+	private LocalDateTime updatedAt;
+
+	private LocalDateTime createdAt;
+
+	private Integer lockVersion;
+
+	private Integer deletedFlg;
 
 }

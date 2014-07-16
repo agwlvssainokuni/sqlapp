@@ -16,8 +16,8 @@
 
 package cherry.sqlapp.service.sqltool.metadata;
 
-import cherry.sqlapp.db.app.mapper.MetadataCondition;
-import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
+import cherry.sqlapp.db.dto.SqltoolMetadata;
+import cherry.sqlapp.db.mapper.MetadataCondition;
 
 public interface MetadataService {
 

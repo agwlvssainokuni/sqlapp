@@ -14,25 +14,49 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.service.sqltool.metadata;
+package cherry.sqlapp.db.dto;
 
-import java.util.List;
+import java.io.Serializable;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import cherry.spring.common.lib.paginate.PageSet;
-import cherry.sqlapp.db.dto.SqltoolMetadata;
 
-@Getter
+import org.joda.time.LocalDateTime;
+
 @Setter
+@Getter
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = false)
-public class Result {
+public class SqltoolClause implements Serializable {
 
-	private PageSet pageSet;
+	private static final long serialVersionUID = 1L;
 
-	private List<SqltoolMetadata> metadataList;
+	private Integer id;
+
+	private String databaseName;
+
+	private String selectClause;
+
+	private String fromClause;
+
+	private String whereClause;
+
+	private String groupByClause;
+
+	private String havingClause;
+
+	private String orderByClause;
+
+	private String paramMap;
+
+	private LocalDateTime updatedAt;
+
+	private LocalDateTime createdAt;
+
+	private Integer lockVersion;
+
+	private Integer deletedFlg;
 
 }
