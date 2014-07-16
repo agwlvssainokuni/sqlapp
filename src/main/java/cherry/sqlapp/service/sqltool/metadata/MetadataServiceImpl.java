@@ -28,15 +28,11 @@ import cherry.spring.common.lib.paginate.PageSet;
 import cherry.spring.common.lib.paginate.Paginator;
 import cherry.sqlapp.db.dao.SqltoolMetadataDao;
 import cherry.sqlapp.db.dto.SqltoolMetadata;
-import cherry.sqlapp.db.gen.mapper.SqltoolMetadataMapper;
 import cherry.sqlapp.db.mapper.MetadataCondition;
 import cherry.sqlapp.db.mapper.MetadataMapper;
 
 @Component
 public class MetadataServiceImpl implements MetadataService {
-
-	@Autowired
-	private SqltoolMetadataMapper sqlMetadataMapper;
 
 	@Autowired
 	private SqltoolMetadataDao sqltoolMetadataDao;

@@ -6,8 +6,6 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
 	<mybatis-spring:scan base-package="cherry.sqlapp.db.mapper" />
-	<mybatis-spring:scan base-package="cherry.sqlapp.db.app.mapper" />
-	<mybatis-spring:scan base-package="cherry.sqlapp.db.gen.mapper" />
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />

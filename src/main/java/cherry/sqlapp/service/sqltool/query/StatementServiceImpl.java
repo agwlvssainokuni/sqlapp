@@ -20,12 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.sqlapp.db.app.mapper.StatementMapper;
 import cherry.sqlapp.db.dao.SqltoolMetadataDao;
 import cherry.sqlapp.db.dao.SqltoolStatementDao;
 import cherry.sqlapp.db.dto.SqltoolMetadata;
 import cherry.sqlapp.db.dto.SqltoolStatement;
-import cherry.sqlapp.db.gen.mapper.SqltoolStatementMapper;
 import cherry.sqlapp.db.mapper.MetadataMapper;
 
 @Component
@@ -36,12 +34,6 @@ public class StatementServiceImpl implements StatementService {
 
 	@Autowired
 	private SqltoolMetadataDao sqltoolMetadataDao;
-
-	@Autowired
-	private SqltoolStatementMapper sqlStatementMapper;
-
-	@Autowired
-	private StatementMapper statementMapper;
 
 	@Autowired
 	private MetadataMapper metadataMapper;

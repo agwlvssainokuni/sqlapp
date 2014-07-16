@@ -20,12 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.sqlapp.db.app.mapper.LoadMapper;
 import cherry.sqlapp.db.dao.SqltoolLoadDao;
 import cherry.sqlapp.db.dao.SqltoolMetadataDao;
 import cherry.sqlapp.db.dto.SqltoolLoad;
 import cherry.sqlapp.db.dto.SqltoolMetadata;
-import cherry.sqlapp.db.gen.mapper.SqltoolLoadMapper;
 import cherry.sqlapp.db.mapper.MetadataMapper;
 
 @Component
@@ -36,12 +34,6 @@ public class LoadServiceImpl implements LoadService {
 
 	@Autowired
 	private SqltoolMetadataDao sqltoolMetadataDao;
-
-	@Autowired
-	private SqltoolLoadMapper sqlLoadMapper;
-
-	@Autowired
-	private LoadMapper loadMapper;
 
 	@Autowired
 	private MetadataMapper metadataMapper;

@@ -20,12 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.sqlapp.db.app.mapper.ClauseMapper;
 import cherry.sqlapp.db.dao.SqltoolClauseDao;
 import cherry.sqlapp.db.dao.SqltoolMetadataDao;
 import cherry.sqlapp.db.dto.SqltoolClause;
 import cherry.sqlapp.db.dto.SqltoolMetadata;
-import cherry.sqlapp.db.gen.mapper.SqltoolClauseMapper;
 import cherry.sqlapp.db.mapper.MetadataMapper;
 
 @Component
@@ -36,12 +34,6 @@ public class ClauseServiceImpl implements ClauseService {
 
 	@Autowired
 	private SqltoolMetadataDao sqltoolMetadataDao;
-
-	@Autowired
-	private SqltoolClauseMapper sqlClauseMapper;
-
-	@Autowired
-	private ClauseMapper clauseMapper;
 
 	@Autowired
 	private MetadataMapper metadataMapper;
