@@ -22,8 +22,8 @@ import java.util.Map;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.core.io.Resource;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -39,6 +39,9 @@ public class SqltoolMetadataDaoImpl implements SqltoolMetadataDao,
 
 	@Autowired
 	private NamedParameterJdbcOperations namedParameterJdbcOperations;
+
+	@Autowired
+	private ConversionService conversionService;
 
 	@Autowired
 	private SqlLoader sqlLoader;
@@ -66,7 +69,8 @@ public class SqltoolMetadataDaoImpl implements SqltoolMetadataDao,
 		paramMap.put("id", id);
 		paramMap.put("loginId", loginId);
 		return namedParameterJdbcOperations.queryForObject(sqlFindById,
-				paramMap, new BeanPropertyRowMapper<>(SqltoolMetadata.class));
+				paramMap, new DaoRowMapper<SqltoolMetadata>(
+						SqltoolMetadata.class, conversionService));
 	}
 
 	@Override

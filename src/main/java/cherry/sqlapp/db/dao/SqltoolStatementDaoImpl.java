@@ -22,8 +22,8 @@ import java.util.Map;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.core.io.Resource;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Component;
@@ -37,6 +37,9 @@ public class SqltoolStatementDaoImpl implements SqltoolStatementDao,
 
 	@Autowired
 	private NamedParameterJdbcOperations namedParameterJdbcOperations;
+
+	@Autowired
+	private ConversionService conversionService;
 
 	@Autowired
 	private SqlLoader sqlLoader;
@@ -63,7 +66,8 @@ public class SqltoolStatementDaoImpl implements SqltoolStatementDao,
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("id", id);
 		return namedParameterJdbcOperations.queryForObject(sqlFindById,
-				paramMap, new BeanPropertyRowMapper<>(SqltoolStatement.class));
+				paramMap, new DaoRowMapper<SqltoolStatement>(
+						SqltoolStatement.class, conversionService));
 	}
 
 	@Override

@@ -5,6 +5,8 @@ SELECT
 	name,
 	description,
 	owned_by,
+	published_flg,
+	registered_at,
 	updated_at,
 	created_at,
 	lock_version,

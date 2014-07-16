@@ -62,6 +62,11 @@
 				<bean class="org.springframework.format.datetime.DateFormatterRegistrar" />
 			</set>
 		</property>
+		<property name="converters">
+			<set>
+				<bean class="cherry.sqlapp.db.dao.LocalDateTimeConverter" />
+			</set>
+		</property>
 	</bean>
 
 	<bean id="namedParameterJdbcOperations"
