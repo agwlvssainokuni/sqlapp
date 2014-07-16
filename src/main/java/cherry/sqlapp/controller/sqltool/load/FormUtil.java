@@ -18,7 +18,7 @@ package cherry.sqlapp.controller.sqltool.load;
 
 import org.springframework.stereotype.Component;
 
-import cherry.sqlapp.db.gen.dto.SqltoolLoad;
+import cherry.sqlapp.db.dto.SqltoolLoad;
 
 @Component("loadFormUtil")
 public class FormUtil {

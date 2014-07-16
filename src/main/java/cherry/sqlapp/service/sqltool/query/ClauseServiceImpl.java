@@ -21,13 +21,21 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.sqlapp.db.app.mapper.ClauseMapper;
-import cherry.sqlapp.db.app.mapper.MetadataMapper;
-import cherry.sqlapp.db.gen.dto.SqltoolClause;
-import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
+import cherry.sqlapp.db.dao.SqltoolClauseDao;
+import cherry.sqlapp.db.dao.SqltoolMetadataDao;
+import cherry.sqlapp.db.dto.SqltoolClause;
+import cherry.sqlapp.db.dto.SqltoolMetadata;
 import cherry.sqlapp.db.gen.mapper.SqltoolClauseMapper;
+import cherry.sqlapp.db.mapper.MetadataMapper;
 
 @Component
 public class ClauseServiceImpl implements ClauseService {
+
+	@Autowired
+	private SqltoolClauseDao sqltoolClauseDao;
+
+	@Autowired
+	private SqltoolMetadataDao sqltoolMetadataDao;
 
 	@Autowired
 	private SqltoolClauseMapper sqlClauseMapper;
@@ -41,29 +49,26 @@ public class ClauseServiceImpl implements ClauseService {
 	@Transactional
 	@Override
 	public SqltoolClause findById(int id) {
-		SqltoolClause record = sqlClauseMapper.selectByPrimaryKey(id);
-		if (record.getDeletedFlg() != 0) {
-			return null;
-		}
-		return record;
+		return sqltoolClauseDao.findById(id);
 	}
 
 	@Transactional
 	@Override
 	public int create(SqltoolClause record, String ownedBy) {
 		SqltoolMetadata metadata = new SqltoolMetadata();
+		metadata.setSqlType("clause");
 		metadata.setDescription(ownedBy);
 		metadata.setOwnedBy(ownedBy);
-		int count0 = metadataMapper.createClause(metadata);
+		int count0 = sqltoolMetadataDao.create(metadata);
 		if (count0 != 1) {
 			throw new IllegalArgumentException(
-					"sql_metadata is not created; count=" + count0);
+					"sqltool_metadata is not created; count=" + count0);
 		}
 		record.setId(metadata.getId());
-		int count1 = clauseMapper.create(record);
+		int count1 = sqltoolClauseDao.create(record);
 		if (count1 != 1) {
 			throw new IllegalArgumentException(
-					"sql_select is not created; count=" + count1);
+					"sqltool_clause is not created; count=" + count1);
 		}
 		return metadata.getId();
 	}
@@ -71,7 +76,7 @@ public class ClauseServiceImpl implements ClauseService {
 	@Transactional
 	@Override
 	public boolean update(SqltoolClause record) {
-		int count = clauseMapper.update(record);
+		int count = sqltoolClauseDao.update(record);
 		return count == 1;
 	}
 

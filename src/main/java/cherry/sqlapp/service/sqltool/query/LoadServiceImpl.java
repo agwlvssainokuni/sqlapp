@@ -21,13 +21,21 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.sqlapp.db.app.mapper.LoadMapper;
-import cherry.sqlapp.db.app.mapper.MetadataMapper;
-import cherry.sqlapp.db.gen.dto.SqltoolLoad;
-import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
+import cherry.sqlapp.db.dao.SqltoolLoadDao;
+import cherry.sqlapp.db.dao.SqltoolMetadataDao;
+import cherry.sqlapp.db.dto.SqltoolLoad;
+import cherry.sqlapp.db.dto.SqltoolMetadata;
 import cherry.sqlapp.db.gen.mapper.SqltoolLoadMapper;
+import cherry.sqlapp.db.mapper.MetadataMapper;
 
 @Component
 public class LoadServiceImpl implements LoadService {
+
+	@Autowired
+	private SqltoolLoadDao sqltoolLoadDao;
+
+	@Autowired
+	private SqltoolMetadataDao sqltoolMetadataDao;
 
 	@Autowired
 	private SqltoolLoadMapper sqlLoadMapper;
@@ -41,29 +49,26 @@ public class LoadServiceImpl implements LoadService {
 	@Transactional
 	@Override
 	public SqltoolLoad findById(int id) {
-		SqltoolLoad record = sqlLoadMapper.selectByPrimaryKey(id);
-		if (record.getDeletedFlg() != 0) {
-			return null;
-		}
-		return record;
+		return sqltoolLoadDao.findById(id);
 	}
 
 	@Transactional
 	@Override
 	public int create(SqltoolLoad record, String ownedBy) {
 		SqltoolMetadata metadata = new SqltoolMetadata();
+		metadata.setSqlType("load");
 		metadata.setDescription(ownedBy);
 		metadata.setOwnedBy(ownedBy);
-		int count0 = metadataMapper.createLoad(metadata);
+		int count0 = sqltoolMetadataDao.create(metadata);
 		if (count0 != 1) {
 			throw new IllegalArgumentException(
-					"sql_metadata is not created; count=" + count0);
+					"sqltool_metadata is not created; count=" + count0);
 		}
 		record.setId(metadata.getId());
-		int count1 = loadMapper.create(record);
+		int count1 = sqltoolLoadDao.create(record);
 		if (count1 != 1) {
-			throw new IllegalArgumentException("sql_csv is not created; count="
-					+ count1);
+			throw new IllegalArgumentException(
+					"sqltool_load is not created; count=" + count1);
 		}
 		return metadata.getId();
 	}
@@ -71,7 +76,7 @@ public class LoadServiceImpl implements LoadService {
 	@Transactional
 	@Override
 	public boolean update(SqltoolLoad record) {
-		int count = loadMapper.update(record);
+		int count = sqltoolLoadDao.update(record);
 		return count == 1;
 	}
 

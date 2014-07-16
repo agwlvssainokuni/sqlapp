@@ -18,7 +18,7 @@ package cherry.sqlapp.controller.sqltool.clause;
 
 import org.springframework.stereotype.Component;
 
-import cherry.sqlapp.db.gen.dto.SqltoolClause;
+import cherry.sqlapp.db.dto.SqltoolClause;
 import cherry.sqlapp.service.sqltool.exec.QueryBuilder;
 
 @Component("clauseFormUtil")

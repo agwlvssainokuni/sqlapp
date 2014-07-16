@@ -18,7 +18,7 @@ package cherry.sqlapp.controller.sqltool.statement;
 
 import org.springframework.stereotype.Component;
 
-import cherry.sqlapp.db.gen.dto.SqltoolStatement;
+import cherry.sqlapp.db.dto.SqltoolStatement;
 
 @Component("statementFormUtil")
 public class FormUtil {

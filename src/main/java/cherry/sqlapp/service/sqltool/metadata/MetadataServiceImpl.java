@@ -26,16 +26,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.spring.common.lib.paginate.Paginator;
-import cherry.sqlapp.db.app.mapper.MetadataCondition;
-import cherry.sqlapp.db.app.mapper.MetadataMapper;
-import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
+import cherry.sqlapp.db.dao.SqltoolMetadataDao;
+import cherry.sqlapp.db.dto.SqltoolMetadata;
 import cherry.sqlapp.db.gen.mapper.SqltoolMetadataMapper;
+import cherry.sqlapp.db.mapper.MetadataCondition;
+import cherry.sqlapp.db.mapper.MetadataMapper;
 
 @Component
 public class MetadataServiceImpl implements MetadataService {
 
 	@Autowired
 	private SqltoolMetadataMapper sqlMetadataMapper;
+
+	@Autowired
+	private SqltoolMetadataDao sqltoolMetadataDao;
 
 	@Autowired
 	private MetadataMapper metadataMapper;
@@ -47,24 +51,14 @@ public class MetadataServiceImpl implements MetadataService {
 	@Transactional
 	@Override
 	public SqltoolMetadata findById(int id, String loginId) {
-		SqltoolMetadata record = sqlMetadataMapper.selectByPrimaryKey(id);
-		if (0 != record.getDeletedFlg()) {
-			return null;
-		}
-		if (0 != record.getPublishedFlg()) {
-			return record;
-		}
-		if (loginId.equals(record.getOwnedBy())) {
-			return record;
-		}
-		return null;
+		return sqltoolMetadataDao.findById(id, loginId);
 	}
 
 	@CacheEvict(value = "SqltoolMetadata", key = "#record.id")
 	@Transactional
 	@Override
 	public boolean update(SqltoolMetadata record) {
-		int count = metadataMapper.update(record);
+		int count = sqltoolMetadataDao.update(record);
 		return count == 1;
 	}
 

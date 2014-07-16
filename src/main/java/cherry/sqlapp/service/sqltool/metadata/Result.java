@@ -23,7 +23,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import cherry.spring.common.lib.paginate.PageSet;
-import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
+import cherry.sqlapp.db.dto.SqltoolMetadata;
 
 @Getter
 @Setter

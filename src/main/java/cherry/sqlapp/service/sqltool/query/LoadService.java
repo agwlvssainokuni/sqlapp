@@ -16,7 +16,7 @@
 
 package cherry.sqlapp.service.sqltool.query;
 
-import cherry.sqlapp.db.gen.dto.SqltoolLoad;
+import cherry.sqlapp.db.dto.SqltoolLoad;
 
 public interface LoadService {
 

@@ -18,7 +18,7 @@ package cherry.sqlapp.controller.sqltool;
 
 import org.springframework.stereotype.Component;
 
-import cherry.sqlapp.db.gen.dto.SqltoolMetadata;
+import cherry.sqlapp.db.dto.SqltoolMetadata;
 
 @Component("metadataFormUtil")
 public class MdFormUtil {
