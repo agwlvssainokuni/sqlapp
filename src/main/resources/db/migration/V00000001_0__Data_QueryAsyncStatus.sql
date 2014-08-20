@@ -23,7 +23,7 @@ INSERT INTO sqltool_clause (
 )
 VALUES (
 	(SELECT id FROM sqltool_metadata WHERE name = 'QueryAsyncStatus'),
-	'default',
+	'sqlapp',
 	'*',
 	'async_procs',
 	'deleted_flg = 0',

@@ -10,16 +10,10 @@
 		<property name="defaultName" value="default" />
 		<property name="dataSourceMap">
 			<map key-type="java.lang.String" value-type="javax.sql.DataSource">
-				<entry key="default" value-ref="dataSource" />
-				<entry key="another">
-					<bean class="org.apache.commons.dbcp.BasicDataSource"
-						destroy-method="close">
-						<property name="driverClassName" value="${sqlapp.jdbc.driverClassName}" />
-						<property name="url" value="${sqlapp.jdbc.url}" />
-						<property name="username" value="${sqlapp.jdbc.username}" />
-						<property name="password" value="${sqlapp.jdbc.password}" />
-					</bean>
+				<entry key="default">
+					<jee:jndi-lookup jndi-name="${sqlapp.jdbc.dataSource.default}" />
 				</entry>
+				<entry key="sqlapp" value-ref="dataSource" />
 			</map>
 		</property>
 	</bean>
