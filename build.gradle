@@ -117,3 +117,72 @@ eclipse.wtp.facet {
 war {
 	classpath = jar.outputs.files + configurations.runtime - configurations.providedRuntime
 }
+
+task processDistResources(type: Copy, overwrite: true) {
+	from "src/main/distResources"
+	into sourceSets.main.output.resourcesDir
+
+	def props = new Properties()
+	file("filter.properties").withInputStream { props.load(it) }
+	def appdir = "/opt/" + project.name
+	if (project.hasProperty("appendix")) {
+		appdir = appdir + "/" + project.appendix
+	}
+	props.setProperty("filter.conf", "${appdir}/conf")
+	props.setProperty("filter.log.dir", "${appdir}/log")
+
+	filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: props)
+	dependsOn processResources
+}
+
+classes.mustRunAfter processDistResources
+
+def distSpec = copySpec {
+	into("app") {
+		from("build/libs")
+		include "*.war"
+		rename {
+			if (project.hasProperty("appendix")) {
+				it.replace("-${version}", project.appendix)
+			} else {
+				it.replace("-${version}", "")
+			}
+		}
+	}
+	into("conf") {
+		from(sourceSets.main.output.resourcesDir) {
+			include "*.properties"
+			for (String p : ["sqlapp", "common", "log"]) {
+				exclude "${p}.properties"
+			}
+			rename { it + ".template" }
+		}
+	}
+	into("log") {
+	}
+}
+
+task distZip(type: Zip) {
+	baseName = project.name
+	version = project.version
+	if (project.hasProperty("appendix")) {
+		appendix = project.appendix
+	}
+	classifier = "dist"
+	with(distSpec)
+	dependsOn processDistResources
+	dependsOn assemble
+}
+
+task distTar(type: Tar) {
+	baseName = project.name
+	version = project.version
+	if (project.hasProperty("appendix")) {
+		appendix = project.appendix
+	}
+	classifier = "dist"
+	compression = Compression.GZIP
+	with(distSpec)
+	dependsOn processDistResources
+	dependsOn assemble
+}

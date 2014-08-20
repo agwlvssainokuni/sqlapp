@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration>
+<configuration>
+	<property file="@filter.conf@/logback.properties" />
+	<appender name="debuglog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${logback.dir}/debug.log</file>
+		<encoder>
+			<pattern>${logback.pattern}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>${logback.debug.threshold}</level>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${logback.dir}/backup/debug.%i.zip
+			</fileNamePattern>
+			<minIndex>${logback.debug.minIndex}</minIndex>
+			<maxIndex>${logback.debug.maxIndex}</maxIndex>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>${logback.debug.maxFileSize}</maxFileSize>
+		</triggeringPolicy>
+	</appender>
+	<appender name="applog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${logback.dir}/app.log</file>
+		<encoder>
+			<pattern>${logback.pattern}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>${logback.app.threshold}</level>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${logback.dir}/backup/app.%d{yyyyMMdd}.zip
+			</fileNamePattern>
+			<maxHistory>${logback.app.maxHistory}</maxHistory>
+		</rollingPolicy>
+	</appender>
+	<appender name="operlog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${logback.dir}/oper.log</file>
+		<encoder>
+			<pattern>${logback.pattern}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>${logback.oper.threshold}</level>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${logback.dir}/backup/oper.%d{yyyyMMdd}.zip
+			</fileNamePattern>
+			<maxHistory>${logback.oper.maxHistory}</maxHistory>
+		</rollingPolicy>
+	</appender>
+	<logger name="cherry.sqlapp" level="${logback.level.app}" />
+	<logger name="cherry.spring" level="${logback.level.app}" />
+	<logger name="org.springframework" level="${logback.level.framework}" />
+	<logger name="org.flywaydb" level="${logback.level.framework}" />
+	<logger name="trace" level="TRACE" />
+	<logger name="operation" level="INFO">
+		<appender-ref ref="operlog" />
+	</logger>
+	<root level="INFO">
+		<appender-ref ref="applog" />
+		<appender-ref ref="debuglog" />
+	</root>
+</configuration>

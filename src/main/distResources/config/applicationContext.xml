@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<context:property-placeholder location="file:@filter.conf@/env.properties"
+		ignore-unresolvable="true" ignore-resource-not-found="true" />
+	<context:property-placeholder location="classpath:env.properties"
+		ignore-unresolvable="true" />
+
+	<import resource="applicationContext-common.xml" />
+	<import resource="applicationContext-commonMapper.xml" />
+	<import resource="applicationContext-sqlapp.xml" />
+	<import resource="applicationContext-sqlappWeb.xml" />
+	<import resource="applicationContext-sqlappService.xml" />
+	<import resource="applicationContext-sqlappAsync.xml" />
+	<import resource="applicationContext-dataSource.xml" />
+
+	<import resource="applicationContext-commonMigration.xml" />
+
+</beans>
