@@ -21,37 +21,37 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.Copy
 
-class DistResourcesPlugin implements Plugin<Project> {
+class DeliveryResourcesPlugin implements Plugin<Project> {
 	void apply(Project project) {
 
 		def props = new Properties()
-		project.extensions.create("distResources", DistResourcesPluginExtension, project, props)
+		project.extensions.create("deliveryResources", DeliveryResourcesPluginExtension, project, props)
 
-		project.task("processDistResources", type: Copy, overwrite: true) {
-			from "src/main/distResources"
+		project.task("processDeliveryResources", type: Copy, overwrite: true) {
+			from "src/main/deliveryResources"
 			into project.sourceSets.main.output.resourcesDir
 			filter(ReplaceTokens, tokens: props)
 			dependsOn project.tasks.processResources
 		}
 
-		project.tasks.classes.mustRunAfter project.tasks.processDistResources
+		project.tasks.classes.mustRunAfter project.tasks.processDeliveryResources
 
-		project.task("assembleDist") {
-			dependsOn project.tasks.processDistResources
+		project.task("assembleDelivery") {
+			dependsOn project.tasks.processDeliveryResources
 			dependsOn project.tasks.assemble
 		}
 	}
 }
 
-class DistResourcesPluginExtension {
+class DeliveryResourcesPluginExtension {
 	Project project
 	Properties props
-	DistResourcesPluginExtension(Project project, Properties props) {
+	DeliveryResourcesPluginExtension(Project project, Properties props) {
 		this.project = project
 		this.props = props
 	}
 	void from(String d) {
-		project.tasks.processDistResources.from(d)
+		project.tasks.processDeliveryResources.from(d)
 	}
 	void tokens(String f) {
 		project.file(f).withInputStream { props.load(it) }

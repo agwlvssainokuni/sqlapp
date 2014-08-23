@@ -2,7 +2,7 @@ apply plugin: "java"
 apply plugin: "war"
 apply plugin: "eclipse-wtp"
 apply plugin: "jetty"
-apply plugin: "distResources"
+apply plugin: "deliveryResources"
 
 version = "1.0"
 
@@ -117,8 +117,8 @@ war {
 	classpath = jar.outputs.files + configurations.runtime - configurations.providedRuntime
 }
 
-distResources {
-	from "src/main/distResources"
+deliveryResources {
+	from "src/main/deliveryResources"
 	tokens "filter.properties"
 	override {
 		def appdir = "/opt/" + project.name
@@ -130,7 +130,7 @@ distResources {
 	}
 }
 
-def distSpec = copySpec {
+def deliverySpec = copySpec {
 	into("app") {
 		from("build/libs")
 		include "*.war"
@@ -155,23 +155,23 @@ def distSpec = copySpec {
 	}
 }
 
-task distZip(type: Zip, dependsOn: assembleDist) {
+task deliveryZip(type: Zip, dependsOn: assembleDelivery) {
 	baseName = project.name
 	version = project.version
 	if (project.hasProperty("appendix")) {
 		appendix = project.appendix
 	}
-	classifier = "dist"
-	with(distSpec)
+	classifier = "delivery"
+	with(deliverySpec)
 }
 
-task distTar(type: Tar, dependsOn: assembleDist) {
+task deliveryTar(type: Tar, dependsOn: assembleDelivery) {
 	baseName = project.name
 	version = project.version
 	if (project.hasProperty("appendix")) {
 		appendix = project.appendix
 	}
-	classifier = "dist"
+	classifier = "delivery"
 	compression = Compression.GZIP
-	with(distSpec)
+	with(deliverySpec)
 }
