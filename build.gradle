@@ -2,12 +2,11 @@ apply plugin: "java"
 apply plugin: "war"
 apply plugin: "eclipse-wtp"
 apply plugin: "jetty"
+apply plugin: cherry.gradle.plugin.DistResourcesPlugin
 
 version = "1.0"
 
-repositories {
-	mavenCentral()
-}
+repositories { mavenCentral() }
 
 ext {
 	versionH2db = "1.4.178"
@@ -118,24 +117,18 @@ war {
 	classpath = jar.outputs.files + configurations.runtime - configurations.providedRuntime
 }
 
-task processDistResources(type: Copy, overwrite: true) {
+distResources {
 	from "src/main/distResources"
-	into sourceSets.main.output.resourcesDir
-
-	def props = new Properties()
-	file("filter.properties").withInputStream { props.load(it) }
-	def appdir = "/opt/" + project.name
-	if (project.hasProperty("appendix")) {
-		appdir = appdir + "/" + project.appendix
+	tokens "filter.properties"
+	override {
+		def appdir = "/opt/" + project.name
+		if (project.hasProperty("appendix")) {
+			appdir = appdir + "/" + project.appendix
+		}
+		it.setProperty("filter.conf", "${appdir}/conf")
+		it.setProperty("filter.log.dir", "${appdir}/log")
 	}
-	props.setProperty("filter.conf", "${appdir}/conf")
-	props.setProperty("filter.log.dir", "${appdir}/log")
-
-	filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: props)
-	dependsOn processResources
 }
-
-classes.mustRunAfter processDistResources
 
 def distSpec = copySpec {
 	into("app") {
@@ -162,7 +155,7 @@ def distSpec = copySpec {
 	}
 }
 
-task distZip(type: Zip) {
+task distZip(type: Zip, dependsOn: assembleDist) {
 	baseName = project.name
 	version = project.version
 	if (project.hasProperty("appendix")) {
@@ -170,11 +163,9 @@ task distZip(type: Zip) {
 	}
 	classifier = "dist"
 	with(distSpec)
-	dependsOn processDistResources
-	dependsOn assemble
 }
 
-task distTar(type: Tar) {
+task distTar(type: Tar, dependsOn: assembleDist) {
 	baseName = project.name
 	version = project.version
 	if (project.hasProperty("appendix")) {
@@ -183,6 +174,4 @@ task distTar(type: Tar) {
 	classifier = "dist"
 	compression = Compression.GZIP
 	with(distSpec)
-	dependsOn processDistResources
-	dependsOn assemble
 }
