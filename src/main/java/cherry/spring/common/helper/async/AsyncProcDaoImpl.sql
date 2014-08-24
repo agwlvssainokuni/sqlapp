@@ -1,5 +1,5 @@
 -- NAME: createAsyncProc
-INSERT INTO async_procs (
+INSERT INTO async_proc (
 	name,
 	launcher_id,
 	status,
@@ -14,7 +14,7 @@ VALUES (
 ;
 
 -- NAME: invokeAsyncProc
-UPDATE async_procs
+UPDATE async_proc
 SET
 	status = 'INVOKED',
 	invoked_at = CURRENT_TIMESTAMP,
@@ -27,7 +27,7 @@ WHERE
 ;
 
 -- NAME: startAsyncProc
-UPDATE async_procs
+UPDATE async_proc
 SET
 	status = 'PROCESSING',
 	started_at = CURRENT_TIMESTAMP,
@@ -40,7 +40,7 @@ WHERE
 ;
 
 -- NAME: successAsyncProc
-UPDATE async_procs
+UPDATE async_proc
 SET
 	status = 'SUCCESS',
 	finished_at = CURRENT_TIMESTAMP,
@@ -54,7 +54,7 @@ WHERE
 ;
 
 -- NAME: errorAsyncProc
-UPDATE async_procs
+UPDATE async_proc
 SET
 	status = 'ERROR',
 	finished_at = CURRENT_TIMESTAMP,

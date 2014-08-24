@@ -25,7 +25,7 @@ VALUES (
 	(SELECT id FROM sqltool_metadata WHERE name = 'QueryAsyncStatus'),
 	'sqlapp',
 	'*',
-	'async_procs',
+	'async_proc',
 	'deleted_flg = 0',
 	'id DESC'
 )
