@@ -130,8 +130,19 @@ deliveryResources {
 	}
 }
 
-def deliverySpec = copySpec {
-	into("app") {
+task deliveryZip(type: Zip)
+task deliveryTar(type: Tar) { compression = Compression.GZIP }
+
+[deliveryZip, deliveryTar].each {
+	it.baseName = project.name
+	it.version = project.version
+	if (project.hasProperty("appendix")) {
+		it.appendix = project.appendix
+	}
+	it.classifier = "delivery"
+	it.dependsOn assembleDelivery
+
+	it.into("app") {
 		from("build/libs")
 		include "*.war"
 		rename {
@@ -142,7 +153,7 @@ def deliverySpec = copySpec {
 			}
 		}
 	}
-	into("conf") {
+	it.into("conf") {
 		from(sourceSets.main.output.resourcesDir) {
 			include "*.properties"
 			for (String p : ["sqlapp", "common", "log"]) {
@@ -151,27 +162,6 @@ def deliverySpec = copySpec {
 			rename { it + ".template" }
 		}
 	}
-	into("log") {
+	it.into("log") {
 	}
-}
-
-task deliveryZip(type: Zip, dependsOn: assembleDelivery) {
-	baseName = project.name
-	version = project.version
-	if (project.hasProperty("appendix")) {
-		appendix = project.appendix
-	}
-	classifier = "delivery"
-	with(deliverySpec)
-}
-
-task deliveryTar(type: Tar, dependsOn: assembleDelivery) {
-	baseName = project.name
-	version = project.version
-	if (project.hasProperty("appendix")) {
-		appendix = project.appendix
-	}
-	classifier = "delivery"
-	compression = Compression.GZIP
-	with(deliverySpec)
 }
