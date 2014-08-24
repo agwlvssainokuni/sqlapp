@@ -54,9 +54,11 @@ class DeliveryResourcesPluginExtension {
 		project.tasks.processDeliveryResources.from(d)
 	}
 	void tokens(String f) {
-		project.file(f).withInputStream { props.load(it) }
+		tokens { p ->
+			project.file(f).withInputStream { p.load(it) }
+		}
 	}
-	void override(Closure<?> c) {
+	void tokens(Closure<?> c) {
 		c.delegate = props
 		c.call(props)
 	}

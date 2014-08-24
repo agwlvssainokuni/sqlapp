@@ -6,7 +6,9 @@ apply plugin: "deliveryResources"
 
 version = "1.0"
 
-repositories { mavenCentral() }
+repositories {
+	mavenCentral()
+}
 
 ext {
 	versionH2db = "1.4.178"
@@ -120,13 +122,13 @@ war {
 deliveryResources {
 	from "src/main/deliveryResources"
 	tokens "filter.properties"
-	override {
+	tokens { props ->
 		def appdir = "/opt/" + project.name
 		if (project.hasProperty("appendix")) {
 			appdir = appdir + "/" + project.appendix
 		}
-		it.setProperty("filter.conf", "${appdir}/conf")
-		it.setProperty("filter.log.dir", "${appdir}/log")
+		props.setProperty("filter.conf", "${appdir}/conf")
+		props.setProperty("filter.log.dir", "${appdir}/log")
 	}
 }
 
