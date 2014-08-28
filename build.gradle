@@ -144,26 +144,28 @@ task deliveryTar(type: Tar) { compression = Compression.GZIP }
 	it.classifier = "delivery"
 	it.dependsOn assembleDelivery
 
-	it.into("app") {
-		from("build/libs")
-		include "*.war"
-		rename {
-			if (project.hasProperty("appendix")) {
-				it.replace("-${version}", project.appendix)
-			} else {
-				it.replace("-${version}", "")
+	it.with(copySpec {
+		into("app") {
+			from("build/libs")
+			include "*.war"
+			rename {
+				if (project.hasProperty("appendix")) {
+					it.replace("-${version}", project.appendix)
+				} else {
+					it.replace("-${version}", "")
+				}
 			}
 		}
-	}
-	it.into("conf") {
-		from(sourceSets.main.output.resourcesDir) {
-			include "*.properties"
-			for (String p : ["sqlapp", "common", "log"]) {
-				exclude "${p}.properties"
+		into("conf") {
+			from(sourceSets.main.output.resourcesDir) {
+				include "*.properties"
+				for (String p : ["sqlapp", "common", "log"]) {
+					exclude "${p}.properties"
+				}
+				rename { it + ".template" }
 			}
-			rename { it + ".template" }
 		}
-	}
-	it.into("log") {
-	}
+		into("log") {
+		}
+	})
 }
