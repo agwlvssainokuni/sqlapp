@@ -6,15 +6,14 @@ apply plugin: "deliveryResources"
 
 version = "1.0"
 
-repositories {
-	mavenCentral()
-}
+repositories { mavenCentral() }
 
 ext {
-	versionH2db = "1.4.178"
+	versionH2db = "1.4.180"
 	versionFlyway = "3.0"
 	versionJodaTime = "2.4"
-	versionCommonsDbcp = "2.0.1"
+	versionCommonsPool = "1.6"
+	versionCommonsDbcp2 = "2.0.1"
 	versionCommonsLang3 = "3.3.2"
 	versionCommonsMath3 = "3.2"
 	versionSlf4j = "1.7.7"
@@ -44,7 +43,8 @@ dependencies {
 	compile "com.h2database:h2:${versionH2db}"
 	compile "org.flywaydb:flyway-core:${versionFlyway}"
 	compile "joda-time:joda-time:${versionJodaTime}"
-	compile "org.apache.commons:commons-dbcp2:${versionCommonsDbcp}"
+	compile "commons-pool:commons-pool:${versionCommonsPool}"
+	compile "org.apache.commons:commons-dbcp2:${versionCommonsDbcp2}"
 	compile "org.apache.commons:commons-lang3:${versionCommonsLang3}"
 	compile "org.apache.commons:commons-math3:${versionCommonsMath3}"
 	compile "org.slf4j:slf4j-api:${versionSlf4j}"
@@ -159,10 +159,8 @@ task deliveryTar(type: Tar) { compression = Compression.GZIP }
 		into("conf") {
 			from(sourceSets.main.output.resourcesDir) {
 				include "*.properties"
-				for (String p : ["sqlapp", "common", "log"]) {
-					exclude "${p}.properties"
-				}
-				rename { it + ".template" }
+				["sqlapp", "common", "log"].each { exclude "${it}.properties" }
+				rename { "#{it}.template" }
 			}
 		}
 		into("log") {
