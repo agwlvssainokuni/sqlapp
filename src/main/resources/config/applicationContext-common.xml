@@ -64,7 +64,7 @@
 		</property>
 		<property name="converters">
 			<set>
-				<bean class="cherry.sqlapp.db.dao.LocalDateTimeConverter" />
+				<bean class="cherry.spring.common.custom.converter.LocalDateTimeConverter" />
 			</set>
 		</property>
 	</bean>

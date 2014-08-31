@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.db.dao;
+package cherry.spring.common.custom.converter;
 
 import java.sql.Timestamp;
 import java.util.HashSet;
