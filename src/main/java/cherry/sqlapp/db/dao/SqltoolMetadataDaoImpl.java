@@ -22,15 +22,15 @@ import java.util.Map;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.core.io.Resource;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import cherry.spring.common.custom.jdbc.CustomBeanPropertyRowMapper;
-import cherry.spring.common.custom.jdbc.CustomBeanPropertySqlParameterSource;
+import cherry.spring.common.custom.jdbc.RowMapperCreator;
+import cherry.spring.common.custom.jdbc.SqlParameterSourceCreator;
 import cherry.spring.common.helper.sql.SqlLoader;
 import cherry.sqlapp.db.dto.SqltoolMetadata;
 
@@ -42,7 +42,10 @@ public class SqltoolMetadataDaoImpl implements SqltoolMetadataDao,
 	private NamedParameterJdbcOperations namedParameterJdbcOperations;
 
 	@Autowired
-	private ConversionService conversionService;
+	private RowMapperCreator rowMapperCreator;
+
+	@Autowired
+	private SqlParameterSourceCreator sqlParameterSourceCreator;
 
 	@Autowired
 	private SqlLoader sqlLoader;
@@ -56,12 +59,15 @@ public class SqltoolMetadataDaoImpl implements SqltoolMetadataDao,
 
 	private String sqlUpdate;
 
+	private RowMapper<SqltoolMetadata> rowMapper;
+
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		Map<String, String> sqlmap = sqlLoader.load(sqlResource);
 		sqlFindById = sqlmap.get("findById");
 		sqlCreate = sqlmap.get("create");
 		sqlUpdate = sqlmap.get("update");
+		rowMapper = rowMapperCreator.create(SqltoolMetadata.class);
 	}
 
 	@Override
@@ -70,15 +76,14 @@ public class SqltoolMetadataDaoImpl implements SqltoolMetadataDao,
 		paramMap.put("id", id);
 		paramMap.put("loginId", loginId);
 		return namedParameterJdbcOperations.queryForObject(sqlFindById,
-				paramMap, new CustomBeanPropertyRowMapper<SqltoolMetadata>(
-						SqltoolMetadata.class, conversionService));
+				paramMap, rowMapper);
 	}
 
 	@Override
 	public int create(SqltoolMetadata record) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		int count = namedParameterJdbcOperations.update(sqlCreate,
-				new CustomBeanPropertySqlParameterSource(record), keyHolder);
+				sqlParameterSourceCreator.create(record), keyHolder);
 		if (count > 0) {
 			record.setId(keyHolder.getKey().intValue());
 		}
@@ -88,7 +93,7 @@ public class SqltoolMetadataDaoImpl implements SqltoolMetadataDao,
 	@Override
 	public int update(SqltoolMetadata record) {
 		return namedParameterJdbcOperations.update(sqlUpdate,
-				new CustomBeanPropertySqlParameterSource(record));
+				sqlParameterSourceCreator.create(record));
 	}
 
 }

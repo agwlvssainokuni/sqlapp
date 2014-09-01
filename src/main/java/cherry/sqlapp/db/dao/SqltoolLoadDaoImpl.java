@@ -22,13 +22,13 @@ import java.util.Map;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.core.io.Resource;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Component;
 
-import cherry.spring.common.custom.jdbc.CustomBeanPropertyRowMapper;
-import cherry.spring.common.custom.jdbc.CustomBeanPropertySqlParameterSource;
+import cherry.spring.common.custom.jdbc.RowMapperCreator;
+import cherry.spring.common.custom.jdbc.SqlParameterSourceCreator;
 import cherry.spring.common.helper.sql.SqlLoader;
 import cherry.sqlapp.db.dto.SqltoolLoad;
 
@@ -39,7 +39,10 @@ public class SqltoolLoadDaoImpl implements SqltoolLoadDao, InitializingBean {
 	private NamedParameterJdbcOperations namedParameterJdbcOperations;
 
 	@Autowired
-	private ConversionService conversionService;
+	private RowMapperCreator rowMapperCreator;
+
+	@Autowired
+	private SqlParameterSourceCreator sqlParameterSourceCreator;
 
 	@Autowired
 	private SqlLoader sqlLoader;
@@ -53,12 +56,15 @@ public class SqltoolLoadDaoImpl implements SqltoolLoadDao, InitializingBean {
 
 	private String sqlUpdate;
 
+	private RowMapper<SqltoolLoad> rowMapper;
+
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		Map<String, String> sqlmap = sqlLoader.load(sqlResource);
 		sqlFindById = sqlmap.get("findById");
 		sqlCreate = sqlmap.get("create");
 		sqlUpdate = sqlmap.get("update");
+		rowMapper = rowMapperCreator.create(SqltoolLoad.class);
 	}
 
 	@Override
@@ -66,20 +72,19 @@ public class SqltoolLoadDaoImpl implements SqltoolLoadDao, InitializingBean {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("id", id);
 		return namedParameterJdbcOperations.queryForObject(sqlFindById,
-				paramMap, new CustomBeanPropertyRowMapper<SqltoolLoad>(
-						SqltoolLoad.class, conversionService));
+				paramMap, rowMapper);
 	}
 
 	@Override
 	public int create(SqltoolLoad record) {
 		return namedParameterJdbcOperations.update(sqlCreate,
-				new CustomBeanPropertySqlParameterSource(record));
+				sqlParameterSourceCreator.create(record));
 	}
 
 	@Override
 	public int update(SqltoolLoad record) {
 		return namedParameterJdbcOperations.update(sqlUpdate,
-				new CustomBeanPropertySqlParameterSource(record));
+				sqlParameterSourceCreator.create(record));
 	}
 
 }
