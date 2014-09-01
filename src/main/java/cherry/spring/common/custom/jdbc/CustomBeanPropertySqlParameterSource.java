@@ -14,25 +14,28 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.db.dao;
+package cherry.spring.common.custom.jdbc;
 
-import org.springframework.beans.BeanWrapper;
-import org.springframework.core.convert.ConversionService;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import java.sql.Timestamp;
 
-public class DaoRowMapper<T> extends BeanPropertyRowMapper<T> {
+import org.joda.time.LocalDateTime;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 
-	private ConversionService conversionService;
+public class CustomBeanPropertySqlParameterSource extends
+		BeanPropertySqlParameterSource {
 
-	public DaoRowMapper(Class<T> mappedClass,
-			ConversionService conversionService) {
-		super(mappedClass);
-		this.conversionService = conversionService;
+	public CustomBeanPropertySqlParameterSource(Object object) {
+		super(object);
 	}
 
 	@Override
-	protected void initBeanWrapper(BeanWrapper bw) {
-		bw.setConversionService(conversionService);
+	public Object getValue(String paramName) throws IllegalArgumentException {
+		Object object = super.getValue(paramName);
+		if (object instanceof LocalDateTime) {
+			LocalDateTime dtm = (LocalDateTime) object;
+			return new Timestamp(dtm.toDate().getTime());
+		}
+		return object;
 	}
 
 }

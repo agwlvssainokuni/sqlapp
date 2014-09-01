@@ -24,12 +24,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.io.Resource;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import cherry.spring.common.custom.jdbc.CustomBeanPropertyRowMapper;
+import cherry.spring.common.custom.jdbc.CustomBeanPropertySqlParameterSource;
 import cherry.spring.common.helper.sql.SqlLoader;
 import cherry.sqlapp.db.dto.SqltoolMetadata;
 
@@ -69,7 +70,7 @@ public class SqltoolMetadataDaoImpl implements SqltoolMetadataDao,
 		paramMap.put("id", id);
 		paramMap.put("loginId", loginId);
 		return namedParameterJdbcOperations.queryForObject(sqlFindById,
-				paramMap, new DaoRowMapper<SqltoolMetadata>(
+				paramMap, new CustomBeanPropertyRowMapper<SqltoolMetadata>(
 						SqltoolMetadata.class, conversionService));
 	}
 
@@ -77,7 +78,7 @@ public class SqltoolMetadataDaoImpl implements SqltoolMetadataDao,
 	public int create(SqltoolMetadata record) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		int count = namedParameterJdbcOperations.update(sqlCreate,
-				new BeanPropertySqlParameterSource(record), keyHolder);
+				new CustomBeanPropertySqlParameterSource(record), keyHolder);
 		if (count > 0) {
 			record.setId(keyHolder.getKey().intValue());
 		}
@@ -87,7 +88,7 @@ public class SqltoolMetadataDaoImpl implements SqltoolMetadataDao,
 	@Override
 	public int update(SqltoolMetadata record) {
 		return namedParameterJdbcOperations.update(sqlUpdate,
-				new BeanPropertySqlParameterSource(record));
+				new CustomBeanPropertySqlParameterSource(record));
 	}
 
 }

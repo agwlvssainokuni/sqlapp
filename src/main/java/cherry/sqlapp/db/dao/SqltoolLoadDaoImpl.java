@@ -24,10 +24,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.io.Resource;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Component;
 
+import cherry.spring.common.custom.jdbc.CustomBeanPropertyRowMapper;
+import cherry.spring.common.custom.jdbc.CustomBeanPropertySqlParameterSource;
 import cherry.spring.common.helper.sql.SqlLoader;
 import cherry.sqlapp.db.dto.SqltoolLoad;
 
@@ -65,20 +66,20 @@ public class SqltoolLoadDaoImpl implements SqltoolLoadDao, InitializingBean {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("id", id);
 		return namedParameterJdbcOperations.queryForObject(sqlFindById,
-				paramMap, new DaoRowMapper<SqltoolLoad>(SqltoolLoad.class,
-						conversionService));
+				paramMap, new CustomBeanPropertyRowMapper<SqltoolLoad>(
+						SqltoolLoad.class, conversionService));
 	}
 
 	@Override
 	public int create(SqltoolLoad record) {
 		return namedParameterJdbcOperations.update(sqlCreate,
-				new BeanPropertySqlParameterSource(record));
+				new CustomBeanPropertySqlParameterSource(record));
 	}
 
 	@Override
 	public int update(SqltoolLoad record) {
 		return namedParameterJdbcOperations.update(sqlUpdate,
-				new BeanPropertySqlParameterSource(record));
+				new CustomBeanPropertySqlParameterSource(record));
 	}
 
 }

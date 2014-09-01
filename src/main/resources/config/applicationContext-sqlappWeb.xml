@@ -49,6 +49,12 @@
 			<bean
 				class="org.springframework.mobile.device.site.SitePreferenceWebArgumentResolver" />
 		</mvc:argument-resolvers>
+		<mvc:message-converters>
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper" ref="objectMapper" />
+			</bean>
+		</mvc:message-converters>
 	</mvc:annotation-driven>
 
 	<mvc:default-servlet-handler />
@@ -85,7 +91,9 @@
 		<property name="defaultViews">
 			<list>
 				<bean
-					class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+					class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+					<property name="objectMapper" ref="objectMapper" />
+				</bean>
 			</list>
 		</property>
 	</bean>
