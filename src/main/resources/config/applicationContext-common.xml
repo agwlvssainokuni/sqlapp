@@ -16,7 +16,7 @@
 
 	<aop:config>
 		<aop:advisor advice-ref="traceInterceptor"
-			pointcut="execution(* cherry..*.*(..))
+			pointcut="execution(* cherry.spring..*.*(..))
 				and
 				!execution(* cherry.spring.common.log..*.*(..))
 				and
@@ -30,7 +30,6 @@
 		<property name="packagePrefix">
 			<list>
 				<value>cherry.spring</value>
-				<value>cherry.sqlapp</value>
 			</list>
 		</property>
 	</bean>
@@ -55,6 +54,8 @@
 					class="org.springframework.format.datetime.joda.JodaDateTimeFormatAnnotationFormatterFactory" />
 				<bean
 					class="cherry.spring.common.custom.format.CustomDateTimeFormatAnnotationFormatterFactory" />
+				<bean
+					class="cherry.spring.common.custom.format.IpAddrFormatAnnotationFormatterFactory" />
 			</set>
 		</property>
 		<property name="formatterRegistrars">
@@ -65,6 +66,7 @@
 		<property name="converters">
 			<set>
 				<bean class="cherry.spring.common.custom.converter.LocalDateTimeConverter" />
+				<bean class="cherry.spring.common.custom.converter.SecureStringConverter" />
 			</set>
 		</property>
 	</bean>
@@ -73,5 +75,7 @@
 		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
 		<constructor-arg ref="dataSource" />
 	</bean>
+
+	<bean id="ipAddrUtil" class="cherry.spring.common.lib.ipaddr.IpAddrUtil" />
 
 </beans>
