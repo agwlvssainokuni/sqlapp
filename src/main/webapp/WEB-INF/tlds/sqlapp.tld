@@ -14,7 +14,7 @@
 		<name>dataSourceDef</name>
 		<function-class>cherry.sqlapp.service.sqltool.DataSourceDefTag</function-class>
 		<function-signature>
-			cherry.sqlapp.service.sqltool.DataSourceDef getDataSourceDef(javax.servlet.ServletContext)
+			cherry.sqlapp.service.sqltool.DataSourceDef getDataSourceDef()
 		</function-signature>
 	</function>
 

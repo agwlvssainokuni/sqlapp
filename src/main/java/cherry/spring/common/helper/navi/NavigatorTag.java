@@ -20,18 +20,16 @@ import static cherry.spring.common.helper.AppCtxTag.getBeanByClass;
 
 import java.util.List;
 
-import javax.servlet.ServletContext;
-
 import cherry.spring.common.helper.navi.Navigator.Node;
 
 public class NavigatorTag {
 
-	public static Navigator getNavigator(ServletContext sc) {
-		return getBeanByClass(sc, Navigator.class);
+	public static Navigator getNavigator() {
+		return getBeanByClass(Navigator.class);
 	}
 
-	public static List<Node> navigate(ServletContext sc, String name) {
-		return getNavigator(sc).navigate(name);
+	public static List<Node> navigate(String name) {
+		return getNavigator().navigate(name);
 	}
 
 }

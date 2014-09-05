@@ -105,8 +105,7 @@
 						<td><f:select path="databaseName"
 								cssClass="app-width50 ui-widget"
 								cssErrorClass="app-width50 ui-widget ui-state-error">
-								<c:set var="sc" value="<%=application%>" />
-								<c:set var="dataSourceDef" value="${sqlapp:dataSourceDef(sc)}" />
+								<c:set var="dataSourceDef" value="${sqlapp:dataSourceDef()}" />
 								<f:options items="${dataSourceDef.names}" />
 							</f:select></td>
 					</tr>

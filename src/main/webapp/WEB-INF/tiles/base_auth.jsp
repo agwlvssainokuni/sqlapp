@@ -52,8 +52,7 @@
 		<div id="Navi">
 			<ul class="app-flat">
 				<li><s:message code="base/auth.navigation" /></li>
-				<c:set var="sc" value="<%=application%>" />
-				<c:forEach var="node" items="${common:navigate(sc, name)}">
+				<c:forEach var="node" items="${common:navigate(name)}">
 					<s:url var="uri" value="${node.uri}">
 						<c:if test="${node.uri.contains('{id}')}">
 							<s:param name="id" value="${id}" />

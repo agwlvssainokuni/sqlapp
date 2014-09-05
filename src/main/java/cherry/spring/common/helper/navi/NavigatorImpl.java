@@ -36,12 +36,16 @@ public class NavigatorImpl implements Navigator, InitializingBean {
 
 	private Resource navigationDef;
 
-	private Map<String, NaviNode> nodeMap;
+	private ObjectMapper objectMapper;
 
-	private ObjectMapper objectMapper = new ObjectMapper();
+	private Map<String, NaviNode> nodeMap;
 
 	public void setNavigationDef(Resource navigationDef) {
 		this.navigationDef = navigationDef;
+	}
+
+	public void setObjectMapper(ObjectMapper objectMapper) {
+		this.objectMapper = objectMapper;
 	}
 
 	@Override

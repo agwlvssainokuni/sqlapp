@@ -20,6 +20,7 @@
 
 	<bean id="navigator" class="cherry.spring.common.helper.navi.NavigatorImpl">
 		<property name="navigationDef" value="classpath:navi.json" />
+		<property name="objectMapper" ref="objectMapper" />
 	</bean>
 
 	<bean id="sqlLoader" class="cherry.spring.common.helper.sql.SqlLoaderImpl" />

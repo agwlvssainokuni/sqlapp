@@ -16,14 +16,12 @@
 
 package cherry.sqlapp.service.sqltool;
 
-import javax.servlet.ServletContext;
-
 import cherry.spring.common.helper.AppCtxTag;
 
 public class DataSourceDefTag {
 
-	public static DataSourceDef getDataSourceDef(ServletContext sc) {
-		return AppCtxTag.getBeanByClass(sc, DataSourceDef.class);
+	public static DataSourceDef getDataSourceDef() {
+		return AppCtxTag.getBeanByClass(DataSourceDef.class);
 	}
 
 }
