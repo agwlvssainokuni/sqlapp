@@ -73,7 +73,6 @@ public class AESCipherHelper implements CipherHelper, InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws IOException {
-		assert secretKey != null;
 		byte[] keyBin = keyCipherHelper.decrypt(load(secretKey));
 		secKey = new SecretKeySpec(keyBin, keyAlgorithm);
 		if (initVector != null) {

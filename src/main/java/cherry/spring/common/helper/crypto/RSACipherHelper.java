@@ -16,6 +16,7 @@
 
 package cherry.spring.common.helper.crypto;
 
+import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -61,11 +62,12 @@ public class RSACipherHelper implements CipherHelper, InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		assert publicKey != null;
-		assert privateKey != null;
-		assert keyLoader != null;
-		pubKey = keyLoader.loadPublicKey(publicKey.getInputStream());
-		privKey = keyLoader.loadPrivateKey(privateKey.getInputStream());
+		try (InputStream in = publicKey.getInputStream()) {
+			pubKey = keyLoader.loadPublicKey(in);
+		}
+		try (InputStream in = privateKey.getInputStream()) {
+			privKey = keyLoader.loadPrivateKey(in);
+		}
 	}
 
 	@Override

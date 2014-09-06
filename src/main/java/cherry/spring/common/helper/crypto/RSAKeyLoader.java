@@ -51,14 +51,12 @@ public class RSAKeyLoader implements KeyLoader {
 
 	private byte[] loadBytes(InputStream in) throws IOException {
 		try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-			byte[] buff = new byte[8192];
+			byte[] buff = new byte[4096];
 			int len;
 			while ((len = in.read(buff)) >= 0) {
 				out.write(buff, 0, len);
 			}
 			return out.toByteArray();
-		} finally {
-			in.close();
 		}
 	}
 
