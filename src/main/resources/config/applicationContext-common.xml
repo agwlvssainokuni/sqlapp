@@ -21,6 +21,8 @@
 				!execution(* cherry.spring.common.log..*.*(..))
 				and
 				!execution(* cherry.spring.common.custom..*.*(..))
+				and
+				!execution(* cherry.spring.common.helper.crypto..*.*(..))
 				" />
 	</aop:config>
 
