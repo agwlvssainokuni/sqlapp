@@ -16,7 +16,7 @@
 
 	<aop:config>
 		<aop:advisor advice-ref="traceInterceptor"
-			pointcut="execution(* cherry.spring..*.*(..))
+			pointcut="execution(* cherry..*.*(..))
 				and
 				!execution(* cherry.spring.common.log..*.*(..))
 				and
