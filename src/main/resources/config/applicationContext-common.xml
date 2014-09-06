@@ -16,7 +16,7 @@
 
 	<aop:config>
 		<aop:advisor advice-ref="traceInterceptor"
-			pointcut="execution(* cherry..*.*(..))
+			pointcut="execution(* cherry.spring..*.*(..))
 				and
 				!execution(* cherry.spring.common.log..*.*(..))
 				and
@@ -30,7 +30,6 @@
 		<property name="packagePrefix">
 			<list>
 				<value>cherry.spring</value>
-				<value>cherry.sqlapp</value>
 			</list>
 		</property>
 	</bean>
@@ -67,7 +66,7 @@
 		<property name="converters">
 			<set>
 				<bean class="cherry.spring.common.custom.converter.LocalDateTimeConverter" />
-				<bean class="cherry.spring.common.custom.converter.SecureStringConverter" />
+				<bean class="cherry.spring.common.custom.converter.SecureTypeConverter" />
 			</set>
 		</property>
 	</bean>
@@ -78,5 +77,75 @@
 	</bean>
 
 	<bean id="ipAddrUtil" class="cherry.spring.common.lib.ipaddr.IpAddrUtil" />
+
+	<bean class="cherry.spring.common.custom.SecureString"
+		factory-method="setEncoder">
+		<constructor-arg>
+			<bean class="cherry.spring.common.helper.crypto.SecureStringHelper">
+				<property name="charset" value="UTF-8" />
+				<property name="cipherHelper" ref="aesCipherHelper" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean class="cherry.spring.common.custom.SecureInteger"
+		factory-method="setEncoder">
+		<constructor-arg>
+			<bean class="cherry.spring.common.helper.crypto.SecureIntegerHelper">
+				<property name="cipherHelper" ref="aesCipherHelper" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean class="cherry.spring.common.custom.SecureLong"
+		factory-method="setEncoder">
+		<constructor-arg>
+			<bean class="cherry.spring.common.helper.crypto.SecureLongHelper">
+				<property name="cipherHelper" ref="aesCipherHelper" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean class="cherry.spring.common.custom.SecureBigInteger"
+		factory-method="setEncoder">
+		<constructor-arg>
+			<bean class="cherry.spring.common.helper.crypto.SecureBigIntegerHelper">
+				<property name="cipherHelper" ref="aesCipherHelper" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean class="cherry.spring.common.custom.SecureBigDecimal"
+		factory-method="setEncoder">
+		<constructor-arg>
+			<bean class="cherry.spring.common.helper.crypto.SecureBigDecimalHelper">
+				<property name="cipherHelper" ref="aesCipherHelper" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="aesCipherHelper"
+		class="cherry.spring.common.helper.crypto.VersionedCipherHelper">
+		<property name="defaultVersion" value="0" />
+		<property name="cipherHelperMap">
+			<map key-type="java.lang.Integer" value-type="cherry.spring.common.helper.crypto.CipherHelper">
+				<entry key="0">
+					<bean class="cherry.spring.common.helper.crypto.AESCipherHelper">
+						<property name="secretKey" value="classpath:crypto/0/key.bin" />
+						<property name="initVector" value="classpath:crypto/0/iv.bin" />
+						<property name="keyCipherHelper" ref="rsaCipherHelper" />
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="rsaCipherHelper" class="cherry.spring.common.helper.crypto.RSACipherHelper">
+		<property name="keyLoader">
+			<bean class="cherry.spring.common.helper.crypto.RSAKeyLoader" />
+		</property>
+		<property name="privateKey" value="classpath:crypto/rsa/privkey.pk8" />
+		<property name="publicKey" value="classpath:crypto/rsa/pubkey.der" />
+	</bean>
 
 </beans>

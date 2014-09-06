@@ -16,24 +16,18 @@
 
 package cherry.spring.common.helper.crypto;
 
-import java.nio.charset.Charset;
+import java.math.BigInteger;
 
-public class SecureStringHelper extends SecureTypeBaseHelper<String> {
+public class SecureBigIntegerHelper extends SecureTypeBaseHelper<BigInteger> {
 
-	private Charset charset;
-
-	public void setCharset(Charset charset) {
-		this.charset = charset;
+	@Override
+	protected byte[] typeToBytes(BigInteger p) {
+		return p.toByteArray();
 	}
 
 	@Override
-	protected byte[] typeToBytes(String p) {
-		return p.getBytes(charset);
-	}
-
-	@Override
-	protected String bytesToType(byte[] p) {
-		return new String(p, charset);
+	protected BigInteger bytesToType(byte[] p) {
+		return new BigInteger(p);
 	}
 
 }

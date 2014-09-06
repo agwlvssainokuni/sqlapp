@@ -16,37 +16,47 @@
 
 package cherry.spring.common.custom;
 
-public class SecureString extends SecureTypeBase<String> {
+import java.math.BigDecimal;
+
+public class SecureBigDecimal extends SecureTypeBase<BigDecimal> {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Encoder<String> encoder = new Encoder<String>() {
+	private static Encoder<BigDecimal> encoder = new Encoder<BigDecimal>() {
 
 		@Override
-		public String encode(String s) {
-			return s;
+		public String encode(BigDecimal bd) {
+			if (bd == null) {
+				return null;
+			} else {
+				return bd.toPlainString();
+			}
 		}
 
 		@Override
-		public String decode(String s) {
-			return s;
+		public BigDecimal decode(String s) {
+			if (s == null) {
+				return null;
+			} else {
+				return new BigDecimal(s);
+			}
 		}
 	};
 
-	public static Encoder<String> setEncoder(Encoder<String> e) {
+	public static Encoder<BigDecimal> setEncoder(Encoder<BigDecimal> e) {
 		encoder = e;
 		return encoder;
 	}
 
-	public static SecureString plainValueOf(String s) {
-		return new SecureString(s, null, encoder);
+	public static SecureBigDecimal plainValueOf(BigDecimal bd) {
+		return new SecureBigDecimal(bd, null, encoder);
 	}
 
-	public static SecureString cryptoValueOf(String s) {
-		return new SecureString(null, s, encoder);
+	public static SecureBigDecimal cryptoValueOf(String s) {
+		return new SecureBigDecimal(null, s, encoder);
 	}
 
-	private SecureString(String p, String c, Encoder<String> e) {
+	private SecureBigDecimal(BigDecimal p, String c, Encoder<BigDecimal> e) {
 		super(p, c, e);
 	}
 

@@ -14,26 +14,19 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.crypto;
+package cherry.spring.common.custom;
 
-import java.nio.charset.Charset;
+public interface SecureType<T> {
 
-public class SecureStringHelper extends SecureTypeBaseHelper<String> {
+	T plain();
 
-	private Charset charset;
+	String crypto();
 
-	public void setCharset(Charset charset) {
-		this.charset = charset;
-	}
+	public interface Encoder<T> {
 
-	@Override
-	protected byte[] typeToBytes(String p) {
-		return p.getBytes(charset);
-	}
+		String encode(T p);
 
-	@Override
-	protected String bytesToType(byte[] p) {
-		return new String(p, charset);
+		T decode(String c);
 	}
 
 }

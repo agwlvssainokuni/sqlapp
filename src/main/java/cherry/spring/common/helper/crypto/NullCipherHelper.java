@@ -16,24 +16,16 @@
 
 package cherry.spring.common.helper.crypto;
 
-import java.nio.charset.Charset;
+public class NullCipherHelper implements CipherHelper {
 
-public class SecureStringHelper extends SecureTypeBaseHelper<String> {
-
-	private Charset charset;
-
-	public void setCharset(Charset charset) {
-		this.charset = charset;
+	@Override
+	public byte[] encrypt(byte[] in) {
+		return in;
 	}
 
 	@Override
-	protected byte[] typeToBytes(String p) {
-		return p.getBytes(charset);
-	}
-
-	@Override
-	protected String bytesToType(byte[] p) {
-		return new String(p, charset);
+	public byte[] decrypt(byte[] in) {
+		return in;
 	}
 
 }

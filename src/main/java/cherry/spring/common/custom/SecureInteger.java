@@ -16,37 +16,45 @@
 
 package cherry.spring.common.custom;
 
-public class SecureString extends SecureTypeBase<String> {
+public class SecureInteger extends SecureTypeBase<Integer> {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Encoder<String> encoder = new Encoder<String>() {
+	private static Encoder<Integer> encoder = new Encoder<Integer>() {
 
 		@Override
-		public String encode(String s) {
-			return s;
+		public String encode(Integer i) {
+			if (i == null) {
+				return null;
+			} else {
+				return i.toString();
+			}
 		}
 
 		@Override
-		public String decode(String s) {
-			return s;
+		public Integer decode(String s) {
+			if (s == null) {
+				return null;
+			} else {
+				return Integer.parseInt(s);
+			}
 		}
 	};
 
-	public static Encoder<String> setEncoder(Encoder<String> e) {
+	public static Encoder<Integer> setEncoder(Encoder<Integer> e) {
 		encoder = e;
 		return encoder;
 	}
 
-	public static SecureString plainValueOf(String s) {
-		return new SecureString(s, null, encoder);
+	public static SecureInteger plainValueOf(Integer i) {
+		return new SecureInteger(i, null, encoder);
 	}
 
-	public static SecureString cryptoValueOf(String s) {
-		return new SecureString(null, s, encoder);
+	public static SecureInteger cryptoValueOf(String s) {
+		return new SecureInteger(null, s, encoder);
 	}
 
-	private SecureString(String p, String c, Encoder<String> e) {
+	private SecureInteger(Integer p, String c, Encoder<Integer> e) {
 		super(p, c, e);
 	}
 

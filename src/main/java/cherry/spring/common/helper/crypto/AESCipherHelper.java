@@ -45,6 +45,8 @@ public class AESCipherHelper implements CipherHelper, InitializingBean {
 
 	private Resource initVector;
 
+	private CipherHelper keyCipherHelper = new NullCipherHelper();
+
 	private Key secKey;
 
 	private AlgorithmParameterSpec initVec;
@@ -65,12 +67,18 @@ public class AESCipherHelper implements CipherHelper, InitializingBean {
 		this.initVector = initVector;
 	}
 
+	public void setKeyCipherHelper(CipherHelper keyCipherHelper) {
+		this.keyCipherHelper = keyCipherHelper;
+	}
+
 	@Override
 	public void afterPropertiesSet() throws IOException {
 		assert secretKey != null;
-		secKey = new SecretKeySpec(load(secretKey), keyAlgorithm);
+		byte[] keyBin = keyCipherHelper.decrypt(load(secretKey));
+		secKey = new SecretKeySpec(keyBin, keyAlgorithm);
 		if (initVector != null) {
-			initVec = new IvParameterSpec(load(initVector));
+			byte[] ivBin = keyCipherHelper.decrypt(load(initVector));
+			initVec = new IvParameterSpec(ivBin);
 		}
 	}
 

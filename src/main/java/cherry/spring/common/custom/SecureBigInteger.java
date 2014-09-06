@@ -16,37 +16,47 @@
 
 package cherry.spring.common.custom;
 
-public class SecureString extends SecureTypeBase<String> {
+import java.math.BigInteger;
+
+public class SecureBigInteger extends SecureTypeBase<BigInteger> {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Encoder<String> encoder = new Encoder<String>() {
+	private static Encoder<BigInteger> encoder = new Encoder<BigInteger>() {
 
 		@Override
-		public String encode(String s) {
-			return s;
+		public String encode(BigInteger bi) {
+			if (bi == null) {
+				return null;
+			} else {
+				return bi.toString();
+			}
 		}
 
 		@Override
-		public String decode(String s) {
-			return s;
+		public BigInteger decode(String s) {
+			if (s == null) {
+				return null;
+			} else {
+				return new BigInteger(s);
+			}
 		}
 	};
 
-	public static Encoder<String> setEncoder(Encoder<String> e) {
+	public static Encoder<BigInteger> setEncoder(Encoder<BigInteger> e) {
 		encoder = e;
 		return encoder;
 	}
 
-	public static SecureString plainValueOf(String s) {
-		return new SecureString(s, null, encoder);
+	public static SecureBigInteger plainValueOf(BigInteger bi) {
+		return new SecureBigInteger(bi, null, encoder);
 	}
 
-	public static SecureString cryptoValueOf(String s) {
-		return new SecureString(null, s, encoder);
+	public static SecureBigInteger cryptoValueOf(String s) {
+		return new SecureBigInteger(null, s, encoder);
 	}
 
-	private SecureString(String p, String c, Encoder<String> e) {
+	private SecureBigInteger(BigInteger p, String c, Encoder<BigInteger> e) {
 		super(p, c, e);
 	}
 

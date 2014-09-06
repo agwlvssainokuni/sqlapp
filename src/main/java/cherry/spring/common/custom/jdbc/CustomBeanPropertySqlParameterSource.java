@@ -21,7 +21,7 @@ import java.sql.Timestamp;
 import org.joda.time.LocalDateTime;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 
-import cherry.spring.common.custom.SecureString;
+import cherry.spring.common.custom.SecureType;
 
 public class CustomBeanPropertySqlParameterSource extends
 		BeanPropertySqlParameterSource {
@@ -37,10 +37,11 @@ public class CustomBeanPropertySqlParameterSource extends
 			LocalDateTime dtm = (LocalDateTime) object;
 			return new Timestamp(dtm.toDate().getTime());
 		}
-		if (object instanceof SecureString) {
-			SecureString sstring = (SecureString) object;
-			return sstring.crypto();
+		if (object instanceof SecureType<?>) {
+			SecureType<?> sectype = (SecureType<?>) object;
+			return sectype.crypto();
 		}
 		return object;
 	}
+
 }

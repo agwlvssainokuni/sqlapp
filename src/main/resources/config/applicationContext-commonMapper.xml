@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-	<mybatis-spring:scan base-package="cherry.sqlapp.db.mapper" />
+	<mybatis-spring:scan base-package="cherry.spring.common.db" />
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
@@ -17,6 +17,12 @@
 					class="cherry.spring.common.custom.mybatis.JodaLocalDateTimeTypeHandler" />
 				<bean class="cherry.spring.common.custom.mybatis.JodaDateTimeTypeHandler" />
 				<bean class="cherry.spring.common.custom.mybatis.SecureStringTypeHandler" />
+				<bean class="cherry.spring.common.custom.mybatis.SecureIntegerTypeHandler" />
+				<bean class="cherry.spring.common.custom.mybatis.SecureLongTypeHandler" />
+				<bean
+					class="cherry.spring.common.custom.mybatis.SecureBigIntegerTypeHandler" />
+				<bean
+					class="cherry.spring.common.custom.mybatis.SecureBigDecimalTypeHandler" />
 			</list>
 		</property>
 	</bean>

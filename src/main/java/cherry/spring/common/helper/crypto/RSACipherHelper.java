@@ -31,7 +31,7 @@ import org.springframework.core.io.Resource;
 
 public class RSACipherHelper implements CipherHelper, InitializingBean {
 
-	private String algorithm = "RSA/NONE/PKCS1Padding";
+	private String algorithm = "RSA/ECB/PKCS1Padding";
 
 	private Resource publicKey;
 
