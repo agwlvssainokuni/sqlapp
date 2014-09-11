@@ -2,27 +2,30 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://www.springframework.org/schema/beans" xmlns:jee="http://www.springframework.org/schema/jee"
 	xmlns:jms="http://www.springframework.org/schema/jms"
-	xsi:schemaLocation="http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-4.0.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
 		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-	<jee:jndi-lookup id="connectionFactory" jndi-name="${sqlapp.jms.connectionFactory}" />
+	<jms:annotation-driven />
 
-	<jms:listener-container destination-resolver="destinationResolver"
-		task-executor="taskExecutor">
-		<jms:listener destination="${sqlapp.app.import.queue}"
-			ref="execLoadServiceImpl" method="handle" />
-	</jms:listener-container>
+	<jee:jndi-lookup id="connectionFactory" jndi-name="${sqlapp.jms.connectionFactory}" />
 
 	<bean id="destinationResolver"
 		class="org.springframework.jms.support.destination.JndiDestinationResolver" />
 
-	<bean id="taskExecutor"
-		class="org.springframework.scheduling.concurrent.DefaultManagedTaskExecutor" />
-
 	<bean id="jmsOperations" class="org.springframework.jms.core.JmsTemplate">
 		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="destinationResolver" ref="destinationResolver" />
+	</bean>
+
+	<bean id="jmsListenerContainerFactory"
+		class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destinationResolver" ref="destinationResolver" />
+		<property name="taskExecutor">
+			<bean
+				class="org.springframework.scheduling.concurrent.DefaultManagedTaskExecutor" />
+		</property>
 	</bean>
 
 </beans>
