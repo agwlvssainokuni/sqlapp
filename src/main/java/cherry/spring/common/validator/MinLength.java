@@ -14,36 +14,44 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.validation;
+package cherry.spring.common.validator;
 
+import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
+import static java.lang.annotation.ElementType.CONSTRUCTOR;
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
+import javax.validation.OverridesAttribute;
 import javax.validation.Payload;
+import javax.validation.ReportAsSingleViolation;
+import javax.validation.constraints.Size;
 
-import cherry.spring.common.validator.MaxLength;
-
-@Target({ METHOD, FIELD })
+@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
-@MaxLength(500)
-public @interface DescriptionSize {
+@Size(min = 0, max = Integer.MAX_VALUE)
+@ReportAsSingleViolation
+public @interface MinLength {
 
-	String message() default "{cherry.sqlapp.validation.NameSize.message}";
+	@OverridesAttribute(constraint = Size.class, name = "min")
+	int value() default 0;
+
+	String message() default "{cherry.spring.common.validator.MinLength.message}";
 
 	Class<?>[] groups() default {};
 
 	Class<? extends Payload>[] payload() default {};
 
-	@Target({ METHOD, FIELD })
+	@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 	@Retention(RUNTIME)
 	public @interface List {
-		DescriptionSize[] value();
+		MinLength[] value();
 	}
 
 }

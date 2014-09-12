@@ -25,14 +25,13 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import javax.validation.ReportAsSingleViolation;
-import javax.validation.constraints.Size;
+
+import cherry.spring.common.validator.MaxLength;
 
 @Target({ METHOD, FIELD })
 @Retention(RUNTIME)
 @Constraint(validatedBy = {})
-@Size(max = 5000)
-@ReportAsSingleViolation
+@MaxLength(5000)
 public @interface SqlStatementSize {
 
 	String message() default "{cherry.sqlapp.validation.SqlStatementSize.message}";
