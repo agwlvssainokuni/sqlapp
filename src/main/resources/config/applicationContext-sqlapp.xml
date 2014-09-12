@@ -53,7 +53,7 @@
 				<value>message/error</value>
 				<value>message/form</value>
 				<value>message/page</value>
-				<value>message/customValidation</value>
+				<value>message/validation</value>
 			</list>
 		</property>
 	</bean>
