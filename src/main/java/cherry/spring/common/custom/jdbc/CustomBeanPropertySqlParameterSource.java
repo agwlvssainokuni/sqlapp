@@ -16,11 +16,16 @@
 
 package cherry.spring.common.custom.jdbc;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.joda.time.LocalTime;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 
+import cherry.spring.common.custom.CodeEnum;
 import cherry.spring.common.custom.SecureType;
 
 public class CustomBeanPropertySqlParameterSource extends
@@ -34,12 +39,24 @@ public class CustomBeanPropertySqlParameterSource extends
 	public Object getValue(String paramName) throws IllegalArgumentException {
 		Object object = super.getValue(paramName);
 		if (object instanceof LocalDateTime) {
-			LocalDateTime dtm = (LocalDateTime) object;
-			return new Timestamp(dtm.toDate().getTime());
+			LocalDateTime ldt = (LocalDateTime) object;
+			return new Timestamp(ldt.toDate().getTime());
+		}
+		if (object instanceof LocalDate) {
+			LocalDate ld = (LocalDate) object;
+			return new Date(ld.toDate().getTime());
+		}
+		if (object instanceof LocalTime) {
+			LocalTime lt = (LocalTime) object;
+			return new Time((long) lt.getMillisOfDay());
 		}
 		if (object instanceof SecureType<?>) {
-			SecureType<?> sectype = (SecureType<?>) object;
-			return sectype.crypto();
+			SecureType<?> st = (SecureType<?>) object;
+			return st.crypto();
+		}
+		if (object instanceof CodeEnum<?>) {
+			CodeEnum<?> ce = (CodeEnum<?>) object;
+			return ce.code();
 		}
 		return object;
 	}
