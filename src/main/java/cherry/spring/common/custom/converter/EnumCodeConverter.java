@@ -16,17 +16,32 @@
 
 package cherry.spring.common.custom.converter;
 
-import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.joda.time.LocalDateTime;
 import org.springframework.core.convert.converter.Converter;
 
-public class LocalDateTimeConverter implements
-		Converter<Timestamp, LocalDateTime> {
+import cherry.spring.common.custom.Code;
+
+public abstract class EnumCodeConverter<C, E extends Code<C>> implements
+		Converter<C, E> {
+
+	private Map<C, E> enums;
+
+	protected EnumCodeConverter(Class<E> enumType) {
+		if (enumType.getEnumConstants() == null) {
+			throw new IllegalArgumentException(enumType.getSimpleName()
+					+ " does not represent an enum type.");
+		}
+		this.enums = new HashMap<>();
+		for (E e : enumType.getEnumConstants()) {
+			this.enums.put(e.code(), e);
+		}
+	}
 
 	@Override
-	public LocalDateTime convert(Timestamp source) {
-		return new LocalDateTime(source.getTime());
+	public E convert(C source) {
+		return enums.get(source);
 	}
 
 }

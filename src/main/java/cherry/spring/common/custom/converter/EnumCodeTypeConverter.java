@@ -24,9 +24,9 @@ import java.util.Set;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.GenericConverter;
 
-import cherry.spring.common.custom.CodeEnum;
+import cherry.spring.common.custom.Code;
 
-public class CodeEnumTypeConverter<C, E extends CodeEnum<C>> implements
+public class EnumCodeTypeConverter<C, E extends Code<C>> implements
 		GenericConverter {
 
 	private Class<C> codeType;
@@ -35,7 +35,7 @@ public class CodeEnumTypeConverter<C, E extends CodeEnum<C>> implements
 
 	private Map<C, E> enums;
 
-	public CodeEnumTypeConverter(Class<C> codeType, Class<E> enumType) {
+	public EnumCodeTypeConverter(Class<C> codeType, Class<E> enumType) {
 		this.codeType = codeType;
 		this.enumType = enumType;
 		if (this.enumType.getEnumConstants() == null) {

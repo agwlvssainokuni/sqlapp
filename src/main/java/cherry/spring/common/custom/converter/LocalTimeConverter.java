@@ -14,10 +14,18 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.custom;
+package cherry.spring.common.custom.converter;
 
-public interface CodeEnum<T> {
+import java.sql.Time;
 
-	T code();
+import org.joda.time.LocalTime;
+import org.springframework.core.convert.converter.Converter;
+
+public class LocalTimeConverter implements Converter<Time, LocalTime> {
+
+	@Override
+	public LocalTime convert(Time source) {
+		return new LocalTime(source.getTime());
+	}
 
 }

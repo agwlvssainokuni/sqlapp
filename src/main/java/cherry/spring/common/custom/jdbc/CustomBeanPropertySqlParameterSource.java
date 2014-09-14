@@ -25,7 +25,7 @@ import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 
-import cherry.spring.common.custom.CodeEnum;
+import cherry.spring.common.custom.Code;
 import cherry.spring.common.custom.SecureType;
 
 public class CustomBeanPropertySqlParameterSource extends
@@ -54,8 +54,8 @@ public class CustomBeanPropertySqlParameterSource extends
 			SecureType<?> st = (SecureType<?>) object;
 			return st.crypto();
 		}
-		if (object instanceof CodeEnum<?>) {
-			CodeEnum<?> ce = (CodeEnum<?>) object;
+		if (object instanceof Code<?>) {
+			Code<?> ce = (Code<?>) object;
 			return ce.code();
 		}
 		return object;

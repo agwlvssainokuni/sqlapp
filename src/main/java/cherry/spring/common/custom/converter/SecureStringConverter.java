@@ -14,32 +14,17 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.custom;
+package cherry.spring.common.custom.converter;
 
-public enum FlagCode implements Code<Integer> {
-	FALSE(0), TRUE(1);
+import org.springframework.core.convert.converter.Converter;
 
-	private int code;
+import cherry.spring.common.custom.SecureString;
 
-	private FlagCode(int code) {
-		this.code = code;
-	}
+public class SecureStringConverter implements Converter<String, SecureString> {
 
 	@Override
-	public Integer code() {
-		return this.code;
-	}
-
-	public boolean isTrue() {
-		return this == TRUE;
-	}
-
-	public static FlagCode valueOf(int i) {
-		return i != 0 ? TRUE : FALSE;
-	}
-
-	public static FlagCode valueOf(boolean b) {
-		return b ? TRUE : FALSE;
+	public SecureString convert(String source) {
+		return SecureString.cryptoValueOf(source);
 	}
 
 }

@@ -26,16 +26,16 @@ import java.util.Map;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 
-import cherry.spring.common.custom.CodeEnum;
+import cherry.spring.common.custom.Code;
 
-public class CodeEnumStringTypeHandler<E extends CodeEnum<String>> extends
+public abstract class EnumCodeStringTypeHandler<E extends Code<String>> extends
 		BaseTypeHandler<E> {
 
 	private Class<E> type;
 
 	private Map<String, E> enums;
 
-	public CodeEnumStringTypeHandler(Class<E> type) {
+	protected EnumCodeStringTypeHandler(Class<E> type) {
 		this.type = type;
 		if (this.type.getEnumConstants() == null) {
 			throw new IllegalArgumentException(this.type.getSimpleName()

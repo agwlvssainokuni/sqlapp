@@ -16,30 +16,8 @@
 
 package cherry.spring.common.custom;
 
-public enum FlagCode implements Code<Integer> {
-	FALSE(0), TRUE(1);
+public interface Code<T> {
 
-	private int code;
-
-	private FlagCode(int code) {
-		this.code = code;
-	}
-
-	@Override
-	public Integer code() {
-		return this.code;
-	}
-
-	public boolean isTrue() {
-		return this == TRUE;
-	}
-
-	public static FlagCode valueOf(int i) {
-		return i != 0 ? TRUE : FALSE;
-	}
-
-	public static FlagCode valueOf(boolean b) {
-		return b ? TRUE : FALSE;
-	}
+	T code();
 
 }
