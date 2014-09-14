@@ -69,6 +69,10 @@
 			<set>
 				<bean class="cherry.spring.common.custom.converter.LocalDateTimeConverter" />
 				<bean class="cherry.spring.common.custom.converter.SecureTypeConverter" />
+				<bean class="cherry.spring.common.custom.converter.CodeEnumTypeConverter">
+					<constructor-arg value="java.lang.Integer" />
+					<constructor-arg value="cherry.spring.common.custom.FlagCode" />
+				</bean>
 			</set>
 		</property>
 	</bean>
