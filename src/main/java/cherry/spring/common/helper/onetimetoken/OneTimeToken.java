@@ -14,23 +14,32 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.sql;
+package cherry.spring.common.helper.onetimetoken;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.util.Map;
+import java.io.Serializable;
 
-import org.springframework.core.io.Resource;
+public class OneTimeToken implements Serializable {
 
-public interface SqlLoader {
+	private static final long serialVersionUID = 1L;
 
-	Map<String, String> load(Class<?> klass) throws IOException;
+	private String name;
 
-	Map<String, String> load(Resource resource) throws IOException;
+	private String value;
 
-	Map<String, String> load(InputStream in) throws IOException;
+	public String getName() {
+		return name;
+	}
 
-	Map<String, String> load(Reader reader) throws IOException;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
 
 }

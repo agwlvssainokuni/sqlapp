@@ -14,23 +14,27 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.sql;
+package cherry.spring.common.helper.onetimetoken;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.util.Map;
+import java.util.UUID;
 
-import org.springframework.core.io.Resource;
+import javax.servlet.http.HttpServletRequest;
 
-public interface SqlLoader {
+import org.springframework.beans.factory.annotation.Value;
 
-	Map<String, String> load(Class<?> klass) throws IOException;
+public class OneTimeTokenIssuerImpl implements OneTimeTokenIssuer {
 
-	Map<String, String> load(Resource resource) throws IOException;
+	@Value("${common.helper.onetimetoken.name}")
+	private String name;
 
-	Map<String, String> load(InputStream in) throws IOException;
-
-	Map<String, String> load(Reader reader) throws IOException;
+	@Override
+	public OneTimeToken newToken(HttpServletRequest request) {
+		String value = UUID.randomUUID().toString();
+		request.getSession().setAttribute(name, value);
+		OneTimeToken token = new OneTimeToken();
+		token.setName(name);
+		token.setValue(value);
+		return token;
+	}
 
 }

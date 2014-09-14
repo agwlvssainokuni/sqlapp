@@ -22,8 +22,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -39,9 +37,6 @@ public class AsyncProcDaoImpl implements AsyncProcDao, InitializingBean {
 	@Autowired
 	private SqlLoader sqlLoader;
 
-	@Value("classpath:cherry/spring/common/helper/async/AsyncProcDaoImpl.sql")
-	private Resource sqlResource;
-
 	private String sqlCreateAsyncProc;
 
 	private String sqlInvokeAsyncProc;
@@ -54,7 +49,7 @@ public class AsyncProcDaoImpl implements AsyncProcDao, InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws IOException {
-		Map<String, String> sqlmap = sqlLoader.load(sqlResource);
+		Map<String, String> sqlmap = sqlLoader.load(getClass());
 		sqlCreateAsyncProc = sqlmap.get("createAsyncProc");
 		sqlInvokeAsyncProc = sqlmap.get("invokeAsyncProc");
 		sqlStartAsyncProc = sqlmap.get("startAsyncProc");

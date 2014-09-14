@@ -37,11 +37,22 @@ public class SqlLoaderImpl implements SqlLoader {
 	@Value("${common.helper.sqlloader.charset}")
 	private Charset charset;
 
+	@Value("${common.helper.sqlloader.extension}")
+	private String extension;
+
 	@Value("${common.helper.sqlloader.namePattern}")
 	private Pattern namePattern;
 
 	@Autowired
 	private SimpleSqlParser simpleSqlParser;
+
+	@Override
+	public Map<String, String> load(Class<?> klass) throws IOException {
+		String name = klass.getSimpleName() + extension;
+		try (InputStream in = klass.getResourceAsStream(name)) {
+			return load(in);
+		}
+	}
 
 	@Override
 	public Map<String, String> load(Resource resource) throws IOException {

@@ -21,8 +21,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Component;
@@ -48,9 +46,6 @@ public class SqltoolStatementDaoImpl implements SqltoolStatementDao,
 	@Autowired
 	private SqlLoader sqlLoader;
 
-	@Value("classpath:cherry/sqlapp/db/dao/SqltoolStatementDaoImpl.sql")
-	private Resource sqlResource;
-
 	private String sqlFindById;
 
 	private String sqlCreate;
@@ -61,7 +56,7 @@ public class SqltoolStatementDaoImpl implements SqltoolStatementDao,
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		Map<String, String> sqlmap = sqlLoader.load(sqlResource);
+		Map<String, String> sqlmap = sqlLoader.load(getClass());
 		sqlFindById = sqlmap.get("findById");
 		sqlCreate = sqlmap.get("create");
 		sqlUpdate = sqlmap.get("update");
