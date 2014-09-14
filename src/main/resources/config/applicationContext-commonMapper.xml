@@ -23,10 +23,8 @@
 					class="cherry.spring.common.custom.mybatis.SecureBigIntegerTypeHandler" />
 				<bean
 					class="cherry.spring.common.custom.mybatis.SecureBigDecimalTypeHandler" />
-				<bean
-					class="cherry.spring.common.custom.mybatis.CodeEnumIntegerTypeHandler">
-					<constructor-arg value="cherry.spring.common.custom.FlagCode" />
-				</bean>
+				<bean class="cherry.spring.common.custom.mybatis.DeletedFlagTypeHandler" />
+				<bean class="cherry.spring.common.custom.mybatis.FlagCodeTypeHandler" />
 			</list>
 		</property>
 	</bean>
