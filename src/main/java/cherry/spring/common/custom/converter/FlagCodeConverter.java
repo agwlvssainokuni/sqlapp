@@ -21,7 +21,7 @@ import cherry.spring.common.custom.FlagCode;
 public class FlagCodeConverter extends EnumCodeConverter<Integer, FlagCode> {
 
 	public FlagCodeConverter() {
-		super(FlagCode.class);
+		super(FlagCode.class, FlagCode.TRUE);
 	}
 
 }

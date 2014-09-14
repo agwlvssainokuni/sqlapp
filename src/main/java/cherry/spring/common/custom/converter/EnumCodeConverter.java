@@ -28,7 +28,9 @@ public abstract class EnumCodeConverter<C, E extends Code<C>> implements
 
 	private Map<C, E> enums;
 
-	protected EnumCodeConverter(Class<E> enumType) {
+	private E defaultValue;
+
+	protected EnumCodeConverter(Class<E> enumType, E defaultValue) {
 		if (enumType.getEnumConstants() == null) {
 			throw new IllegalArgumentException(enumType.getSimpleName()
 					+ " does not represent an enum type.");
@@ -37,11 +39,15 @@ public abstract class EnumCodeConverter<C, E extends Code<C>> implements
 		for (E e : enumType.getEnumConstants()) {
 			this.enums.put(e.code(), e);
 		}
+		this.defaultValue = defaultValue;
 	}
 
 	@Override
 	public E convert(C source) {
-		return enums.get(source);
+		E e = enums.get(source);
+		if (e == null) {
+			return defaultValue;
+		}
+		return e;
 	}
-
 }

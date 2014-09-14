@@ -18,6 +18,7 @@ package cherry.spring.common.custom.converter;
 
 import java.sql.Time;
 
+import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.springframework.core.convert.converter.Converter;
 
@@ -25,7 +26,8 @@ public class LocalTimeConverter implements Converter<Time, LocalTime> {
 
 	@Override
 	public LocalTime convert(Time source) {
-		return new LocalTime(source.getTime());
+		return new LocalTime(source.getTime()
+				+ LocalDate.now().toDate().getTime());
 	}
 
 }
