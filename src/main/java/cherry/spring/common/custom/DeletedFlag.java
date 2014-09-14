@@ -23,6 +23,8 @@ public class DeletedFlag implements Code<Integer>, Comparable<DeletedFlag>,
 
 	private static final long serialVersionUID = 1L;
 
+	public static final DeletedFlag NOT_DELETED = new DeletedFlag(0);
+
 	private final int code;
 
 	public DeletedFlag(int code) {
