@@ -40,6 +40,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import cherry.spring.common.custom.FlagCode;
 import cherry.spring.common.lib.etl.CsvConsumer;
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.sqlapp.controller.sqltool.LogicErrorUtil;
@@ -286,7 +287,7 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 		md.setId(id);
 		md.setName(mdForm.getName());
 		md.setDescription(mdForm.getDescription());
-		md.setPublishedFlg(mdForm.isPublishedFlg() ? 1 : 0);
+		md.setPublishedFlg(FlagCode.valueOf(mdForm.isPublishedFlg()));
 		md.setLockVersion(mdForm.getLockVersion());
 
 		if (metadataService.update(md)) {

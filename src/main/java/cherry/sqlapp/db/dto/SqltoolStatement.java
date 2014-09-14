@@ -25,6 +25,8 @@ import lombok.ToString;
 
 import org.joda.time.LocalDateTime;
 
+import cherry.spring.common.custom.DeletedFlag;
+
 @Setter
 @Getter
 @EqualsAndHashCode(callSuper = false)
@@ -47,6 +49,6 @@ public class SqltoolStatement implements Serializable {
 
 	private Integer lockVersion;
 
-	private Integer deletedFlg;
+	private DeletedFlag deletedFlg;
 
 }

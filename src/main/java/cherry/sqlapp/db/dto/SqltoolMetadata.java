@@ -25,6 +25,9 @@ import lombok.ToString;
 
 import org.joda.time.LocalDateTime;
 
+import cherry.spring.common.custom.DeletedFlag;
+import cherry.spring.common.custom.FlagCode;
+
 @Setter
 @Getter
 @EqualsAndHashCode(callSuper = false)
@@ -43,7 +46,7 @@ public class SqltoolMetadata implements Serializable {
 
 	private String ownedBy;
 
-	private Integer publishedFlg;
+	private FlagCode publishedFlg;
 
 	private LocalDateTime registeredAt;
 
@@ -53,6 +56,6 @@ public class SqltoolMetadata implements Serializable {
 
 	private Integer lockVersion;
 
-	private Integer deletedFlg;
+	private DeletedFlag deletedFlg;
 
 }

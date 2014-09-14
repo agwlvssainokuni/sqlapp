@@ -28,7 +28,7 @@ public class MdFormUtil {
 		mdForm.setName(record.getName());
 		mdForm.setDescription(record.getDescription());
 		mdForm.setOwnedBy(record.getOwnedBy());
-		mdForm.setPublishedFlg(record.getPublishedFlg() != 0);
+		mdForm.setPublishedFlg(record.getPublishedFlg().isTrue());
 		mdForm.setLockVersion(record.getLockVersion());
 		return mdForm;
 	}

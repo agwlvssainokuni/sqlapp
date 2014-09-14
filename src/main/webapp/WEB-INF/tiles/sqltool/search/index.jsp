@@ -163,7 +163,7 @@
 							<td><c:out value="${item.sqlType}" /></td>
 							<td><c:out value="${item.registeredAt}" /></td>
 							<td><c:choose>
-									<c:when test="${item.publishedFlg ==  0}">
+									<c:when test="${!item.publishedFlg.isTrue()}">
 										<s:message code="sqltool/search/index.column.publishedFlg.0" />
 									</c:when>
 									<c:otherwise>

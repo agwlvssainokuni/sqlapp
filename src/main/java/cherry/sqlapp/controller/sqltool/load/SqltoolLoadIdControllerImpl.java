@@ -31,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import cherry.spring.common.custom.FlagCode;
 import cherry.sqlapp.controller.sqltool.LogicErrorUtil;
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
@@ -197,7 +198,7 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 		md.setId(id);
 		md.setName(mdForm.getName());
 		md.setDescription(mdForm.getDescription());
-		md.setPublishedFlg(mdForm.isPublishedFlg() ? 1 : 0);
+		md.setPublishedFlg(FlagCode.valueOf(mdForm.isPublishedFlg()));
 		md.setLockVersion(mdForm.getLockVersion());
 
 		if (metadataService.update(md)) {
