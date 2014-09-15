@@ -27,15 +27,21 @@ import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 
 import cherry.spring.common.custom.Code;
+import cherry.spring.common.log.Log;
+import cherry.spring.common.log.LogFactory;
 
 public abstract class EnumCodeIntegerTypeHandler<E extends Code<Integer>>
 		extends BaseTypeHandler<E> {
+
+	private final Log log = LogFactory.getLog(getClass());
 
 	private Class<E> type;
 
 	private Map<Integer, E> enums;
 
-	protected EnumCodeIntegerTypeHandler(Class<E> type) {
+	private E defaultValue;
+
+	protected EnumCodeIntegerTypeHandler(Class<E> type, E defaultValue) {
 		this.type = type;
 		if (this.type.getEnumConstants() == null) {
 			throw new IllegalArgumentException(this.type.getSimpleName()
@@ -45,6 +51,7 @@ public abstract class EnumCodeIntegerTypeHandler<E extends Code<Integer>>
 		for (E e : this.type.getEnumConstants()) {
 			this.enums.put(e.code(), e);
 		}
+		this.defaultValue = defaultValue;
 	}
 
 	@Override
@@ -86,8 +93,15 @@ public abstract class EnumCodeIntegerTypeHandler<E extends Code<Integer>>
 	private E getEnumValue(int code) {
 		E e = enums.get(code);
 		if (e == null) {
-			throw new IllegalStateException("No matching enum "
-					+ type.getSimpleName() + " for " + code);
+			if (defaultValue == null) {
+				throw new IllegalStateException("No matching enum "
+						+ type.getSimpleName() + " for " + code);
+			}
+			if (log.isDebugEnabled()) {
+				log.debug("No matching enum {0} for {1}", type.getSimpleName(),
+						code);
+			}
+			return defaultValue;
 		}
 		return e;
 	}

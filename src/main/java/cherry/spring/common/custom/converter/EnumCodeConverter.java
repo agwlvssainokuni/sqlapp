@@ -22,21 +22,28 @@ import java.util.Map;
 import org.springframework.core.convert.converter.Converter;
 
 import cherry.spring.common.custom.Code;
+import cherry.spring.common.log.Log;
+import cherry.spring.common.log.LogFactory;
 
 public abstract class EnumCodeConverter<C, E extends Code<C>> implements
 		Converter<C, E> {
+
+	private final Log log = LogFactory.getLog(getClass());
+
+	private Class<E> type;
 
 	private Map<C, E> enums;
 
 	private E defaultValue;
 
-	protected EnumCodeConverter(Class<E> enumType, E defaultValue) {
-		if (enumType.getEnumConstants() == null) {
-			throw new IllegalArgumentException(enumType.getSimpleName()
+	protected EnumCodeConverter(Class<E> type, E defaultValue) {
+		this.type = type;
+		if (this.type.getEnumConstants() == null) {
+			throw new IllegalArgumentException(this.type.getSimpleName()
 					+ " does not represent an enum type.");
 		}
 		this.enums = new HashMap<>();
-		for (E e : enumType.getEnumConstants()) {
+		for (E e : this.type.getEnumConstants()) {
 			this.enums.put(e.code(), e);
 		}
 		this.defaultValue = defaultValue;
@@ -46,6 +53,14 @@ public abstract class EnumCodeConverter<C, E extends Code<C>> implements
 	public E convert(C source) {
 		E e = enums.get(source);
 		if (e == null) {
+			if (defaultValue == null) {
+				throw new IllegalStateException("No matching enum "
+						+ type.getSimpleName() + " for " + source);
+			}
+			if (log.isDebugEnabled()) {
+				log.debug("No matching enum {0} for {1}", type.getSimpleName(),
+						source);
+			}
 			return defaultValue;
 		}
 		return e;
