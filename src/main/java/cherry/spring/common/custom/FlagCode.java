@@ -16,6 +16,8 @@
 
 package cherry.spring.common.custom;
 
+import cherry.spring.common.custom.CodeUtil.CodeMap;
+
 public enum FlagCode implements Code<Integer> {
 	FALSE(0), TRUE(1);
 
@@ -34,8 +36,11 @@ public enum FlagCode implements Code<Integer> {
 		return this == TRUE;
 	}
 
+	private static CodeMap<Integer, FlagCode> codeMap = CodeUtil.getCodeMap(
+			FlagCode.class, TRUE);
+
 	public static FlagCode valueOf(int i) {
-		return i != 0 ? TRUE : FALSE;
+		return codeMap.get(i);
 	}
 
 	public static FlagCode valueOf(boolean b) {
