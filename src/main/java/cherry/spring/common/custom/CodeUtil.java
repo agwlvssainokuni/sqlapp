@@ -40,7 +40,7 @@ public class CodeUtil {
 				E e = map.get(code);
 				if (e == null) {
 					if (defaultValue == null) {
-						throw new IllegalStateException("No matching enum "
+						throw new IllegalArgumentException("No matching enum "
 								+ type.getSimpleName() + " for " + code);
 					}
 					if (log.isDebugEnabled()) {
