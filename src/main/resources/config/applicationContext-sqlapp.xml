@@ -16,6 +16,10 @@
 
 	<bean id="asyncProcHelper" class="cherry.spring.common.helper.async.AsyncProcHelperImpl" />
 
+	<bean id="bizdateDao" class="cherry.spring.common.helper.bizdate.BizdateDaoImpl" />
+
+	<bean id="bizdateHelper" class="cherry.spring.common.helper.bizdate.BizdateHelperImpl" />
+
 	<bean id="jsonHelper" class="cherry.spring.common.helper.json.JsonHelperImpl" />
 
 	<bean id="navigator" class="cherry.spring.common.helper.navi.NavigatorImpl">
