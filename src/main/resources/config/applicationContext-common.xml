@@ -80,6 +80,7 @@
 					class="cherry.spring.common.custom.converter.SecureBigDecimalConverter" />
 				<bean class="cherry.spring.common.custom.converter.DeletedFlagConverter" />
 				<bean class="cherry.spring.common.custom.converter.FlagCodeConverter" />
+				<bean class="cherry.sqlapp.code.type.SqlTypeCodeConverter" />
 			</set>
 		</property>
 	</bean>

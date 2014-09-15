@@ -5,7 +5,8 @@
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-	<mybatis-spring:scan base-package="cherry.sqlapp.db.mapper" />
+	<mybatis-spring:scan
+		base-package="cherry.sqlapp.db.mapper, cherry.sqlapp.db.gen.mapper" />
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
@@ -25,6 +26,7 @@
 					class="cherry.spring.common.custom.mybatis.SecureBigDecimalTypeHandler" />
 				<bean class="cherry.spring.common.custom.mybatis.DeletedFlagTypeHandler" />
 				<bean class="cherry.spring.common.custom.mybatis.FlagCodeTypeHandler" />
+				<bean class="cherry.sqlapp.code.type.SqlTypeCodeTypeHandler" />
 			</list>
 		</property>
 	</bean>
