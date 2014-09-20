@@ -17,6 +17,8 @@ ext {
 	versionCommonsLang3 = "3.3.2"
 	versionCommonsMath3 = "3.2"
 	versionCommonsCodec = "1.9"
+	versionVelocity = "1.7"
+	versionFluentLogger = "0.2.11"
 	versionSlf4j = "1.7.7"
 	versionLogback = "1.1.2"
 	versionMyBatis = "3.2.7"
@@ -51,6 +53,8 @@ dependencies {
 	compile "org.apache.commons:commons-lang3:${versionCommonsLang3}"
 	compile "org.apache.commons:commons-math3:${versionCommonsMath3}"
 	compile "commons-codec:commons-codec:${versionCommonsCodec}"
+	compile "org.apache.velocity:velocity:${versionVelocity}"
+	compile "org.fluentd:fluent-logger:${versionFluentLogger}"
 	compile "org.slf4j:slf4j-api:${versionSlf4j}"
 	compile "org.slf4j:jcl-over-slf4j:${versionSlf4j}"
 	compile "ch.qos.logback:logback-core:${versionLogback}"
@@ -117,11 +121,14 @@ compileTestJava.options.encoding = "UTF-8"
 
 sourceSets.main {
 	java {
+		srcDir "src/common/java"
 		srcDir "src/mybatis/java"
 		srcDir "src/querydsl/java"
 	}
 	resources {
 		srcDir "src/main/java"
+		srcDir "src/common/java"
+		srcDir "src/common/resources"
 		srcDir "src/mybatis/java"
 		srcDir "src/querydsl/java"
 	}

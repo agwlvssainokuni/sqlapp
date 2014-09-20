@@ -16,4 +16,13 @@
 		<function-signature>java.util.List navigate(java.lang.String)</function-signature>
 	</function>
 
+	<function>
+		<description>OneTimeToken</description>
+		<name>onetimetoken</name>
+		<function-class>cherry.spring.common.helper.onetimetoken.OneTimeTokenTag</function-class>
+		<function-signature>
+			cherry.spring.common.helper.onetimetoken.OneTimeToken newToken(javax.servlet.http.HttpServletRequest)
+		</function-signature>
+	</function>
+
 </taglib>
