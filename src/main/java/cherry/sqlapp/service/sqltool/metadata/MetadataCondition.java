@@ -14,19 +14,37 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.db.mapper;
+package cherry.sqlapp.service.sqltool.metadata;
 
-import java.util.List;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-import org.apache.ibatis.annotations.Param;
+import org.joda.time.LocalDateTime;
 
-import cherry.sqlapp.db.dto.SqltoolMetadata;
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = false)
+public class MetadataCondition {
 
-public interface MetadataMapper {
+	private String name;
 
-	int count(@Param("cond") MetadataCondition cond);
+	private boolean clause;
 
-	List<SqltoolMetadata> search(@Param("cond") MetadataCondition cond,
-			@Param("limit") int limit, @Param("offset") int offset);
+	private boolean statement;
+
+	private boolean load;
+
+	private boolean publish;
+
+	private boolean notPublish;
+
+	private LocalDateTime registeredFrom;
+
+	private LocalDateTime registeredTo;
+
+	private String loginId;
 
 }

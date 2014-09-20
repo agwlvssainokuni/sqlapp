@@ -16,6 +16,8 @@
 
 package cherry.sqlapp.service.sqltool.metadata;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +26,21 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.spring.common.lib.paginate.PageSet;
-import cherry.spring.common.lib.paginate.Paginator;
+import cherry.spring.common.custom.DeletedFlag;
+import cherry.spring.common.custom.FlagCode;
+import cherry.spring.common.custom.jdbc.RowMapperCreator;
+import cherry.spring.common.helper.querydsl.SQLQueryConfigurer;
+import cherry.spring.common.helper.querydsl.SQLQueryHelper;
+import cherry.spring.common.helper.querydsl.SQLQueryResult;
+import cherry.sqlapp.code.SqlTypeCode;
 import cherry.sqlapp.db.dao.SqltoolMetadataDao;
 import cherry.sqlapp.db.dto.SqltoolMetadata;
-import cherry.sqlapp.db.mapper.MetadataCondition;
-import cherry.sqlapp.db.mapper.MetadataMapper;
+import cherry.sqlapp.db.gen.query.QSqltoolMetadata;
+
+import com.mysema.query.BooleanBuilder;
+import com.mysema.query.sql.SQLQuery;
+import com.mysema.query.types.Expression;
+import com.mysema.query.types.Predicate;
 
 @Component
 public class MetadataServiceImpl implements MetadataService {
@@ -38,10 +49,10 @@ public class MetadataServiceImpl implements MetadataService {
 	private SqltoolMetadataDao sqltoolMetadataDao;
 
 	@Autowired
-	private MetadataMapper metadataMapper;
+	private SQLQueryHelper sqlQueryHelper;
 
 	@Autowired
-	private Paginator paginator;
+	private RowMapperCreator rowMapperCreator;
 
 	@Cacheable(value = "SqltoolMetadata", key = "#id")
 	@Transactional
@@ -62,16 +73,84 @@ public class MetadataServiceImpl implements MetadataService {
 	@Override
 	public Result search(MetadataCondition cond, int pageNo, int pageSz) {
 
-		int itemCount = metadataMapper.count(cond);
-		PageSet pageSet = paginator.paginate(pageNo, itemCount, pageSz);
-		int offset = pageSet.getCurrent().getFrom();
-		List<SqltoolMetadata> list = metadataMapper
-				.search(cond, pageSz, offset);
+		QSqltoolMetadata m = new QSqltoolMetadata("m");
+		SQLQueryResult<SqltoolMetadata> r = sqlQueryHelper.search(
+				getConfigurer(m, cond), pageNo, pageSz,
+				rowMapperCreator.create(SqltoolMetadata.class), getColumns(m));
 
 		Result result = new Result();
-		result.setPageSet(pageSet);
-		result.setMetadataList(list);
+		result.setPageSet(r.getPageSet());
+		result.setMetadataList(r.getResultList());
 		return result;
+	}
+
+	private Expression<?>[] getColumns(QSqltoolMetadata m) {
+		return new Expression<?>[] { m.id, m.sqlType, m.name, m.description,
+				m.ownedBy, m.publishedFlg, m.registeredAt, m.updatedAt,
+				m.createdAt, m.lockVersion, m.deletedFlg };
+	}
+
+	private SQLQueryConfigurer getConfigurer(final QSqltoolMetadata m,
+			final MetadataCondition cond) {
+		return new SQLQueryConfigurer() {
+
+			@Override
+			public SQLQuery configure(SQLQuery query) {
+
+				List<Predicate> list = new LinkedList<>();
+				if (cond.getName() != null) {
+					list.add(m.name.startsWith(cond.getName()));
+				}
+
+				if (cond.getRegisteredFrom() != null) {
+					list.add(m.registeredAt.goe(cond.getRegisteredFrom()));
+				}
+				if (cond.getRegisteredTo() != null) {
+					list.add(m.registeredAt.lt(cond.getRegisteredTo()
+							.plusSeconds(1)));
+				}
+
+				Predicate pub = m.publishedFlg.ne(FlagCode.FALSE.code());
+				Predicate prv = m.publishedFlg.eq(FlagCode.FALSE.code()).and(
+						m.ownedBy.eq(cond.getLoginId()));
+				BooleanBuilder bb = new BooleanBuilder();
+				if (cond.isPublish()) {
+					bb.or(pub);
+				}
+				if (cond.isNotPublish()) {
+					bb.or(prv);
+				}
+				if (!bb.hasValue()) {
+					bb.or(pub);
+					bb.or(prv);
+				}
+				list.add(bb);
+
+				List<String> code = new ArrayList<>();
+				if (cond.isClause()) {
+					code.add(SqlTypeCode.CLAUSE.code());
+				}
+				if (cond.isStatement()) {
+					code.add(SqlTypeCode.STATEMENT.code());
+				}
+				if (cond.isLoad()) {
+					code.add(SqlTypeCode.LOAD.code());
+				}
+				if (!code.isEmpty()) {
+					list.add(m.sqlType.in(code));
+				}
+
+				list.add(m.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+
+				return query.from(m).where(
+						list.toArray(new Predicate[list.size()]));
+			}
+
+			@Override
+			public SQLQuery orderBy(SQLQuery query) {
+				return query.orderBy(m.id.asc());
+			}
+		};
 	}
 
 }

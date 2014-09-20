@@ -16,11 +16,9 @@
 
 package cherry.sqlapp.controller.sqltool.search;
 
-import org.apache.commons.lang3.StringUtils;
-import org.joda.time.LocalDateTime;
 import org.springframework.stereotype.Component;
 
-import cherry.sqlapp.db.mapper.MetadataCondition;
+import cherry.sqlapp.service.sqltool.metadata.MetadataCondition;
 
 @Component("searchFormUtil")
 public class FormUtil {
@@ -28,37 +26,16 @@ public class FormUtil {
 	public MetadataCondition createSqlCondition(SqltoolSearchForm form,
 			String loginId) {
 		MetadataCondition cond = new MetadataCondition();
-		cond.setName(stringCond(form.getName()));
+		cond.setName(form.getName());
 		cond.setClause(form.isClause());
 		cond.setStatement(form.isStatement());
 		cond.setLoad(form.isLoad());
 		cond.setPublish(form.isPublish());
 		cond.setNotPublish(form.isNotPublish());
-		cond.setRegisteredFrom(dateFromCond(form.getRegisteredFrom()));
-		cond.setRegisteredTo(dateToCond(form.getRegisteredTo()));
+		cond.setRegisteredFrom(form.getRegisteredFrom());
+		cond.setRegisteredTo(form.getRegisteredTo());
 		cond.setLoginId(loginId);
 		return cond;
-	}
-
-	private String stringCond(String string) {
-		if (StringUtils.isBlank(string)) {
-			return null;
-		}
-		return string.replaceAll("([%_\\\\])", "\\$1") + "%";
-	}
-
-	private LocalDateTime dateFromCond(LocalDateTime dt) {
-		if (dt == null) {
-			return null;
-		}
-		return dt;
-	}
-
-	private LocalDateTime dateToCond(LocalDateTime dt) {
-		if (dt == null) {
-			return null;
-		}
-		return dt.plusSeconds(1);
 	}
 
 }

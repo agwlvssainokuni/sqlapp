@@ -24,7 +24,6 @@ import cherry.sqlapp.db.dao.SqltoolLoadDao;
 import cherry.sqlapp.db.dao.SqltoolMetadataDao;
 import cherry.sqlapp.db.dto.SqltoolLoad;
 import cherry.sqlapp.db.dto.SqltoolMetadata;
-import cherry.sqlapp.db.mapper.MetadataMapper;
 
 @Component
 public class LoadServiceImpl implements LoadService {
@@ -34,9 +33,6 @@ public class LoadServiceImpl implements LoadService {
 
 	@Autowired
 	private SqltoolMetadataDao sqltoolMetadataDao;
-
-	@Autowired
-	private MetadataMapper metadataMapper;
 
 	@Transactional
 	@Override

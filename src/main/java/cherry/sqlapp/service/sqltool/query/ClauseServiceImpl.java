@@ -24,7 +24,6 @@ import cherry.sqlapp.db.dao.SqltoolClauseDao;
 import cherry.sqlapp.db.dao.SqltoolMetadataDao;
 import cherry.sqlapp.db.dto.SqltoolClause;
 import cherry.sqlapp.db.dto.SqltoolMetadata;
-import cherry.sqlapp.db.mapper.MetadataMapper;
 
 @Component
 public class ClauseServiceImpl implements ClauseService {
@@ -34,9 +33,6 @@ public class ClauseServiceImpl implements ClauseService {
 
 	@Autowired
 	private SqltoolMetadataDao sqltoolMetadataDao;
-
-	@Autowired
-	private MetadataMapper metadataMapper;
 
 	@Transactional
 	@Override

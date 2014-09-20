@@ -24,7 +24,6 @@ import cherry.sqlapp.db.dao.SqltoolMetadataDao;
 import cherry.sqlapp.db.dao.SqltoolStatementDao;
 import cherry.sqlapp.db.dto.SqltoolMetadata;
 import cherry.sqlapp.db.dto.SqltoolStatement;
-import cherry.sqlapp.db.mapper.MetadataMapper;
 
 @Component
 public class StatementServiceImpl implements StatementService {
@@ -34,9 +33,6 @@ public class StatementServiceImpl implements StatementService {
 
 	@Autowired
 	private SqltoolMetadataDao sqltoolMetadataDao;
-
-	@Autowired
-	private MetadataMapper metadataMapper;
 
 	@Transactional
 	@Override

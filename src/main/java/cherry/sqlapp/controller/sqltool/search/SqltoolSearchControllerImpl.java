@@ -30,7 +30,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
-import cherry.sqlapp.db.mapper.MetadataCondition;
+import cherry.sqlapp.service.sqltool.metadata.MetadataCondition;
 import cherry.sqlapp.service.sqltool.metadata.MetadataService;
 import cherry.sqlapp.service.sqltool.metadata.Result;
 
