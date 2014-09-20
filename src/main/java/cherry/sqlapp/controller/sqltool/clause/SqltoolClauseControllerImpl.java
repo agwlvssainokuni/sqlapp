@@ -16,20 +16,14 @@
 
 package cherry.sqlapp.controller.sqltool.clause;
 
-import static java.text.MessageFormat.format;
-
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.nio.charset.Charset;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -40,6 +34,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import cherry.spring.common.helper.download.DownloadAction;
+import cherry.spring.common.helper.download.DownloadHelper;
 import cherry.spring.common.lib.etl.CsvConsumer;
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.sqlapp.controller.sqltool.LogicErrorUtil;
@@ -65,15 +61,6 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 	@Value("${sqlapp.app.export.contentType}")
 	private String contentType;
 
-	@Value("${sqlapp.app.export.charset}")
-	private Charset charset;
-
-	@Value("${sqlapp.app.export.headerName}")
-	private String headerName;
-
-	@Value("${sqlapp.app.export.headerValue}")
-	private String headerValue;
-
 	@Value("${sqlapp.app.export.filename}")
 	private String filename;
 
@@ -88,6 +75,9 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 
 	@Autowired
 	private ClauseService clauseService;
+
+	@Autowired
+	private DownloadHelper downloadHelper;
 
 	@Autowired
 	private FormUtil formUtil;
@@ -160,33 +150,30 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 	}
 
 	@Override
-	public ModelAndView download(SqltoolClauseForm form, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView download(final SqltoolClauseForm form,
+			BindingResult binding, Authentication authentication,
+			Locale locale, SitePreference sitePreference,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			return mav;
 		}
 
-		QueryBuilder builder = formUtil.getQueryBuilder(form);
-		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
+		final QueryBuilder builder = formUtil.getQueryBuilder(form);
+		final Map<String, ?> paramMap = paramMapUtil.getParamMap(form
+				.getParamMap());
 
 		try {
 
-			response.setContentType(contentType);
-			response.setCharacterEncoding(charset.name());
-			String fname = format(filename, LocalDateTime.now().toDate());
-			response.setHeader(headerName, format(headerValue, fname));
-
-			try (OutputStream out = response.getOutputStream();
-					Writer writer = new OutputStreamWriter(out, charset)) {
-				execQueryService.query(form.getDatabaseName(), builder.build(),
-						paramMap, new CsvConsumer(writer, true));
-			} catch (IOException ex) {
-				throw new IllegalStateException(ex);
-			}
+			DownloadAction action = new DownloadAction() {
+				@Override
+				public void doDownload(Writer writer) throws IOException {
+					execQueryService.query(form.getDatabaseName(), builder
+							.build(), paramMap, new CsvConsumer(writer, true));
+				}
+			};
+			downloadHelper.download(response, contentType, filename, action);
 
 			return null;
 
