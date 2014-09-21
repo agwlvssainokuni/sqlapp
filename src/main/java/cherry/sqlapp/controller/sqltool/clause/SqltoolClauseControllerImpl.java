@@ -34,6 +34,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import cherry.spring.common.helper.bizdate.BizdateHelper;
 import cherry.spring.common.helper.download.DownloadAction;
 import cherry.spring.common.helper.download.DownloadHelper;
 import cherry.spring.common.lib.etl.CsvConsumer;
@@ -75,6 +76,9 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 
 	@Autowired
 	private ClauseService clauseService;
+
+	@Autowired
+	private BizdateHelper bizdateHelper;
 
 	@Autowired
 	private DownloadHelper downloadHelper;
@@ -168,12 +172,15 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 
 			DownloadAction action = new DownloadAction() {
 				@Override
-				public void doDownload(Writer writer) throws IOException {
-					execQueryService.query(form.getDatabaseName(), builder
-							.build(), paramMap, new CsvConsumer(writer, true));
+				public int doDownload(Writer writer) throws IOException {
+					PageSet ps = execQueryService.query(form.getDatabaseName(),
+							builder.build(), paramMap, new CsvConsumer(writer,
+									true));
+					return ps.getLast().getTo() + 1;
 				}
 			};
-			downloadHelper.download(response, contentType, filename, action);
+			downloadHelper.download(response, contentType, filename,
+					bizdateHelper.now(), action);
 
 			return null;
 
