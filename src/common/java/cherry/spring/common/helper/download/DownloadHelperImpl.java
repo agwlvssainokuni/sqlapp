@@ -25,15 +25,19 @@ import java.text.MessageFormat;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-import cherry.spring.common.helper.bizdate.BizdateHelper;
+import cherry.spring.common.log.Log;
+import cherry.spring.common.log.LogFactory;
 
 public class DownloadHelperImpl implements DownloadHelper, InitializingBean {
+
+	private final Log log = LogFactory.getLog(getClass());
 
 	@Value("${common.helper.download.charset}")
 	private Charset charset;
@@ -47,9 +51,6 @@ public class DownloadHelperImpl implements DownloadHelper, InitializingBean {
 	@Value("${common.helper.download.format}")
 	private String format;
 
-	@Autowired
-	private BizdateHelper bizdateHelper;
-
 	private DateTimeFormatter formatter;
 
 	@Autowired
@@ -59,19 +60,40 @@ public class DownloadHelperImpl implements DownloadHelper, InitializingBean {
 
 	@Override
 	public void download(HttpServletResponse response, String contentType,
-			String filename, DownloadAction action) {
+			String filename, LocalDateTime timestamp, DownloadAction action) {
 
-		String ts = formatter.print(bizdateHelper.now());
+		String fname = MessageFormat.format(filename,
+				formatter.print(timestamp));
+
+		if (log.isDebugEnabled()) {
+			log.debug("Setting response headers: contentType={0}", contentType);
+			log.debug("Setting response headers:     charset={0}",
+					charset.name());
+			log.debug("Setting response headers:  headerName={0}", headerName);
+			log.debug("Setting response headers: headerValue={0}", headerValue);
+			log.debug("Setting response headers:    filename={0}", fname);
+		}
 
 		response.setContentType(contentType);
 		response.setCharacterEncoding(charset.name());
-		String fname = MessageFormat.format(filename, ts);
 		response.setHeader(headerName, MessageFormat.format(headerValue, fname));
+
+		if (log.isDebugEnabled()) {
+			log.debug("Download action starting.");
+		}
 
 		try (OutputStream out = response.getOutputStream();
 				Writer writer = new OutputStreamWriter(out, charset)) {
-			action.doDownload(writer);
+
+			int count = action.doDownload(writer);
+
+			if (log.isDebugEnabled()) {
+				log.debug("Download action completed: result={0}", count);
+			}
 		} catch (IOException ex) {
+			if (log.isDebugEnabled()) {
+				log.debug(ex, "Download action failed.");
+			}
 			throw new IllegalStateException(ex);
 		}
 	}

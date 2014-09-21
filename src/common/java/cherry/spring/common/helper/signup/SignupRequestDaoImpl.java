@@ -23,7 +23,10 @@ import java.util.Map;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import cherry.spring.common.helper.sql.SqlLoader;
 
@@ -35,6 +38,8 @@ public class SignupRequestDaoImpl implements SignupRequestDao, InitializingBean 
 	@Autowired
 	private SqlLoader sqlLoader;
 
+	private String sqlCreateSignupRequest;
+
 	private String sqlValidateMailAddr;
 
 	private String sqlValidateToken;
@@ -42,8 +47,23 @@ public class SignupRequestDaoImpl implements SignupRequestDao, InitializingBean 
 	@Override
 	public void afterPropertiesSet() throws IOException {
 		Map<String, String> sqlmap = sqlLoader.load(getClass());
+		this.sqlCreateSignupRequest = sqlmap.get("createSignupRequest");
 		this.sqlValidateMailAddr = sqlmap.get("validateMailAddr");
 		this.sqlValidateToken = sqlmap.get("validateToken");
+	}
+
+	@Override
+	public Integer createSignupRequest(String mailAddr, String token) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("mailAddr", mailAddr);
+		paramMap.put("token", token);
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		int count = namedParameterJdbcOperations.update(sqlCreateSignupRequest,
+				new MapSqlParameterSource(paramMap), keyHolder);
+		if (count != 1) {
+			return null;
+		}
+		return keyHolder.getKey().intValue();
 	}
 
 	@Override

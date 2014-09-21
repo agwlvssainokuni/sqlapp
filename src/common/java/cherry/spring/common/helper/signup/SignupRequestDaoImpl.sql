@@ -1,3 +1,14 @@
+-- NAME: createSignupRequest
+INSERT INTO signup_request (
+	mail_addr,
+	token
+)
+VALUES (
+	:mailAddr,
+	:token
+)
+;
+
 -- NAME: validateMailAddr
 SELECT
 	CASE

@@ -39,7 +39,6 @@ public class UserPasswordDaoImpl implements UserPasswordDao, InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
 		Map<String, String> sqlmap = sqlLoader.load(getClass());
 		sqlUpdatePassword = sqlmap.get("updatePassword");
 		sqlChangePassword = sqlmap.get("changePassword");

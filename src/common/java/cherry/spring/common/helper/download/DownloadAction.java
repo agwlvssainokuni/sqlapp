@@ -21,6 +21,6 @@ import java.io.Writer;
 
 public interface DownloadAction {
 
-	void doDownload(Writer writer) throws IOException;
+	int doDownload(Writer writer) throws IOException;
 
 }

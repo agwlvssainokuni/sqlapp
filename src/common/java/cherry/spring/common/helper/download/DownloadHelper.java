@@ -18,9 +18,11 @@ package cherry.spring.common.helper.download;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.joda.time.LocalDateTime;
+
 public interface DownloadHelper {
 
 	void download(HttpServletResponse response, String contentType,
-			String filename, DownloadAction action);
+			String filename, LocalDateTime timestamp, DownloadAction action);
 
 }
