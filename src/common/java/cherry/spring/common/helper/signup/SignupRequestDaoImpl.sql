@@ -1,11 +1,13 @@
 -- NAME: createSignupRequest
 INSERT INTO signup_request (
 	mail_addr,
-	token
+	token,
+	applied_at
 )
 VALUES (
 	:mailAddr,
-	:token
+	:token,
+	:appliedAt
 )
 ;
 

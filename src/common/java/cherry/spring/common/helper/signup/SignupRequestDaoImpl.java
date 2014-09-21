@@ -53,10 +53,12 @@ public class SignupRequestDaoImpl implements SignupRequestDao, InitializingBean 
 	}
 
 	@Override
-	public Integer createSignupRequest(String mailAddr, String token) {
+	public Integer createSignupRequest(String mailAddr, String token,
+			LocalDateTime appliedAt) {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("mailAddr", mailAddr);
 		paramMap.put("token", token);
+		paramMap.put("appliedAt", appliedAt.toDate());
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		int count = namedParameterJdbcOperations.update(sqlCreateSignupRequest,
 				new MapSqlParameterSource(paramMap), keyHolder);
