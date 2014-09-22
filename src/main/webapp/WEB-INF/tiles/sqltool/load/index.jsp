@@ -10,6 +10,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="sqlapp" uri="urn:sqlapp"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
+<s:url var="baseUri" value="/sqltool/load" />
 <script type="text/javascript">
 	$(function() {
 		$(".accordion").accordion({
@@ -25,7 +26,7 @@
 </h1>
 <div class="app-portion accordion">
 	<h1>
-		<s:message code="sqltool/load/index.message.1" />
+		<s:message code="sqltool/load/index.message.2" />
 	</h1>
 	<div>
 		<s:hasBindErrors name="sqltoolLoadForm">
@@ -36,7 +37,7 @@
 				<f:errors path="sqltoolLoadForm.lockVersion" element="div" />
 			</div>
 		</s:hasBindErrors>
-		<f:form servletRelativeAction="/sqltool/load/req" method="POST"
+		<f:form servletRelativeAction="${baseUri}/req" method="POST"
 			modelAttribute="sqltoolLoadForm" enctype="multipart/form-data">
 			<f:hidden path="lockVersion" />
 			<table class="app-collabel">

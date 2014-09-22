@@ -21,7 +21,7 @@
 			collapsible : true,
 			animate : false,
 			heightStyle : "content",
-			active: ${hasResultList ? 'false' : 1}
+			active : ${hasResultList ? 'false' : 1}
 		}).removeClass("ui-widget");
 	});
 </script>

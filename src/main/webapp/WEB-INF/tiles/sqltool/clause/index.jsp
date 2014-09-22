@@ -10,6 +10,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="sqlapp" uri="urn:sqlapp"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
+<s:url var="baseUri" value="/sqltool/clause" />
 <c:set var="hasResultList"
 	value="${resultSet != null && pageSet != null}" />
 <script type="text/javascript">
@@ -27,7 +28,7 @@
 </h1>
 <div class="app-portion accordion">
 	<h1>
-		<s:message code="sqltool/clause/index.message.1" />
+		<s:message code="sqltool/clause/index.message.2" />
 	</h1>
 	<div>
 		<s:hasBindErrors name="sqltoolClauseForm">
@@ -44,7 +45,7 @@
 				<f:errors path="sqltoolClauseForm.lockVersion" element="div" />
 			</div>
 		</s:hasBindErrors>
-		<f:form servletRelativeAction="/sqltool/clause/req" method="POST"
+		<f:form servletRelativeAction="${baseUri}/req" method="POST"
 			modelAttribute="sqltoolClauseForm">
 			<input type="hidden" id="sz" name="sz"
 				value="<c:out value="${param.sz}" />">
@@ -136,10 +137,10 @@
 <c:if test="${hasResultList}">
 	<div class="app-portion">
 		<h1 class="app-subject">
-			<s:message code="sqltool/clause/index.message.2" />
+			<s:message code="sqltool/clause/index.message.3" />
 		</h1>
 		<div class="app-portion">
-			<f:form servletRelativeAction="/sqltool/clause/req" method="POST"
+			<f:form servletRelativeAction="${baseUri}/req" method="POST"
 				modelAttribute="sqltoolClauseForm" id="sqltoolClauseWithPage"
 				class="app-pager-form">
 				<input type="hidden" id="no2" name="no">

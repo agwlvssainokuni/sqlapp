@@ -10,6 +10,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="sqlapp" uri="urn:sqlapp"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
+<c:url var="baseUri" value="/sqltool/statement" />
 <c:set var="hasResultList"
 	value="${resultSet != null && pageSet != null}" />
 <script type="text/javascript">
@@ -27,7 +28,7 @@
 </h1>
 <div class="app-portion accordion">
 	<h1>
-		<s:message code="sqltool/statement/index.message.1" />
+		<s:message code="sqltool/statement/index.message.2" />
 	</h1>
 	<div>
 		<s:hasBindErrors name="sqltoolStatementForm">
@@ -39,7 +40,7 @@
 				<f:errors path="sqltoolStatementForm.lockVersion" element="div" />
 			</div>
 		</s:hasBindErrors>
-		<f:form servletRelativeAction="/sqltool/statement/req" method="POST"
+		<f:form servletRelativeAction="${baseUri}/req" method="POST"
 			modelAttribute="sqltoolStatementForm">
 			<f:hidden path="lockVersion" />
 			<table class="app-collabel">
@@ -93,7 +94,7 @@
 <c:if test="${hasResultList}">
 	<div class="app-portion">
 		<h1 class="app-subject">
-			<s:message code="sqltool/statement/index.message.2" />
+			<s:message code="sqltool/statement/index.message.3" />
 		</h1>
 		<div class="app-portion">
 			<app:resultSet id="resultSetList" resultSet="${resultSet}"

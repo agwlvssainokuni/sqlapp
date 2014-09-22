@@ -16,10 +16,10 @@
 		<li><a href="<c:url value="/sqltool/search" />"><s:message
 					code="secure/home/index.menu.search" /></a></li>
 		<li><a href="<c:url value="/sqltool/clause" />"><s:message
-					code="secure/home/index.menu.execSelect" /></a></li>
+					code="secure/home/index.menu.execClause" /></a></li>
 		<li><a href="<c:url value="/sqltool/statement" />"><s:message
-					code="secure/home/index.menu.execAny" /></a></li>
+					code="secure/home/index.menu.execStatement" /></a></li>
 		<li><a href="<c:url value="/sqltool/load" />"><s:message
-					code="secure/home/index.menu.execCsv" /></a></li>
+					code="secure/home/index.menu.execLoad" /></a></li>
 	</ul>
 </div>
