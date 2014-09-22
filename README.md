@@ -29,8 +29,17 @@ SqlApp - SQL実行機能
 		*	SQL保存先 (sqlapp):	java:/datasources/SqlApp
 	*	メッセージキュー
 		*	LOAD非同期実行:	java:/jms/queue/SqlApp
+*	また、WildFly 8.1.0.Final では下記の設定をしておく必要があります。
+	*	standalone-full.xml の logging サブシステム (`"urn:jboss:domain:logging:2.0"`) 直下に下記の設定を追加。
 
-##	ビルド
+		```xml:standalone-full.xml
+		<subsystem xmlns="urn:jboss:domain:logging:2.0">
+			<add-logging-api-dependencies value="false"/>
+			<use-deployment-logging-config value="false"/>
+			...
+		```
+
+##	ビルド＆デプロイ
 
 *	Gradle を使ってビルドします。
 	*	コマンド:	gradle deliveryZip
@@ -45,6 +54,10 @@ SqlApp - SQL実行機能
 	*	conf/ 配下のファイルをそれぞれ *.properties (「.template」なし) にコピーする。
 	*	app/sqlapp.war を Java EE コンテナのデプロイディレクトリに配置する。
 	*	Java EE コンテナを起動する。
+		*	/opt/sqlapp/log/ 配下にログが出力される。
+			*	app.log:	アプリケーションログ。
+			*	oper.log:	操作ログ。
+			*	debug.log:	デバッグログ。
 *	下記の要領でアクセスしてください。
 	*	URL:	http://{ホスト名}:{ポート番号}/sqlapp/
 	*	ユーザID/パスワード:	administrator/password
