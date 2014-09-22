@@ -60,12 +60,10 @@ public interface SqltoolClauseIdController {
 			SitePreference sitePreference, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(
-			@PathVariable(PATH_VAR) int id,
-			@Validated SqltoolClauseForm form,
-			BindingResult binding,
-			@RequestParam(value = PARAM_NO, required = false, defaultValue = "0") int pageNo,
-			@RequestParam(value = PARAM_SZ, required = false, defaultValue = "0") int pageSz,
+	ModelAndView request(@PathVariable(PATH_VAR) int id,
+			@Validated SqltoolClauseForm form, BindingResult binding,
+			@RequestParam(value = PARAM_NO, defaultValue = "0") int pageNo,
+			@RequestParam(value = PARAM_SZ, defaultValue = "0") int pageSz,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 

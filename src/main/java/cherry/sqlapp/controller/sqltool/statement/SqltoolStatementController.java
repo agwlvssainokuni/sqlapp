@@ -44,7 +44,7 @@ public interface SqltoolStatementController {
 
 	@RequestMapping()
 	ModelAndView index(
-			@RequestParam(value = PARAM_REF, required = false, defaultValue = "") Integer ref,
+			@RequestParam(value = PARAM_REF, required = false) Integer ref,
 			Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request);
 
