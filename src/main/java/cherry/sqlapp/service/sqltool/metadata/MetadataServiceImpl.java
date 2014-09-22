@@ -17,7 +17,6 @@
 package cherry.sqlapp.service.sqltool.metadata;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +31,7 @@ import cherry.spring.common.custom.jdbc.RowMapperCreator;
 import cherry.spring.common.helper.querydsl.SQLQueryConfigurer;
 import cherry.spring.common.helper.querydsl.SQLQueryHelper;
 import cherry.spring.common.helper.querydsl.SQLQueryResult;
+import cherry.spring.common.lib.util.LocalDateTimeUtil;
 import cherry.sqlapp.code.SqlTypeCode;
 import cherry.sqlapp.db.dao.SqltoolMetadataDao;
 import cherry.sqlapp.db.dto.SqltoolMetadata;
@@ -97,17 +97,18 @@ public class MetadataServiceImpl implements MetadataService {
 			@Override
 			public SQLQuery configure(SQLQuery query) {
 
-				List<Predicate> list = new LinkedList<>();
+				BooleanBuilder where = new BooleanBuilder();
 				if (cond.getName() != null) {
-					list.add(m.name.startsWith(cond.getName()));
+					where.and(m.name.startsWith(cond.getName()));
 				}
 
 				if (cond.getRegisteredFrom() != null) {
-					list.add(m.registeredAt.goe(cond.getRegisteredFrom()));
+					where.and(m.registeredAt.goe(LocalDateTimeUtil
+							.rangeFrom(cond.getRegisteredFrom())));
 				}
 				if (cond.getRegisteredTo() != null) {
-					list.add(m.registeredAt.lt(cond.getRegisteredTo()
-							.plusSeconds(1)));
+					where.and(m.registeredAt.lt(LocalDateTimeUtil.rangeTo(cond
+							.getRegisteredTo())));
 				}
 
 				Predicate pub = m.publishedFlg.ne(FlagCode.FALSE.code());
@@ -124,7 +125,7 @@ public class MetadataServiceImpl implements MetadataService {
 					bb.or(pub);
 					bb.or(prv);
 				}
-				list.add(bb);
+				where.and(bb);
 
 				List<String> code = new ArrayList<>();
 				if (cond.isClause()) {
@@ -137,13 +138,12 @@ public class MetadataServiceImpl implements MetadataService {
 					code.add(SqlTypeCode.LOAD.code());
 				}
 				if (!code.isEmpty()) {
-					list.add(m.sqlType.in(code));
+					where.and(m.sqlType.in(code));
 				}
 
-				list.add(m.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+				where.and(m.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 
-				return query.from(m).where(
-						list.toArray(new Predicate[list.size()]));
+				return query.from(m).where(where);
 			}
 
 			@Override
