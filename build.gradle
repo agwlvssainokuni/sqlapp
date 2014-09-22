@@ -191,7 +191,7 @@ task deliveryTar(type: Tar) { compression = Compression.GZIP }
 			from(sourceSets.main.output.resourcesDir) {
 				include "*.properties"
 				["sqlapp", "common", "log"].each { exclude "${it}.properties" }
-				rename { "#{it}.template" }
+				rename { "${it}.template" }
 			}
 		}
 		into("log") {
