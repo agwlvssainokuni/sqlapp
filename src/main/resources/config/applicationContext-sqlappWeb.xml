@@ -20,11 +20,11 @@
 		<security:intercept-url pattern="/sqltool/**"
 			access="IS_AUTHENTICATED_FULLY" />
 		<security:form-login login-page="/login"
-			login-processing-url="/login/req" authentication-failure-url="/login?err=login"
+			login-processing-url="/login/req" authentication-failure-url="/login?loginFailed"
 			default-target-url="/secure/" always-use-default-target="false"
 			username-parameter="loginId" password-parameter="password" />
 		<security:logout logout-url="/logout"
-			logout-success-url="/login?ok=logout" invalidate-session="true" />
+			logout-success-url="/login?loggedOut" invalidate-session="true" />
 		<security:csrf />
 	</security:http>
 

@@ -23,6 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class LoginControllerImpl implements LoginController {
@@ -36,8 +38,28 @@ public class LoginControllerImpl implements LoginController {
 
 	@Override
 	public ModelAndView index(Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+			HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		mav.addAllObjects(redirectAttributes.getFlashAttributes());
+		return mav;
+	}
+
+	@Override
+	public ModelAndView loginFailed(Locale locale,
+			SitePreference sitePreference, HttpServletRequest request,
+			RedirectAttributes redirectAttributes) {
+		redirectAttributes.addFlashAttribute("loginFailed", true);
+		ModelAndView mav = new ModelAndView();
+		mav.setView(new RedirectView(URI_PATH, true));
+		return mav;
+	}
+
+	@Override
+	public ModelAndView loggedOut(Locale locale, SitePreference sitePreference,
+			HttpServletRequest request, RedirectAttributes redirectAttributes) {
+		redirectAttributes.addFlashAttribute("loggedOut", true);
+		ModelAndView mav = new ModelAndView();
+		mav.setView(new RedirectView(URI_PATH, true));
 		return mav;
 	}
 

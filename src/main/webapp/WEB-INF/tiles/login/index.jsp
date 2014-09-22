@@ -11,9 +11,14 @@
 <h1 class="app-subject">
 	<s:message code="login/index.message.0" />
 </h1>
-<c:if test="${param.err == 'login'}">
+<c:if test="${loginFailed}">
 	<div class="app-portion ui-state-error">
 		<s:message code="login/index.message.1" />
+	</div>
+</c:if>
+<c:if test="${loggedOut}">
+	<div class="app-portion ui-state-highlight">
+		<s:message code="login/index.message.2" />
 	</div>
 </c:if>
 <div>

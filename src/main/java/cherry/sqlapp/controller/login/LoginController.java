@@ -24,6 +24,7 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequestMapping(LoginController.URI_PATH)
 public interface LoginController {
@@ -35,6 +36,14 @@ public interface LoginController {
 
 	@RequestMapping()
 	ModelAndView index(Locale locale, SitePreference sitePreference,
-			HttpServletRequest request);
+			HttpServletRequest request, RedirectAttributes redirectAttributes);
+
+	@RequestMapping(params = "loginFailed")
+	ModelAndView loginFailed(Locale locale, SitePreference sitePreference,
+			HttpServletRequest request, RedirectAttributes redirectAttributes);
+
+	@RequestMapping(params = "loggedOut")
+	ModelAndView loggedOut(Locale locale, SitePreference sitePreference,
+			HttpServletRequest request, RedirectAttributes redirectAttributes);
 
 }
