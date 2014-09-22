@@ -4,23 +4,33 @@
 	"children": [
 		{
 			"name": "sqltool/search/index",
-			"uri": "/sqltool/search"
+			"uri": "/sqltool/search/req",
+			"children": [
+				{
+					"name": "sqltool/clause/indexId",
+					"uri": "/sqltool/clause/{id}"
+				},
+				{
+					"name": "sqltool/statement/indexId",
+					"uri": "/sqltool/statement/{id}"
+				},
+				{
+					"name": "sqltool/load/indexId",
+					"uri": "/sqltool/load/{id}"
+				},
+				{
+					"name": "sqltool/load/finishId",
+					"uri": "/sqltool/load/{id}"
+				}
+			]
 		},
 		{
 			"name": "sqltool/clause/index",
 			"uri": "/sqltool/clause"
 		},
 		{
-			"name": "sqltool/clause/indexId",
-			"uri": "/sqltool/clause/{id}"
-		},
-		{
 			"name": "sqltool/statement/index",
 			"uri": "/sqltool/statement"
-		},
-		{
-			"name": "sqltool/statement/indexId",
-			"uri": "/sqltool/statement/{id}"
 		},
 		{
 			"name": "sqltool/load/index",
@@ -29,14 +39,6 @@
 		{
 			"name": "sqltool/load/finish",
 			"uri": "/sqltool/load"
-		},
-		{
-			"name": "sqltool/load/indexId",
-			"uri": "/sqltool/load/{id}"
-		},
-		{
-			"name": "sqltool/load/finishId",
-			"uri": "/sqltool/load/{id}"
 		}
 	]
 }
