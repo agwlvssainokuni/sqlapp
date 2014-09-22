@@ -16,15 +16,18 @@
 
 package cherry.sqlapp.controller.login;
 
+import java.io.Serializable;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import cherry.sqlapp.controller.BaseForm;
+import lombok.ToString;
 
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class LoginForm extends BaseForm {
+@ToString
+public class LoginForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

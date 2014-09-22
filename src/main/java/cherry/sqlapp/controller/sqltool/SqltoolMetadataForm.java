@@ -16,20 +16,23 @@
 
 package cherry.sqlapp.controller.sqltool;
 
+import java.io.Serializable;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import cherry.sqlapp.controller.BaseForm;
 import cherry.sqlapp.validation.DescriptionSize;
 import cherry.sqlapp.validation.NameSize;
 
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class SqltoolMetadataForm extends BaseForm {
+@ToString
+public class SqltoolMetadataForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

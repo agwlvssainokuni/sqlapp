@@ -16,21 +16,24 @@
 
 package cherry.sqlapp.controller.sqltool.search;
 
+import java.io.Serializable;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import org.joda.time.LocalDateTime;
 
 import cherry.spring.common.custom.format.CustomDateTimeFormat;
 import cherry.spring.common.custom.format.CustomDateTimeFormat.Range;
-import cherry.sqlapp.controller.BaseForm;
 import cherry.sqlapp.validation.NameSize;
 
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class SqltoolSearchForm extends BaseForm {
+@ToString
+public class SqltoolSearchForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
