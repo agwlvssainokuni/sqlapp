@@ -27,8 +27,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+@SessionAttributes(types = SqltoolSearchForm.class)
 @RequestMapping(SqltoolSearchController.URI_PATH)
 public interface SqltoolSearchController {
 

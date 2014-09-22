@@ -21,7 +21,6 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.site.SitePreference;
@@ -30,6 +29,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
+import cherry.spring.common.helper.bizdate.BizdateHelper;
+import cherry.spring.common.lib.util.LocalDateTimeUtil;
 import cherry.sqlapp.service.sqltool.metadata.MetadataCondition;
 import cherry.sqlapp.service.sqltool.metadata.MetadataService;
 import cherry.sqlapp.service.sqltool.metadata.Result;
@@ -49,13 +50,18 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 	private MetadataService metadataService;
 
 	@Autowired
+	private BizdateHelper bizdateHelper;
+
+	@Autowired
 	private FormUtil formUtil;
 
 	@Override
 	public SqltoolSearchForm getForm() {
+		LocalDate today = bizdateHelper.today();
 		SqltoolSearchForm form = new SqltoolSearchForm();
-		form.setRegisteredFrom(LocalDate.now().minusDays(defaultFromDays)
-				.toLocalDateTime(LocalTime.MIDNIGHT));
+		form.setRegisteredFrom(LocalDateTimeUtil.rangeFrom(today
+				.minusDays(defaultFromDays)));
+		form.setRegisteredTo(LocalDateTimeUtil.rangeTo(today).minusSeconds(1));
 		return form;
 	}
 
@@ -63,6 +69,7 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 	public ModelAndView index(Authentication authentication, Locale locale,
 			SitePreference sitePreference, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		mav.addObject(getForm());
 		return mav;
 	}
 
