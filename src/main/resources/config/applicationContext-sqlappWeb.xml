@@ -25,8 +25,23 @@
 			username-parameter="loginId" password-parameter="password" />
 		<security:logout logout-url="/logout"
 			logout-success-url="/login?loggedOut" invalidate-session="true" />
-		<security:csrf />
+		<security:csrf request-matcher-ref="csrfRequestMatcher" />
 	</security:http>
+
+	<bean id="csrfRequestMatcher" class="cherry.spring.common.helper.security.CsrfRequestMatcher">
+		<property name="excludes">
+			<list>
+				<bean
+					class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
+					<constructor-arg value="/login/**" />
+				</bean>
+				<bean
+					class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
+					<constructor-arg value="/logout/**" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	<mvc:interceptors>
 		<mvc:interceptor>
