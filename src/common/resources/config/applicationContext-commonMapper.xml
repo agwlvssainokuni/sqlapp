@@ -3,7 +3,7 @@
 	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
 
 	<mybatis-spring:scan
 		base-package="cherry.sqlapp.db.mapper, cherry.sqlapp.db.gen.mapper" />
