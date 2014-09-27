@@ -23,8 +23,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponents;
 
 @Controller
 public class LoginControllerImpl implements LoginController {
@@ -32,35 +34,39 @@ public class LoginControllerImpl implements LoginController {
 	public static final String VIEW_PATH = "login/index";
 
 	@Override
-	public LoginForm getForm() {
-		return new LoginForm();
-	}
-
-	@Override
-	public ModelAndView index(Locale locale, SitePreference sitePreference,
-			HttpServletRequest request, RedirectAttributes redirectAttributes) {
+	public ModelAndView index(Locale locale, SitePreference sitePref,
+			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		mav.addAllObjects(redirectAttributes.getFlashAttributes());
 		return mav;
 	}
 
 	@Override
-	public ModelAndView loginFailed(Locale locale,
-			SitePreference sitePreference, HttpServletRequest request,
-			RedirectAttributes redirectAttributes) {
-		redirectAttributes.addFlashAttribute("loginFailed", true);
+	public ModelAndView loginFailed(Locale locale, SitePreference sitePref,
+			HttpServletRequest request, RedirectAttributes redirAttr) {
+
+		redirAttr.addFlashAttribute("loginFailed", true);
+
+		UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
+				LoginController.class, "index", locale, sitePref, request)
+				.build();
+
 		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(URI_PATH, true));
+		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;
 	}
 
 	@Override
-	public ModelAndView loggedOut(Locale locale, SitePreference sitePreference,
-			HttpServletRequest request, RedirectAttributes redirectAttributes) {
-		redirectAttributes.addFlashAttribute("loggedOut", true);
+	public ModelAndView loggedOut(Locale locale, SitePreference sitePref,
+			HttpServletRequest request, RedirectAttributes redirAttributes) {
+
+		redirAttributes.addFlashAttribute("loggedOut", true);
+
+		UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
+				LoginController.class, "index", locale, sitePref, request)
+				.build();
+
 		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(URI_PATH, true));
+		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;
 	}
-
 }

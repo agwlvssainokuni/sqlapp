@@ -21,7 +21,6 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.mobile.device.site.SitePreference;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -31,19 +30,16 @@ public interface LoginController {
 
 	public static final String URI_PATH = "/login";
 
-	@ModelAttribute("loginForm")
-	LoginForm getForm();
-
 	@RequestMapping()
-	ModelAndView index(Locale locale, SitePreference sitePreference,
-			HttpServletRequest request, RedirectAttributes redirectAttributes);
+	ModelAndView index(Locale locale, SitePreference sitePref,
+			HttpServletRequest request);
 
 	@RequestMapping(params = "loginFailed")
-	ModelAndView loginFailed(Locale locale, SitePreference sitePreference,
-			HttpServletRequest request, RedirectAttributes redirectAttributes);
+	ModelAndView loginFailed(Locale locale, SitePreference sitePref,
+			HttpServletRequest request, RedirectAttributes redirAttr);
 
 	@RequestMapping(params = "loggedOut")
-	ModelAndView loggedOut(Locale locale, SitePreference sitePreference,
-			HttpServletRequest request, RedirectAttributes redirectAttributes);
+	ModelAndView loggedOut(Locale locale, SitePreference sitePref,
+			HttpServletRequest request, RedirectAttributes redirAttr);
 
 }
