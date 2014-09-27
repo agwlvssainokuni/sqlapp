@@ -18,7 +18,7 @@
 
 	<aop:config>
 		<aop:advisor advice-ref="traceInterceptor"
-			pointcut="execution(* cherry..*.*(..))
+			pointcut="execution(* cherry.spring..*.*(..))
 				and
 				!execution(* cherry.spring.common.log..*.*(..))
 				and
@@ -34,7 +34,6 @@
 		<property name="packagePrefix">
 			<list>
 				<value>cherry.spring</value>
-				<value>cherry.sqlapp</value>
 			</list>
 		</property>
 	</bean>
@@ -148,6 +147,7 @@
 	<bean class="cherry.spring.common.helper.bizdate.BizdateHelperImpl" />
 	<bean class="cherry.spring.common.helper.download.DownloadHelperImpl" />
 	<bean class="cherry.spring.common.helper.json.JsonHelperImpl" />
+	<bean class="cherry.spring.common.helper.logicalerror.LogicalErrorHelperImpl" />
 	<bean class="cherry.spring.common.helper.mail.MailMessageDaoImpl" />
 	<bean class="cherry.spring.common.helper.mail.MailMessageHelperImpl" />
 	<bean class="cherry.spring.common.helper.onetimetoken.OneTimeTokenIssuerImpl" />
