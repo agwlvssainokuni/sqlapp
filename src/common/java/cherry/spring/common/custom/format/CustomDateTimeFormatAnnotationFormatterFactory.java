@@ -16,14 +16,17 @@
 
 package cherry.spring.common.custom.format;
 
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
+import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.AnnotationFormatterFactory;
@@ -62,12 +65,9 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 	@Value("${common.format.delimiter.parse}")
 	private String delimiterToParse;
 
-	private Set<Class<?>> fieldTypes = createFieldTypes();
-
-	private Set<Class<?>> createFieldTypes() {
-		return new HashSet<Class<?>>(Arrays.asList(LocalDate.class,
-				LocalTime.class, LocalDateTime.class, DateTime.class));
-	}
+	private Set<Class<?>> fieldTypes = new HashSet<Class<?>>(Arrays.asList(
+			LocalDate.class, LocalTime.class, LocalDateTime.class,
+			DateTime.class));
 
 	@Override
 	public Set<Class<?>> getFieldTypes() {
@@ -101,7 +101,11 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 			Class<?> fieldType) {
 		if (fieldType == LocalDate.class) {
 			DateTimeFormatterBuilder toParse = builder(dateToParse);
-			return new LocalDateParser(toParse.toFormatter());
+			if (annotation.value() == Range.TO) {
+				return new LocalDateToParser(toParse.toFormatter());
+			} else {
+				return new LocalDateParser(toParse.toFormatter());
+			}
 		} else if (fieldType == LocalTime.class) {
 			if (annotation.optional()) {
 				if (annotation.value() == Range.TO) {
@@ -189,6 +193,110 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 
 	private DateTimeFormatterBuilder builder(String pattern) {
 		return new DateTimeFormatterBuilder().appendPattern(pattern);
+	}
+
+	static class LocalDateToParser implements Parser<LocalDate> {
+
+		private final LocalDateParser parser;
+
+		public LocalDateToParser(DateTimeFormatter formatter) {
+			parser = new LocalDateParser(formatter);
+		}
+
+		@Override
+		public LocalDate parse(String text, Locale locale)
+				throws ParseException {
+			return parser.parse(text, locale);
+		}
+	}
+
+	static class LocalTimeToParser implements Parser<LocalTime> {
+
+		private final LocalTimeParser parserHm;
+
+		private final LocalTimeParser parserHms;
+
+		public LocalTimeToParser(DateTimeFormatter formatterHm,
+				DateTimeFormatter formatterHms) {
+			parserHm = new LocalTimeParser(formatterHm);
+			parserHms = new LocalTimeParser(formatterHms);
+		}
+
+		@Override
+		public LocalTime parse(String text, Locale locale)
+				throws ParseException {
+			try {
+				return parserHms.parse(text, locale);
+			} catch (IllegalArgumentException ex) {
+				return parserHm.parse(text, locale).plusMinutes(1)
+						.minusSeconds(1);
+			}
+		}
+	}
+
+	static class LocalDateTimeToParser implements Parser<LocalDateTime> {
+
+		private final LocalDateTimeParser parserYmd;
+
+		private final LocalDateTimeParser parserYmdHm;
+
+		private final LocalDateTimeParser parserYmdHms;
+
+		public LocalDateTimeToParser(DateTimeFormatter formatterYmd,
+				DateTimeFormatter formatterYmdHm,
+				DateTimeFormatter formatterYmdHms) {
+			parserYmd = new LocalDateTimeParser(formatterYmd);
+			parserYmdHm = new LocalDateTimeParser(formatterYmdHm);
+			parserYmdHms = new LocalDateTimeParser(formatterYmdHms);
+		}
+
+		@Override
+		public LocalDateTime parse(String text, Locale locale)
+				throws ParseException {
+			try {
+				return parserYmdHms.parse(text, locale);
+			} catch (IllegalArgumentException ex) {
+				try {
+					return parserYmdHm.parse(text, locale).plusMinutes(1)
+							.minusSeconds(1);
+				} catch (IllegalArgumentException ex2) {
+					return parserYmd.parse(text, locale).plusDays(1)
+							.minusSeconds(1);
+				}
+			}
+		}
+	}
+
+	static class DateTimeToParser implements Parser<DateTime> {
+
+		private final DateTimeParser parserYmd;
+
+		private final DateTimeParser parserYmdHm;
+
+		private final DateTimeParser parserYmdHms;
+
+		public DateTimeToParser(DateTimeFormatter formatterYmd,
+				DateTimeFormatter formatterYmdHm,
+				DateTimeFormatter formatterYmdHms) {
+			parserYmd = new DateTimeParser(formatterYmd);
+			parserYmdHm = new DateTimeParser(formatterYmdHm);
+			parserYmdHms = new DateTimeParser(formatterYmdHms);
+		}
+
+		@Override
+		public DateTime parse(String text, Locale locale) throws ParseException {
+			try {
+				return parserYmdHms.parse(text, locale);
+			} catch (IllegalArgumentException ex) {
+				try {
+					return parserYmdHm.parse(text, locale).plusMinutes(1)
+							.minusSeconds(1);
+				} catch (IllegalArgumentException ex2) {
+					return parserYmd.parse(text, locale).plusDays(1)
+							.minusSeconds(1);
+				}
+			}
+		}
 	}
 
 }

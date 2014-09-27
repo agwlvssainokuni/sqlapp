@@ -17,14 +17,32 @@
 package cherry.spring.common.custom.converter;
 
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.format.FormatterRegistrar;
+import org.springframework.format.FormatterRegistry;
 
 import cherry.spring.common.custom.DeletedFlag;
+import cherry.spring.common.custom.FlagCode;
 
-public class DeletedFlagConverter implements Converter<Integer, DeletedFlag> {
+public class CodeSqlConverterRegistrar implements FormatterRegistrar {
 
 	@Override
-	public DeletedFlag convert(Integer source) {
-		return new DeletedFlag(source);
+	public void registerFormatters(FormatterRegistry registry) {
+		registry.addConverter(new DeletedFlagConverter());
+		registry.addConverter(new FlagCodeConverter());
+	}
+
+	static class DeletedFlagConverter implements
+			Converter<Integer, DeletedFlag> {
+		@Override
+		public DeletedFlag convert(Integer source) {
+			return new DeletedFlag(source);
+		}
+	}
+
+	static class FlagCodeConverter extends EnumCodeConverter<Integer, FlagCode> {
+		public FlagCodeConverter() {
+			super(FlagCode.class, FlagCode.TRUE);
+		}
 	}
 
 }
