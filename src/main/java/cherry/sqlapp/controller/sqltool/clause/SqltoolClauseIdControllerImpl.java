@@ -32,7 +32,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponents;
 
 import cherry.spring.common.custom.FlagCode;
 import cherry.spring.common.helper.bizdate.BizdateHelper;
@@ -110,12 +112,10 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 	}
 
 	@Override
-	public ModelAndView index(int id, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+	public ModelAndView index(int id, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 
-		SqltoolMetadata md = metadataService.findById(id,
-				authentication.getName());
+		SqltoolMetadata md = metadataService.findById(id, auth.getName());
 		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		SqltoolClause record = clauseService.findById(id);
@@ -130,12 +130,10 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 
 	@Override
 	public ModelAndView request(int id, SqltoolClauseForm form,
-			BindingResult binding, int pageNo, int pageSz,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+			BindingResult binding, int pageNo, int pageSz, Authentication auth,
+			Locale locale, SitePreference sitePref, HttpServletRequest request) {
 
-		SqltoolMetadata md = metadataService.findById(id,
-				authentication.getName());
+		SqltoolMetadata md = metadataService.findById(id, auth.getName());
 		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		if (binding.hasErrors()) {
@@ -173,12 +171,11 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 
 	@Override
 	public ModelAndView download(int id, final SqltoolClauseForm form,
-			BindingResult binding, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request, HttpServletResponse response) {
+			BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request,
+			HttpServletResponse response) {
 
-		SqltoolMetadata md = metadataService.findById(id,
-				authentication.getName());
+		SqltoolMetadata md = metadataService.findById(id, auth.getName());
 		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		if (binding.hasErrors()) {
@@ -219,12 +216,10 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 
 	@Override
 	public ModelAndView update(int id, SqltoolClauseForm form,
-			BindingResult binding, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+			BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 
-		SqltoolMetadata md = metadataService.findById(id,
-				authentication.getName());
+		SqltoolMetadata md = metadataService.findById(id, auth.getName());
 		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		if (binding.hasErrors()) {
@@ -247,9 +242,11 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 		record.setLockVersion(form.getLockVersion());
 
 		if (clauseService.update(record)) {
+			UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
+					SqltoolClauseIdController.class, "index", id, auth, locale,
+					sitePref, request).build();
 			ModelAndView mav = new ModelAndView();
-			mav.setView(new RedirectView(URI_PATH, true));
-			mav.addObject(PATH_VAR, id);
+			mav.setView(new RedirectView(uc.toUriString(), true));
 			return mav;
 		} else {
 			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
@@ -263,9 +260,8 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 
 	@Override
 	public ModelAndView metadata(int id, SqltoolMetadataForm mdForm,
-			BindingResult binding, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+			BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 
 		SqltoolClause record = clauseService.findById(id);
 		SqltoolClauseForm form = formUtil.getForm(record);
@@ -285,9 +281,11 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 		md.setLockVersion(mdForm.getLockVersion());
 
 		if (metadataService.update(md)) {
+			UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
+					SqltoolClauseIdController.class, "index", id, auth, locale,
+					sitePref, request).build();
 			ModelAndView mav = new ModelAndView();
-			mav.setView(new RedirectView(URI_PATH, true));
-			mav.addObject(PATH_VAR, id);
+			mav.setView(new RedirectView(uc.toUriString(), true));
 			return mav;
 		} else {
 			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);

@@ -50,33 +50,31 @@ public interface SqltoolStatementIdController {
 	SqltoolStatementForm getForm();
 
 	@RequestMapping()
-	ModelAndView index(@PathVariable(PATH_VAR) int id,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+	ModelAndView index(@PathVariable(PATH_VAR) int id, Authentication auth,
+			Locale locale, SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
 	ModelAndView request(@PathVariable(PATH_VAR) int id,
 			@Validated SqltoolStatementForm form, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request);
 
-	@RequestMapping(value = URI_PATH_REQ, params = { "proc=download" })
+	@RequestMapping(value = URI_PATH_REQ, params = "download")
 	ModelAndView download(@PathVariable(PATH_VAR) int id,
 			@Validated SqltoolStatementForm form, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request,
-			HttpServletResponse response);
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request, HttpServletResponse response);
 
-	@RequestMapping(value = URI_PATH_REQ, params = { "proc=update" })
+	@RequestMapping(value = URI_PATH_REQ, params = "update")
 	ModelAndView update(@PathVariable(PATH_VAR) int id,
 			@Validated SqltoolStatementForm form, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_METADATA)
 	ModelAndView metadata(@PathVariable(PATH_VAR) int id,
 			@Validated SqltoolMetadataForm mdForm, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request);
 
 }

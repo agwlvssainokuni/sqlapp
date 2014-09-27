@@ -53,8 +53,9 @@
 			<table class="app-collabel">
 				<tbody>
 					<tr>
-						<th><label for="databaseName"><s:message
-									code="sqltoolClauseForm.databaseName" /></label></th>
+						<th><f:label path="databaseName">
+								<s:message code="sqltoolClauseForm.databaseName" />
+							</f:label></th>
 						<td><f:select path="databaseName"
 								cssClass="app-width50 ui-widget"
 								cssErrorClass="app-width50 ui-widget ui-state-error">
@@ -63,50 +64,57 @@
 							</f:select></td>
 					</tr>
 					<tr>
-						<th><label for="select"><s:message
-									code="sqltoolClauseForm.select" /></label></th>
+						<th><f:label path="select">
+								<s:message code="sqltoolClauseForm.select" />
+							</f:label></th>
 						<td><f:textarea path="select"
 								cssClass="app-width50 app-height5"
 								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<th><label for="from"><s:message
-									code="sqltoolClauseForm.from" /></label></th>
+						<th><f:label path="from">
+								<s:message code="sqltoolClauseForm.from" />
+							</f:label></th>
 						<td><f:textarea path="from"
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<th><label for="where"><s:message
-									code="sqltoolClauseForm.where" /></label></th>
+						<th><f:label path="where">
+								<s:message code="sqltoolClauseForm.where" />
+							</f:label></th>
 						<td><f:textarea path="where"
 								cssClass="app-width50 app-height5"
 								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<th><label for="groupBy"><s:message
-									code="sqltoolClauseForm.groupBy" /></label></th>
+						<th><f:label path="groupBy">
+								<s:message code="sqltoolClauseForm.groupBy" />
+							</f:label></th>
 						<td><f:textarea path="groupBy"
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<th><label for="having"><s:message
-									code="sqltoolClauseForm.having" /></label></th>
+						<th><f:label path="having">
+								<s:message code="sqltoolClauseForm.having" />
+							</f:label></th>
 						<td><f:textarea path="having"
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<th><label for="orderBy"><s:message
-									code="sqltoolClauseForm.orderBy" /></label></th>
+						<th><f:label path="orderBy">
+								<s:message code="sqltoolClauseForm.orderBy" />
+							</f:label></th>
 						<td><f:textarea path="orderBy"
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<th><label for="paramMap"><s:message
-									code="sqltoolClauseForm.paramMap" /></label></th>
+						<th><f:label path="paramMap">
+								<s:message code="sqltoolClauseForm.paramMap" />
+							</f:label></th>
 						<td><f:textarea path="paramMap"
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
@@ -115,19 +123,14 @@
 				<tfoot class="app-transparent">
 					<tr>
 						<td></td>
-						<td>
-							<button type="submit" name="proc" value="exec" class="app-button">
+						<td><f:button type="submit" class="app-button"
+								class="app-button">
 								<s:message code="sqltool/clause/index.execButton" />
-							</button>
-							<button type="submit" name="proc" value="download"
-								class="app-button">
+							</f:button> <f:button type="submit" name="download" class="app-button">
 								<s:message code="sqltool/clause/index.downloadButton" />
-							</button>
-							<button type="submit" name="proc" value="create"
-								class="app-button">
+							</f:button> <f:button type="submit" name="create" class="app-button">
 								<s:message code="sqltool/clause/index.createButton" />
-							</button>
-						</td>
+							</f:button></td>
 					</tr>
 				</tfoot>
 			</table>

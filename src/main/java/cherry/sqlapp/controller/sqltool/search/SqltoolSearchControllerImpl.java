@@ -66,8 +66,8 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 	}
 
 	@Override
-	public ModelAndView index(Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+	public ModelAndView index(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(getForm());
 		return mav;
@@ -75,9 +75,8 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 
 	@Override
 	public ModelAndView request(SqltoolSearchForm form, BindingResult binding,
-			int pageNo, int pageSz, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+			int pageNo, int pageSz, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
@@ -85,7 +84,7 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 		}
 
 		MetadataCondition cond = formUtil.createSqlCondition(form,
-				authentication.getName());
+				auth.getName());
 		Result result = metadataService.search(cond, pageNo,
 				(pageSz <= 0 ? defaultPageSize : pageSz));
 

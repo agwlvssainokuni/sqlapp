@@ -28,8 +28,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponents;
 
 import cherry.spring.common.custom.FlagCode;
 import cherry.sqlapp.controller.sqltool.LogicErrorUtil;
@@ -85,12 +87,10 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 	}
 
 	@Override
-	public ModelAndView index(int id, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+	public ModelAndView index(int id, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 
-		SqltoolMetadata md = metadataService.findById(id,
-				authentication.getName());
+		SqltoolMetadata md = metadataService.findById(id, auth.getName());
 		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		SqltoolLoad record = loadService.findById(id);
@@ -105,12 +105,11 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 
 	@Override
 	public ModelAndView request(int id, SqltoolLoadForm form,
-			BindingResult binding, RedirectAttributes redirectAttributes,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+			BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request,
+			RedirectAttributes redirAttr) {
 
-		SqltoolMetadata md = metadataService.findById(id,
-				authentication.getName());
+		SqltoolMetadata md = metadataService.findById(id, auth.getName());
 		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		if (binding.hasErrors()) {
@@ -122,22 +121,25 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 
 		Map<String, String> asyncParam = execLoadService.launch(
 				form.getDatabaseName(), form.getSql(), form.getFile(),
-				authentication.getName());
-		redirectAttributes.addFlashAttribute(ASYNC_PARAM, asyncParam);
+				auth.getName());
+
+		redirAttr.addFlashAttribute(ASYNC_PARAM, asyncParam);
+
+		UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
+				SqltoolLoadIdController.class, "finish", id, auth, locale,
+				sitePref, request).build();
 
 		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(URI_PATH_FIN, true));
+		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;
 	}
 
 	@Override
 	public ModelAndView finish(@PathVariable(PATH_VAR) int id,
-			RedirectAttributes redirectAttributes,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
 		mav.addObject(PATH_VAR, id);
-		mav.addAllObjects(redirectAttributes.getFlashAttributes());
 		return mav;
 	}
 

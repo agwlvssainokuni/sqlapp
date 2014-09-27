@@ -27,8 +27,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponents;
 
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.db.dto.SqltoolLoad;
@@ -73,13 +75,11 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 	}
 
 	@Override
-	public ModelAndView index(Integer ref, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+	public ModelAndView index(Integer ref, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		if (ref != null) {
-			SqltoolMetadata md = metadataService.findById(ref,
-					authentication.getName());
+			SqltoolMetadata md = metadataService.findById(ref, auth.getName());
 			if (md != null) {
 				SqltoolLoad record = loadService.findById(ref);
 				if (record != null) {
@@ -92,9 +92,8 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 
 	@Override
 	public ModelAndView request(SqltoolLoadForm form, BindingResult binding,
-			RedirectAttributes redirectAttributes,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request, RedirectAttributes redirAttr) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
@@ -103,27 +102,30 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 
 		Map<String, String> asyncParam = execLoadService.launch(
 				form.getDatabaseName(), form.getSql(), form.getFile(),
-				authentication.getName());
-		redirectAttributes.addFlashAttribute(ASYNC_PARAM, asyncParam);
+				auth.getName());
+
+		redirAttr.addFlashAttribute(ASYNC_PARAM, asyncParam);
+
+		UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
+				SqltoolLoadController.class, "finish", auth, locale, sitePref,
+				request).build();
 
 		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(URI_PATH_FIN, true));
+		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;
 	}
 
 	@Override
-	public ModelAndView finish(RedirectAttributes redirectAttributes,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+	public ModelAndView finish(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
-		mav.addAllObjects(redirectAttributes.getFlashAttributes());
 		return mav;
 	}
 
 	@Override
 	public ModelAndView create(SqltoolLoadForm form, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
@@ -135,11 +137,14 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 		record.setQuery(form.getSql());
 		record.setLockVersion(form.getLockVersion());
 
-		int id = loadService.create(record, authentication.getName());
+		int id = loadService.create(record, auth.getName());
+
+		UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
+				SqltoolLoadIdController.class, "index", id, auth, locale,
+				sitePref, request).build();
 
 		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(SqltoolLoadIdController.URI_PATH, true));
-		mav.addObject(SqltoolLoadIdController.PATH_VAR, id);
+		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;
 	}
 

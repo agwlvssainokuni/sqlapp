@@ -49,27 +49,26 @@ public interface SqltoolClauseController {
 	@RequestMapping()
 	ModelAndView index(
 			@RequestParam(value = PARAM_REF, required = false) Integer ref,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
 	ModelAndView request(@Validated SqltoolClauseForm form,
 			BindingResult binding,
 			@RequestParam(value = PARAM_NO, defaultValue = "0") int pageNo,
 			@RequestParam(value = PARAM_SZ, defaultValue = "0") int pageSz,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
-
-	@RequestMapping(value = URI_PATH_REQ, params = { "proc=download" })
-	ModelAndView download(@Validated SqltoolClauseForm form,
-			BindingResult binding, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request, HttpServletResponse response);
-
-	@RequestMapping(value = URI_PATH_REQ, params = { "proc=create" })
-	ModelAndView create(@Validated SqltoolClauseForm form,
-			BindingResult binding, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
+			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
+
+	@RequestMapping(value = URI_PATH_REQ, params = "download")
+	ModelAndView download(@Validated SqltoolClauseForm form,
+			BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request,
+			HttpServletResponse response);
+
+	@RequestMapping(value = URI_PATH_REQ, params = "create")
+	ModelAndView create(@Validated SqltoolClauseForm form,
+			BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
 }

@@ -45,25 +45,23 @@ public interface SqltoolStatementController {
 	@RequestMapping()
 	ModelAndView index(
 			@RequestParam(value = PARAM_REF, required = false) Integer ref,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request);
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
 	ModelAndView request(@Validated SqltoolStatementForm form,
-			BindingResult binding, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request);
+			BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
-	@RequestMapping(value = URI_PATH_REQ, params = { "proc=download" })
+	@RequestMapping(value = URI_PATH_REQ, params = "download")
 	ModelAndView download(@Validated SqltoolStatementForm form,
-			BindingResult binding, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request, HttpServletResponse response);
+			BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request,
+			HttpServletResponse response);
 
-	@RequestMapping(value = URI_PATH_REQ, params = { "proc=create" })
+	@RequestMapping(value = URI_PATH_REQ, params = "create")
 	ModelAndView create(@Validated SqltoolStatementForm form,
-			BindingResult binding, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request);
+			BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
 }

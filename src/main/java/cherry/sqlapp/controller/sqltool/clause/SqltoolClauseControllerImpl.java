@@ -32,7 +32,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponents;
 
 import cherry.spring.common.helper.bizdate.BizdateHelper;
 import cherry.spring.common.helper.download.DownloadAction;
@@ -103,13 +105,11 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 	}
 
 	@Override
-	public ModelAndView index(Integer ref, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+	public ModelAndView index(Integer ref, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		if (ref != null) {
-			SqltoolMetadata md = metadataService.findById(ref,
-					authentication.getName());
+			SqltoolMetadata md = metadataService.findById(ref, auth.getName());
 			if (md != null) {
 				SqltoolClause record = clauseService.findById(ref);
 				if (record != null) {
@@ -122,9 +122,8 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 
 	@Override
 	public ModelAndView request(SqltoolClauseForm form, BindingResult binding,
-			int pageNo, int pageSz, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+			int pageNo, int pageSz, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
@@ -155,9 +154,9 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 
 	@Override
 	public ModelAndView download(final SqltoolClauseForm form,
-			BindingResult binding, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request, HttpServletResponse response) {
+			BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
@@ -193,8 +192,8 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 
 	@Override
 	public ModelAndView create(SqltoolClauseForm form, BindingResult binding,
-			Authentication authentication, Locale locale,
-			SitePreference sitePreference, HttpServletRequest request) {
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
@@ -212,11 +211,14 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 		record.setParamMap(form.getParamMap());
 		record.setLockVersion(form.getLockVersion());
 
-		int id = clauseService.create(record, authentication.getName());
+		int id = clauseService.create(record, auth.getName());
+
+		UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
+				SqltoolClauseIdController.class, "index", id, auth, locale,
+				sitePref, request).build();
 
 		ModelAndView mav = new ModelAndView();
-		mav.setView(new RedirectView(SqltoolClauseIdController.URI_PATH, true));
-		mav.addObject(SqltoolClauseIdController.PATH_VAR, id);
+		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;
 	}
 
