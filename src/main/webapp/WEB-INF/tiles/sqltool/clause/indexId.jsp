@@ -47,38 +47,39 @@
 			<table class="app-collabel">
 				<tbody>
 					<tr>
-						<th><label for="name"><s:message
-									code="sqltoolMetadataForm.name" /></label></th>
+						<th><f:label path="name">
+								<s:message code="sqltoolMetadataForm.name" />
+							</f:label></th>
 						<td><f:input path="name" cssClass="app-width50"
 								cssErrorClass="app-width50 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<th><label for="description"><s:message
-									code="sqltoolMetadataForm.description" /></label></th>
+						<th><f:label path="description">
+								<s:message code="sqltoolMetadataForm.description" />
+							</f:label></th>
 						<td><f:textarea path="description"
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<th><label for="ownedBy"><s:message
-									code="sqltoolMetadataForm.ownedBy" /></label></th>
+						<th><f:label path="ownedBy">
+								<s:message code="sqltoolMetadataForm.ownedBy" />
+							</f:label></th>
 						<td><f:input path="ownedBy" disabled="true" /></td>
 					</tr>
 					<tr>
-						<th><label for="publishedFlg"><s:message
-									code="sqltoolMetadataForm.publishedFlg" /></label></th>
+						<th><f:label path="publishedFlg">
+								<s:message code="sqltoolMetadataForm.publishedFlg" />
+							</f:label></th>
 						<td><f:checkbox path="publishedFlg" /></td>
 					</tr>
 				</tbody>
 				<tfoot class="app-transparent">
 					<tr>
 						<td></td>
-						<td>
-							<button type="submit" name="proc" value="update"
-								class="app-button">
+						<td><f:button type="submit" class="app-button">
 								<s:message code="sqltool/clause/indexId.updateButton" />
-							</button>
-						</td>
+							</f:button></td>
 					</tr>
 				</tfoot>
 			</table>
@@ -110,8 +111,9 @@
 			<table class="app-collabel">
 				<tbody>
 					<tr>
-						<th><label for="databaseName"><s:message
-									code="sqltoolClauseForm.databaseName" /></label></th>
+						<th><f:label path="databaseName">
+								<s:message code="sqltoolClauseForm.databaseName" />
+							</f:label></th>
 						<td><f:select path="databaseName"
 								cssClass="app-width50 ui-widget"
 								cssErrorClass="app-width50 ui-widget ui-state-error">
@@ -120,50 +122,57 @@
 							</f:select></td>
 					</tr>
 					<tr>
-						<th><label for="select"><s:message
-									code="sqltoolClauseForm.select" /></label></th>
+						<th><f:label path="select">
+								<s:message code="sqltoolClauseForm.select" />
+							</f:label></th>
 						<td><f:textarea path="select"
 								cssClass="app-width50 app-height5"
 								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<th><label for="from"><s:message
-									code="sqltoolClauseForm.from" /></label></th>
+						<th><f:label path="from">
+								<s:message code="sqltoolClauseForm.from" />
+							</f:label></th>
 						<td><f:textarea path="from"
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<th><label for="where"><s:message
-									code="sqltoolClauseForm.where" /></label></th>
+						<th><f:label path="where">
+								<s:message code="sqltoolClauseForm.where" />
+							</f:label></th>
 						<td><f:textarea path="where"
 								cssClass="app-width50 app-height5"
 								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<th><label for="groupBy"><s:message
-									code="sqltoolClauseForm.groupBy" /></label></th>
+						<th><f:label path="groupBy">
+								<s:message code="sqltoolClauseForm.groupBy" />
+							</f:label></th>
 						<td><f:textarea path="groupBy"
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<th><label for="having"><s:message
-									code="sqltoolClauseForm.having" /></label></th>
+						<th><f:label path="having">
+								<s:message code="sqltoolClauseForm.having" />
+							</f:label></th>
 						<td><f:textarea path="having"
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<th><label for="orderBy"><s:message
-									code="sqltoolClauseForm.orderBy" /></label></th>
+						<th><f:label path="orderBy">
+								<s:message code="sqltoolClauseForm.orderBy" />
+							</f:label></th>
 						<td><f:textarea path="orderBy"
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<th><label for="paramMap"><s:message
-									code="sqltoolClauseForm.paramMap" /></label></th>
+						<th><f:label path="paramMap">
+								<s:message code="sqltoolClauseForm.paramMap" />
+							</f:label></th>
 						<td><f:textarea path="paramMap"
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
@@ -172,19 +181,13 @@
 				<tfoot class="app-transparent">
 					<tr>
 						<td></td>
-						<td>
-							<button type="submit" name="proc" value="exec" class="app-button">
+						<td><f:button type="submit" class="app-button">
 								<s:message code="sqltool/clause/indexId.execButton" />
-							</button>
-							<button type="submit" name="proc" value="download"
-								class="app-button">
+							</f:button> <f:button type="submit" name="download" class="app-button">
 								<s:message code="sqltool/clause/indexId.downloadButton" />
-							</button>
-							<button type="submit" name="proc" value="update"
-								class="app-button">
+							</f:button> <f:button type="submit" name="update" class="app-button">
 								<s:message code="sqltool/clause/indexId.updateButton" />
-							</button>
-						</td>
+							</f:button></td>
 					</tr>
 				</tfoot>
 			</table>

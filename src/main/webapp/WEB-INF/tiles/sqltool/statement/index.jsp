@@ -46,8 +46,9 @@
 			<table class="app-collabel">
 				<tbody>
 					<tr>
-						<th><label for="databaseName"><s:message
-									code="sqltoolStatementForm.databaseName" /></label></th>
+						<th><f:label path="databaseName">
+								<s:message code="sqltoolStatementForm.databaseName" />
+							</f:label></th>
 						<td><f:select path="databaseName"
 								cssClass="app-width50 ui-widget"
 								cssErrorClass="app-width50 ui-widget ui-state-error">
@@ -56,14 +57,16 @@
 							</f:select></td>
 					</tr>
 					<tr>
-						<th><label for="sql"><s:message
-									code="sqltoolStatementForm.sql" /></label></th>
+						<th><f:label path="sql">
+								<s:message code="sqltoolStatementForm.sql" />
+							</f:label></th>
 						<td><f:textarea path="sql" cssClass="app-width50 app-height5"
 								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<th><label for="paramMap"><s:message
-									code="sqltoolStatementForm.paramMap" /></label></th>
+						<th><f:label path="paramMap">
+								<s:message code="sqltoolStatementForm.paramMap" />
+							</f:label></th>
 						<td><f:textarea path="paramMap"
 								cssClass="app-width50 app-height3"
 								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
@@ -72,19 +75,13 @@
 				<tfoot class="app-transparent">
 					<tr>
 						<td></td>
-						<td>
-							<button type="submit" name="proc" value="exec" class="app-button">
+						<td><f:button type="submit" class="app-button">
 								<s:message code="sqltool/statement/index.execButton" />
-							</button>
-							<button type="submit" name="proc" value="download"
-								class="app-button">
+							</f:button> <f:button type="submit" name="download" class="app-button">
 								<s:message code="sqltool/statement/index.downloadButton" />
-							</button>
-							<button type="submit" name="proc" value="create"
-								class="app-button">
+							</f:button> <f:button type="submit" name="create" class="app-button">
 								<s:message code="sqltool/statement/index.createButton" />
-							</button>
-						</td>
+							</f:button></td>
 					</tr>
 				</tfoot>
 			</table>

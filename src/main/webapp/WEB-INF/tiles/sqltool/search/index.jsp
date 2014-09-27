@@ -49,8 +49,9 @@
 			<table class="app-collabel">
 				<tbody>
 					<tr>
-						<th><label for="name"><s:message
-									code="sqltoolSearchForm.name" /></label></th>
+						<th><f:label path="name">
+								<s:message code="sqltoolSearchForm.name" />
+							</f:label></th>
 						<td><f:input path="name" cssClass="app-width20"
 								cssErrorClass="app-width20 ui-state-error" /></td>
 					</tr>
@@ -58,12 +59,15 @@
 						<th><s:message code="sqltool/search/index.form.type" /></th>
 						<td>
 							<ul class="app-flat">
-								<li><f:checkbox path="clause" /><label for="clause1"><s:message
-											code="sqltool/search/index.form.type.clause" /></label></li>
-								<li><f:checkbox path="statement" /><label for="statement1"><s:message
-											code="sqltool/search/index.form.type.statement" /></label></li>
-								<li><f:checkbox path="load" /><label for="load1"><s:message
-											code="sqltool/search/index.form.type.load" /></label></li>
+								<li><c:set var="label">
+										<s:message code="sqltool/search/index.form.type.clause" />
+									</c:set> <f:checkbox path="clause" label="${label}" /></li>
+								<li><c:set var="label">
+										<s:message code="sqltool/search/index.form.type.statement" />
+									</c:set> <f:checkbox path="statement" label="${label}" /></li>
+								<li><c:set var="label">
+										<s:message code="sqltool/search/index.form.type.load" />
+									</c:set> <f:checkbox path="load" label="${label}" /></li>
 							</ul>
 						</td>
 					</tr>
@@ -71,23 +75,27 @@
 						<th><s:message code="sqltool/search/index.form.published" /></th>
 						<td>
 							<ul class="app-flat">
-								<li><f:checkbox path="publish" /><label for="publish1"><s:message
-											code="sqltool/search/index.form.published.public" /></label></li>
-								<li><f:checkbox path="notPublish" /><label
-									for="notPublish1"><s:message
-											code="sqltool/search/index.form.published.private" /></label></li>
+								<li><f:checkbox path="publish" /> <f:label path="publish">
+										<s:message code="sqltool/search/index.form.published.public" />
+									</f:label></li>
+								<li><f:checkbox path="notPublish" /> <f:label
+										path="notPublish">
+										<s:message code="sqltool/search/index.form.published.private" />
+									</f:label></li>
 							</ul>
 						</td>
 					</tr>
 					<tr>
-						<th><label for="registeredFrom"><s:message
-									code="sqltoolSearchForm.registeredFrom" /></label></th>
+						<th><f:label path="registeredFrom">
+								<s:message code="sqltoolSearchForm.registeredFrom" />
+							</f:label></th>
 						<td><f:input path="registeredFrom" cssClass="app-width20"
 								cssErrorClass="app-width20 ui-state-error" /></td>
 					</tr>
 					<tr>
-						<th><label for="registeredTo"><s:message
-									code="sqltoolSearchForm.registeredTo" /></label></th>
+						<th><f:label path="registeredTo">
+								<s:message code="sqltoolSearchForm.registeredTo" />
+							</f:label></th>
 						<td><f:input path="registeredTo" cssClass="app-width20"
 								cssErrorClass="app-width20 ui-state-error" /></td>
 					</tr>
@@ -95,11 +103,9 @@
 				<tfoot class="app-transparent">
 					<tr>
 						<td></td>
-						<td>
-							<button type="submit" class="app-button">
+						<td><f:button type="submit" class="app-button">
 								<s:message code="sqltool/search/index.searchButton" />
-							</button>
-						</td>
+							</f:button></td>
 					</tr>
 				</tfoot>
 			</table>

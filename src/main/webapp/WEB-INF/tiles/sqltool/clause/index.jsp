@@ -123,8 +123,7 @@
 				<tfoot class="app-transparent">
 					<tr>
 						<td></td>
-						<td><f:button type="submit" class="app-button"
-								class="app-button">
+						<td><f:button type="submit" class="app-button">
 								<s:message code="sqltool/clause/index.execButton" />
 							</f:button> <f:button type="submit" name="download" class="app-button">
 								<s:message code="sqltool/clause/index.downloadButton" />
