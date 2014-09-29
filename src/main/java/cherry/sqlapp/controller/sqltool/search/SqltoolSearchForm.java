@@ -25,8 +25,8 @@ import lombok.ToString;
 
 import org.joda.time.LocalDateTime;
 
-import cherry.spring.common.custom.format.CustomDateTimeFormat;
-import cherry.spring.common.custom.format.CustomDateTimeFormat.Range;
+import cherry.spring.common.type.format.CustomDateTimeFormat;
+import cherry.spring.common.type.format.CustomDateTimeFormat.Range;
 import cherry.sqlapp.validation.NameSize;
 
 @Getter

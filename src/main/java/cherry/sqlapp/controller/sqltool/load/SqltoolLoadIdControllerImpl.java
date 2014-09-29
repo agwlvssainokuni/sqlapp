@@ -33,7 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
-import cherry.spring.common.custom.FlagCode;
+import cherry.spring.common.type.FlagCode;
 import cherry.sqlapp.controller.sqltool.LogicErrorUtil;
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;

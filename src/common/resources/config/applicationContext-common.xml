@@ -22,7 +22,7 @@
 				and
 				!execution(* cherry.spring.common.log..*.*(..))
 				and
-				!execution(* cherry.spring.common.custom..*.*(..))
+				!execution(* cherry.spring.common.type..*.*(..))
 				and
 				!execution(* cherry.spring.common.helper.crypto..*.*(..))
 				" />
@@ -55,14 +55,13 @@
 				<bean
 					class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
 				<bean
-					class="cherry.spring.common.custom.format.IpAddrFormatAnnotationFormatterFactory" />
+					class="cherry.spring.common.type.format.IpAddrFormatAnnotationFormatterFactory" />
 			</set>
 		</property>
 		<property name="formatterRegistrars">
 			<set>
 				<bean class="org.springframework.format.datetime.DateFormatterRegistrar" />
-				<bean
-					class="cherry.spring.common.custom.format.DelegateFormatterRegistrar">
+				<bean class="cherry.spring.common.type.format.DelegateFormatterRegistrar">
 					<property name="formatters">
 						<list>
 							<bean
@@ -87,13 +86,13 @@
 								</property>
 							</bean>
 							<bean
-								class="cherry.spring.common.custom.format.CustomDateTimeFormatAnnotationFormatterFactory" />
+								class="cherry.spring.common.type.format.CustomDateTimeFormatAnnotationFormatterFactory" />
 							<bean
-								class="cherry.spring.common.custom.converter.JodaTimeSqlConverterRegistrar" />
+								class="cherry.spring.common.type.converter.JodaTimeSqlConverterRegistrar" />
 							<bean
-								class="cherry.spring.common.custom.converter.SecureTypeSqlConverterRegistrar" />
+								class="cherry.spring.common.type.converter.SecureTypeSqlConverterRegistrar" />
 							<bean
-								class="cherry.spring.common.custom.converter.CodeSqlConverterRegistrar" />
+								class="cherry.spring.common.type.converter.CodeSqlConverterRegistrar" />
 						</list>
 					</property>
 				</bean>
@@ -164,7 +163,7 @@
 	<bean class="cherry.spring.common.helper.password.UserPasswordDaoImpl" />
 	<bean class="cherry.spring.common.helper.signup.SignupRequestDaoImpl" />
 
-	<bean class="cherry.spring.common.custom.SecureString"
+	<bean class="cherry.spring.common.type.SecureString"
 		factory-method="setEncoder">
 		<constructor-arg>
 			<bean class="cherry.spring.common.helper.crypto.SecureStringHelper">
@@ -174,7 +173,7 @@
 		</constructor-arg>
 	</bean>
 
-	<bean class="cherry.spring.common.custom.SecureInteger"
+	<bean class="cherry.spring.common.type.SecureInteger"
 		factory-method="setEncoder">
 		<constructor-arg>
 			<bean class="cherry.spring.common.helper.crypto.SecureIntegerHelper">
@@ -183,8 +182,7 @@
 		</constructor-arg>
 	</bean>
 
-	<bean class="cherry.spring.common.custom.SecureLong"
-		factory-method="setEncoder">
+	<bean class="cherry.spring.common.type.SecureLong" factory-method="setEncoder">
 		<constructor-arg>
 			<bean class="cherry.spring.common.helper.crypto.SecureLongHelper">
 				<property name="cipherHelper" ref="aesCipherHelper" />
@@ -192,7 +190,7 @@
 		</constructor-arg>
 	</bean>
 
-	<bean class="cherry.spring.common.custom.SecureBigInteger"
+	<bean class="cherry.spring.common.type.SecureBigInteger"
 		factory-method="setEncoder">
 		<constructor-arg>
 			<bean class="cherry.spring.common.helper.crypto.SecureBigIntegerHelper">
@@ -201,7 +199,7 @@
 		</constructor-arg>
 	</bean>
 
-	<bean class="cherry.spring.common.custom.SecureBigDecimal"
+	<bean class="cherry.spring.common.type.SecureBigDecimal"
 		factory-method="setEncoder">
 		<constructor-arg>
 			<bean class="cherry.spring.common.helper.crypto.SecureBigDecimalHelper">

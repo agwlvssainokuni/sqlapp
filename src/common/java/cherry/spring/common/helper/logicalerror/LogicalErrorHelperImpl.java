@@ -23,9 +23,9 @@ import org.springframework.validation.BindingResult;
 public class LogicalErrorHelperImpl implements LogicalErrorHelper {
 
 	@Override
-	public void reject(BindingResult binding, ILogicalError logicError,
+	public void reject(BindingResult binding, ILogicalError logicalError,
 			Object... args) {
-		binding.reject(logicError.code(), args, logicError.code());
+		binding.reject(logicalError.code(), args, logicalError.code());
 	}
 
 	@Override
@@ -37,6 +37,16 @@ public class LogicalErrorHelperImpl implements LogicalErrorHelper {
 	@Override
 	public MessageSourceResolvable resolve(String code) {
 		return new DefaultMessageSourceResolvable(code);
+	}
+
+	@Override
+	public void rejectOnOptimisticLockError(BindingResult binding) {
+		reject(binding, LogicalError.OptimisticLockError);
+	}
+
+	@Override
+	public void rejectOnOneTimeTokenError(BindingResult binding) {
+		reject(binding, LogicalError.OneTimeTokenError);
 	}
 
 }

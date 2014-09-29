@@ -29,33 +29,33 @@
 			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="deleted_flg"
-				javaType="cherry.spring.common.custom.DeletedFlag" />
+				javaType="cherry.spring.common.type.DeletedFlag" />
 		</table>
 		<table tableName="sqltool_statement">
 			<generatedKey column="id" sqlStatement="JDBC" />
 			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="deleted_flg"
-				javaType="cherry.spring.common.custom.DeletedFlag" />
+				javaType="cherry.spring.common.type.DeletedFlag" />
 		</table>
 		<table tableName="sqltool_clause">
 			<generatedKey column="id" sqlStatement="JDBC" />
 			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="deleted_flg"
-				javaType="cherry.spring.common.custom.DeletedFlag" />
+				javaType="cherry.spring.common.type.DeletedFlag" />
 		</table>
 		<table tableName="sqltool_metadata">
 			<generatedKey column="id" sqlStatement="JDBC" />
 			<columnOverride column="sql_type"
 				javaType="cherry.sqlapp.code.SqlTypeCode" />
 			<columnOverride column="published_flg"
-				javaType="cherry.spring.common.custom.FlagCode" />
+				javaType="cherry.spring.common.type.FlagCode" />
 			<columnOverride column="registered_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="deleted_flg"
-				javaType="cherry.spring.common.custom.DeletedFlag" />
+				javaType="cherry.spring.common.type.DeletedFlag" />
 		</table>
 		<table tableName="async_proc">
 			<generatedKey column="id" sqlStatement="JDBC" />
@@ -66,7 +66,7 @@
 			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="deleted_flg"
-				javaType="cherry.spring.common.custom.DeletedFlag" />
+				javaType="cherry.spring.common.type.DeletedFlag" />
 		</table>
 		<table tableName="bizdatetime_master">
 			<generatedKey column="id" sqlStatement="JDBC" />
@@ -74,7 +74,7 @@
 			<columnOverride column="updated_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="created_at" javaType="org.joda.time.LocalDateTime" />
 			<columnOverride column="deleted_flg"
-				javaType="cherry.spring.common.custom.DeletedFlag" />
+				javaType="cherry.spring.common.type.DeletedFlag" />
 		</table>
 	</context>
 </generatorConfiguration>

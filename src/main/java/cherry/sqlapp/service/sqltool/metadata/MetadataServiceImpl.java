@@ -25,13 +25,13 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.spring.common.custom.DeletedFlag;
-import cherry.spring.common.custom.FlagCode;
-import cherry.spring.common.custom.jdbc.RowMapperCreator;
 import cherry.spring.common.helper.querydsl.SQLQueryConfigurer;
 import cherry.spring.common.helper.querydsl.SQLQueryHelper;
 import cherry.spring.common.helper.querydsl.SQLQueryResult;
 import cherry.spring.common.lib.util.LocalDateTimeUtil;
+import cherry.spring.common.type.DeletedFlag;
+import cherry.spring.common.type.FlagCode;
+import cherry.spring.common.type.jdbc.RowMapperCreator;
 import cherry.sqlapp.code.SqlTypeCode;
 import cherry.sqlapp.db.dao.SqltoolMetadataDao;
 import cherry.sqlapp.db.dto.SqltoolMetadata;

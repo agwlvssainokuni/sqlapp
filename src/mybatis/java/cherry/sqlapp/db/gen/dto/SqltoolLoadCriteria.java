@@ -1,6 +1,6 @@
 package cherry.sqlapp.db.gen.dto;
 
-import cherry.spring.common.custom.DeletedFlag;
+import cherry.spring.common.type.DeletedFlag;
 import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.LocalDateTime;

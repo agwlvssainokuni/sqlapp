@@ -28,7 +28,7 @@
 		<security:csrf request-matcher-ref="csrfRequestMatcher" />
 	</security:http>
 
-	<bean id="csrfRequestMatcher" class="cherry.spring.common.helper.security.CsrfRequestMatcher">
+	<bean id="csrfRequestMatcher" class="cherry.spring.common.mvc.CsrfRequestMatcher">
 		<property name="excludes">
 			<list>
 				<bean

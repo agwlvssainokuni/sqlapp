@@ -16,9 +16,9 @@
 
 package cherry.sqlapp.code;
 
-import cherry.spring.common.custom.Code;
-import cherry.spring.common.custom.CodeUtil;
-import cherry.spring.common.custom.CodeUtil.CodeMap;
+import cherry.spring.common.type.Code;
+import cherry.spring.common.type.CodeUtil;
+import cherry.spring.common.type.CodeUtil.CodeMap;
 
 public enum SqlTypeCode implements Code<String> {
 	CLAUSE("clause"), STATEMENT("statement"), LOAD("load");

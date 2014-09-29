@@ -25,7 +25,7 @@ import lombok.ToString;
 
 import org.joda.time.LocalDateTime;
 
-import cherry.spring.common.custom.DeletedFlag;
+import cherry.spring.common.type.DeletedFlag;
 
 @Setter
 @Getter

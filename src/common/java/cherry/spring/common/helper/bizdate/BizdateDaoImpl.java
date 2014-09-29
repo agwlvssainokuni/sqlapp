@@ -25,8 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 
-import cherry.spring.common.custom.jdbc.RowMapperCreator;
 import cherry.spring.common.helper.sql.SqlLoader;
+import cherry.spring.common.type.jdbc.RowMapperCreator;
 
 public class BizdateDaoImpl implements BizdateDao, InitializingBean {
 

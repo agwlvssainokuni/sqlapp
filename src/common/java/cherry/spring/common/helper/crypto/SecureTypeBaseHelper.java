@@ -19,7 +19,7 @@ package cherry.spring.common.helper.crypto;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
-import cherry.spring.common.custom.SecureType.Encoder;
+import cherry.spring.common.type.SecureType.Encoder;
 
 public abstract class SecureTypeBaseHelper<T> implements Encoder<T> {
 

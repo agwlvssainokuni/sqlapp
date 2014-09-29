@@ -21,11 +21,16 @@ import org.springframework.validation.BindingResult;
 
 public interface LogicalErrorHelper {
 
-	void reject(BindingResult binding, ILogicalError logicError, Object... args);
+	void reject(BindingResult binding, ILogicalError logicalError,
+			Object... args);
 
 	void rejectValue(BindingResult binding, String name,
 			ILogicalError logicError, Object... args);
 
 	MessageSourceResolvable resolve(String code);
+
+	void rejectOnOptimisticLockError(BindingResult binding);
+
+	void rejectOnOneTimeTokenError(BindingResult binding);
 
 }
