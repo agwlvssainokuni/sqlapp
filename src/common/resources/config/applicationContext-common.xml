@@ -18,7 +18,7 @@
 
 	<aop:config>
 		<aop:advisor advice-ref="traceInterceptor"
-			pointcut="execution(* cherry.spring..*.*(..))
+			pointcut="execution(* cherry..*.*(..))
 				and
 				!execution(* cherry.spring.common.log..*.*(..))
 				and
@@ -34,6 +34,7 @@
 		<property name="packagePrefix">
 			<list>
 				<value>cherry.spring</value>
+				<value>cherry.sqlapp</value>
 			</list>
 		</property>
 	</bean>
