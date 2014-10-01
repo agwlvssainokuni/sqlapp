@@ -25,4 +25,36 @@
 		</function-signature>
 	</function>
 
+	<function>
+		<description>LabeledEnum</description>
+		<name>LabeledEnum</name>
+		<function-class>cherry.spring.common.type.EnumUtil</function-class>
+		<function-signature>
+			cherry.spring.common.type.LabeledEnum getLabeledEnum(java.lang.Enum)
+		</function-signature>
+	</function>
+
+	<function>
+		<description>LabeledEnumList</description>
+		<name>LabeledEnumList</name>
+		<function-class>cherry.spring.common.type.EnumUtil</function-class>
+		<function-signature>java.util.List getLabeledEnumList(java.lang.Class)</function-signature>
+	</function>
+
+	<function>
+		<description>LabeledCode</description>
+		<name>LabeledCode</name>
+		<function-class>cherry.spring.common.type.CodeUtil</function-class>
+		<function-signature>
+			cherry.spring.common.type.LabeledCode getLabeledCode(cherry.spring.common.type.Code)
+		</function-signature>
+	</function>
+
+	<function>
+		<description>LabeledCodeList</description>
+		<name>LabeledCodeList</name>
+		<function-class>cherry.spring.common.type.CodeUtil</function-class>
+		<function-signature>java.util.List getLabeledCodeList(java.lang.Class)</function-signature>
+	</function>
+
 </taglib>
