@@ -151,6 +151,10 @@
 	<bean class="cherry.spring.common.helper.password.UserPasswordDaoImpl" />
 	<bean class="cherry.spring.common.helper.signup.SignupRequestDaoImpl" />
 
+	<bean class="cherry.spring.common.type.EnumUtil" factory-method="setMessageSource">
+		<constructor-arg ref="messageSource" />
+	</bean>
+
 	<bean class="cherry.spring.common.type.CodeUtil" factory-method="setMessageSource">
 		<constructor-arg ref="messageSource" />
 	</bean>
