@@ -16,13 +16,27 @@
 
 package cherry.spring.common.type;
 
-import java.util.HashMap;
+import static com.google.common.base.Preconditions.checkArgument;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
 
 public class CodeUtil {
+
+	private static MessageSource messageSource;
+
+	public static MessageSource setMessageSource(MessageSource ms) {
+		messageSource = ms;
+		return ms;
+	}
 
 	public interface CodeMap<C, E extends Code<C>> {
 		E get(C code);
@@ -39,10 +53,9 @@ public class CodeUtil {
 			public E get(C code) {
 				E e = map.get(code);
 				if (e == null) {
-					if (defaultValue == null) {
-						throw new IllegalArgumentException("No matching enum "
-								+ type.getSimpleName() + " for " + code);
-					}
+					checkArgument(defaultValue != null,
+							"No matching enum %s for %s", type.getSimpleName(),
+							code);
 					if (log.isDebugEnabled()) {
 						log.debug("No matching enum {0} for {1}",
 								type.getSimpleName(), code);
@@ -55,15 +68,48 @@ public class CodeUtil {
 	}
 
 	public static <C, E extends Code<C>> Map<C, E> getMap(Class<E> type) {
-		if (type.getEnumConstants() == null) {
-			throw new IllegalArgumentException(type.getSimpleName()
-					+ " does not represent an enum type.");
-		}
-		Map<C, E> map = new HashMap<>();
+		checkArgument(type.getEnumConstants() != null,
+				"%s does not represent an enum type.", type.getSimpleName());
+		Map<C, E> map = new LinkedHashMap<>();
 		for (E e : type.getEnumConstants()) {
 			map.put(e.code(), e);
 		}
 		return map;
+	}
+
+	public static <C, E extends Code<C>> LabeledCode<C, E> getLabeledCode(
+			final E code) {
+		return new LabeledCode<C, E>() {
+
+			@Override
+			public E getCode() {
+				return code;
+			}
+
+			@Override
+			public C getCodeValue() {
+				return code.code();
+			}
+
+			@Override
+			public String getCodeLabel() {
+				String cd = new StringBuffer(code.getClass().getName())
+						.append(".").append(code.code()).toString();
+				return messageSource.getMessage(cd, null,
+						LocaleContextHolder.getLocale());
+			}
+		};
+	}
+
+	public static <C, E extends Code<C>> List<LabeledCode<C, E>> getLabeledCodeList(
+			Class<E> type) {
+		checkArgument(type.getEnumConstants() != null,
+				"%s does not represent an enum type.", type.getSimpleName());
+		List<LabeledCode<C, E>> list = new ArrayList<>();
+		for (E e : type.getEnumConstants()) {
+			list.add(getLabeledCode(e));
+		}
+		return list;
 	}
 
 }

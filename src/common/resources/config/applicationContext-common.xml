@@ -44,6 +44,8 @@
 			<map>
 				<entry key="java.util.ResourceBundle"
 					value="org.springframework.beans.propertyeditors.ResourceBundleEditor" />
+				<entry key="org.joda.time.format.DateTimeFormatter"
+					value="cherry.spring.common.type.editor.DateTimeFormatEditor" />
 			</map>
 		</property>
 	</bean>
@@ -67,24 +69,9 @@
 						<list>
 							<bean
 								class="org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar">
-								<property name="dateFormatter">
-									<bean class="org.joda.time.format.DateTimeFormat"
-										factory-method="forPattern">
-										<constructor-arg value="${common.format.date}" />
-									</bean>
-								</property>
-								<property name="timeFormatter">
-									<bean class="org.joda.time.format.DateTimeFormat"
-										factory-method="forPattern">
-										<constructor-arg value="${common.format.time}" />
-									</bean>
-								</property>
-								<property name="dateTimeFormatter">
-									<bean class="org.joda.time.format.DateTimeFormat"
-										factory-method="forPattern">
-										<constructor-arg value="${common.format.datetime}" />
-									</bean>
-								</property>
+								<property name="dateFormatter" value="${common.format.date}" />
+								<property name="timeFormatter" value="${common.format.time}" />
+								<property name="dateTimeFormatter" value="${common.format.datetime}" />
 							</bean>
 							<bean
 								class="cherry.spring.common.type.format.CustomDateTimeFormatAnnotationFormatterFactory" />
@@ -163,6 +150,10 @@
 
 	<bean class="cherry.spring.common.helper.password.UserPasswordDaoImpl" />
 	<bean class="cherry.spring.common.helper.signup.SignupRequestDaoImpl" />
+
+	<bean class="cherry.spring.common.type.CodeUtil" factory-method="setMessageSource">
+		<constructor-arg ref="messageSource" />
+	</bean>
 
 	<bean class="cherry.spring.common.type.SecureString"
 		factory-method="setEncoder">
