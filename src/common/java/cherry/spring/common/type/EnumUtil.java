@@ -67,4 +67,14 @@ public class EnumUtil {
 		return list;
 	}
 
+	@SuppressWarnings("unchecked")
+	public static <E extends Enum<E>> List<LabeledEnum<E>> getLabeledEnumList(
+			String typeName) {
+		try {
+			return getLabeledEnumList((Class<E>) Class.forName(typeName));
+		} catch (ClassNotFoundException ex) {
+			throw new IllegalArgumentException(ex);
+		}
+	}
+
 }

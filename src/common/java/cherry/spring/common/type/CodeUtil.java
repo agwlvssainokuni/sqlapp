@@ -112,4 +112,14 @@ public class CodeUtil {
 		return list;
 	}
 
+	@SuppressWarnings("unchecked")
+	public static <C, E extends Code<C>> List<LabeledCode<C, E>> getLabeledCodeList(
+			String typeName) {
+		try {
+			return getLabeledCodeList((Class<E>) Class.forName(typeName));
+		} catch (ClassNotFoundException ex) {
+			throw new IllegalArgumentException(ex);
+		}
+	}
+
 }
