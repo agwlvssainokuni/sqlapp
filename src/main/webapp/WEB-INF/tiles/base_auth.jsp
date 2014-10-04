@@ -33,45 +33,36 @@
 	src="<c:url value="/script/sqltool.js" />"></script>
 </head>
 <body>
-	<div id="PageHeader">
-		<div id="Header" class="ui-helper-clearfix">
-			<div class="ui-widget" style="float: right;">
-				<form action="<c:url value="/logout" />" method="POST">
-					<button type="submit" class="app-button">
-						<s:message code="base/auth.logout" />
-					</button>
-					<input type="hidden" name="${_csrf.parameterName}"
-						value="${_csrf.token}">
-				</form>
-			</div>
-			<s:message code="base/common.title" />
+	<div>
+		<div>
+			<form action="<c:url value="/logout" />" method="POST">
+				<button type="submit">
+					<s:message code="base/auth.logout" />
+				</button>
+				<input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}">
+			</form>
 		</div>
+		<s:message code="base/common.title" />
 	</div>
-	<div id="PageNavi">
-		<div id="Navi">
-			<ul class="app-flat">
-				<li><s:message code="base/auth.navigation" /></li>
-				<c:forEach var="node" items="${common:navigate(name)}">
-					<s:url var="uri" value="${node.uri}">
-						<c:if test="${node.uri.contains('{id}')}">
-							<s:param name="id" value="${id}" />
-						</c:if>
-					</s:url>
-					<li><a href="${uri}"><s:message code="${node.name}.title" /></a>
-						<c:if test="${! node.last}"> &gt;</c:if></li>
-				</c:forEach>
-			</ul>
-		</div>
+	<div>
+		<ul>
+			<li><s:message code="base/auth.navigation" /></li>
+			<c:forEach var="node" items="${common:navigate(name)}">
+				<s:url var="uri" value="${node.uri}">
+					<c:if test="${node.uri.contains('{id}')}">
+						<s:param name="id" value="${id}" />
+					</c:if>
+				</s:url>
+				<li><a href="${uri}"><s:message code="${node.name}.title" /></a></li>
+			</c:forEach>
+		</ul>
 	</div>
-	<div id="PageContent">
-		<div id="Content">
-			<tiles:insertAttribute name="content" />
-		</div>
+	<div>
+		<tiles:insertAttribute name="content" />
 	</div>
-	<div id="PageFooter">
-		<div id="Footer">
-			<s:message code="base/common.copyright" />
-		</div>
+	<div>
+		<s:message code="base/common.copyright" />
 	</div>
 </body>
 </html>

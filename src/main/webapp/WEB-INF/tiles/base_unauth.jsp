@@ -33,20 +33,14 @@
 	src="<c:url value="/script/sqltool.js" />"></script>
 </head>
 <body>
-	<div id="PageHeader">
-		<div id="Header">
-			<s:message code="base/common.title" />
-		</div>
+	<div>
+		<s:message code="base/common.title" />
 	</div>
-	<div id="PageContent">
-		<div id="Content">
-			<tiles:insertAttribute name="content" />
-		</div>
+	<div>
+		<tiles:insertAttribute name="content" />
 	</div>
-	<div id="PageFooter">
-		<div id="Footer">
-			<s:message code="base/common.copyright" />
-		</div>
+	<div>
+		<s:message code="base/common.copyright" />
 	</div>
 </body>
 </html>
