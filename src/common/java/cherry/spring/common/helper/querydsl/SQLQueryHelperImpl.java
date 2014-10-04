@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -29,7 +30,6 @@ import cherry.spring.common.lib.etl.Limiter;
 import cherry.spring.common.lib.etl.LimiterException;
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.spring.common.lib.paginate.Paginator;
-import cherry.spring.common.lib.querydsl.SQLQueryOperations;
 
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.types.Expression;
@@ -37,7 +37,7 @@ import com.mysema.query.types.Expression;
 public class SQLQueryHelperImpl implements SQLQueryHelper {
 
 	@Autowired
-	private SQLQueryOperations sqlQueryOperations;
+	private QueryDslJdbcOperations queryDslJdbcOperations;
 
 	@Autowired
 	private Paginator paginator;
@@ -47,14 +47,15 @@ public class SQLQueryHelperImpl implements SQLQueryHelper {
 			int pageNo, int pageSz, RowMapper<T> rowMapper,
 			Expression<?>... projection) {
 
-		SQLQuery query = sqlQueryOperations.createSQLQuery();
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query = configurer.configure(query);
-		long count = sqlQueryOperations.count(query);
+		long count = queryDslJdbcOperations.count(query);
 
 		PageSet pageSet = paginator.paginate(pageNo, (int) count, pageSz);
 		query.limit(pageSz).offset(pageSet.getCurrent().getFrom());
 		query = configurer.orderBy(query);
-		List<T> list = sqlQueryOperations.query(query, rowMapper, projection);
+		List<T> list = queryDslJdbcOperations.query(query, rowMapper,
+				projection);
 
 		SQLQueryResult<T> result = new SQLQueryResult<>();
 		result.setTotalCount((int) count);
@@ -75,11 +76,11 @@ public class SQLQueryHelperImpl implements SQLQueryHelper {
 		limiter.start();
 		try {
 
-			SQLQuery query = sqlQueryOperations.createSQLQuery();
+			SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 			query = configurer.configure(query);
 			query = configurer.orderBy(query);
 
-			return sqlQueryOperations.queryForObject(query, extractor,
+			return queryDslJdbcOperations.queryForObject(query, extractor,
 					projection);
 		} catch (IllegalStateException ex) {
 			throw (IOException) ex.getCause();

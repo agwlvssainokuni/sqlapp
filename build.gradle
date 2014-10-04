@@ -124,6 +124,7 @@ compileTestJava.options.encoding = "UTF-8"
 sourceSets.main {
 	java {
 		srcDir "src/common/java"
+		srcDir "src/spring-data-jdbc-core/java"
 		srcDir "src/mybatis/java"
 		srcDir "src/querydsl/java"
 	}

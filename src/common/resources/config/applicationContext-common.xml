@@ -121,6 +121,11 @@
 		<constructor-arg ref="dataSource" />
 	</bean>
 
+	<bean id="queryDslJdbcOperations"
+		class="org.springframework.data.jdbc.query.QueryDslJdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
+
 	<bean id="sqlQueryOperations" class="cherry.spring.common.lib.querydsl.SQLQueryTemplate">
 		<constructor-arg ref="dataSource" />
 		<constructor-arg>
