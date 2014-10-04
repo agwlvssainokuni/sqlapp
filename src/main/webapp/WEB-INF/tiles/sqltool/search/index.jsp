@@ -45,8 +45,10 @@
 				<f:form servletRelativeAction="/sqltool/search/req" method="POST"
 					modelAttribute="sqltoolSearchForm" cssClass="form-horizontal"
 					role="form">
+					<f:hidden path="pageNo" value="0" />
+					<f:hidden path="pageSz" />
 					<c:set var="hasError">
-						<s:bind path="name">${status.isError() ? 'has-error' : ''}</s:bind>
+						<s:bind path="name">${status.isError() ? "has-error" : ""}</s:bind>
 					</c:set>
 					<div class="form-group ${hasError}">
 						<f:label path="name" cssClass="col-sm-2 control-label">
@@ -99,7 +101,7 @@
 						</div>
 					</div>
 					<c:set var="hasError">
-						<s:bind path="registeredFrom">${status.isError() ? 'has-error' : ''}</s:bind>
+						<s:bind path="registeredFrom">${status.isError() ? "has-error" : ""}</s:bind>
 					</c:set>
 					<div class="form-group ${hasError}">
 						<f:label path="registeredFrom" cssClass="col-sm-2 control-label">
@@ -110,7 +112,7 @@
 						</div>
 					</div>
 					<c:set var="hasError">
-						<s:bind path="registeredFrom">${status.isError() ? 'has-error' : ''}</s:bind>
+						<s:bind path="registeredFrom">${status.isError() ? "has-error" : ""}</s:bind>
 					</c:set>
 					<div class="form-group ${hasError}">
 						<f:label path="registeredTo" cssClass="col-sm-2 control-label">
@@ -127,8 +129,6 @@
 							</f:button>
 						</div>
 					</div>
-					<f:hidden path="pageNo" value="0" />
-					<f:hidden path="pageSz" />
 				</f:form>
 			</div>
 		</div>
@@ -146,6 +146,8 @@
 					<f:form servletRelativeAction="/sqltool/search/req" method="POST"
 						modelAttribute="sqltoolSearchForm" id="sqltoolSearchForm2"
 						cssClass="app-pager-form">
+						<f:hidden id="pageNo2" path="pageNo" cssClass="app-page-no" />
+						<f:hidden id="pageSz2" path="pageSz" cssClass="app-page-sz" />
 						<f:hidden id="name2" path="name" />
 						<f:hidden id="clause2" path="clause" />
 						<f:hidden id="statement2" path="statement" />
@@ -154,8 +156,6 @@
 						<f:hidden id="notPublish2" path="notPublish" />
 						<f:hidden id="registeredFrom2" path="registeredFrom" />
 						<f:hidden id="registeredTo2" path="registeredTo" />
-						<f:hidden id="pageNo2" path="pageNo" cssClass="app-page-no" />
-						<f:hidden id="pageSz2" path="pageSz" cssClass="app-page-sz" />
 					</f:form>
 					<div>
 						<div class="app-pager-desc">
