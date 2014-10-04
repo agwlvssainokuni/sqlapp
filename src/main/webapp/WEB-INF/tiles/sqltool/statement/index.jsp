@@ -13,89 +13,93 @@
 <c:url var="baseUri" value="/sqltool/statement" />
 <c:set var="hasResultList"
 	value="${resultSet != null && pageSet != null}" />
-<script type="text/javascript">
-	$(function() {
-		$(".accordion").accordion({
-			collapsible : true,
-			animate : false,
-			heightStyle : "content",
-			active : ${hasResultList ? 'false' : 0}
-		}).removeClass("ui-widget");
-	});
-</script>
-<h1 class="app-subject">
+<h2 class="page-header">
 	<s:message code="sqltool/statement/index.message.0" />
-</h1>
-<div class="app-portion accordion">
-	<h1>
-		<s:message code="sqltool/statement/index.message.2" />
-	</h1>
-	<div>
-		<s:hasBindErrors name="sqltoolStatementForm">
-			<div class="ui-state-error">
-				<f:errors path="sqltoolStatementForm" element="div" />
-				<f:errors path="sqltoolStatementForm.databaseName" element="div" />
-				<f:errors path="sqltoolStatementForm.sql" element="div" />
-				<f:errors path="sqltoolStatementForm.paramMap" element="div" />
-				<f:errors path="sqltoolStatementForm.lockVersion" element="div" />
-			</div>
-		</s:hasBindErrors>
-		<f:form servletRelativeAction="${baseUri}/req" method="POST"
-			modelAttribute="sqltoolStatementForm">
-			<f:hidden path="lockVersion" />
-			<table class="app-collabel">
-				<tbody>
-					<tr>
-						<th><f:label path="databaseName">
-								<s:message code="sqltoolStatementForm.databaseName" />
-							</f:label></th>
-						<td><f:select path="databaseName"
-								cssClass="app-width50 ui-widget"
-								cssErrorClass="app-width50 ui-widget ui-state-error">
+</h2>
+<div class="panel-group">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				<a data-toggle="collapse" href="#statementForm"><s:message
+						code="sqltool/statement/index.message.2" /></a>
+			</h3>
+		</div>
+		<div id="statementForm"
+			class="panel-collapse collapse ${hasResultList ? '' : 'in'}">
+			<div class="panel-body">
+				<s:hasBindErrors name="sqltoolStatementForm">
+					<div class="col-sm-offset-2 col-sm-10">
+						<div class="alert alert-danger" role="alert">
+							<f:errors path="sqltoolStatementForm" element="div" />
+							<f:errors path="sqltoolStatementForm.databaseName" element="div" />
+							<f:errors path="sqltoolStatementForm.sql" element="div" />
+							<f:errors path="sqltoolStatementForm.paramMap" element="div" />
+							<f:errors path="sqltoolStatementForm.lockVersion" element="div" />
+						</div>
+					</div>
+				</s:hasBindErrors>
+				<f:form servletRelativeAction="${baseUri}/req" method="POST"
+					modelAttribute="sqltoolStatementForm" cssClass="form-horizontal"
+					role="form">
+					<f:hidden path="lockVersion" />
+					<div class="form-group">
+						<f:label path="databaseName" cssClass="col-sm-2 control-label">
+							<s:message code="sqltoolStatementForm.databaseName" />
+						</f:label>
+						<div class="col-sm-10">
+							<f:select path="databaseName" cssClass="col-sm-2 form-control">
 								<c:set var="dataSourceDef" value="${sqlapp:dataSourceDef()}" />
 								<f:options items="${dataSourceDef.names}" />
-							</f:select></td>
-					</tr>
-					<tr>
-						<th><f:label path="sql">
-								<s:message code="sqltoolStatementForm.sql" />
-							</f:label></th>
-						<td><f:textarea path="sql" cssClass="app-width50 app-height5"
-								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
-					</tr>
-					<tr>
-						<th><f:label path="paramMap">
-								<s:message code="sqltoolStatementForm.paramMap" />
-							</f:label></th>
-						<td><f:textarea path="paramMap"
-								cssClass="app-width50 app-height3"
-								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
-					</tr>
-				</tbody>
-				<tfoot class="app-transparent">
-					<tr>
-						<td></td>
-						<td><f:button type="submit" class="app-button">
+							</f:select>
+						</div>
+					</div>
+					<div class="form-group">
+						<f:label path="sql" cssClass="col-sm-2 control-label">
+							<s:message code="sqltoolStatementForm.sql" />
+						</f:label>
+						<div class="col-sm-10">
+							<f:textarea path="sql" cssClass="col-sm-2 form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<f:label path="paramMap" cssClass="col-sm-2 control-label">
+							<s:message code="sqltoolStatementForm.paramMap" />
+						</f:label>
+						<div class="col-sm-10">
+							<f:textarea path="paramMap" cssClass="col-sm-2 form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<f:button type="submit" class="btn btn-primary">
 								<s:message code="sqltool/statement/index.execButton" />
-							</f:button> <f:button type="submit" name="download" class="app-button">
+							</f:button>
+							<f:button type="submit" name="download" class="btn btn-default">
 								<s:message code="sqltool/statement/index.downloadButton" />
-							</f:button> <f:button type="submit" name="create" class="app-button">
+							</f:button>
+							<f:button type="submit" name="create" class="btn btn-default">
 								<s:message code="sqltool/statement/index.createButton" />
-							</f:button></td>
-					</tr>
-				</tfoot>
-			</table>
-		</f:form>
-	</div>
-</div>
-<c:if test="${hasResultList}">
-	<div class="app-portion">
-		<h1 class="app-subject">
-			<s:message code="sqltool/statement/index.message.3" />
-		</h1>
-		<div class="app-portion">
-			<app:resultSet id="resultSetList" resultSet="${resultSet}"
-				pageSet="${pageSet}" />
+							</f:button>
+						</div>
+					</div>
+				</f:form>
+			</div>
 		</div>
 	</div>
-</c:if>
+	<c:if test="${hasResultList}">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<a data-toggle="collapse" href="#statementResult"><s:message
+							code="sqltool/statement/index.message.3" /></a>
+				</h3>
+			</div>
+			<div id="statementResult" class="panel-collapse collapse in">
+				<div class="panel-body">
+					<app:resultSet id="resultSetList" resultSet="${resultSet}"
+						pageSet="${pageSet}" />
+				</div>
+			</div>
+		</div>
+	</c:if>
+</div>
