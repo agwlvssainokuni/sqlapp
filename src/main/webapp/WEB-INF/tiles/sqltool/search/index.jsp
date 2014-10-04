@@ -23,7 +23,7 @@
 						code="sqltool/search/index.message.1" /></a>
 			</h3>
 		</div>
-		<div id="searchForm" class="panel-collapse collapse in">
+		<div id="searchForm" class="panel-collapse collapse ${hasResultList ? '' : 'in'}">
 			<div class="panel-body">
 				<s:hasBindErrors name="sqltoolSearchForm">
 					<div class="col-sm-offset-2 col-sm-10">
