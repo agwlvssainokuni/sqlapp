@@ -13,26 +13,22 @@
 		<s:message code="login/index.message.0" />
 	</h2>
 </div>
+<c:if test="${loginFailed}">
+	<div class="col-sm-offset-2 col-sm-10">
+		<div class="alert alert-danger" role="alert">
+			<s:message code="login/index.message.1" />
+		</div>
+	</div>
+</c:if>
+<c:if test="${loggedOut}">
+	<div class="col-sm-offset-2 col-sm-10">
+		<div class="alert alert-success" role="alert">
+			<s:message code="login/index.message.2" />
+		</div>
+	</div>
+</c:if>
 <form id="loginForm" action="<c:url value="/login/req" />" method="POST"
 	class="form-horizontal" role="form">
-	<c:if test="${loginFailed}">
-		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-10">
-				<div class="text-danger bg-danger form-control-static">
-					<s:message code="login/index.message.1" />
-				</div>
-			</div>
-		</div>
-	</c:if>
-	<c:if test="${loggedOut}">
-		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-10">
-				<div class="text-success bg-success form-control-static">
-					<s:message code="login/index.message.2" />
-				</div>
-			</div>
-		</div>
-	</c:if>
 	<div class="form-group">
 		<label for="loginId" class="col-sm-2 control-label"><s:message
 				code="loginForm.loginId" /></label>
