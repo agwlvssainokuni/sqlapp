@@ -32,37 +32,53 @@
 <script type="text/javascript"
 	src="<c:url value="/script/sqltool.js" />"></script>
 </head>
-<body>
-	<div>
-		<div>
-			<form action="<c:url value="/logout" />" method="POST">
-				<button type="submit">
+<body role="document">
+	<div class="navbar navbar-default" role="navigation">
+		<div class="container">
+			<div class="nav navbar-header">
+				<div class="navbar-brand">
+					<s:message code="base/common.title" />
+				</div>
+			</div>
+			<form action="<c:url value="/logout" />" method="POST"
+				class="navbar-right" role="form">
+				<button type="submit" class="btn btn-default navbar-btn">
 					<s:message code="base/auth.logout" />
 				</button>
-				<input type="hidden" name="${_csrf.parameterName}"
-					value="${_csrf.token}">
 			</form>
 		</div>
-		<s:message code="base/common.title" />
+		<div class="container">
+			<ol class="breadcrumb">
+				<li><s:message code="base/auth.navigation" /></li>
+				<c:forEach var="node" items="${common:navigate(name)}">
+					<s:url var="uri" value="${node.uri}">
+						<c:if test="${node.uri.contains('{id}')}">
+							<s:param name="id" value="${id}" />
+						</c:if>
+					</s:url>
+					<c:choose>
+						<c:when test="${node.last}">
+							<li class="active"><a href="${uri}"><s:message
+										code="${node.name}.title" /></a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="${uri}"><s:message
+										code="${node.name}.title" /></a></li>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</ol>
+		</div>
 	</div>
-	<div>
-		<ul>
-			<li><s:message code="base/auth.navigation" /></li>
-			<c:forEach var="node" items="${common:navigate(name)}">
-				<s:url var="uri" value="${node.uri}">
-					<c:if test="${node.uri.contains('{id}')}">
-						<s:param name="id" value="${id}" />
-					</c:if>
-				</s:url>
-				<li><a href="${uri}"><s:message code="${node.name}.title" /></a></li>
-			</c:forEach>
-		</ul>
-	</div>
-	<div>
+	<div class="container" role="main">
 		<tiles:insertAttribute name="content" />
 	</div>
-	<div>
-		<s:message code="base/common.copyright" />
+	<div class="footer">
+		<div class="container">
+			<div class="text-center">
+				<s:message code="base/common.copyright" />
+			</div>
+		</div>
 	</div>
 </body>
 </html>
