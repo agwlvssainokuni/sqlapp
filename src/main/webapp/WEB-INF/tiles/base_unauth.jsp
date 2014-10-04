@@ -32,15 +32,25 @@
 <script type="text/javascript"
 	src="<c:url value="/script/sqltool.js" />"></script>
 </head>
-<body>
-	<div>
-		<s:message code="base/common.title" />
+<body role="document">
+	<div class="navbar navbar-default" role="navigation">
+		<div class="container">
+			<div class="nav navbar-header">
+				<div class="navbar-brand">
+					<s:message code="base/common.title" />
+				</div>
+			</div>
+		</div>
 	</div>
-	<div>
+	<div class="container" role="main">
 		<tiles:insertAttribute name="content" />
 	</div>
-	<div>
-		<s:message code="base/common.copyright" />
+	<div class="footer">
+		<div class="container">
+			<div class="text-center">
+				<s:message code="base/common.copyright" />
+			</div>
+		</div>
 	</div>
 </body>
 </html>

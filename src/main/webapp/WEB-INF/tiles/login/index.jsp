@@ -8,44 +8,51 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<h1 class="app-subject">
-	<s:message code="login/index.message.0" />
-</h1>
-<c:if test="${loginFailed}">
-	<div class="app-portion ui-state-error">
-		<s:message code="login/index.message.1" />
+<div class="page-header">
+	<h2>
+		<s:message code="login/index.message.0" />
+	</h2>
+</div>
+<form id="loginForm" action="<c:url value="/login/req" />" method="POST"
+	class="form-horizontal" role="form">
+	<c:if test="${loginFailed}">
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<div class="text-danger bg-danger form-control-static">
+					<s:message code="login/index.message.1" />
+				</div>
+			</div>
+		</div>
+	</c:if>
+	<c:if test="${loggedOut}">
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<div class="text-success bg-success form-control-static">
+					<s:message code="login/index.message.2" />
+				</div>
+			</div>
+		</div>
+	</c:if>
+	<div class="form-group">
+		<label for="loginId" class="col-sm-2 control-label"><s:message
+				code="loginForm.loginId" /></label>
+		<div class="col-sm-10">
+			<input type="text" id="loginId" name="loginId" class="form-control" />
+		</div>
 	</div>
-</c:if>
-<c:if test="${loggedOut}">
-	<div class="app-portion ui-state-highlight">
-		<s:message code="login/index.message.2" />
+	<div class="form-group">
+		<label for="password" class="col-sm-2 control-label"><s:message
+				code="loginForm.password" /></label>
+		<div class="col-sm-10">
+			<input type="password" id="password" name="password"
+				class="form-control" />
+		</div>
 	</div>
-</c:if>
-<form id="loginForm" action="<c:url value="/login/req" />" method="POST">
-	<table>
-		<tbody class="app-transparent">
-			<tr>
-				<td><label for="loginId"><s:message
-							code="loginForm.loginId" /></label></td>
-				<td><input type="text" id="loginId" name="loginId"
-					class="app-width20" /></td>
-			</tr>
-			<tr>
-				<td><label for="password"><s:message
-							code="loginForm.password" /></label></td>
-				<td><input type="password" id="password" name="password"
-					class="app-width20" /></td>
-			</tr>
-		</tbody>
-		<tfoot class="app-transparent">
-			<tr>
-				<td></td>
-				<td>
-					<button type="submit" class="app-button">
-						<s:message code="login/index.loginButton" />
-					</button>
-				</td>
-			</tr>
-		</tfoot>
-	</table>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button type="submit" class="btn btn-primary btn-block">
+				<s:message code="login/index.loginButton" />
+			</button>
+		</div>
+	</div>
 </form>
