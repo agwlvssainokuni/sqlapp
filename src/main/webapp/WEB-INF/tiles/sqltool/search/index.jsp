@@ -45,8 +45,6 @@
 				<f:form servletRelativeAction="/sqltool/search/req" method="POST"
 					modelAttribute="sqltoolSearchForm" cssClass="form-horizontal"
 					role="form">
-					<input type="hidden" id="sz" name="sz"
-						value="<c:out value="${param.sz}" />">
 					<div class="form-group">
 						<f:label path="name" cssClass="col-sm-2 control-label">
 							<s:message code="sqltoolSearchForm.name" />
@@ -120,6 +118,8 @@
 							</f:button>
 						</div>
 					</div>
+					<f:hidden path="pageNo" value="0" />
+					<f:hidden path="pageSz" />
 				</f:form>
 			</div>
 		</div>
@@ -136,11 +136,8 @@
 			<div id="searchResult" class="panel-collapse collapse in">
 				<div class="panel-body">
 					<f:form servletRelativeAction="/sqltool/search/req" method="POST"
-						modelAttribute="sqltoolSearchForm" id="sqltoolSearchFormHidden"
-						cssClass="app-pager-form" role="form">
-						<input type="hidden" id="no2" name="no" class="app-page-no">
-						<input type="hidden" id="sz2" name="sz"
-							value="<c:out value="${param.sz}" />" class="app-page-sz">
+						modelAttribute="sqltoolSearchForm" id="sqltoolSearchForm2"
+						cssClass="app-pager-form">
 						<f:hidden id="name2" path="name" />
 						<f:hidden id="clause2" path="clause" />
 						<f:hidden id="statement2" path="statement" />
@@ -149,8 +146,10 @@
 						<f:hidden id="notPublish2" path="notPublish" />
 						<f:hidden id="registeredFrom2" path="registeredFrom" />
 						<f:hidden id="registeredTo2" path="registeredTo" />
+						<f:hidden id="pageNo2" path="pageNo" cssClass="app-page-no" />
+						<f:hidden id="pageSz2" path="pageSz" cssClass="app-page-sz" />
 					</f:form>
-					<div class="app-pager">
+					<div>
 						<div class="app-pager-desc">
 							<s:message code="common/pager.message.0"
 								arguments="${result.pageSet.last.to+1},${result.pageSet.current.from+1},${result.pageSet.current.to+1}" />
@@ -173,34 +172,46 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="item" items="${result.metadataList}"
-								varStatus="status">
-								<s:url var="uri" value="/sqltool/{type}/{id}">
-									<s:param name="type" value="${item.sqlType}" />
-									<s:param name="id" value="${item.id}" />
-								</s:url>
-								<tr>
-									<td class="text-right"><c:out
-											value="${result.pageSet.current.from + status.count}" /></td>
-									<td><a href="${uri}" title="${item.name}"><c:out
-												value="${item.name}" /></a></td>
-									<td><c:out value="${item.sqlType}" /></td>
-									<td><c:out value="${item.registeredAt}" /></td>
-									<td><c:choose>
-											<c:when test="${!item.publishedFlg.isTrue()}">
-												<s:message code="sqltool/search/index.column.publishedFlg.0" />
-											</c:when>
-											<c:otherwise>
-												<s:message code="sqltool/search/index.column.publishedFlg.1" />
-											</c:otherwise>
-										</c:choose></td>
-									<td><c:out value="${item.ownedBy}" /></td>
-									<td><c:out value="${item.description}" /></td>
-								</tr>
+							<c:forEach var="count" begin="1"
+								end="${result.metadataList.size()}">
+								<s:nestedPath path="result.metadataList[${count - 1}]">
+									<s:url var="uri" value="/sqltool/{type}/{id}">
+										<s:param name="type">
+											<s:bind path="sqlType">${status.value}</s:bind>
+										</s:param>
+										<s:param name="id">
+											<s:bind path="id">${status.value}</s:bind>
+										</s:param>
+									</s:url>
+									<tr>
+										<td class="text-right"><c:out
+												value="${result.pageSet.current.from + count}" /></td>
+										<td><s:bind path="name">
+												<a href="${uri}" title="${status.value}"><c:out
+														value="${status.value}" /></a>
+											</s:bind></td>
+										<td><s:bind path="sqlType">${status.value}</s:bind></td>
+										<td><s:bind path="registeredAt">${status.value}</s:bind></td>
+										<td><s:bind path="publishedFlg">
+												<c:choose>
+													<c:when test="${!status.actualValue.isTrue()}">
+														<s:message
+															code="sqltool/search/index.column.publishedFlg.0" />
+													</c:when>
+													<c:otherwise>
+														<s:message
+															code="sqltool/search/index.column.publishedFlg.1" />
+													</c:otherwise>
+												</c:choose>
+											</s:bind></td>
+										<td><s:bind path="ownedBy">${status.value}</s:bind></td>
+										<td><s:bind path="description">${status.value}</s:bind></td>
+									</tr>
+								</s:nestedPath>
 							</c:forEach>
 						</tbody>
 					</table>
-					<div class="app-pager">
+					<div>
 						<app:pagerLink pageSet="${result.pageSet}" />
 					</div>
 				</div>
