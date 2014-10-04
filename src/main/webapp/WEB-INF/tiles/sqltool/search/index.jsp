@@ -45,7 +45,10 @@
 				<f:form servletRelativeAction="/sqltool/search/req" method="POST"
 					modelAttribute="sqltoolSearchForm" cssClass="form-horizontal"
 					role="form">
-					<div class="form-group">
+					<c:set var="hasError">
+						<s:bind path="name">${status.isError() ? 'has-error' : ''}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
 						<f:label path="name" cssClass="col-sm-2 control-label">
 							<s:message code="sqltoolSearchForm.name" />
 						</f:label>
@@ -95,7 +98,10 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-group">
+					<c:set var="hasError">
+						<s:bind path="registeredFrom">${status.isError() ? 'has-error' : ''}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
 						<f:label path="registeredFrom" cssClass="col-sm-2 control-label">
 							<s:message code="sqltoolSearchForm.registeredFrom" />
 						</f:label>
@@ -103,7 +109,10 @@
 							<f:input path="registeredFrom" cssClass="form-control" />
 						</div>
 					</div>
-					<div class="form-group">
+					<c:set var="hasError">
+						<s:bind path="registeredFrom">${status.isError() ? 'has-error' : ''}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
 						<f:label path="registeredTo" cssClass="col-sm-2 control-label">
 							<s:message code="sqltoolSearchForm.registeredTo" />
 						</f:label>
