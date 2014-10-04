@@ -8,11 +8,9 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<div class="page-header">
-	<h2>
-		<s:message code="login/index.message.0" />
-	</h2>
-</div>
+<h2 class="page-header">
+	<s:message code="login/index.message.0" />
+</h2>
 <c:if test="${loginFailed}">
 	<div class="col-sm-offset-2 col-sm-10">
 		<div class="alert alert-danger" role="alert">

@@ -8,11 +8,9 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<div class="page-header">
-	<h2>
-		<s:message code="secure/home/index.message.0" />
-	</h2>
-</div>
+<h2 class="page-header">
+	<s:message code="secure/home/index.message.0" />
+</h2>
 <div class="list-group">
 	<a class="list-group-item" href="<c:url value="/sqltool/search" />"><s:message
 			code="secure/home/index.menu.search" /></a> <a class="list-group-item"
