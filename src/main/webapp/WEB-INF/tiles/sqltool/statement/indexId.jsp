@@ -164,7 +164,7 @@
 							<f:button type="submit" name="download" class="btn btn-default">
 								<s:message code="sqltool/statement/indexId.downloadButton" />
 							</f:button>
-							<f:button type="submit" name="create" class="btn btn-default">
+							<f:button type="submit" name="update" class="btn btn-default">
 								<s:message code="sqltool/statement/indexId.updateButton" />
 							</f:button>
 						</div>
