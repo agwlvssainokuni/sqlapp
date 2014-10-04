@@ -26,7 +26,10 @@
 						code="sqltool/statement/indexId.message.1" /></a>
 			</h3>
 		</div>
-		<div id="metadataForm" class="panel-collapse collapse">
+		<c:set var="hasError">
+			<s:hasBindErrors name="sqltoolMetadataForm">in</s:hasBindErrors>
+		</c:set>
+		<div id="metadataForm" class="panel-collapse collapse ${hasError}">
 			<div class="panel-body">
 				<s:hasBindErrors name="sqltoolMetadataForm">
 					<div class="col-sm-offset-2 col-sm-10">
@@ -42,7 +45,10 @@
 					modelAttribute="sqltoolMetadataForm" cssClass="form-horizontal"
 					role="form">
 					<f:hidden path="lockVersion" />
-					<div class="form-group">
+					<c:set var="hasError">
+						<s:bind path="name">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
 						<f:label path="name" cssClass="col-sm-2 control-label">
 							<s:message code="sqltoolMetadataForm.name" />
 						</f:label>
@@ -50,7 +56,10 @@
 							<f:input path="name" cssClass="col-sm-2 form-control" />
 						</div>
 					</div>
-					<div class="form-group">
+					<c:set var="hasError">
+						<s:bind path="name">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
 						<f:label path="description" cssClass="col-sm-2 control-label">
 							<s:message code="sqltoolMetadataForm.description" />
 						</f:label>
@@ -111,7 +120,10 @@
 					modelAttribute="sqltoolStatementForm" cssClass="form-horizontal"
 					role="form">
 					<f:hidden path="lockVersion" />
-					<div class="form-group">
+					<c:set var="hasError">
+						<s:bind path="databaseName">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
 						<f:label path="databaseName" cssClass="col-sm-2 control-label">
 							<s:message code="sqltoolStatementForm.databaseName" />
 						</f:label>
@@ -122,7 +134,10 @@
 							</f:select>
 						</div>
 					</div>
-					<div class="form-group">
+					<c:set var="hasError">
+						<s:bind path="sql">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
 						<f:label path="sql" cssClass="col-sm-2 control-label">
 							<s:message code="sqltoolStatementForm.sql" />
 						</f:label>
@@ -130,7 +145,10 @@
 							<f:textarea path="sql" cssClass="col-sm-2 form-control" />
 						</div>
 					</div>
-					<div class="form-group">
+					<c:set var="hasError">
+						<s:bind path="paramMap">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
 						<f:label path="paramMap" cssClass="col-sm-2 control-label">
 							<s:message code="sqltoolStatementForm.paramMap" />
 						</f:label>
