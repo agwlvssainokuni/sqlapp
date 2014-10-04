@@ -14,16 +14,16 @@
 <h2 class="page-header">
 	<s:message code="sqltool/search/index.message.0" />
 </h2>
-<div id="accordion" class="panel-group">
+<div class="panel-group">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
-				<a data-toggle="collapse" data-parent="#accordion"
-					href="#searchForm"><s:message
+				<a data-toggle="collapse" href="#searchForm"><s:message
 						code="sqltool/search/index.message.1" /></a>
 			</h3>
 		</div>
-		<div id="searchForm" class="panel-collapse collapse ${hasResultList ? '' : 'in'}">
+		<div id="searchForm"
+			class="panel-collapse collapse ${hasResultList ? '' : 'in'}">
 			<div class="panel-body">
 				<s:hasBindErrors name="sqltoolSearchForm">
 					<div class="col-sm-offset-2 col-sm-10">
@@ -128,8 +128,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">
-					<a data-toggle="collapse" data-parent="#accordion"
-						href="#searchResult"><s:message
+					<a data-toggle="collapse" href="#searchResult"><s:message
 							code="sqltool/search/index.message.2" /></a>
 				</h3>
 			</div>
