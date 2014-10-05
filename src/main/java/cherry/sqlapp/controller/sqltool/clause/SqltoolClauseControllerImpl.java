@@ -98,25 +98,25 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 	private LogicErrorUtil logicErrorUtil;
 
 	@Override
-	public SqltoolClauseForm getForm() {
+	public SqltoolClauseForm getForm(Integer ref, Authentication auth) {
+		if (ref != null) {
+			SqltoolMetadata md = metadataService.findById(ref, auth.getName());
+			if (md != null) {
+				SqltoolClause record = clauseService.findById(ref);
+				if (record != null) {
+					return formUtil.getForm(record);
+				}
+			}
+		}
 		SqltoolClauseForm form = new SqltoolClauseForm();
 		form.setDatabaseName(dataSourceDef.getDefaultName());
 		return form;
 	}
 
 	@Override
-	public ModelAndView index(Integer ref, Authentication auth, Locale locale,
+	public ModelAndView index(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		if (ref != null) {
-			SqltoolMetadata md = metadataService.findById(ref, auth.getName());
-			if (md != null) {
-				SqltoolClause record = clauseService.findById(ref);
-				if (record != null) {
-					mav.addObject(formUtil.getForm(record));
-				}
-			}
-		}
 		return mav;
 	}
 

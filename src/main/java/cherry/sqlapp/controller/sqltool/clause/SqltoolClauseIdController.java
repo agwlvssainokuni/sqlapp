@@ -48,11 +48,12 @@ public interface SqltoolClauseIdController {
 
 	public static final String PARAM_SZ = "sz";
 
-	@ModelAttribute("sqltoolMetadataForm")
-	SqltoolMetadataForm getMetadata();
+	@ModelAttribute()
+	SqltoolMetadataForm getMetadata(@PathVariable(PATH_VAR) int id,
+			Authentication auth);
 
-	@ModelAttribute("sqltoolClauseForm")
-	SqltoolClauseForm getForm();
+	@ModelAttribute()
+	SqltoolClauseForm getForm(@PathVariable(PATH_VAR) int id);
 
 	@RequestMapping()
 	ModelAndView index(@PathVariable(PATH_VAR) int id, Authentication auth,

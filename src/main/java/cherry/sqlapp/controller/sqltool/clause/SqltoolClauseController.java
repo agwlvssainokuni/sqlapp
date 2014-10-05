@@ -43,14 +43,14 @@ public interface SqltoolClauseController {
 
 	public static final String PARAM_SZ = "sz";
 
-	@ModelAttribute("sqltoolClauseForm")
-	SqltoolClauseForm getForm();
+	@ModelAttribute()
+	SqltoolClauseForm getForm(
+			@RequestParam(value = PARAM_REF, required = false) Integer ref,
+			Authentication auth);
 
 	@RequestMapping()
-	ModelAndView index(
-			@RequestParam(value = PARAM_REF, required = false) Integer ref,
-			Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request);
+	ModelAndView index(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
 	ModelAndView request(@Validated SqltoolClauseForm form,
