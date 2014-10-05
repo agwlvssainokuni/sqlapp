@@ -32,7 +32,7 @@ public enum FlagCode implements Code<Integer> {
 		return this.code;
 	}
 
-	public boolean isTrue() {
+	public boolean booleanValue() {
 		return this == TRUE;
 	}
 

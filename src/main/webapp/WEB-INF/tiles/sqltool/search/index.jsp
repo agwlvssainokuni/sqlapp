@@ -183,16 +183,8 @@
 										<td><s:bind path="sqlType">${status.value}</s:bind></td>
 										<td><s:bind path="registeredAt">${status.value}</s:bind></td>
 										<td><s:bind path="publishedFlg">
-												<c:choose>
-													<c:when test="${!status.actualValue.isTrue()}">
-														<s:message
-															code="sqltool/search/index.column.publishedFlg.0" />
-													</c:when>
-													<c:otherwise>
-														<s:message
-															code="sqltool/search/index.column.publishedFlg.1" />
-													</c:otherwise>
-												</c:choose>
+												<s:message
+													code="sqltool/search/index.column.publishedFlg.${status.actualValue.code()}" />
 											</s:bind></td>
 										<td><s:bind path="ownedBy">${status.value}</s:bind></td>
 										<td><s:bind path="description">${status.value}</s:bind></td>
