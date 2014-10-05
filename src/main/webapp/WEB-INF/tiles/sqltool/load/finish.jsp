@@ -8,12 +8,10 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<h1 class="app-subject">
+<h2 class="page-header">
 	<s:message code="sqltool/load/finish.message.0" />
-</h1>
-<div class="app-portion ui-state-highlight">
-	<div>
-		<s:message code="sqltool/load/finish.message.1"
-			arguments="${asyncParam.procId}" />
-	</div>
+</h2>
+<div class="alert alert-info" role="alert">
+	<s:message code="sqltool/load/finish.message.1"
+		arguments="${asyncParam.procId}" />
 </div>
