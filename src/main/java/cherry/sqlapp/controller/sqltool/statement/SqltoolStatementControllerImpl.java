@@ -95,25 +95,25 @@ public class SqltoolStatementControllerImpl implements
 	private LogicErrorUtil logicErrorUtil;
 
 	@Override
-	public SqltoolStatementForm getForm() {
+	public SqltoolStatementForm getForm(Integer ref, Authentication auth) {
+		if (ref != null) {
+			SqltoolMetadata md = metadataService.findById(ref, auth.getName());
+			if (md != null) {
+				SqltoolStatement record = statementService.findById(ref);
+				if (record != null) {
+					return formUtil.getForm(record);
+				}
+			}
+		}
 		SqltoolStatementForm form = new SqltoolStatementForm();
 		form.setDatabaseName(dataSourceDef.getDefaultName());
 		return form;
 	}
 
 	@Override
-	public ModelAndView index(Integer ref, Authentication auth, Locale locale,
+	public ModelAndView index(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		if (ref != null) {
-			SqltoolMetadata md = metadataService.findById(ref, auth.getName());
-			if (md != null) {
-				SqltoolStatement record = statementService.findById(ref);
-				if (record != null) {
-					mav.addObject(formUtil.getForm(record));
-				}
-			}
-		}
 		return mav;
 	}
 
