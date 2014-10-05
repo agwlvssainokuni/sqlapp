@@ -17,6 +17,7 @@
 package cherry.sqlapp.controller.sqltool.search;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -46,15 +47,9 @@ public class SqltoolSearchForm implements Serializable {
 	@CustomDateTimeFormat(Range.TO)
 	private LocalDateTime registeredTo;
 
-	private boolean clause = true;
+	private List<SqlType> sqlType;
 
-	private boolean statement = true;
-
-	private boolean load = true;
-
-	private boolean publish = true;
-
-	private boolean notPublish = true;
+	private List<Published> published;
 
 	private int pageNo = 0;
 

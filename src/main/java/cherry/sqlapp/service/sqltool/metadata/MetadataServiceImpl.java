@@ -40,7 +40,6 @@ import cherry.sqlapp.db.gen.query.QSqltoolMetadata;
 import com.mysema.query.BooleanBuilder;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.types.Expression;
-import com.mysema.query.types.Predicate;
 
 @Component
 public class MetadataServiceImpl implements MetadataService {
@@ -111,33 +110,23 @@ public class MetadataServiceImpl implements MetadataService {
 							.getRegisteredTo())));
 				}
 
-				Predicate pub = m.publishedFlg.ne(FlagCode.FALSE.code());
-				Predicate prv = m.publishedFlg.eq(FlagCode.FALSE.code()).and(
-						m.ownedBy.eq(cond.getLoginId()));
 				BooleanBuilder bb = new BooleanBuilder();
-				if (cond.isPublish()) {
-					bb.or(pub);
+				if (cond.getPublishedFlg().isEmpty()
+						|| cond.getPublishedFlg().contains(FlagCode.TRUE)) {
+					bb.or(m.publishedFlg.ne(FlagCode.FALSE.code()));
 				}
-				if (cond.isNotPublish()) {
-					bb.or(prv);
-				}
-				if (!bb.hasValue()) {
-					bb.or(pub);
-					bb.or(prv);
+				if (cond.getPublishedFlg().isEmpty()
+						|| cond.getPublishedFlg().contains(FlagCode.FALSE)) {
+					bb.or(m.publishedFlg.eq(FlagCode.FALSE.code()).and(
+							m.ownedBy.eq(cond.getLoginId())));
 				}
 				where.and(bb);
 
-				List<String> code = new ArrayList<>();
-				if (cond.isClause()) {
-					code.add(SqlTypeCode.CLAUSE.code());
-				}
-				if (cond.isStatement()) {
-					code.add(SqlTypeCode.STATEMENT.code());
-				}
-				if (cond.isLoad()) {
-					code.add(SqlTypeCode.LOAD.code());
-				}
-				if (!code.isEmpty()) {
+				if (!cond.getSqlType().isEmpty()) {
+					List<String> code = new ArrayList<>();
+					for (SqlTypeCode c : cond.getSqlType()) {
+						code.add(c.code());
+					}
 					where.and(m.sqlType.in(code));
 				}
 

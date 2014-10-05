@@ -14,36 +14,24 @@
  * limitations under the License.
  */
 
-package cherry.sqlapp.service.sqltool.metadata;
-
-import java.util.List;
-
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
-import org.joda.time.LocalDateTime;
+package cherry.sqlapp.controller.sqltool.search;
 
 import cherry.spring.common.type.FlagCode;
-import cherry.sqlapp.code.SqlTypeCode;
 
-@Getter
-@Setter
-@EqualsAndHashCode(callSuper = false)
-@ToString(callSuper = false)
-public class MetadataCondition {
+public enum Published {
+	//
+	PUBLIC(FlagCode.TRUE),
+	//
+	PRIVATE(FlagCode.FALSE);
 
-	private String name;
+	private final FlagCode flagCode;
 
-	private List<SqlTypeCode> sqlType;
+	private Published(FlagCode flagCode) {
+		this.flagCode = flagCode;
+	}
 
-	private List<FlagCode> publishedFlg;
-
-	private LocalDateTime registeredFrom;
-
-	private LocalDateTime registeredTo;
-
-	private String loginId;
+	public FlagCode getFlagCode() {
+		return this.flagCode;
+	}
 
 }

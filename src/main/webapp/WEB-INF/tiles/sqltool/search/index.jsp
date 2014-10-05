@@ -9,6 +9,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="common" uri="urn:springapp:common"%>
 <c:set var="hasResultList"
 	value="${result != null && !result.metadataList.isEmpty()}" />
 <h2 class="page-header">
@@ -62,42 +63,26 @@
 						<label class="col-sm-2 control-label"><s:message
 								code="sqltool/search/index.form.type" /></label>
 						<div class="col-sm-10">
-							<div class="checkbox-inline">
-								<c:set var="label">
-									<s:message code="sqltool/search/index.form.type.clause" />
-								</c:set>
-								<f:checkbox path="clause" label="${label}" />
-							</div>
-							<div class="checkbox-inline">
-								<c:set var="label">
-									<s:message code="sqltool/search/index.form.type.statement" />
-								</c:set>
-								<f:checkbox path="statement" label="${label}" />
-							</div>
-							<div class="checkbox-inline">
-								<c:set var="label">
-									<s:message code="sqltool/search/index.form.type.load" />
-								</c:set>
-								<f:checkbox path="load" label="${label}" />
-							</div>
+							<c:forEach var="item"
+								items="${common:getLabeledEnumList('cherry.sqlapp.controller.sqltool.search.SqlType')}">
+								<div class="checkbox-inline">
+									<f:checkbox path="sqlType" value="${item.enumName}"
+										label="${item.enumLabel}" />
+								</div>
+							</c:forEach>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label"><s:message
 								code="sqltool/search/index.form.published" /></label>
 						<div class="col-sm-10">
-							<div class="checkbox-inline">
-								<c:set var="label">
-									<s:message code="sqltool/search/index.form.published.public" />
-								</c:set>
-								<f:checkbox path="publish" label="${label}" />
-							</div>
-							<div class="checkbox-inline">
-								<c:set var="label">
-									<s:message code="sqltool/search/index.form.published.private" />
-								</c:set>
-								<f:checkbox path="notPublish" label="${label}" />
-							</div>
+							<c:forEach var="item"
+								items="${common:getLabeledEnumList('cherry.sqlapp.controller.sqltool.search.Published')}">
+								<div class="checkbox-inline">
+									<f:checkbox path="published" value="${item.enumName}"
+										label="${item.enumLabel}" />
+								</div>
+							</c:forEach>
 						</div>
 					</div>
 					<c:set var="hasError">
@@ -149,11 +134,8 @@
 						<f:hidden id="pageNo2" path="pageNo" cssClass="app-page-no" />
 						<f:hidden id="pageSz2" path="pageSz" cssClass="app-page-sz" />
 						<f:hidden id="name2" path="name" />
-						<f:hidden id="clause2" path="clause" />
-						<f:hidden id="statement2" path="statement" />
-						<f:hidden id="load2" path="load" />
-						<f:hidden id="publish2" path="publish" />
-						<f:hidden id="notPublish2" path="notPublish" />
+						<f:hidden id="sqlType2" path="sqlType" />
+						<f:hidden id="published2" path="published" />
 						<f:hidden id="registeredFrom2" path="registeredFrom" />
 						<f:hidden id="registeredTo2" path="registeredTo" />
 					</f:form>

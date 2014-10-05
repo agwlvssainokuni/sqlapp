@@ -16,6 +16,7 @@
 
 package cherry.sqlapp.controller.sqltool.search;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,6 +63,9 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 		form.setRegisteredFrom(LocalDateTimeUtil.rangeFrom(today
 				.minusDays(defaultFromDays)));
 		form.setRegisteredTo(LocalDateTimeUtil.rangeTo(today).minusSeconds(1));
+		form.setSqlType(Arrays.asList(SqlType.CLAUSE, SqlType.STATEMENT,
+				SqlType.LOAD));
+		form.setPublished(Arrays.asList(Published.PUBLIC, Published.PRIVATE));
 		return form;
 	}
 

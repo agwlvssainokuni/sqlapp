@@ -16,8 +16,13 @@
 
 package cherry.sqlapp.controller.sqltool.search;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
+import cherry.spring.common.type.FlagCode;
+import cherry.sqlapp.code.SqlTypeCode;
 import cherry.sqlapp.service.sqltool.metadata.MetadataCondition;
 
 @Component("searchFormUtil")
@@ -25,17 +30,28 @@ public class FormUtil {
 
 	public MetadataCondition createSqlCondition(SqltoolSearchForm form,
 			String loginId) {
+
+		List<SqlTypeCode> sqlType = new ArrayList<>();
+		if (form.getSqlType() != null) {
+			for (SqlType s : form.getSqlType()) {
+				sqlType.add(s.getSqlTypeCode());
+			}
+		}
+
+		List<FlagCode> publishedFlg = new ArrayList<>();
+		if (form.getPublished() != null) {
+			for (Published p : form.getPublished()) {
+				publishedFlg.add(p.getFlagCode());
+			}
+		}
+
 		MetadataCondition cond = new MetadataCondition();
 		cond.setName(form.getName());
-		cond.setClause(form.isClause());
-		cond.setStatement(form.isStatement());
-		cond.setLoad(form.isLoad());
-		cond.setPublish(form.isPublish());
-		cond.setNotPublish(form.isNotPublish());
+		cond.setSqlType(sqlType);
+		cond.setPublishedFlg(publishedFlg);
 		cond.setRegisteredFrom(form.getRegisteredFrom());
 		cond.setRegisteredTo(form.getRegisteredTo());
 		cond.setLoginId(loginId);
 		return cond;
 	}
-
 }
