@@ -64,4 +64,8 @@ public class SqltoolClauseForm implements Serializable {
 
 	private Integer lockVersion;
 
+	private int pageNo;
+
+	private int pageSz;
+
 }

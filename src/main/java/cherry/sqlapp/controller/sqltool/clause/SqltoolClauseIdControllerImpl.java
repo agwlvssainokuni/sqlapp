@@ -125,8 +125,8 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 
 	@Override
 	public ModelAndView request(int id, SqltoolClauseForm form,
-			BindingResult binding, int pageNo, int pageSz, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request) {
+			BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
@@ -136,13 +136,15 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 
 		QueryBuilder builder = formUtil.getQueryBuilder(form);
 		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
+		int pageNo = form.getPageNo();
+		int pageSz = (form.getPageSz() <= 0 ? defaultPageSize : form
+				.getPageSz());
 
 		try {
 
 			ResultSet resultSet = new ResultSet();
 			PageSet pageSet = execQueryService.query(form.getDatabaseName(),
-					builder, paramMap, pageNo, (pageSz <= 0 ? defaultPageSize
-							: pageSz), resultSet);
+					builder, paramMap, pageNo, pageSz, resultSet);
 
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);

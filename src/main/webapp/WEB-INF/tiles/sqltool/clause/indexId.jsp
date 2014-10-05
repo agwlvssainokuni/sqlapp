@@ -124,8 +124,8 @@
 				<f:form servletRelativeAction="${baseUri}/req" method="POST"
 					modelAttribute="sqltoolClauseForm" cssClass="form-horizontal"
 					role="form">
-					<input type="hidden" id="sz" name="sz"
-						value="<c:out value="${param.sz}" />">
+					<f:hidden path="pageNo" value="0" />
+					<f:hidden path="pageSz" />
 					<f:hidden path="lockVersion" />
 					<c:set var="hasError">
 						<s:bind path="databaseName">${status.isError() ? "has-error" : ""}</s:bind>
@@ -247,9 +247,8 @@
 				<f:form servletRelativeAction="${baseUri}/req" method="POST"
 					modelAttribute="sqltoolClauseForm" id="sqltoolClause2"
 					class="app-pager-form">
-					<input type="hidden" id="no2" name="no" class="app-page-no">
-					<input type="hidden" id="sz2" name="sz"
-						value="<c:out value="${param.sz}" />" class="app-page-sz">
+					<f:hidden id="pageNo2" path="pageNo" cssClass="app-page-no" />
+					<f:hidden id="pageSz2" path="pageSz" cssClass="app-page-sz" />
 					<f:hidden id="lockVersion2" path="lockVersion" />
 					<f:hidden id="databaseName2" path="databaseName" />
 					<f:hidden id="select2" path="select" />

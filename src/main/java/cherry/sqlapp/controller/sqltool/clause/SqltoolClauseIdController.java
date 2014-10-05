@@ -28,7 +28,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
@@ -44,10 +43,6 @@ public interface SqltoolClauseIdController {
 
 	public static final String PATH_VAR = "id";
 
-	public static final String PARAM_NO = "no";
-
-	public static final String PARAM_SZ = "sz";
-
 	@ModelAttribute()
 	SqltoolMetadataForm getMetadata(@PathVariable(PATH_VAR) int id,
 			Authentication auth);
@@ -62,8 +57,6 @@ public interface SqltoolClauseIdController {
 	@RequestMapping(URI_PATH_REQ)
 	ModelAndView request(@PathVariable(PATH_VAR) int id,
 			@Validated SqltoolClauseForm form, BindingResult binding,
-			@RequestParam(value = PARAM_NO, defaultValue = "0") int pageNo,
-			@RequestParam(value = PARAM_SZ, defaultValue = "0") int pageSz,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 

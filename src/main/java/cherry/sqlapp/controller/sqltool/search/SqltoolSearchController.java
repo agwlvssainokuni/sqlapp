@@ -37,11 +37,7 @@ public interface SqltoolSearchController {
 
 	public static final String URI_PATH_REQ = "req";
 
-	public static final String PARAM_NO = "no";
-
-	public static final String PARAM_SZ = "sz";
-
-	@ModelAttribute("sqltoolSearchForm")
+	@ModelAttribute()
 	SqltoolSearchForm getForm();
 
 	@RequestMapping()
