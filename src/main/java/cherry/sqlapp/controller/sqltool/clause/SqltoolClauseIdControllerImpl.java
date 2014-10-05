@@ -16,6 +16,8 @@
 
 package cherry.sqlapp.controller.sqltool.clause;
 
+import static cherry.spring.common.mvc.Contract.shouldExist;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Locale;
@@ -100,62 +102,52 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 	private LogicErrorUtil logicErrorUtil;
 
 	@Override
-	public SqltoolMetadataForm getMetadata() {
-		return new SqltoolMetadataForm();
+	public SqltoolMetadataForm getMetadata(int id, Authentication auth) {
+		SqltoolMetadata md = metadataService.findById(id, auth.getName());
+		shouldExist(md, SqltoolMetadata.class, id, auth.getName());
+		return mdFormUtil.getMdForm(md);
 	}
 
 	@Override
-	public SqltoolClauseForm getForm() {
-		SqltoolClauseForm form = new SqltoolClauseForm();
-		form.setDatabaseName(dataSourceDef.getDefaultName());
-		return form;
+	public SqltoolClauseForm getForm(int id) {
+		SqltoolClause record = clauseService.findById(id);
+		shouldExist(record, SqltoolClause.class, id);
+		return formUtil.getForm(record);
 	}
 
 	@Override
 	public ModelAndView index(int id, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
-
-		SqltoolMetadata md = metadataService.findById(id, auth.getName());
-		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
-
-		SqltoolClause record = clauseService.findById(id);
-		SqltoolClauseForm form = formUtil.getForm(record);
-
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(PATH_VAR, id);
-		mav.addObject(mdForm);
-		mav.addObject(form);
 		return mav;
 	}
 
 	@Override
 	public ModelAndView request(int id, SqltoolClauseForm form,
-			BindingResult binding, int pageNo, int pageSz, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request) {
-
-		SqltoolMetadata md = metadataService.findById(id, auth.getName());
-		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
+			BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(mdForm);
 			return mav;
 		}
 
 		QueryBuilder builder = formUtil.getQueryBuilder(form);
 		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
+		int pageNo = form.getPageNo();
+		int pageSz = (form.getPageSz() <= 0 ? defaultPageSize : form
+				.getPageSz());
 
 		try {
 
 			ResultSet resultSet = new ResultSet();
 			PageSet pageSet = execQueryService.query(form.getDatabaseName(),
-					builder, paramMap, pageNo, (pageSz <= 0 ? defaultPageSize
-							: pageSz), resultSet);
+					builder, paramMap, pageNo, pageSz, resultSet);
 
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(mdForm);
 			mav.addObject(pageSet);
 			mav.addObject(resultSet);
 			return mav;
@@ -164,7 +156,6 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(mdForm);
 			return mav;
 		}
 	}
@@ -175,13 +166,9 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 			SitePreference sitePref, HttpServletRequest request,
 			HttpServletResponse response) {
 
-		SqltoolMetadata md = metadataService.findById(id, auth.getName());
-		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
-
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(mdForm);
 			return mav;
 		}
 
@@ -209,7 +196,6 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(mdForm);
 			return mav;
 		}
 	}
@@ -263,13 +249,9 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 			BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
 
-		SqltoolClause record = clauseService.findById(id);
-		SqltoolClauseForm form = formUtil.getForm(record);
-
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(form);
 			return mav;
 		}
 
@@ -291,7 +273,6 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(form);
 			return mav;
 		}
 	}

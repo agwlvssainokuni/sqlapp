@@ -8,18 +8,16 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<h1 class="app-subject">
+<h2 class="page-header">
 	<s:message code="secure/home/index.message.0" />
-</h1>
-<div class="app-portion">
-	<ul>
-		<li><a href="<c:url value="/sqltool/search" />"><s:message
-					code="secure/home/index.menu.search" /></a></li>
-		<li><a href="<c:url value="/sqltool/clause" />"><s:message
-					code="secure/home/index.menu.execClause" /></a></li>
-		<li><a href="<c:url value="/sqltool/statement" />"><s:message
-					code="secure/home/index.menu.execStatement" /></a></li>
-		<li><a href="<c:url value="/sqltool/load" />"><s:message
-					code="secure/home/index.menu.execLoad" /></a></li>
-	</ul>
+</h2>
+<div class="list-group">
+	<a class="list-group-item" href="<c:url value="/sqltool/search" />"><s:message
+			code="secure/home/index.menu.search" /></a> <a class="list-group-item"
+		href="<c:url value="/sqltool/clause" />"><s:message
+			code="secure/home/index.menu.execClause" /></a> <a
+		class="list-group-item" href="<c:url value="/sqltool/statement" />"><s:message
+			code="secure/home/index.menu.execStatement" /></a> <a
+		class="list-group-item" href="<c:url value="/sqltool/load" />"><s:message
+			code="secure/home/index.menu.execLoad" /></a>
 </div>

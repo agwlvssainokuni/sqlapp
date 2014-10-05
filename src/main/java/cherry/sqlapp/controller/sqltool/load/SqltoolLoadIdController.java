@@ -45,11 +45,12 @@ public interface SqltoolLoadIdController {
 
 	public static final String PATH_VAR = "id";
 
-	@ModelAttribute("sqltoolMetadataForm")
-	SqltoolMetadataForm getMetadata();
+	@ModelAttribute()
+	SqltoolMetadataForm getMetadata(@PathVariable(PATH_VAR) int id,
+			Authentication auth);
 
-	@ModelAttribute("sqltoolLoadForm")
-	SqltoolLoadForm getForm();
+	@ModelAttribute()
+	SqltoolLoadForm getForm(@PathVariable(PATH_VAR) int id);
 
 	@RequestMapping()
 	ModelAndView index(@PathVariable(PATH_VAR) int id, Authentication auth,

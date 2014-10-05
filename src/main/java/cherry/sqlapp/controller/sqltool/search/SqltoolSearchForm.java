@@ -56,4 +56,8 @@ public class SqltoolSearchForm implements Serializable {
 
 	private boolean notPublish = true;
 
+	private int pageNo = 0;
+
+	private int pageSz = 0;
+
 }

@@ -15,146 +15,178 @@
 </s:url>
 <c:set var="hasResultList"
 	value="${resultSet != null && pageSet != null}" />
-<script type="text/javascript">
-	$(function() {
-		$(".accordion").accordion({
-			collapsible : true,
-			animate : false,
-			heightStyle : "content",
-			active : ${hasResultList ? 'false' : 1}
-		}).removeClass("ui-widget");
-	});
-</script>
-<h1 class="app-subject">
+<h2 class="page-header">
 	<s:message code="sqltool/statement/indexId.message.0" />
-</h1>
-<div class="app-portion accordion">
-	<h1>
-		<s:message code="sqltool/statement/indexId.message.1" />
-	</h1>
-	<div>
-		<s:hasBindErrors name="sqltoolMetadataForm">
-			<div class="ui-state-error">
-				<f:errors path="sqltoolMetadataForm" element="div" />
-				<f:errors path="sqltoolMetadataForm.name" element="div" />
-				<f:errors path="sqltoolMetadataForm.description" element="div" />
-				<f:errors path="sqltoolMetadataForm.lockVersion" element="div" />
-			</div>
-		</s:hasBindErrors>
-		<f:form servletRelativeAction="${baseUri}/metadata" method="POST"
-			modelAttribute="sqltoolMetadataForm">
-			<f:hidden path="lockVersion" />
-			<table class="app-collabel">
-				<tbody>
-					<tr>
-						<th><f:label path="name">
-								<s:message code="sqltoolMetadataForm.name" />
-							</f:label></th>
-						<td><f:input path="name" cssClass="app-width50"
-								cssErrorClass="app-width50 ui-state-error" /></td>
-					</tr>
-					<tr>
-						<th><f:label path="description">
-								<s:message code="sqltoolMetadataForm.description" />
-							</f:label></th>
-						<td><f:textarea path="description"
-								cssClass="app-width50 app-height3"
-								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
-					</tr>
-					<tr>
-						<th><f:label path="ownedBy">
-								<s:message code="sqltoolMetadataForm.ownedBy" />
-							</f:label></th>
-						<td><f:input path="ownedBy" disabled="true" /></td>
-					</tr>
-					<tr>
-						<th><f:label path="publishedFlg">
-								<s:message code="sqltoolMetadataForm.publishedFlg" />
-							</f:label></th>
-						<td><f:checkbox path="publishedFlg" /></td>
-					</tr>
-				</tbody>
-				<tfoot class="app-transparent">
-					<tr>
-						<td></td>
-						<td><f:button type="submit" name="proc" value="update"
-								class="app-button">
+</h2>
+<div class="panel-group">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				<a data-toggle="collapse" href="#metadataForm"><s:message
+						code="sqltool/statement/indexId.message.1" /></a>
+			</h3>
+		</div>
+		<c:set var="hasError">
+			<s:hasBindErrors name="sqltoolMetadataForm">in</s:hasBindErrors>
+		</c:set>
+		<div id="metadataForm" class="panel-collapse collapse ${hasError}">
+			<div class="panel-body">
+				<s:hasBindErrors name="sqltoolMetadataForm">
+					<div class="col-sm-offset-2 col-sm-10">
+						<div class="alert alert-danger" role="alert">
+							<f:errors path="sqltoolMetadataForm" element="div" />
+							<f:errors path="sqltoolMetadataForm.name" element="div" />
+							<f:errors path="sqltoolMetadataForm.description" element="div" />
+							<f:errors path="sqltoolMetadataForm.lockVersion" element="div" />
+						</div>
+					</div>
+				</s:hasBindErrors>
+				<f:form servletRelativeAction="${baseUri}/metadata" method="POST"
+					modelAttribute="sqltoolMetadataForm" cssClass="form-horizontal"
+					role="form">
+					<f:hidden path="lockVersion" />
+					<c:set var="hasError">
+						<s:bind path="name">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
+						<f:label path="name" cssClass="col-sm-2 control-label">
+							<s:message code="sqltoolMetadataForm.name" />
+						</f:label>
+						<div class="col-sm-10">
+							<f:input path="name" cssClass="col-sm-2 form-control" />
+						</div>
+					</div>
+					<c:set var="hasError">
+						<s:bind path="name">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
+						<f:label path="description" cssClass="col-sm-2 control-label">
+							<s:message code="sqltoolMetadataForm.description" />
+						</f:label>
+						<div class="col-sm-10">
+							<f:textarea path="description" cssClass="col-sm-2 form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<f:label path="ownedBy" cssClass="col-sm-2 control-label">
+							<s:message code="sqltoolMetadataForm.ownedBy" />
+						</f:label>
+						<div class="col-sm-10">
+							<f:input path="ownedBy" cssClass="col-sm-2 form-control"
+								disabled="true" />
+						</div>
+					</div>
+					<div class="form-group">
+						<f:label path="publishedFlg" cssClass="col-sm-2 control-label">
+							<s:message code="sqltoolMetadataForm.publishedFlg" />
+						</f:label>
+						<div class="col-sm-10">
+							<f:checkbox path="publishedFlg" cssClass="col-sm-2 form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<f:button type="submit" class="btn btn-primary">
 								<s:message code="sqltool/statement/indexId.updateButton" />
-							</f:button></td>
-					</tr>
-				</tfoot>
-			</table>
-		</f:form>
-	</div>
-	<h1>
-		<s:message code="sqltool/statement/indexId.message.2" />
-	</h1>
-	<div>
-		<s:hasBindErrors name="sqltoolStatementForm">
-			<div class="ui-state-error">
-				<f:errors path="sqltoolStatementForm" element="div" />
-				<f:errors path="sqltoolStatementForm.databaseName" element="div" />
-				<f:errors path="sqltoolStatementForm.sql" element="div" />
-				<f:errors path="sqltoolStatementForm.paramMap" element="div" />
-				<f:errors path="sqltoolStatementForm.lockVersion" element="div" />
+							</f:button>
+						</div>
+					</div>
+				</f:form>
 			</div>
-		</s:hasBindErrors>
-		<f:form servletRelativeAction="${baseUri}/req" method="POST"
-			modelAttribute="sqltoolStatementForm">
-			<f:hidden path="lockVersion" />
-			<table class="app-collabel">
-				<tbody>
-					<tr>
-						<th><f:label path="databaseName">
-								<s:message code="sqltoolStatementForm.databaseName" />
-							</f:label></th>
-						<td><f:select path="databaseName"
-								cssClass="app-width50 ui-widget"
-								cssErrorClass="app-width50 ui-widget ui-state-error">
-								<c:set var="dataSourceDef" value="${sqlapp:dataSourceDef()}" />
-								<f:options items="${dataSourceDef.names}" />
-							</f:select></td>
-					</tr>
-					<tr>
-						<th><f:label path="sql">
-								<s:message code="sqltoolStatementForm.sql" />
-							</f:label></th>
-						<td><f:textarea path="sql" cssClass="app-width50 app-height5"
-								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
-					</tr>
-					<tr>
-						<th><f:label path="paramMap">
-								<s:message code="sqltoolStatementForm.paramMap" />
-							</f:label></th>
-						<td><f:textarea path="paramMap"
-								cssClass="app-width50 app-height3"
-								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
-					</tr>
-				</tbody>
-				<tfoot class="app-transparent">
-					<tr>
-						<td></td>
-						<td><f:button type="submit" class="app-button">
-								<s:message code="sqltool/statement/indexId.execButton" />
-							</f:button> <f:button type="submit" name="download" class="app-button">
-								<s:message code="sqltool/statement/indexId.downloadButton" />
-							</f:button> <f:button type="submit" name="update" class="app-button">
-								<s:message code="sqltool/statement/indexId.updateButton" />
-							</f:button></td>
-					</tr>
-				</tfoot>
-			</table>
-		</f:form>
-	</div>
-</div>
-<c:if test="${hasResultList}">
-	<div class="app-portion">
-		<h1 class="app-subject">
-			<s:message code="sqltool/statement/indexId.message.3" />
-		</h1>
-		<div class="app-portion">
-			<app:resultSet id="resultSetList" resultSet="${resultSet}"
-				pageSet="${pageSet}" />
 		</div>
 	</div>
-</c:if>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				<a data-toggle="collapse" href="#statementForm"><s:message
+						code="sqltool/statement/indexId.message.2" /></a>
+			</h3>
+		</div>
+		<div id="statementForm"
+			class="panel-collapse collapse ${hasResultList ? '' : 'in'}">
+			<div class="panel-body">
+				<s:hasBindErrors name="sqltoolStatementForm">
+					<div class="col-sm-offset-2 col-sm-10">
+						<div class="alert alert-danger" role="alert">
+							<f:errors path="sqltoolStatementForm" element="div" />
+							<f:errors path="sqltoolStatementForm.databaseName" element="div" />
+							<f:errors path="sqltoolStatementForm.sql" element="div" />
+							<f:errors path="sqltoolStatementForm.paramMap" element="div" />
+							<f:errors path="sqltoolStatementForm.lockVersion" element="div" />
+						</div>
+					</div>
+				</s:hasBindErrors>
+				<f:form servletRelativeAction="${baseUri}/req" method="POST"
+					modelAttribute="sqltoolStatementForm" cssClass="form-horizontal"
+					role="form">
+					<f:hidden path="lockVersion" />
+					<c:set var="hasError">
+						<s:bind path="databaseName">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
+						<f:label path="databaseName" cssClass="col-sm-2 control-label">
+							<s:message code="sqltoolStatementForm.databaseName" />
+						</f:label>
+						<div class="col-sm-10">
+							<f:select path="databaseName" cssClass="col-sm-2 form-control">
+								<c:set var="dataSourceDef" value="${sqlapp:dataSourceDef()}" />
+								<f:options items="${dataSourceDef.names}" />
+							</f:select>
+						</div>
+					</div>
+					<c:set var="hasError">
+						<s:bind path="sql">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
+						<f:label path="sql" cssClass="col-sm-2 control-label">
+							<s:message code="sqltoolStatementForm.sql" />
+						</f:label>
+						<div class="col-sm-10">
+							<f:textarea path="sql" cssClass="col-sm-2 form-control" />
+						</div>
+					</div>
+					<c:set var="hasError">
+						<s:bind path="paramMap">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
+						<f:label path="paramMap" cssClass="col-sm-2 control-label">
+							<s:message code="sqltoolStatementForm.paramMap" />
+						</f:label>
+						<div class="col-sm-10">
+							<f:textarea path="paramMap" cssClass="col-sm-2 form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<f:button type="submit" class="btn btn-primary">
+								<s:message code="sqltool/statement/indexId.execButton" />
+							</f:button>
+							<f:button type="submit" name="download" class="btn btn-default">
+								<s:message code="sqltool/statement/indexId.downloadButton" />
+							</f:button>
+							<f:button type="submit" name="update" class="btn btn-default">
+								<s:message code="sqltool/statement/indexId.updateButton" />
+							</f:button>
+						</div>
+					</div>
+				</f:form>
+			</div>
+		</div>
+	</div>
+	<c:if test="${hasResultList}">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<a data-toggle="collapse" href="#statementResult"><s:message
+							code="sqltool/statement/indexId.message.3" /></a>
+				</h3>
+			</div>
+			<div id="statementResult" class="panel-collapse collapse in">
+				<div class="panel-body">
+					<app:resultSet id="resultSetList" resultSet="${resultSet}"
+						pageSet="${pageSet}" />
+				</div>
+			</div>
+		</div>
+	</c:if>
+</div>

@@ -26,7 +26,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,11 +37,7 @@ public interface SqltoolSearchController {
 
 	public static final String URI_PATH_REQ = "req";
 
-	public static final String PARAM_NO = "no";
-
-	public static final String PARAM_SZ = "sz";
-
-	@ModelAttribute("sqltoolSearchForm")
+	@ModelAttribute()
 	SqltoolSearchForm getForm();
 
 	@RequestMapping()
@@ -51,10 +46,7 @@ public interface SqltoolSearchController {
 
 	@RequestMapping(URI_PATH_REQ)
 	ModelAndView request(@Validated SqltoolSearchForm form,
-			BindingResult binding,
-			@RequestParam(value = PARAM_NO, defaultValue = "0") int pageNo,
-			@RequestParam(value = PARAM_SZ, defaultValue = "0") int pageSz,
-			Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request);
+			BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
 }

@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+
+.navbar {
+	margin-bottom: 0px;
+}
+
+.breadcrumb {
+	/* background: transparent; */
+	margin-bottom: 0px;
+}
+
+h1.page-header, h2.page-header, h3.page-header, h4.page-header, h5.page-header,
+	h6.page-header {
+	margin-top: 20px;
+	margin-bottom: 10px;
+	padding-bottom: 5px;
+}
+
+.pagination {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}

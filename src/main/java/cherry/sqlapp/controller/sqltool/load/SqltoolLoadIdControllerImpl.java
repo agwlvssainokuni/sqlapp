@@ -16,6 +16,8 @@
 
 package cherry.sqlapp.controller.sqltool.load;
 
+import static cherry.spring.common.mvc.Contract.shouldExist;
+
 import java.util.Locale;
 import java.util.Map;
 
@@ -75,31 +77,24 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 	private LogicErrorUtil logicErrorUtil;
 
 	@Override
-	public SqltoolMetadataForm getMetadata() {
-		return new SqltoolMetadataForm();
+	public SqltoolMetadataForm getMetadata(int id, Authentication auth) {
+		SqltoolMetadata md = metadataService.findById(id, auth.getName());
+		shouldExist(md, SqltoolMetadata.class, id, auth.getName());
+		return mdFormUtil.getMdForm(md);
 	}
 
 	@Override
-	public SqltoolLoadForm getForm() {
-		SqltoolLoadForm form = new SqltoolLoadForm();
-		form.setDatabaseName(dataSourceDef.getDefaultName());
-		return form;
+	public SqltoolLoadForm getForm(int id) {
+		SqltoolLoad record = loadService.findById(id);
+		shouldExist(record, SqltoolLoad.class, id);
+		return formUtil.getForm(record);
 	}
 
 	@Override
 	public ModelAndView index(int id, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
-
-		SqltoolMetadata md = metadataService.findById(id, auth.getName());
-		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
-
-		SqltoolLoad record = loadService.findById(id);
-		SqltoolLoadForm form = formUtil.getForm(record);
-
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(PATH_VAR, id);
-		mav.addObject(mdForm);
-		mav.addObject(form);
 		return mav;
 	}
 
@@ -109,13 +104,9 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 			SitePreference sitePref, HttpServletRequest request,
 			RedirectAttributes redirAttr) {
 
-		SqltoolMetadata md = metadataService.findById(id, auth.getName());
-		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
-
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(mdForm);
 			return mav;
 		}
 
@@ -149,14 +140,9 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
-		SqltoolMetadata md = metadataService.findById(id,
-				authentication.getName());
-		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
-
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(mdForm);
 			return mav;
 		}
 
@@ -175,7 +161,6 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(mdForm);
 			return mav;
 		}
 	}
@@ -186,13 +171,9 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 			Locale locale, SitePreference sitePreference,
 			HttpServletRequest request) {
 
-		SqltoolLoad record = loadService.findById(id);
-		SqltoolLoadForm form = formUtil.getForm(record);
-
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(form);
 			return mav;
 		}
 
@@ -212,7 +193,6 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
 			mav.addObject(PATH_VAR, id);
-			mav.addObject(form);
 			return mav;
 		}
 	}

@@ -39,26 +39,19 @@ public interface SqltoolClauseController {
 
 	public static final String PARAM_REF = "ref";
 
-	public static final String PARAM_NO = "no";
-
-	public static final String PARAM_SZ = "sz";
-
-	@ModelAttribute("sqltoolClauseForm")
-	SqltoolClauseForm getForm();
+	@ModelAttribute()
+	SqltoolClauseForm getForm(
+			@RequestParam(value = PARAM_REF, required = false) Integer ref,
+			Authentication auth);
 
 	@RequestMapping()
-	ModelAndView index(
-			@RequestParam(value = PARAM_REF, required = false) Integer ref,
-			Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request);
+	ModelAndView index(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
 	ModelAndView request(@Validated SqltoolClauseForm form,
-			BindingResult binding,
-			@RequestParam(value = PARAM_NO, defaultValue = "0") int pageNo,
-			@RequestParam(value = PARAM_SZ, defaultValue = "0") int pageSz,
-			Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request);
+			BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(value = URI_PATH_REQ, params = "download")
 	ModelAndView download(@Validated SqltoolClauseForm form,

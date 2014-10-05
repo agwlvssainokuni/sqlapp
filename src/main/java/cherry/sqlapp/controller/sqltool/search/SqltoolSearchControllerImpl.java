@@ -75,8 +75,8 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 
 	@Override
 	public ModelAndView request(SqltoolSearchForm form, BindingResult binding,
-			int pageNo, int pageSz, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(VIEW_PATH);
@@ -85,8 +85,11 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 
 		MetadataCondition cond = formUtil.createSqlCondition(form,
 				auth.getName());
-		Result result = metadataService.search(cond, pageNo,
-				(pageSz <= 0 ? defaultPageSize : pageSz));
+		int pageNo = form.getPageNo();
+		int pageSz = (form.getPageSz() <= 0 ? defaultPageSize : form
+				.getPageSz());
+
+		Result result = metadataService.search(cond, pageNo, pageSz);
 
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(result);

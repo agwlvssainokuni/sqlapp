@@ -39,14 +39,14 @@ public interface SqltoolStatementController {
 
 	public static final String PARAM_REF = "ref";
 
-	@ModelAttribute("sqltoolStatementForm")
-	SqltoolStatementForm getForm();
+	@ModelAttribute()
+	SqltoolStatementForm getForm(
+			@RequestParam(value = PARAM_REF, required = false) Integer ref,
+			Authentication auth);
 
 	@RequestMapping()
-	ModelAndView index(
-			@RequestParam(value = PARAM_REF, required = false) Integer ref,
-			Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request);
+	ModelAndView index(Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
 	ModelAndView request(@Validated SqltoolStatementForm form,

@@ -13,163 +13,189 @@
 <s:url var="baseUri" value="/sqltool/clause" />
 <c:set var="hasResultList"
 	value="${resultSet != null && pageSet != null}" />
-<script type="text/javascript">
-	$(function() {
-		$(".accordion").accordion({
-			collapsible : true,
-			animate : false,
-			heightStyle : "content",
-			active : ${hasResultList ? 'false' : 0}
-		}).removeClass("ui-widget");
-	});
-</script>
-<h1 class="app-subject">
+<h2 class="page-header">
 	<s:message code="sqltool/clause/index.message.0" />
-</h1>
-<div class="app-portion accordion">
-	<h1>
-		<s:message code="sqltool/clause/index.message.2" />
-	</h1>
-	<div>
-		<s:hasBindErrors name="sqltoolClauseForm">
-			<div class="ui-state-error">
-				<f:errors path="sqltoolClauseForm" element="div" />
-				<f:errors path="sqltoolClauseForm.databaseName" element="div" />
-				<f:errors path="sqltoolClauseForm.select" element="div" />
-				<f:errors path="sqltoolClauseForm.from" element="div" />
-				<f:errors path="sqltoolClauseForm.where" element="div" />
-				<f:errors path="sqltoolClauseForm.groupBy" element="div" />
-				<f:errors path="sqltoolClauseForm.having" element="div" />
-				<f:errors path="sqltoolClauseForm.orderBy" element="div" />
-				<f:errors path="sqltoolClauseForm.paramMap" element="div" />
-				<f:errors path="sqltoolClauseForm.lockVersion" element="div" />
-			</div>
-		</s:hasBindErrors>
-		<f:form servletRelativeAction="${baseUri}/req" method="POST"
-			modelAttribute="sqltoolClauseForm">
-			<input type="hidden" id="sz" name="sz"
-				value="<c:out value="${param.sz}" />">
-			<f:hidden path="lockVersion" />
-			<table class="app-collabel">
-				<tbody>
-					<tr>
-						<th><f:label path="databaseName">
-								<s:message code="sqltoolClauseForm.databaseName" />
-							</f:label></th>
-						<td><f:select path="databaseName"
-								cssClass="app-width50 ui-widget"
-								cssErrorClass="app-width50 ui-widget ui-state-error">
+</h2>
+<div class="panel-group">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">
+				<a data-toggle="collapse" href="#clauseForm"><s:message
+						code="sqltool/clause/index.message.2" /></a>
+			</h3>
+		</div>
+		<div id="clauseForm"
+			class="panel-collapse collapse ${hasResultList ? '' : 'in'}">
+			<div class="panel-body">
+				<s:hasBindErrors name="sqltoolClauseForm">
+					<div class="col-sm-offset-2 col-sm-10">
+						<div class="alert alert-danger" role="alert">
+							<f:errors path="sqltoolClauseForm" element="div" />
+							<f:errors path="sqltoolClauseForm.databaseName" element="div" />
+							<f:errors path="sqltoolClauseForm.select" element="div" />
+							<f:errors path="sqltoolClauseForm.from" element="div" />
+							<f:errors path="sqltoolClauseForm.where" element="div" />
+							<f:errors path="sqltoolClauseForm.groupBy" element="div" />
+							<f:errors path="sqltoolClauseForm.having" element="div" />
+							<f:errors path="sqltoolClauseForm.orderBy" element="div" />
+							<f:errors path="sqltoolClauseForm.paramMap" element="div" />
+							<f:errors path="sqltoolClauseForm.lockVersion" element="div" />
+						</div>
+					</div>
+				</s:hasBindErrors>
+				<f:form servletRelativeAction="${baseUri}/req" method="POST"
+					modelAttribute="sqltoolClauseForm" cssClass="form-horizontal"
+					role="form">
+					<f:hidden path="pageNo" value="0" />
+					<f:hidden path="pageSz" />
+					<f:hidden path="lockVersion" />
+					<c:set var="hasError">
+						<s:bind path="databaseName">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
+						<f:label path="databaseName" cssClass="col-sm-2 control-label">
+							<s:message code="sqltoolClauseForm.databaseName" />
+						</f:label>
+						<div class="col-sm-10">
+							<f:select path="databaseName" cssClass="col-sm-2 form-control">
 								<c:set var="dataSourceDef" value="${sqlapp:dataSourceDef()}" />
 								<f:options items="${dataSourceDef.names}" />
-							</f:select></td>
-					</tr>
-					<tr>
-						<th><f:label path="select">
-								<s:message code="sqltoolClauseForm.select" />
-							</f:label></th>
-						<td><f:textarea path="select"
-								cssClass="app-width50 app-height5"
-								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
-					</tr>
-					<tr>
-						<th><f:label path="from">
-								<s:message code="sqltoolClauseForm.from" />
-							</f:label></th>
-						<td><f:textarea path="from"
-								cssClass="app-width50 app-height3"
-								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
-					</tr>
-					<tr>
-						<th><f:label path="where">
-								<s:message code="sqltoolClauseForm.where" />
-							</f:label></th>
-						<td><f:textarea path="where"
-								cssClass="app-width50 app-height5"
-								cssErrorClass="app-width50 app-height5 ui-state-error" /></td>
-					</tr>
-					<tr>
-						<th><f:label path="groupBy">
-								<s:message code="sqltoolClauseForm.groupBy" />
-							</f:label></th>
-						<td><f:textarea path="groupBy"
-								cssClass="app-width50 app-height3"
-								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
-					</tr>
-					<tr>
-						<th><f:label path="having">
-								<s:message code="sqltoolClauseForm.having" />
-							</f:label></th>
-						<td><f:textarea path="having"
-								cssClass="app-width50 app-height3"
-								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
-					</tr>
-					<tr>
-						<th><f:label path="orderBy">
-								<s:message code="sqltoolClauseForm.orderBy" />
-							</f:label></th>
-						<td><f:textarea path="orderBy"
-								cssClass="app-width50 app-height3"
-								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
-					</tr>
-					<tr>
-						<th><f:label path="paramMap">
-								<s:message code="sqltoolClauseForm.paramMap" />
-							</f:label></th>
-						<td><f:textarea path="paramMap"
-								cssClass="app-width50 app-height3"
-								cssErrorClass="app-width50 app-height3 ui-state-error" /></td>
-					</tr>
-				</tbody>
-				<tfoot class="app-transparent">
-					<tr>
-						<td></td>
-						<td><f:button type="submit" class="app-button">
+							</f:select>
+						</div>
+					</div>
+					<c:set var="hasError">
+						<s:bind path="select">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
+						<f:label path="select" cssClass="col-sm-2 control-label">
+							<s:message code="sqltoolClauseForm.select" />
+						</f:label>
+						<div class="col-sm-10">
+							<f:textarea path="select" cssClass="col-sm-2 form-control" />
+						</div>
+					</div>
+					<c:set var="hasError">
+						<s:bind path="from">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
+						<f:label path="from" cssClass="col-sm-2 control-label">
+							<s:message code="sqltoolClauseForm.from" />
+						</f:label>
+						<div class="col-sm-10">
+							<f:textarea path="from" cssClass="col-sm-2 form-control" />
+						</div>
+					</div>
+					<c:set var="hasError">
+						<s:bind path="where">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
+						<f:label path="where" cssClass="col-sm-2 control-label">
+							<s:message code="sqltoolClauseForm.where" />
+						</f:label>
+						<div class="col-sm-10">
+							<f:textarea path="where" cssClass="col-sm-2 form-control" />
+						</div>
+					</div>
+					<c:set var="hasError">
+						<s:bind path="groupBy">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
+						<f:label path="groupBy" cssClass="col-sm-2 control-label">
+							<s:message code="sqltoolClauseForm.groupBy" />
+						</f:label>
+						<div class="col-sm-10">
+							<f:textarea path="groupBy" cssClass="col-sm-2 form-control" />
+						</div>
+					</div>
+					<c:set var="hasError">
+						<s:bind path="having">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
+						<f:label path="having" cssClass="col-sm-2 control-label">
+							<s:message code="sqltoolClauseForm.having" />
+						</f:label>
+						<div class="col-sm-10">
+							<f:textarea path="having" cssClass="col-sm-2 form-control" />
+						</div>
+					</div>
+					<c:set var="hasError">
+						<s:bind path="orderBy">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
+						<f:label path="orderBy" cssClass="col-sm-2 control-label">
+							<s:message code="sqltoolClauseForm.orderBy" />
+						</f:label>
+						<div class="col-sm-10">
+							<f:textarea path="orderBy" cssClass="col-sm-2 form-control" />
+						</div>
+					</div>
+					<c:set var="hasError">
+						<s:bind path="paramMap">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group ${hasError}">
+						<f:label path="paramMap" cssClass="col-sm-2 control-label">
+							<s:message code="sqltoolClauseForm.paramMap" />
+						</f:label>
+						<div class="col-sm-10">
+							<f:textarea path="paramMap" cssClass="col-sm-2 form-control" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<f:button type="submit" class="btn btn-primary">
 								<s:message code="sqltool/clause/index.execButton" />
-							</f:button> <f:button type="submit" name="download" class="app-button">
+							</f:button>
+							<f:button type="submit" name="download" class="btn btn-default">
 								<s:message code="sqltool/clause/index.downloadButton" />
-							</f:button> <f:button type="submit" name="create" class="app-button">
+							</f:button>
+							<f:button type="submit" name="create" class="btn btn-default">
 								<s:message code="sqltool/clause/index.createButton" />
-							</f:button></td>
-					</tr>
-				</tfoot>
-			</table>
-		</f:form>
-	</div>
-</div>
-<c:if test="${hasResultList}">
-	<div class="app-portion">
-		<h1 class="app-subject">
-			<s:message code="sqltool/clause/index.message.3" />
-		</h1>
-		<div class="app-portion">
-			<f:form servletRelativeAction="${baseUri}/req" method="POST"
-				modelAttribute="sqltoolClauseForm" id="sqltoolClauseWithPage"
-				class="app-pager-form">
-				<input type="hidden" id="no2" name="no">
-				<input type="hidden" id="sz2" name="sz"
-					value="<c:out value="${param.sz}" />">
-				<f:hidden id="lockVersion2" path="lockVersion" />
-				<f:hidden id="databaseName2" path="databaseName" />
-				<f:hidden id="select2" path="select" />
-				<f:hidden id="from2" path="from" />
-				<f:hidden id="where2" path="where" />
-				<f:hidden id="groupBy2" path="groupBy" />
-				<f:hidden id="having2" path="having" />
-				<f:hidden id="orderBy2" path="orderBy" />
-				<f:hidden id="paramMap2" path="paramMap" />
-			</f:form>
-			<div class="app-pager">
-				<div class="app-pager-desc">
-					<s:message code="common/pager.message.0"
-						arguments="${pageSet.last.to+1},${pageSet.current.from+1},${pageSet.current.to+1}" />
-				</div>
-				<app:pagerLink pageSet="${pageSet}" />
-			</div>
-			<app:resultSet id="resultSetList" resultSet="${resultSet}"
-				pageSet="${pageSet}" />
-			<div class="app-pager">
-				<app:pagerLink pageSet="${pageSet}" />
+							</f:button>
+						</div>
+					</div>
+				</f:form>
 			</div>
 		</div>
 	</div>
-</c:if>
+	<c:if test="${hasResultList}">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<a data-toggle="collapse" href="#clauseResult"><s:message
+							code="sqltool/clause/index.message.3" /></a>
+				</h3>
+			</div>
+			<div id="clauseResult" class="panel-collapse collapse in">
+				<f:form servletRelativeAction="${baseUri}/req" method="POST"
+					modelAttribute="sqltoolClauseForm" id="sqltoolClause2"
+					class="app-pager-form">
+					<f:hidden id="pageNo2" path="pageNo" cssClass="app-page-no" />
+					<f:hidden id="pageSz2" path="pageSz" cssClass="app-page-sz" />
+					<f:hidden id="lockVersion2" path="lockVersion" />
+					<f:hidden id="databaseName2" path="databaseName" />
+					<f:hidden id="select2" path="select" />
+					<f:hidden id="from2" path="from" />
+					<f:hidden id="where2" path="where" />
+					<f:hidden id="groupBy2" path="groupBy" />
+					<f:hidden id="having2" path="having" />
+					<f:hidden id="orderBy2" path="orderBy" />
+					<f:hidden id="paramMap2" path="paramMap" />
+				</f:form>
+				<div class="panel-body">
+					<div>
+						<div class="app-pager-desc">
+							<s:message code="common/pager.message.0"
+								arguments="${pageSet.last.to+1},${pageSet.current.from+1},${pageSet.current.to+1}" />
+						</div>
+						<app:pagerLink pageSet="${pageSet}" />
+					</div>
+					<app:resultSet id="resultSetList" resultSet="${resultSet}"
+						pageSet="${pageSet}" />
+					<div>
+						<app:pagerLink pageSet="${pageSet}" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if>
+</div>
