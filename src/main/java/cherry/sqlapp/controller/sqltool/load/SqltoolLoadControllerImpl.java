@@ -68,25 +68,25 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 	private MdFormUtil mdFormUtil;
 
 	@Override
-	public SqltoolLoadForm getForm() {
+	public SqltoolLoadForm getForm(Integer ref, Authentication auth) {
+		if (ref != null) {
+			SqltoolMetadata md = metadataService.findById(ref, auth.getName());
+			if (md != null) {
+				SqltoolLoad record = loadService.findById(ref);
+				if (record != null) {
+					return formUtil.getForm(record);
+				}
+			}
+		}
 		SqltoolLoadForm form = new SqltoolLoadForm();
 		form.setDatabaseName(dataSourceDef.getDefaultName());
 		return form;
 	}
 
 	@Override
-	public ModelAndView index(Integer ref, Authentication auth, Locale locale,
+	public ModelAndView index(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		if (ref != null) {
-			SqltoolMetadata md = metadataService.findById(ref, auth.getName());
-			if (md != null) {
-				SqltoolLoad record = loadService.findById(ref);
-				if (record != null) {
-					mav.addObject(formUtil.getForm(record));
-				}
-			}
-		}
 		return mav;
 	}
 
