@@ -16,6 +16,9 @@
 
 package cherry.sqlapp.controller.sqltool.load;
 
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
+
 import java.util.Locale;
 import java.util.Map;
 
@@ -27,7 +30,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
@@ -106,9 +108,9 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 
 		redirAttr.addFlashAttribute(ASYNC_PARAM, asyncParam);
 
-		UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
-				SqltoolLoadController.class, "finish", auth, locale, sitePref,
-				request).build();
+		UriComponents uc = fromMethodCall(
+				on(SqltoolLoadController.class).finish(auth, locale, sitePref,
+						request)).build();
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
@@ -139,9 +141,9 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 
 		int id = loadService.create(record, auth.getName());
 
-		UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
-				SqltoolLoadIdController.class, "index", id, auth, locale,
-				sitePref, request).build();
+		UriComponents uc = fromMethodCall(
+				on(SqltoolLoadIdController.class).index(id, auth, locale,
+						sitePref, request)).build();
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));

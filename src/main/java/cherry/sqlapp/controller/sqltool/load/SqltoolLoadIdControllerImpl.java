@@ -17,6 +17,8 @@
 package cherry.sqlapp.controller.sqltool.load;
 
 import static cherry.spring.common.mvc.Contract.shouldExist;
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 import java.util.Locale;
 import java.util.Map;
@@ -30,7 +32,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
@@ -116,9 +117,9 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 
 		redirAttr.addFlashAttribute(ASYNC_PARAM, asyncParam);
 
-		UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
-				SqltoolLoadIdController.class, "finish", id, auth, locale,
-				sitePref, request).build();
+		UriComponents uc = fromMethodCall(
+				on(SqltoolLoadIdController.class).finish(id, auth, locale,
+						sitePref, request)).build();
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));

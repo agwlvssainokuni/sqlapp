@@ -17,6 +17,8 @@
 package cherry.sqlapp.controller.sqltool.statement;
 
 import static cherry.spring.common.mvc.Contract.shouldExist;
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -34,7 +36,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
@@ -211,9 +212,9 @@ public class SqltoolStatementIdControllerImpl implements
 		record.setLockVersion(form.getLockVersion());
 
 		if (statementService.update(record)) {
-			UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
-					SqltoolStatementIdController.class, "index", id, auth,
-					locale, sitePref, request).build();
+			UriComponents uc = fromMethodCall(
+					on(SqltoolStatementIdController.class).index(id, auth,
+							locale, sitePref, request)).build();
 			ModelAndView mav = new ModelAndView();
 			mav.setView(new RedirectView(uc.toUriString(), true));
 			return mav;
@@ -244,9 +245,9 @@ public class SqltoolStatementIdControllerImpl implements
 		md.setLockVersion(mdForm.getLockVersion());
 
 		if (metadataService.update(md)) {
-			UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
-					SqltoolStatementIdController.class, "index", id, auth,
-					locale, sitePref, request).build();
+			UriComponents uc = fromMethodCall(
+					on(SqltoolStatementIdController.class).index(id, auth,
+							locale, sitePref, request)).build();
 			ModelAndView mav = new ModelAndView();
 			mav.setView(new RedirectView(uc.toUriString(), true));
 			return mav;
