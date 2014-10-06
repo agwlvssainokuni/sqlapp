@@ -31,7 +31,7 @@ public interface LoginController {
 	public static final String URI_PATH = "/login";
 
 	@RequestMapping()
-	ModelAndView index(Locale locale, SitePreference sitePref,
+	ModelAndView init(Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
 	@RequestMapping(params = "loginFailed")

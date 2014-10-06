@@ -16,6 +16,9 @@
 
 package cherry.sqlapp.controller.login;
 
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
+
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +26,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
@@ -34,7 +36,7 @@ public class LoginControllerImpl implements LoginController {
 	public static final String VIEW_PATH = "login/index";
 
 	@Override
-	public ModelAndView index(Locale locale, SitePreference sitePref,
+	public ModelAndView init(Locale locale, SitePreference sitePref,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		return mav;
@@ -46,8 +48,8 @@ public class LoginControllerImpl implements LoginController {
 
 		redirAttr.addFlashAttribute("loginFailed", true);
 
-		UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
-				LoginController.class, "index", locale, sitePref, request)
+		UriComponents uc = fromMethodCall(
+				on(LoginController.class).init(locale, sitePref, request))
 				.build();
 
 		ModelAndView mav = new ModelAndView();
@@ -61,8 +63,8 @@ public class LoginControllerImpl implements LoginController {
 
 		redirAttributes.addFlashAttribute("loggedOut", true);
 
-		UriComponents uc = MvcUriComponentsBuilder.fromMethodName(
-				LoginController.class, "index", locale, sitePref, request)
+		UriComponents uc = fromMethodCall(
+				on(LoginController.class).init(locale, sitePref, request))
 				.build();
 
 		ModelAndView mav = new ModelAndView();
