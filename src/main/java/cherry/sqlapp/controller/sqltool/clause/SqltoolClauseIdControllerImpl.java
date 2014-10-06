@@ -45,6 +45,7 @@ import cherry.spring.common.helper.download.DownloadHelper;
 import cherry.spring.common.lib.etl.CsvConsumer;
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.spring.common.type.FlagCode;
+import cherry.sqlapp.controller.PathDef;
 import cherry.sqlapp.controller.sqltool.LogicErrorUtil;
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.controller.sqltool.ParamMapUtil;
@@ -60,8 +61,6 @@ import cherry.sqlapp.service.sqltool.query.ClauseService;
 
 @Controller
 public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController {
-
-	public static final String VIEW_PATH = "sqltool/clause/indexId";
 
 	@Value("${sqlapp.app.paginator.pageSize}")
 	private int defaultPageSize;
@@ -119,8 +118,8 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 	@Override
 	public ModelAndView init(int id, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		mav.addObject(PATH_VAR, id);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
+		mav.addObject(PathDef.PATH_VAR_ID, id);
 		return mav;
 	}
 
@@ -130,8 +129,9 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 
@@ -147,16 +147,18 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 			PageSet pageSet = execQueryService.query(form.getDatabaseName(),
 					builder, paramMap, pageNo, pageSz, resultSet);
 
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			mav.addObject(pageSet);
 			mav.addObject(resultSet);
 			return mav;
 
 		} catch (BadSqlGrammarException ex) {
 			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 	}
@@ -168,8 +170,9 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 			HttpServletResponse response) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 
@@ -195,8 +198,9 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 
 		} catch (BadSqlGrammarException ex) {
 			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 	}
@@ -210,8 +214,9 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			mav.addObject(mdForm);
 			return mav;
 		}
@@ -237,8 +242,9 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 			return mav;
 		} else {
 			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			mav.addObject(mdForm);
 			return mav;
 
@@ -251,8 +257,9 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 
@@ -272,8 +279,9 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 			return mav;
 		} else {
 			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 	}

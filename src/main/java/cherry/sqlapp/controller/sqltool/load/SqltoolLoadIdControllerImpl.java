@@ -30,13 +30,13 @@ import org.springframework.mobile.device.site.SitePreference;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
 import cherry.spring.common.type.FlagCode;
+import cherry.sqlapp.controller.PathDef;
 import cherry.sqlapp.controller.sqltool.LogicErrorUtil;
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
@@ -49,10 +49,6 @@ import cherry.sqlapp.service.sqltool.query.LoadService;
 
 @Component
 public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
-
-	public static final String VIEW_PATH = "sqltool/load/indexId";
-
-	public static final String VIEW_PATH_FIN = "sqltool/load/finishId";
 
 	public static final String ASYNC_PARAM = "asyncParam";
 
@@ -94,8 +90,8 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 	@Override
 	public ModelAndView init(int id, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		mav.addObject(PATH_VAR, id);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_LOAD_ID_INIT);
+		mav.addObject(PathDef.PATH_VAR_ID, id);
 		return mav;
 	}
 
@@ -106,8 +102,9 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 			RedirectAttributes redirAttr) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_LOAD_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 
@@ -127,11 +124,10 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 	}
 
 	@Override
-	public ModelAndView finish(@PathVariable(PATH_VAR) int id,
-			Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
-		mav.addObject(PATH_VAR, id);
+	public ModelAndView finish(int id, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_LOAD_ID_FINISH);
+		mav.addObject(PathDef.PATH_VAR_ID, id);
 		return mav;
 	}
 
@@ -142,8 +138,9 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 			HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_LOAD_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 
@@ -155,13 +152,14 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 
 		if (loadService.update(record)) {
 			ModelAndView mav = new ModelAndView();
-			mav.setView(new RedirectView(URI_PATH, true));
-			mav.addObject(PATH_VAR, id);
+			mav.setView(new RedirectView(PathDef.URI_SQLTOOL_LOAD_ID, true));
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		} else {
 			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_LOAD_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 	}
@@ -173,8 +171,9 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 			HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_LOAD_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 
@@ -187,13 +186,14 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 
 		if (metadataService.update(md)) {
 			ModelAndView mav = new ModelAndView();
-			mav.setView(new RedirectView(URI_PATH, true));
-			mav.addObject(PATH_VAR, id);
+			mav.setView(new RedirectView(PathDef.URI_SQLTOOL_LOAD_ID, true));
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		} else {
 			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_LOAD_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 	}

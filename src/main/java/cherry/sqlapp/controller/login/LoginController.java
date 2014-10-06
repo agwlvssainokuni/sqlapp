@@ -25,20 +25,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RequestMapping(LoginController.URI_PATH)
-public interface LoginController {
+import cherry.sqlapp.controller.PathDef;
 
-	public static final String URI_PATH = "/login";
+@RequestMapping(PathDef.URI_LOGIN)
+public interface LoginController {
 
 	@RequestMapping()
 	ModelAndView init(Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
-	@RequestMapping(params = "loginFailed")
+	@RequestMapping(params = PathDef.METHOD_LOGIN_FAILED)
 	ModelAndView loginFailed(Locale locale, SitePreference sitePref,
 			HttpServletRequest request, RedirectAttributes redirAttr);
 
-	@RequestMapping(params = "loggedOut")
+	@RequestMapping(params = PathDef.METHOD_LOGGED_OUT)
 	ModelAndView loggedOut(Locale locale, SitePreference sitePref,
 			HttpServletRequest request, RedirectAttributes redirAttr);
 

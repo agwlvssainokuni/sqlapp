@@ -30,50 +30,44 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import cherry.sqlapp.controller.PathDef;
 import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 
-@RequestMapping(SqltoolClauseIdController.URI_PATH)
+@RequestMapping(PathDef.URI_SQLTOOL_CLAUSE_ID)
 public interface SqltoolClauseIdController {
 
-	public static final String URI_PATH = "/sqltool/clause/{id}";
-
-	public static final String URI_PATH_REQ = "req";
-
-	public static final String URI_PATH_METADATA = "metadata";
-
-	public static final String PATH_VAR = "id";
-
 	@ModelAttribute()
-	SqltoolMetadataForm getMetadata(@PathVariable(PATH_VAR) int id,
+	SqltoolMetadataForm getMetadata(@PathVariable(PathDef.PATH_VAR_ID) int id,
 			Authentication auth);
 
 	@ModelAttribute()
-	SqltoolClauseForm getForm(@PathVariable(PATH_VAR) int id);
+	SqltoolClauseForm getForm(@PathVariable(PathDef.PATH_VAR_ID) int id);
 
 	@RequestMapping()
-	ModelAndView init(@PathVariable(PATH_VAR) int id, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request);
+	ModelAndView init(@PathVariable(PathDef.PATH_VAR_ID) int id,
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request);
 
-	@RequestMapping(URI_PATH_REQ)
-	ModelAndView execute(@PathVariable(PATH_VAR) int id,
+	@RequestMapping(PathDef.SUBURI_EXECUTE)
+	ModelAndView execute(@PathVariable(PathDef.PATH_VAR_ID) int id,
 			@Validated SqltoolClauseForm form, BindingResult binding,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
-	@RequestMapping(value = URI_PATH_REQ, params = "download")
-	ModelAndView download(@PathVariable(PATH_VAR) int id,
+	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_DOWNLOAD)
+	ModelAndView download(@PathVariable(PathDef.PATH_VAR_ID) int id,
 			@Validated SqltoolClauseForm form, BindingResult binding,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request, HttpServletResponse response);
 
-	@RequestMapping(value = URI_PATH_REQ, params = "update")
-	ModelAndView update(@PathVariable(PATH_VAR) int id,
+	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_UPDATE)
+	ModelAndView update(@PathVariable(PathDef.PATH_VAR_ID) int id,
 			@Validated SqltoolClauseForm form, BindingResult binding,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
-	@RequestMapping(URI_PATH_METADATA)
-	ModelAndView metadata(@PathVariable(PATH_VAR) int id,
+	@RequestMapping(PathDef.SUBURI_METADATA)
+	ModelAndView metadata(@PathVariable(PathDef.PATH_VAR_ID) int id,
 			@Validated SqltoolMetadataForm mdForm, BindingResult binding,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);

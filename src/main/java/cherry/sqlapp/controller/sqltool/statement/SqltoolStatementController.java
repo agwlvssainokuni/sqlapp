@@ -30,36 +30,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-@RequestMapping(SqltoolStatementController.URI_PATH)
+import cherry.sqlapp.controller.PathDef;
+
+@RequestMapping(PathDef.URI_SQLTOOL_STATEMENT)
 public interface SqltoolStatementController {
-
-	public static final String URI_PATH = "/sqltool/statement";
-
-	public static final String URI_PATH_REQ = "req";
-
-	public static final String PARAM_REF = "ref";
 
 	@ModelAttribute()
 	SqltoolStatementForm getForm(
-			@RequestParam(value = PARAM_REF, required = false) Integer ref,
+			@RequestParam(value = PathDef.PARAM_REF, required = false) Integer ref,
 			Authentication auth);
 
 	@RequestMapping()
 	ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
-	@RequestMapping(URI_PATH_REQ)
+	@RequestMapping(PathDef.SUBURI_EXECUTE)
 	ModelAndView execute(@Validated SqltoolStatementForm form,
 			BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
-	@RequestMapping(value = URI_PATH_REQ, params = "download")
+	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_DOWNLOAD)
 	ModelAndView download(@Validated SqltoolStatementForm form,
 			BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request,
 			HttpServletResponse response);
 
-	@RequestMapping(value = URI_PATH_REQ, params = "create")
+	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_CREATE)
 	ModelAndView create(@Validated SqltoolStatementForm form,
 			BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);

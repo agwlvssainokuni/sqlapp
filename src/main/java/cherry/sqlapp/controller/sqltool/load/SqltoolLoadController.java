@@ -30,37 +30,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RequestMapping(SqltoolLoadController.URI_PATH)
+import cherry.sqlapp.controller.PathDef;
+
+@RequestMapping(PathDef.URI_SQLTOOL_LOAD)
 public interface SqltoolLoadController {
-
-	public static final String URI_PATH = "/sqltool/load";
-
-	public static final String URI_PATH_REQ = "req";
-
-	public static final String URI_PATH_FIN = "fin";
-
-	public static final String PARAM_REF = "ref";
 
 	@ModelAttribute()
 	SqltoolLoadForm getForm(
-			@RequestParam(value = PARAM_REF, required = false) Integer ref,
+			@RequestParam(value = PathDef.PARAM_REF, required = false) Integer ref,
 			Authentication auth);
 
 	@RequestMapping()
 	ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
-	@RequestMapping(URI_PATH_REQ)
+	@RequestMapping(PathDef.SUBURI_EXECUTE)
 	ModelAndView execute(@Validated SqltoolLoadForm form,
 			BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request,
 			RedirectAttributes redirAttr);
 
-	@RequestMapping(URI_PATH_FIN)
+	@RequestMapping(PathDef.SUBURI_FINISH)
 	ModelAndView finish(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
-	@RequestMapping(value = URI_PATH_REQ, params = "create")
+	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_CREATE)
 	ModelAndView create(@Validated SqltoolLoadForm form, BindingResult binding,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);

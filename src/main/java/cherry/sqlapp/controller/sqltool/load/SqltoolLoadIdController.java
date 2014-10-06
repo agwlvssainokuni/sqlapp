@@ -30,50 +30,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import cherry.sqlapp.controller.PathDef;
 import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 
-@RequestMapping(SqltoolLoadIdController.URI_PATH)
+@RequestMapping(PathDef.URI_SQLTOOL_LOAD_ID)
 public interface SqltoolLoadIdController {
 
-	public static final String URI_PATH = "/sqltool/load/{id}";
-
-	public static final String URI_PATH_REQ = "req";
-
-	public static final String URI_PATH_FIN = "fin";
-
-	public static final String URI_PATH_METADATA = "metadata";
-
-	public static final String PATH_VAR = "id";
-
 	@ModelAttribute()
-	SqltoolMetadataForm getMetadata(@PathVariable(PATH_VAR) int id,
+	SqltoolMetadataForm getMetadata(@PathVariable(PathDef.PATH_VAR_ID) int id,
 			Authentication auth);
 
 	@ModelAttribute()
-	SqltoolLoadForm getForm(@PathVariable(PATH_VAR) int id);
+	SqltoolLoadForm getForm(@PathVariable(PathDef.PATH_VAR_ID) int id);
 
 	@RequestMapping()
-	ModelAndView init(@PathVariable(PATH_VAR) int id, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request);
+	ModelAndView init(@PathVariable(PathDef.PATH_VAR_ID) int id,
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request);
 
-	@RequestMapping(URI_PATH_REQ)
-	ModelAndView execute(@PathVariable(PATH_VAR) int id,
+	@RequestMapping(PathDef.SUBURI_EXECUTE)
+	ModelAndView execute(@PathVariable(PathDef.PATH_VAR_ID) int id,
 			@Validated SqltoolLoadForm form, BindingResult binding,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request, RedirectAttributes redirAttr);
 
-	@RequestMapping(URI_PATH_FIN)
-	ModelAndView finish(@PathVariable(PATH_VAR) int id, Authentication auth,
-			Locale locale, SitePreference sitePref, HttpServletRequest request);
+	@RequestMapping(PathDef.SUBURI_FINISH)
+	ModelAndView finish(@PathVariable(PathDef.PATH_VAR_ID) int id,
+			Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request);
 
-	@RequestMapping(value = URI_PATH_REQ, params = "update")
-	ModelAndView update(@PathVariable(PATH_VAR) int id,
+	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_UPDATE)
+	ModelAndView update(@PathVariable(PathDef.PATH_VAR_ID) int id,
 			@Validated SqltoolLoadForm form, BindingResult binding,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
-	@RequestMapping(URI_PATH_METADATA)
-	ModelAndView metadata(@PathVariable(PATH_VAR) int id,
+	@RequestMapping(PathDef.SUBURI_METADATA)
+	ModelAndView metadata(@PathVariable(PathDef.PATH_VAR_ID) int id,
 			@Validated SqltoolMetadataForm mdForm, BindingResult binding,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);

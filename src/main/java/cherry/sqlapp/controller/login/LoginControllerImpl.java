@@ -30,15 +30,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
+import cherry.sqlapp.controller.PathDef;
+
 @Controller
 public class LoginControllerImpl implements LoginController {
-
-	public static final String VIEW_PATH = "login/index";
 
 	@Override
 	public ModelAndView init(Locale locale, SitePreference sitePref,
 			HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_LOGIN_INIT);
 		return mav;
 	}
 
@@ -46,7 +46,7 @@ public class LoginControllerImpl implements LoginController {
 	public ModelAndView loginFailed(Locale locale, SitePreference sitePref,
 			HttpServletRequest request, RedirectAttributes redirAttr) {
 
-		redirAttr.addFlashAttribute("loginFailed", true);
+		redirAttr.addFlashAttribute(PathDef.METHOD_LOGIN_FAILED, true);
 
 		UriComponents uc = fromMethodCall(
 				on(LoginController.class).init(locale, sitePref, request))
@@ -59,9 +59,9 @@ public class LoginControllerImpl implements LoginController {
 
 	@Override
 	public ModelAndView loggedOut(Locale locale, SitePreference sitePref,
-			HttpServletRequest request, RedirectAttributes redirAttributes) {
+			HttpServletRequest request, RedirectAttributes redirAttr) {
 
-		redirAttributes.addFlashAttribute("loggedOut", true);
+		redirAttr.addFlashAttribute(PathDef.METHOD_LOGGED_OUT, true);
 
 		UriComponents uc = fromMethodCall(
 				on(LoginController.class).init(locale, sitePref, request))
@@ -71,4 +71,5 @@ public class LoginControllerImpl implements LoginController {
 		mav.setView(new RedirectView(uc.toUriString(), true));
 		return mav;
 	}
+
 }

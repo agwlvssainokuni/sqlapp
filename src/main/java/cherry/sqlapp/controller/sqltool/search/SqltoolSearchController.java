@@ -29,13 +29,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import cherry.sqlapp.controller.PathDef;
+
 @SessionAttributes(types = SqltoolSearchForm.class)
-@RequestMapping(SqltoolSearchController.URI_PATH)
+@RequestMapping(PathDef.URI_SQLTOOL_SEARCH)
 public interface SqltoolSearchController {
-
-	public static final String URI_PATH = "/sqltool/search";
-
-	public static final String URI_PATH_REQ = "req";
 
 	@ModelAttribute()
 	SqltoolSearchForm getForm();
@@ -44,7 +42,7 @@ public interface SqltoolSearchController {
 	ModelAndView init(Authentication authentication, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
-	@RequestMapping(URI_PATH_REQ)
+	@RequestMapping(PathDef.SUBURI_EXECUTE)
 	ModelAndView execute(@Validated SqltoolSearchForm form,
 			BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);

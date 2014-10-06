@@ -34,6 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
+import cherry.sqlapp.controller.PathDef;
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.db.dto.SqltoolLoad;
 import cherry.sqlapp.db.dto.SqltoolMetadata;
@@ -44,10 +45,6 @@ import cherry.sqlapp.service.sqltool.query.LoadService;
 
 @Component
 public class SqltoolLoadControllerImpl implements SqltoolLoadController {
-
-	public static final String VIEW_PATH = "sqltool/load/index";
-
-	public static final String VIEW_PATH_FIN = "sqltool/load/finish";
 
 	public static final String ASYNC_PARAM = "asyncParam";
 
@@ -88,7 +85,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 	@Override
 	public ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_LOAD_INIT);
 		return mav;
 	}
 
@@ -98,7 +95,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			HttpServletRequest request, RedirectAttributes redirAttr) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_LOAD_INIT);
 			return mav;
 		}
 
@@ -120,7 +117,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 	@Override
 	public ModelAndView finish(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH_FIN);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_LOAD_FINISH);
 		return mav;
 	}
 
@@ -130,7 +127,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_LOAD_INIT);
 			return mav;
 		}
 

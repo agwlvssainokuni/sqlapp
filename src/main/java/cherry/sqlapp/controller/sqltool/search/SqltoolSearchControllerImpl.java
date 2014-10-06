@@ -32,14 +32,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.common.helper.bizdate.BizdateHelper;
 import cherry.spring.common.lib.util.LocalDateTimeUtil;
+import cherry.sqlapp.controller.PathDef;
 import cherry.sqlapp.service.sqltool.metadata.MetadataCondition;
 import cherry.sqlapp.service.sqltool.metadata.MetadataService;
 import cherry.sqlapp.service.sqltool.metadata.Result;
 
 @Controller
 public class SqltoolSearchControllerImpl implements SqltoolSearchController {
-
-	private static final String VIEW_PATH = "sqltool/search/index";
 
 	@Value("${sqlapp.app.search.defaultFromDays}")
 	private Integer defaultFromDays;
@@ -72,7 +71,7 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 	@Override
 	public ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_SEARCH_INIT);
 		mav.addObject(getForm());
 		return mav;
 	}
@@ -83,7 +82,8 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 			HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_SEARCH_INIT);
 			return mav;
 		}
 
@@ -95,7 +95,7 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 
 		Result result = metadataService.search(cond, pageNo, pageSz);
 
-		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_SEARCH_INIT);
 		mav.addObject(result);
 		return mav;
 	}

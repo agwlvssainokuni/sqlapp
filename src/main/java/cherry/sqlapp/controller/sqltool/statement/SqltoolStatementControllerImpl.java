@@ -43,6 +43,7 @@ import cherry.spring.common.helper.download.DownloadAction;
 import cherry.spring.common.helper.download.DownloadHelper;
 import cherry.spring.common.lib.etl.CsvConsumer;
 import cherry.spring.common.lib.paginate.PageSet;
+import cherry.sqlapp.controller.PathDef;
 import cherry.sqlapp.controller.sqltool.LogicErrorUtil;
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.controller.sqltool.ParamMapUtil;
@@ -57,8 +58,6 @@ import cherry.sqlapp.service.sqltool.query.StatementService;
 @Controller
 public class SqltoolStatementControllerImpl implements
 		SqltoolStatementController {
-
-	public static final String VIEW_PATH = "sqltool/statement/index";
 
 	@Value("${sqlapp.app.export.contentType}")
 	private String contentType;
@@ -115,7 +114,7 @@ public class SqltoolStatementControllerImpl implements
 	@Override
 	public ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 		return mav;
 	}
 
@@ -125,7 +124,7 @@ public class SqltoolStatementControllerImpl implements
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 			return mav;
 		}
 
@@ -137,14 +136,14 @@ public class SqltoolStatementControllerImpl implements
 			PageSet pageSet = execQueryService.query(form.getDatabaseName(),
 					form.getSql(), paramMap, resultSet);
 
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 			mav.addObject(pageSet);
 			mav.addObject(resultSet);
 			return mav;
 
 		} catch (BadSqlGrammarException ex) {
 			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 			return mav;
 		}
 	}
@@ -156,7 +155,7 @@ public class SqltoolStatementControllerImpl implements
 			HttpServletResponse response) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 			return mav;
 		}
 
@@ -181,7 +180,7 @@ public class SqltoolStatementControllerImpl implements
 
 		} catch (BadSqlGrammarException ex) {
 			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 			return mav;
 		}
 	}
@@ -192,7 +191,7 @@ public class SqltoolStatementControllerImpl implements
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 			return mav;
 		}
 

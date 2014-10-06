@@ -45,6 +45,7 @@ import cherry.spring.common.helper.download.DownloadHelper;
 import cherry.spring.common.lib.etl.CsvConsumer;
 import cherry.spring.common.lib.paginate.PageSet;
 import cherry.spring.common.type.FlagCode;
+import cherry.sqlapp.controller.PathDef;
 import cherry.sqlapp.controller.sqltool.LogicErrorUtil;
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.controller.sqltool.ParamMapUtil;
@@ -60,8 +61,6 @@ import cherry.sqlapp.service.sqltool.query.StatementService;
 @Controller
 public class SqltoolStatementIdControllerImpl implements
 		SqltoolStatementIdController {
-
-	public static final String VIEW_PATH = "sqltool/statement/indexId";
 
 	@Value("${sqlapp.app.export.contentType}")
 	private String contentType;
@@ -116,8 +115,8 @@ public class SqltoolStatementIdControllerImpl implements
 	@Override
 	public ModelAndView init(int id, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH);
-		mav.addObject(PATH_VAR, id);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+		mav.addObject(PathDef.PATH_VAR_ID, id);
 		return mav;
 	}
 
@@ -127,8 +126,8 @@ public class SqltoolStatementIdControllerImpl implements
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 
@@ -140,16 +139,16 @@ public class SqltoolStatementIdControllerImpl implements
 			PageSet pageSet = execQueryService.query(form.getDatabaseName(),
 					form.getSql(), paramMap, resultSet);
 
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			mav.addObject(pageSet);
 			mav.addObject(resultSet);
 			return mav;
 
 		} catch (BadSqlGrammarException ex) {
 			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 	}
@@ -161,8 +160,8 @@ public class SqltoolStatementIdControllerImpl implements
 			HttpServletResponse response) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 
@@ -187,8 +186,8 @@ public class SqltoolStatementIdControllerImpl implements
 
 		} catch (BadSqlGrammarException ex) {
 			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 	}
@@ -199,8 +198,8 @@ public class SqltoolStatementIdControllerImpl implements
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 
@@ -220,8 +219,8 @@ public class SqltoolStatementIdControllerImpl implements
 			return mav;
 		} else {
 			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 	}
@@ -232,8 +231,8 @@ public class SqltoolStatementIdControllerImpl implements
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 
@@ -253,8 +252,8 @@ public class SqltoolStatementIdControllerImpl implements
 			return mav;
 		} else {
 			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
-			ModelAndView mav = new ModelAndView(VIEW_PATH);
-			mav.addObject(PATH_VAR, id);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 	}

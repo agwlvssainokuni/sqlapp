@@ -25,15 +25,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
+import cherry.sqlapp.controller.PathDef;
+
 @Controller
 public class HomeControllerImpl implements HomeController {
-
-	public static final String VIEW_PATH = "secure/home/index";
 
 	@Override
 	public ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(VIEW_PATH);
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_HOME_INIT);
 		return mav;
 	}
 
