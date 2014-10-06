@@ -45,11 +45,11 @@ public interface SqltoolStatementController {
 			Authentication auth);
 
 	@RequestMapping()
-	ModelAndView index(Authentication auth, Locale locale,
+	ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@Validated SqltoolStatementForm form,
+	ModelAndView execute(@Validated SqltoolStatementForm form,
 			BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 

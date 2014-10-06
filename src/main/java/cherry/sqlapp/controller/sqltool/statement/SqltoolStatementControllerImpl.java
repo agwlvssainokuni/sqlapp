@@ -113,14 +113,14 @@ public class SqltoolStatementControllerImpl implements
 	}
 
 	@Override
-	public ModelAndView index(Authentication auth, Locale locale,
+	public ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView request(SqltoolStatementForm form,
+	public ModelAndView execute(SqltoolStatementForm form,
 			BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
 
@@ -205,7 +205,7 @@ public class SqltoolStatementControllerImpl implements
 		int id = statementService.create(record, auth.getName());
 
 		UriComponents uc = fromMethodCall(
-				on(SqltoolStatementIdController.class).index(id, auth, locale,
+				on(SqltoolStatementIdController.class).init(id, auth, locale,
 						sitePref, request)).build();
 
 		ModelAndView mav = new ModelAndView();

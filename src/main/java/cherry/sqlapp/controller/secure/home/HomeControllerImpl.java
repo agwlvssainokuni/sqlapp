@@ -31,7 +31,7 @@ public class HomeControllerImpl implements HomeController {
 	public static final String VIEW_PATH = "secure/home/index";
 
 	@Override
-	public ModelAndView index(Authentication auth, Locale locale,
+	public ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		return mav;

@@ -45,11 +45,11 @@ public interface SqltoolClauseController {
 			Authentication auth);
 
 	@RequestMapping()
-	ModelAndView index(Authentication auth, Locale locale,
+	ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@Validated SqltoolClauseForm form,
+	ModelAndView execute(@Validated SqltoolClauseForm form,
 			BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 

@@ -117,7 +117,7 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 	}
 
 	@Override
-	public ModelAndView index(int id, Authentication auth, Locale locale,
+	public ModelAndView init(int id, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(PATH_VAR, id);
@@ -125,7 +125,7 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 	}
 
 	@Override
-	public ModelAndView request(int id, SqltoolClauseForm form,
+	public ModelAndView execute(int id, SqltoolClauseForm form,
 			BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
 
@@ -230,7 +230,7 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 
 		if (clauseService.update(record)) {
 			UriComponents uc = fromMethodCall(
-					on(SqltoolClauseIdController.class).index(id, auth, locale,
+					on(SqltoolClauseIdController.class).init(id, auth, locale,
 							sitePref, request)).build();
 			ModelAndView mav = new ModelAndView();
 			mav.setView(new RedirectView(uc.toUriString(), true));
@@ -265,7 +265,7 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 
 		if (metadataService.update(md)) {
 			UriComponents uc = fromMethodCall(
-					on(SqltoolClauseIdController.class).index(id, auth, locale,
+					on(SqltoolClauseIdController.class).init(id, auth, locale,
 							sitePref, request)).build();
 			ModelAndView mav = new ModelAndView();
 			mav.setView(new RedirectView(uc.toUriString(), true));

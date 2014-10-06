@@ -53,11 +53,11 @@ public interface SqltoolLoadIdController {
 	SqltoolLoadForm getForm(@PathVariable(PATH_VAR) int id);
 
 	@RequestMapping()
-	ModelAndView index(@PathVariable(PATH_VAR) int id, Authentication auth,
+	ModelAndView init(@PathVariable(PATH_VAR) int id, Authentication auth,
 			Locale locale, SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@PathVariable(PATH_VAR) int id,
+	ModelAndView execute(@PathVariable(PATH_VAR) int id,
 			@Validated SqltoolLoadForm form, BindingResult binding,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request, RedirectAttributes redirAttr);

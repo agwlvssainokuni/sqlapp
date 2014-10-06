@@ -47,11 +47,11 @@ public interface SqltoolLoadController {
 			Authentication auth);
 
 	@RequestMapping()
-	ModelAndView index(Authentication auth, Locale locale,
+	ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@Validated SqltoolLoadForm form,
+	ModelAndView execute(@Validated SqltoolLoadForm form,
 			BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request,
 			RedirectAttributes redirAttr);

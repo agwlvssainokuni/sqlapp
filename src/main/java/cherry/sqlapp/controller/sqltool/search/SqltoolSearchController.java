@@ -41,11 +41,11 @@ public interface SqltoolSearchController {
 	SqltoolSearchForm getForm();
 
 	@RequestMapping()
-	ModelAndView index(Authentication authentication, Locale locale,
+	ModelAndView init(Authentication authentication, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(URI_PATH_REQ)
-	ModelAndView request(@Validated SqltoolSearchForm form,
+	ModelAndView execute(@Validated SqltoolSearchForm form,
 			BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 

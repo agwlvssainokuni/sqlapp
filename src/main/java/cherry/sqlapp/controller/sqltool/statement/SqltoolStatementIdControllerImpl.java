@@ -114,7 +114,7 @@ public class SqltoolStatementIdControllerImpl implements
 	}
 
 	@Override
-	public ModelAndView index(int id, Authentication auth, Locale locale,
+	public ModelAndView init(int id, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(PATH_VAR, id);
@@ -122,7 +122,7 @@ public class SqltoolStatementIdControllerImpl implements
 	}
 
 	@Override
-	public ModelAndView request(int id, SqltoolStatementForm form,
+	public ModelAndView execute(int id, SqltoolStatementForm form,
 			BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
 
@@ -213,7 +213,7 @@ public class SqltoolStatementIdControllerImpl implements
 
 		if (statementService.update(record)) {
 			UriComponents uc = fromMethodCall(
-					on(SqltoolStatementIdController.class).index(id, auth,
+					on(SqltoolStatementIdController.class).init(id, auth,
 							locale, sitePref, request)).build();
 			ModelAndView mav = new ModelAndView();
 			mav.setView(new RedirectView(uc.toUriString(), true));
@@ -246,7 +246,7 @@ public class SqltoolStatementIdControllerImpl implements
 
 		if (metadataService.update(md)) {
 			UriComponents uc = fromMethodCall(
-					on(SqltoolStatementIdController.class).index(id, auth,
+					on(SqltoolStatementIdController.class).init(id, auth,
 							locale, sitePref, request)).build();
 			ModelAndView mav = new ModelAndView();
 			mav.setView(new RedirectView(uc.toUriString(), true));

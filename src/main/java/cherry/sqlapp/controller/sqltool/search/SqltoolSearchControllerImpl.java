@@ -70,7 +70,7 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 	}
 
 	@Override
-	public ModelAndView index(Authentication auth, Locale locale,
+	public ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(getForm());
@@ -78,7 +78,7 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 	}
 
 	@Override
-	public ModelAndView request(SqltoolSearchForm form, BindingResult binding,
+	public ModelAndView execute(SqltoolSearchForm form, BindingResult binding,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request) {
 

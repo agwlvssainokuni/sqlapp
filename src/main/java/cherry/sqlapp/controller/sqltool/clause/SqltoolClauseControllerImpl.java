@@ -116,14 +116,14 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 	}
 
 	@Override
-	public ModelAndView index(Authentication auth, Locale locale,
+	public ModelAndView init(Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView request(SqltoolClauseForm form, BindingResult binding,
+	public ModelAndView execute(SqltoolClauseForm form, BindingResult binding,
 			Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request) {
 
@@ -218,7 +218,7 @@ public class SqltoolClauseControllerImpl implements SqltoolClauseController {
 		int id = clauseService.create(record, auth.getName());
 
 		UriComponents uc = fromMethodCall(
-				on(SqltoolClauseIdController.class).index(id, auth, locale,
+				on(SqltoolClauseIdController.class).init(id, auth, locale,
 						sitePref, request)).build();
 
 		ModelAndView mav = new ModelAndView();

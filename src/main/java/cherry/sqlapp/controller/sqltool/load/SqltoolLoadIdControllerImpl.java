@@ -92,7 +92,7 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 	}
 
 	@Override
-	public ModelAndView index(int id, Authentication auth, Locale locale,
+	public ModelAndView init(int id, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(VIEW_PATH);
 		mav.addObject(PATH_VAR, id);
@@ -100,7 +100,7 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 	}
 
 	@Override
-	public ModelAndView request(int id, SqltoolLoadForm form,
+	public ModelAndView execute(int id, SqltoolLoadForm form,
 			BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request,
 			RedirectAttributes redirAttr) {
