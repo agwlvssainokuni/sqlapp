@@ -13,14 +13,14 @@
 <c:set var="hasResultList"
 	value="${result != null && !result.metadataList.isEmpty()}" />
 <h2 class="page-header">
-	<s:message code="sqltool/search/index.message.0" />
+	<s:message code="sqltool/search/init.message.0" />
 </h2>
 <div class="panel-group">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
 				<a data-toggle="collapse" href="#searchForm"><s:message
-						code="sqltool/search/index.message.1" /></a>
+						code="sqltool/search/init.message.1" /></a>
 			</h3>
 		</div>
 		<div id="searchForm"
@@ -39,13 +39,13 @@
 				<c:if test="${result != null && result.metadataList.isEmpty()}">
 					<div class="col-sm-offset-2 col-sm-10">
 						<div class="alert alert-danger" role="alert">
-							<s:message code="sqltool/search/index.message.3" />
+							<s:message code="sqltool/search/init.message.3" />
 						</div>
 					</div>
 				</c:if>
-				<f:form servletRelativeAction="/sqltool/search/req" method="POST"
-					modelAttribute="sqltoolSearchForm" cssClass="form-horizontal"
-					role="form">
+				<f:form servletRelativeAction="/sqltool/search/execute"
+					method="POST" modelAttribute="sqltoolSearchForm"
+					cssClass="form-horizontal" role="form">
 					<f:hidden path="pageNo" value="0" />
 					<f:hidden path="pageSz" />
 					<c:set var="hasError">
@@ -61,7 +61,7 @@
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label"><s:message
-								code="sqltool/search/index.form.type" /></label>
+								code="sqltool/search/init.form.type" /></label>
 						<div class="col-sm-10">
 							<c:forEach var="item"
 								items="${common:getLabeledEnumList('cherry.sqlapp.controller.sqltool.search.SqlType')}">
@@ -74,7 +74,7 @@
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label"><s:message
-								code="sqltool/search/index.form.published" /></label>
+								code="sqltool/search/init.form.published" /></label>
 						<div class="col-sm-10">
 							<c:forEach var="item"
 								items="${common:getLabeledEnumList('cherry.sqlapp.controller.sqltool.search.Published')}">
@@ -110,7 +110,7 @@
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<f:button type="submit" class="btn btn-primary btn-block">
-								<s:message code="sqltool/search/index.searchButton" />
+								<s:message code="sqltool/search/init.searchButton" />
 							</f:button>
 						</div>
 					</div>
@@ -123,14 +123,14 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">
 					<a data-toggle="collapse" href="#searchResult"><s:message
-							code="sqltool/search/index.message.2" /></a>
+							code="sqltool/search/init.message.2" /></a>
 				</h3>
 			</div>
 			<div id="searchResult" class="panel-collapse collapse in">
 				<div class="panel-body">
-					<f:form servletRelativeAction="/sqltool/search/req" method="POST"
-						modelAttribute="sqltoolSearchForm" id="sqltoolSearchForm2"
-						cssClass="app-pager-form">
+					<f:form servletRelativeAction="/sqltool/search/execute"
+						method="POST" modelAttribute="sqltoolSearchForm"
+						id="sqltoolSearchForm2" cssClass="app-pager-form">
 						<f:hidden id="pageNo2" path="pageNo" cssClass="app-page-no" />
 						<f:hidden id="pageSz2" path="pageSz" cssClass="app-page-sz" />
 						<f:hidden id="name2" path="name" />
@@ -150,15 +150,15 @@
 						<thead>
 							<tr>
 								<th>#</th>
-								<th><s:message code="sqltool/search/index.column.name" /></th>
-								<th><s:message code="sqltool/search/index.column.sqlType" /></th>
+								<th><s:message code="sqltool/search/init.column.name" /></th>
+								<th><s:message code="sqltool/search/init.column.sqlType" /></th>
 								<th><s:message
-										code="sqltool/search/index.column.registeredAt" /></th>
+										code="sqltool/search/init.column.registeredAt" /></th>
 								<th><s:message
-										code="sqltool/search/index.column.publishedFlg" /></th>
-								<th><s:message code="sqltool/search/index.column.ownedBy" /></th>
+										code="sqltool/search/init.column.publishedFlg" /></th>
+								<th><s:message code="sqltool/search/init.column.ownedBy" /></th>
 								<th><s:message
-										code="sqltool/search/index.column.description" /></th>
+										code="sqltool/search/init.column.description" /></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -184,7 +184,7 @@
 										<td><s:bind path="registeredAt">${status.value}</s:bind></td>
 										<td><s:bind path="publishedFlg">
 												<s:message
-													code="sqltool/search/index.column.publishedFlg.${status.actualValue.code()}" />
+													code="sqltool/search/init.column.publishedFlg.${status.actualValue.code()}" />
 											</s:bind></td>
 										<td><s:bind path="ownedBy">${status.value}</s:bind></td>
 										<td><s:bind path="description">${status.value}</s:bind></td>

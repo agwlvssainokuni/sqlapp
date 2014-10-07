@@ -14,14 +14,14 @@
 <c:set var="hasResultList"
 	value="${resultSet != null && pageSet != null}" />
 <h2 class="page-header">
-	<s:message code="sqltool/statement/index.message.0" />
+	<s:message code="sqltool/statement/init.message.0" />
 </h2>
 <div class="panel-group">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
 				<a data-toggle="collapse" href="#statementForm"><s:message
-						code="sqltool/statement/index.message.2" /></a>
+						code="sqltool/statement/init.message.2" /></a>
 			</h3>
 		</div>
 		<div id="statementForm"
@@ -38,7 +38,7 @@
 						</div>
 					</div>
 				</s:hasBindErrors>
-				<f:form servletRelativeAction="${baseUri}/req" method="POST"
+				<f:form servletRelativeAction="${baseUri}/execute" method="POST"
 					modelAttribute="sqltoolStatementForm" cssClass="form-horizontal"
 					role="form">
 					<f:hidden path="lockVersion" />
@@ -81,13 +81,13 @@
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<f:button type="submit" class="btn btn-primary">
-								<s:message code="sqltool/statement/index.execButton" />
+								<s:message code="sqltool/statement/init.execButton" />
 							</f:button>
 							<f:button type="submit" name="download" class="btn btn-default">
-								<s:message code="sqltool/statement/index.downloadButton" />
+								<s:message code="sqltool/statement/init.downloadButton" />
 							</f:button>
 							<f:button type="submit" name="create" class="btn btn-default">
-								<s:message code="sqltool/statement/index.createButton" />
+								<s:message code="sqltool/statement/init.createButton" />
 							</f:button>
 						</div>
 					</div>
@@ -100,7 +100,7 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">
 					<a data-toggle="collapse" href="#statementResult"><s:message
-							code="sqltool/statement/index.message.3" /></a>
+							code="sqltool/statement/init.message.3" /></a>
 				</h3>
 			</div>
 			<div id="statementResult" class="panel-collapse collapse in">

@@ -9,19 +9,19 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <h2 class="page-header">
-	<s:message code="login/index.message.0" />
+	<s:message code="login/init.message.0" />
 </h2>
 <c:if test="${loginFailed}">
 	<div class="col-sm-offset-2 col-sm-10">
 		<div class="alert alert-danger" role="alert">
-			<s:message code="login/index.message.1" />
+			<s:message code="login/init.message.1" />
 		</div>
 	</div>
 </c:if>
 <c:if test="${loggedOut}">
 	<div class="col-sm-offset-2 col-sm-10">
 		<div class="alert alert-success" role="alert">
-			<s:message code="login/index.message.2" />
+			<s:message code="login/init.message.2" />
 		</div>
 	</div>
 </c:if>
@@ -45,7 +45,7 @@
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
 			<button type="submit" class="btn btn-primary btn-block">
-				<s:message code="login/index.loginButton" />
+				<s:message code="login/init.loginButton" />
 			</button>
 		</div>
 	</div>

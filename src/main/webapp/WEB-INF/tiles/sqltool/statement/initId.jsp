@@ -10,18 +10,20 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="sqlapp" uri="urn:sqlapp"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
-<s:url var="baseUri" value="/sqltool/load/{id}">
+<s:url var="baseUri" value="/sqltool/statement/{id}">
 	<s:param name="id" value="${id}" />
 </s:url>
+<c:set var="hasResultList"
+	value="${resultSet != null && pageSet != null}" />
 <h2 class="page-header">
-	<s:message code="sqltool/load/indexId.message.0" />
+	<s:message code="sqltool/statement/initId.message.0" />
 </h2>
 <div class="panel-group">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
 				<a data-toggle="collapse" href="#metadataForm"><s:message
-						code="sqltool/load/indexId.message.1" /></a>
+						code="sqltool/statement/initId.message.1" /></a>
 			</h3>
 		</div>
 		<c:set var="hasError">
@@ -85,7 +87,7 @@
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<f:button type="submit" class="btn btn-primary">
-								<s:message code="sqltool/load/indexId.updateButton" />
+								<s:message code="sqltool/statement/initId.updateButton" />
 							</f:button>
 						</div>
 					</div>
@@ -96,32 +98,34 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
-				<a data-toggle="collapse" href="#loadForm"><s:message
-						code="sqltool/load/indexId.message.2" /></a>
+				<a data-toggle="collapse" href="#statementForm"><s:message
+						code="sqltool/statement/initId.message.2" /></a>
 			</h3>
 		</div>
-		<div id="loadForm" class="panel-collapse collapse in">
+		<div id="statementForm"
+			class="panel-collapse collapse ${hasResultList ? '' : 'in'}">
 			<div class="panel-body">
-				<s:hasBindErrors name="sqltoolLoadForm">
+				<s:hasBindErrors name="sqltoolStatementForm">
 					<div class="col-sm-offset-2 col-sm-10">
 						<div class="alert alert-danger" role="alert">
-							<f:errors path="sqltoolLoadForm" element="div" />
-							<f:errors path="sqltoolLoadForm.databaseName" element="div" />
-							<f:errors path="sqltoolLoadForm.sql" element="div" />
-							<f:errors path="sqltoolLoadForm.lockVersion" element="div" />
+							<f:errors path="sqltoolStatementForm" element="div" />
+							<f:errors path="sqltoolStatementForm.databaseName" element="div" />
+							<f:errors path="sqltoolStatementForm.sql" element="div" />
+							<f:errors path="sqltoolStatementForm.paramMap" element="div" />
+							<f:errors path="sqltoolStatementForm.lockVersion" element="div" />
 						</div>
 					</div>
 				</s:hasBindErrors>
-				<f:form servletRelativeAction="${baseUri}/req" method="POST"
-					modelAttribute="sqltoolLoadForm" enctype="multipart/form-data"
-					cssClass="form-horizontal" role="form">
+				<f:form servletRelativeAction="${baseUri}/execute" method="POST"
+					modelAttribute="sqltoolStatementForm" cssClass="form-horizontal"
+					role="form">
 					<f:hidden path="lockVersion" />
 					<c:set var="hasError">
 						<s:bind path="databaseName">${status.isError() ? "has-error" : ""}</s:bind>
 					</c:set>
 					<div class="form-group ${hasError}">
 						<f:label path="databaseName" cssClass="col-sm-2 control-label">
-							<s:message code="sqltoolLoadForm.databaseName" />
+							<s:message code="sqltoolStatementForm.databaseName" />
 						</f:label>
 						<div class="col-sm-10">
 							<f:select path="databaseName" cssClass="col-sm-2 form-control">
@@ -135,30 +139,33 @@
 					</c:set>
 					<div class="form-group ${hasError}">
 						<f:label path="sql" cssClass="col-sm-2 control-label">
-							<s:message code="sqltoolLoadForm.sql" />
+							<s:message code="sqltoolStatementForm.sql" />
 						</f:label>
 						<div class="col-sm-10">
 							<f:textarea path="sql" cssClass="col-sm-2 form-control" />
 						</div>
 					</div>
 					<c:set var="hasError">
-						<s:bind path="file">${status.isError() ? "has-error" : ""}</s:bind>
+						<s:bind path="paramMap">${status.isError() ? "has-error" : ""}</s:bind>
 					</c:set>
 					<div class="form-group ${hasError}">
-						<f:label path="file" cssClass="col-sm-2 control-label">
-							<s:message code="sqltoolLoadForm.file" />
+						<f:label path="paramMap" cssClass="col-sm-2 control-label">
+							<s:message code="sqltoolStatementForm.paramMap" />
 						</f:label>
 						<div class="col-sm-10">
-							<f:input path="file" type="file" cssClass="form-control" />
+							<f:textarea path="paramMap" cssClass="col-sm-2 form-control" />
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<f:button type="submit" class="btn btn-primary">
-								<s:message code="sqltool/load/indexId.execButton" />
+								<s:message code="sqltool/statement/initId.execButton" />
+							</f:button>
+							<f:button type="submit" name="download" class="btn btn-default">
+								<s:message code="sqltool/statement/initId.downloadButton" />
 							</f:button>
 							<f:button type="submit" name="update" class="btn btn-default">
-								<s:message code="sqltool/load/indexId.updateButton" />
+								<s:message code="sqltool/statement/initId.updateButton" />
 							</f:button>
 						</div>
 					</div>
@@ -166,4 +173,20 @@
 			</div>
 		</div>
 	</div>
+	<c:if test="${hasResultList}">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<a data-toggle="collapse" href="#statementResult"><s:message
+							code="sqltool/statement/initId.message.3" /></a>
+				</h3>
+			</div>
+			<div id="statementResult" class="panel-collapse collapse in">
+				<div class="panel-body">
+					<app:resultSet id="resultSetList" resultSet="${resultSet}"
+						pageSet="${pageSet}" />
+				</div>
+			</div>
+		</div>
+	</c:if>
 </div>

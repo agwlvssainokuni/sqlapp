@@ -16,14 +16,14 @@
 <c:set var="hasResultList"
 	value="${resultSet != null && pageSet != null}" />
 <h2 class="page-header">
-	<s:message code="sqltool/clause/indexId.message.0" />
+	<s:message code="sqltool/clause/initId.message.0" />
 </h2>
 <div class="panel-group">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
 				<a data-toggle="collapse" href="#metadataForm"><s:message
-						code="sqltool/clause/indexId.message.1" /></a>
+						code="sqltool/clause/initId.message.1" /></a>
 			</h3>
 		</div>
 		<c:set var="hasError">
@@ -87,7 +87,7 @@
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<f:button type="submit" class="btn btn-primary">
-								<s:message code="sqltool/clause/indexId.updateButton" />
+								<s:message code="sqltool/clause/initId.updateButton" />
 							</f:button>
 						</div>
 					</div>
@@ -99,7 +99,7 @@
 		<div class="panel-heading">
 			<h3 class="panel-title">
 				<a data-toggle="collapse" href="#clauseForm"><s:message
-						code="sqltool/clause/indexId.message.2" /></a>
+						code="sqltool/clause/initId.message.2" /></a>
 			</h3>
 		</div>
 		<div id="clauseForm"
@@ -121,7 +121,7 @@
 						</div>
 					</div>
 				</s:hasBindErrors>
-				<f:form servletRelativeAction="${baseUri}/req" method="POST"
+				<f:form servletRelativeAction="${baseUri}/execute" method="POST"
 					modelAttribute="sqltoolClauseForm" cssClass="form-horizontal"
 					role="form">
 					<f:hidden path="pageNo" value="0" />
@@ -221,13 +221,13 @@
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<f:button type="submit" class="btn btn-primary">
-								<s:message code="sqltool/clause/indexId.execButton" />
+								<s:message code="sqltool/clause/initId.execButton" />
 							</f:button>
 							<f:button type="submit" name="download" class="btn btn-default">
-								<s:message code="sqltool/clause/indexId.downloadButton" />
+								<s:message code="sqltool/clause/initId.downloadButton" />
 							</f:button>
 							<f:button type="submit" name="update" class="btn btn-default">
-								<s:message code="sqltool/clause/indexId.updateButton" />
+								<s:message code="sqltool/clause/initId.updateButton" />
 							</f:button>
 						</div>
 					</div>
@@ -240,11 +240,11 @@
 			<div class="panel-heading">
 				<h3 class="panel-title">
 					<a data-toggle="collapse" href="#clauseResult"><s:message
-							code="sqltool/clause/indexId.message.3" /></a>
+							code="sqltool/clause/initId.message.3" /></a>
 				</h3>
 			</div>
 			<div id="clauseResult" class="panel-collapse collapse in">
-				<f:form servletRelativeAction="${baseUri}/req" method="POST"
+				<f:form servletRelativeAction="${baseUri}/execute" method="POST"
 					modelAttribute="sqltoolClauseForm" id="sqltoolClause2"
 					class="app-pager-form">
 					<f:hidden id="pageNo2" path="pageNo" cssClass="app-page-no" />

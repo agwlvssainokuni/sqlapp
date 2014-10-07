@@ -12,14 +12,14 @@
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <s:url var="baseUri" value="/sqltool/load" />
 <h2 class="page-header">
-	<s:message code="sqltool/load/index.message.0" />
+	<s:message code="sqltool/load/init.message.0" />
 </h2>
 <div class="panel-group">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
 				<a data-toggle="collapse" href="#loadForm"><s:message
-						code="sqltool/load/index.message.2" /></a>
+						code="sqltool/load/init.message.2" /></a>
 			</h3>
 		</div>
 		<div id="loadForm" class="panel-collapse collapse in">
@@ -34,7 +34,7 @@
 						</div>
 					</div>
 				</s:hasBindErrors>
-				<f:form servletRelativeAction="${baseUri}/req" method="POST"
+				<f:form servletRelativeAction="${baseUri}/execute" method="POST"
 					modelAttribute="sqltoolLoadForm" enctype="multipart/form-data"
 					cssClass="form-horizontal" role="form">
 					<f:hidden path="lockVersion" />
@@ -77,10 +77,10 @@
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<f:button type="submit" class="btn btn-primary">
-								<s:message code="sqltool/load/index.execButton" />
+								<s:message code="sqltool/load/init.execButton" />
 							</f:button>
 							<f:button type="submit" name="create" class="btn btn-default">
-								<s:message code="sqltool/load/index.createButton" />
+								<s:message code="sqltool/load/init.createButton" />
 							</f:button>
 						</div>
 					</div>

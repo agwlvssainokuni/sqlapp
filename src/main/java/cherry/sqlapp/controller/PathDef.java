@@ -56,25 +56,25 @@ public class PathDef {
 
 	public static final String PARAM_REF = "ref";
 
-	public static final String VIEW_LOGIN_INIT = "login/index";
+	public static final String VIEW_LOGIN_INIT = "login/init";
 
-	public static final String VIEW_HOME_INIT = "secure/home/index";
+	public static final String VIEW_HOME_INIT = "secure/home/init";
 
-	public static final String VIEW_SQLTOOL_SEARCH_INIT = "sqltool/search/index";
+	public static final String VIEW_SQLTOOL_SEARCH_INIT = "sqltool/search/init";
 
-	public static final String VIEW_SQLTOOL_CLAUSE_INIT = "sqltool/clause/index";
+	public static final String VIEW_SQLTOOL_CLAUSE_INIT = "sqltool/clause/init";
 
-	public static final String VIEW_SQLTOOL_CLAUSE_ID_INIT = "sqltool/clause/indexId";
+	public static final String VIEW_SQLTOOL_CLAUSE_ID_INIT = "sqltool/clause/initId";
 
-	public static final String VIEW_SQLTOOL_STATEMENT_INIT = "sqltool/statement/index";
+	public static final String VIEW_SQLTOOL_STATEMENT_INIT = "sqltool/statement/init";
 
-	public static final String VIEW_SQLTOOL_STATEMENT_ID_INIT = "sqltool/statement/indexId";
+	public static final String VIEW_SQLTOOL_STATEMENT_ID_INIT = "sqltool/statement/initId";
 
-	public static final String VIEW_SQLTOOL_LOAD_INIT = "sqltool/load/index";
+	public static final String VIEW_SQLTOOL_LOAD_INIT = "sqltool/load/init";
 
 	public static final String VIEW_SQLTOOL_LOAD_FINISH = "sqltool/load/finish";
 
-	public static final String VIEW_SQLTOOL_LOAD_ID_INIT = "sqltool/load/indexId";
+	public static final String VIEW_SQLTOOL_LOAD_ID_INIT = "sqltool/load/initId";
 
 	public static final String VIEW_SQLTOOL_LOAD_ID_FINISH = "sqltool/load/finishId";
 

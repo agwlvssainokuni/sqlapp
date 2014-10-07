@@ -4,22 +4,19 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
 
-	<definition name="login/index" template="/WEB-INF/tiles/base_unauth.jsp">
-		<put-attribute name="name" value="login/index" />
-		<put-attribute name="content"
-			value="/WEB-INF/tiles/login/index.jsp" />
+	<definition name="login/init" template="/WEB-INF/tiles/base_unauth.jsp">
+		<put-attribute name="name" value="login/init" />
+		<put-attribute name="content" value="/WEB-INF/tiles/login/init.jsp" />
 	</definition>
 
 	<definition name="secure/**" template="/WEB-INF/tiles/base_auth.jsp">
 		<put-attribute name="name" value="secure/{1}" />
-		<put-attribute name="content"
-			value="/WEB-INF/tiles/secure/{1}.jsp" />
+		<put-attribute name="content" value="/WEB-INF/tiles/secure/{1}.jsp" />
 	</definition>
 
 	<definition name="sqltool/**" template="/WEB-INF/tiles/base_auth.jsp">
 		<put-attribute name="name" value="sqltool/{1}" />
-		<put-attribute name="content"
-			value="/WEB-INF/tiles/sqltool/{1}.jsp" />
+		<put-attribute name="content" value="/WEB-INF/tiles/sqltool/{1}.jsp" />
 	</definition>
 
 </tiles-definitions>

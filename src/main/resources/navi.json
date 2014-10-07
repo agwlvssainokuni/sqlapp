@@ -1,21 +1,21 @@
 {
-	"name": "secure/home/index",
+	"name": "secure/home/init",
 	"uri": "/secure/",
 	"children": [
 		{
-			"name": "sqltool/search/index",
-			"uri": "/sqltool/search/req",
+			"name": "sqltool/search/init",
+			"uri": "/sqltool/search/execute",
 			"children": [
 				{
-					"name": "sqltool/clause/indexId",
+					"name": "sqltool/clause/initId",
 					"uri": "/sqltool/clause/{id}"
 				},
 				{
-					"name": "sqltool/statement/indexId",
+					"name": "sqltool/statement/initId",
 					"uri": "/sqltool/statement/{id}"
 				},
 				{
-					"name": "sqltool/load/indexId",
+					"name": "sqltool/load/initId",
 					"uri": "/sqltool/load/{id}"
 				},
 				{
@@ -25,15 +25,15 @@
 			]
 		},
 		{
-			"name": "sqltool/clause/index",
+			"name": "sqltool/clause/init",
 			"uri": "/sqltool/clause"
 		},
 		{
-			"name": "sqltool/statement/index",
+			"name": "sqltool/statement/init",
 			"uri": "/sqltool/statement"
 		},
 		{
-			"name": "sqltool/load/index",
+			"name": "sqltool/load/init",
 			"uri": "/sqltool/load"
 		},
 		{
