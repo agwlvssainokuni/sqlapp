@@ -24,7 +24,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import org.joda.time.LocalDateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
 import cherry.spring.common.type.format.CustomDateTimeFormat;
 import cherry.spring.common.type.format.CustomDateTimeFormat.Range;
@@ -42,10 +43,16 @@ public class SqltoolSearchForm implements Serializable {
 	private String name;
 
 	@CustomDateTimeFormat(Range.FROM)
-	private LocalDateTime registeredFrom;
+	private LocalDate registeredFromDt;
+
+	@CustomDateTimeFormat(Range.FROM)
+	private LocalTime registeredFromTm;
 
 	@CustomDateTimeFormat(Range.TO)
-	private LocalDateTime registeredTo;
+	private LocalDate registeredToDt;
+
+	@CustomDateTimeFormat(Range.TO)
+	private LocalTime registeredToTm;
 
 	private List<SqlType> sqlType;
 

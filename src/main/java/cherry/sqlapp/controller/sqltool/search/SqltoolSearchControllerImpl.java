@@ -22,6 +22,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.site.SitePreference;
@@ -59,9 +60,16 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 	public SqltoolSearchForm getForm() {
 		LocalDate today = bizdateHelper.today();
 		SqltoolSearchForm form = new SqltoolSearchForm();
-		form.setRegisteredFrom(LocalDateTimeUtil.rangeFrom(today
-				.minusDays(defaultFromDays)));
-		form.setRegisteredTo(LocalDateTimeUtil.rangeTo(today).minusSeconds(1));
+
+		LocalDateTime from = LocalDateTimeUtil.rangeFrom(today
+				.minusDays(defaultFromDays));
+		form.setRegisteredFromDt(from.toLocalDate());
+		form.setRegisteredFromTm(from.toLocalTime());
+
+		LocalDateTime to = LocalDateTimeUtil.rangeTo(today).minusSeconds(1);
+		form.setRegisteredToDt(to.toLocalDate());
+		form.setRegisteredToTm(to.toLocalTime());
+
 		form.setSqlType(Arrays.asList(SqlType.CLAUSE, SqlType.STATEMENT,
 				SqlType.LOAD));
 		form.setPublished(Arrays.asList(Published.PUBLIC, Published.PRIVATE));

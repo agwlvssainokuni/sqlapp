@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import cherry.spring.common.lib.util.LocalDateTimeUtil;
 import cherry.spring.common.type.FlagCode;
 import cherry.sqlapp.code.SqlTypeCode;
 import cherry.sqlapp.service.sqltool.metadata.MetadataCondition;
@@ -49,8 +50,10 @@ public class FormUtil {
 		cond.setName(form.getName());
 		cond.setSqlType(sqlType);
 		cond.setPublishedFlg(publishedFlg);
-		cond.setRegisteredFrom(form.getRegisteredFrom());
-		cond.setRegisteredTo(form.getRegisteredTo());
+		cond.setRegisteredFrom(LocalDateTimeUtil.rangeFrom(
+				form.getRegisteredFromDt(), form.getRegisteredFromTm()));
+		cond.setRegisteredTo(LocalDateTimeUtil.rangeTo(
+				form.getRegisteredToDt(), form.getRegisteredToTm()));
 		cond.setLoginId(loginId);
 		return cond;
 	}

@@ -19,6 +19,7 @@ package cherry.sqlapp.service.sqltool.metadata;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -28,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 import cherry.spring.common.helper.querydsl.SQLQueryConfigurer;
 import cherry.spring.common.helper.querydsl.SQLQueryHelper;
 import cherry.spring.common.helper.querydsl.SQLQueryResult;
-import cherry.spring.common.lib.util.LocalDateTimeUtil;
 import cherry.spring.common.type.DeletedFlag;
 import cherry.spring.common.type.FlagCode;
 import cherry.spring.common.type.jdbc.RowMapperCreator;
@@ -97,17 +97,15 @@ public class MetadataServiceImpl implements MetadataService {
 			public SQLQuery configure(SQLQuery query) {
 
 				BooleanBuilder where = new BooleanBuilder();
-				if (cond.getName() != null) {
+				if (StringUtils.isNotEmpty(cond.getName())) {
 					where.and(m.name.startsWith(cond.getName()));
 				}
 
 				if (cond.getRegisteredFrom() != null) {
-					where.and(m.registeredAt.goe(LocalDateTimeUtil
-							.rangeFrom(cond.getRegisteredFrom())));
+					where.and(m.registeredAt.goe(cond.getRegisteredFrom()));
 				}
 				if (cond.getRegisteredTo() != null) {
-					where.and(m.registeredAt.lt(LocalDateTimeUtil.rangeTo(cond
-							.getRegisteredTo())));
+					where.and(m.registeredAt.lt(cond.getRegisteredTo()));
 				}
 
 				BooleanBuilder bb = new BooleanBuilder();

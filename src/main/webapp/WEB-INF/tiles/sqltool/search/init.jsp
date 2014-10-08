@@ -31,8 +31,10 @@
 						<div class="alert alert-danger" role="alert">
 							<f:errors path="sqltoolSearchForm" element="div" />
 							<f:errors path="sqltoolSearchForm.name" element="div" />
-							<f:errors path="sqltoolSearchForm.registeredFrom" element="div" />
-							<f:errors path="sqltoolSearchForm.registeredTo" element="div" />
+							<f:errors path="sqltoolSearchForm.registeredFromDt" element="div" />
+							<f:errors path="sqltoolSearchForm.registeredFromTm" element="div" />
+							<f:errors path="sqltoolSearchForm.registeredToDt" element="div" />
+							<f:errors path="sqltoolSearchForm.registeredToTm" element="div" />
 						</div>
 					</div>
 				</s:hasBindErrors>
@@ -85,28 +87,44 @@
 							</c:forEach>
 						</div>
 					</div>
-					<c:set var="hasError">
-						<s:bind path="registeredFrom">${status.isError() ? "has-error" : ""}</s:bind>
+
+					<c:set var="hasErrorDt">
+						<s:bind path="registeredFromDt">${status.isError() ? "has-error" : ""}</s:bind>
 					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="registeredFrom" cssClass="col-sm-2 control-label">
-							<s:message code="sqltoolSearchForm.registeredFrom" />
-						</f:label>
-						<div class="col-sm-10">
-							<f:input path="registeredFrom" cssClass="form-control" />
+					<c:set var="hasErrorTm">
+						<s:bind path="registeredFromTm">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group">
+						<span
+							class="${hasErrorDt.isEmpty() && hasErrorTm.isEmpty() ? '' : 'has-error'}"><label
+							class="col-sm-2 control-label"><s:message
+									code="sqltoolSearchForm.registeredFrom" /></label></span>
+						<div class="col-sm-4 ${hasErrorDt}">
+							<f:input path="registeredFromDt" cssClass="form-control" />
+						</div>
+						<div class="col-sm-4 ${hasErrorTm}">
+							<f:input path="registeredFromTm" cssClass="form-control" />
 						</div>
 					</div>
-					<c:set var="hasError">
-						<s:bind path="registeredFrom">${status.isError() ? "has-error" : ""}</s:bind>
+					<c:set var="hasErrorDt">
+						<s:bind path="registeredToDt">${status.isError() ? "has-error" : ""}</s:bind>
 					</c:set>
-					<div class="form-group ${hasError}">
-						<f:label path="registeredTo" cssClass="col-sm-2 control-label">
-							<s:message code="sqltoolSearchForm.registeredTo" />
-						</f:label>
-						<div class="col-sm-10">
-							<f:input path="registeredTo" cssClass="form-control" />
+					<c:set var="hasErrorTm">
+						<s:bind path="registeredToTm">${status.isError() ? "has-error" : ""}</s:bind>
+					</c:set>
+					<div class="form-group">
+						<span
+							class="${hasErrorDt.isEmpty() && hasErrorTm.isEmpty() ? '' : 'has-error'}"><label
+							class="col-sm-2 control-label"><s:message
+									code="sqltoolSearchForm.registeredTo" /></label></span>
+						<div class="col-sm-4 ${hasErrorDt}">
+							<f:input path="registeredToDt" cssClass="form-control" />
+						</div>
+						<div class="col-sm-4 ${hasErrorTm}">
+							<f:input path="registeredToTm" cssClass="form-control" />
 						</div>
 					</div>
+
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<f:button type="submit" class="btn btn-primary btn-block">
@@ -136,8 +154,10 @@
 						<f:hidden id="name2" path="name" />
 						<f:hidden id="sqlType2" path="sqlType" />
 						<f:hidden id="published2" path="published" />
-						<f:hidden id="registeredFrom2" path="registeredFrom" />
-						<f:hidden id="registeredTo2" path="registeredTo" />
+						<f:hidden id="registeredFromDt2" path="registeredFromDt" />
+						<f:hidden id="registeredFromTm2" path="registeredFromTm" />
+						<f:hidden id="registeredToDt2" path="registeredToDt" />
+						<f:hidden id="registeredToTm2" path="registeredToTm" />
 					</f:form>
 					<div>
 						<div class="app-pager-desc">
