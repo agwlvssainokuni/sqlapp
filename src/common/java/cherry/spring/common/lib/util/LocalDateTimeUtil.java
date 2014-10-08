@@ -19,8 +19,16 @@ package cherry.spring.common.lib.util;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
+import org.joda.time.Period;
 
 public class LocalDateTimeUtil {
+
+	private static Period unitOfTime = Period.seconds(1);
+
+	public static Period setUnitOfTime(Period period) {
+		unitOfTime = period;
+		return unitOfTime;
+	}
 
 	public static LocalDateTime rangeFrom(LocalDate from) {
 		if (from == null) {
@@ -57,14 +65,14 @@ public class LocalDateTimeUtil {
 		if (toT == null) {
 			return toD.toLocalDateTime(LocalTime.MIDNIGHT).plusDays(1);
 		}
-		return toD.toLocalDateTime(toT).plusSeconds(1);
+		return toD.toLocalDateTime(toT).plus(unitOfTime);
 	}
 
 	public static LocalDateTime rangeTo(LocalDateTime to) {
 		if (to == null) {
 			return null;
 		}
-		return to.plusSeconds(1);
+		return to.plus(unitOfTime);
 	}
 
 }
