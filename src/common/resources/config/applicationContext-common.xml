@@ -133,15 +133,14 @@
 		</constructor-arg>
 	</bean>
 
-	<bean class="cherry.spring.common.helper.async.AsyncProcDaoImpl" />
 	<bean class="cherry.spring.common.helper.async.AsyncProcHelperImpl" />
-	<bean class="cherry.spring.common.helper.bizdate.BizdateDaoImpl" />
 	<bean class="cherry.spring.common.helper.bizdate.BizdateHelperImpl" />
+	<bean class="cherry.spring.common.helper.mail.MailMessageHelperImpl" />
+	<bean class="cherry.spring.common.helper.signup.SignupRequestHelperImpl" />
+
 	<bean class="cherry.spring.common.helper.download.DownloadHelperImpl" />
 	<bean class="cherry.spring.common.helper.json.JsonHelperImpl" />
 	<bean class="cherry.spring.common.helper.logicalerror.LogicalErrorHelperImpl" />
-	<bean class="cherry.spring.common.helper.mail.MailMessageDaoImpl" />
-	<bean class="cherry.spring.common.helper.mail.MailMessageHelperImpl" />
 	<bean class="cherry.spring.common.helper.onetimetoken.OneTimeTokenIssuerImpl" />
 	<bean
 		class="cherry.spring.common.helper.onetimetoken.OneTimeTokenValidatorImpl" />
@@ -152,9 +151,6 @@
 	<bean class="cherry.spring.common.lib.sql.SimpleSqlParser" />
 	<bean class="cherry.spring.common.lib.etl.ExtractorImpl" />
 	<bean class="cherry.spring.common.lib.etl.LoaderImpl" />
-
-	<bean class="cherry.spring.common.helper.password.UserPasswordDaoImpl" />
-	<bean class="cherry.spring.common.helper.signup.SignupRequestDaoImpl" />
 
 	<bean class="cherry.spring.common.type.EnumUtil" factory-method="setMessageSource">
 		<constructor-arg ref="messageSource" />
