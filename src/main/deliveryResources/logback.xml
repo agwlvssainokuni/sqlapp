@@ -54,6 +54,7 @@
 	</appender>
 	<logger name="cherry.sqlapp" level="${logback.level.app}" />
 	<logger name="cherry.spring" level="${logback.level.app}" />
+	<logger name="com.mysema" level="${logback.level.framework}" />
 	<logger name="org.springframework" level="${logback.level.framework}" />
 	<logger name="org.flywaydb" level="${logback.level.framework}" />
 	<logger name="trace" level="TRACE" />

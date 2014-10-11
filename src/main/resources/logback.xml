@@ -8,6 +8,7 @@
 	</appender>
 	<logger name="cherry.sqlapp" level="DEBUG" />
 	<logger name="cherry.spring" level="DEBUG" />
+	<logger name="com.mysema" level="INFO" />
 	<logger name="org.springframework" level="INFO" />
 	<logger name="org.flywaydb" level="INFO" />
 	<logger name="trace" level="TRACE" />
