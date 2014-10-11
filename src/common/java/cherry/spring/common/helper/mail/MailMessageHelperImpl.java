@@ -19,29 +19,59 @@ package cherry.spring.common.helper.mail;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.transaction.annotation.Transactional;
+
+import cherry.spring.common.helper.sql.SqlLoader;
+import cherry.spring.common.type.jdbc.RowMapperCreator;
 
 public class MailMessageHelperImpl implements MailMessageHelper,
 		InitializingBean {
 
 	@Autowired
-	private MailMessageDao mailMessageDao;
+	private NamedParameterJdbcTemplate namedParameterJdbcOperations;
+
+	@Autowired
+	private RowMapperCreator rowMapperCreator;
+
+	@Autowired
+	private SqlLoader sqlLoader;
+
+	private String findTemplate;
+
+	private String findAddresses;
 
 	private VelocityEngine velocityEngine;
 
+	public void setFindTemplate(String findTemplate) {
+		this.findTemplate = findTemplate;
+	}
+
+	public void setFindAddresses(String findAddresses) {
+		this.findAddresses = findAddresses;
+	}
+
 	@Override
 	public void afterPropertiesSet() throws IOException {
+		BeanWrapper bw = new BeanWrapperImpl(this);
+		bw.setPropertyValues(sqlLoader.load(getClass()));
 		velocityEngine = new VelocityEngine();
 		velocityEngine.init();
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public SimpleMailMessage createMailMessage(IMailId mailId, String to,
 			MailModel mailModel, Locale locale) {
@@ -49,18 +79,25 @@ public class MailMessageHelperImpl implements MailMessageHelper,
 		VelocityContext context = new VelocityContext();
 		context.put("model", mailModel);
 
-		MailTemplateDto template = mailMessageDao.findTemplate(
-				mailId.templateName(), locale);
-		List<MailTemplateAddressDto> addrList = mailMessageDao
-				.findAddresses(mailId.templateName());
+		Map<String, String> paramMap = new HashMap<>();
+		paramMap.put("name", mailId.templateName());
+		paramMap.put("locale", locale.toString());
+
+		MailTemplateDto template = namedParameterJdbcOperations.queryForObject(
+				findTemplate, paramMap,
+				rowMapperCreator.create(MailTemplateDto.class));
+
+		List<MailAddressDto> addrList = namedParameterJdbcOperations.query(
+				findAddresses, paramMap,
+				rowMapperCreator.create(MailAddressDto.class));
 
 		List<String> cc = new ArrayList<>();
 		List<String> bcc = new ArrayList<>();
-		for (MailTemplateAddressDto addr : addrList) {
-			if (addr.isCc()) {
+		for (MailAddressDto addr : addrList) {
+			if (addr.getRcptType() == RcptType.CC) {
 				cc.add(addr.getMailAddr());
 			}
-			if (addr.isBcc()) {
+			if (addr.getRcptType() == RcptType.BCC) {
 				bcc.add(addr.getMailAddr());
 			}
 		}

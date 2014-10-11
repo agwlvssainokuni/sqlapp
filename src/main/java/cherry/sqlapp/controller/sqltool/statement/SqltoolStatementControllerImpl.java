@@ -124,7 +124,8 @@ public class SqltoolStatementControllerImpl implements
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 			return mav;
 		}
 
@@ -136,14 +137,16 @@ public class SqltoolStatementControllerImpl implements
 			PageSet pageSet = execQueryService.query(form.getDatabaseName(),
 					form.getSql(), paramMap, resultSet);
 
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 			mav.addObject(pageSet);
 			mav.addObject(resultSet);
 			return mav;
 
 		} catch (BadSqlGrammarException ex) {
 			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 			return mav;
 		}
 	}
@@ -155,7 +158,8 @@ public class SqltoolStatementControllerImpl implements
 			HttpServletResponse response) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 			return mav;
 		}
 
@@ -166,11 +170,11 @@ public class SqltoolStatementControllerImpl implements
 
 			DownloadAction action = new DownloadAction() {
 				@Override
-				public int doDownload(Writer writer) throws IOException {
+				public long doDownload(Writer writer) throws IOException {
 					PageSet ps = execQueryService.query(form.getDatabaseName(),
 							form.getSql(), paramMap, new CsvConsumer(writer,
 									true));
-					return ps.getLast().getTo() + 1;
+					return ps.getLast().getTo() + 1L;
 				}
 			};
 			downloadHelper.download(response, contentType, filename,
@@ -180,7 +184,8 @@ public class SqltoolStatementControllerImpl implements
 
 		} catch (BadSqlGrammarException ex) {
 			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 			return mav;
 		}
 	}
@@ -191,7 +196,8 @@ public class SqltoolStatementControllerImpl implements
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 			return mav;
 		}
 

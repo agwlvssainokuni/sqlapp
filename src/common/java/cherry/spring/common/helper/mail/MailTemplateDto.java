@@ -16,9 +16,12 @@
 
 package cherry.spring.common.helper.mail;
 
-import cherry.spring.common.db.BaseDto;
+import java.io.Serializable;
 
-public class MailTemplateDto extends BaseDto {
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+public class MailTemplateDto implements Serializable {
 
 	/** シリアルバージョン。 */
 	private static final long serialVersionUID = 1L;
@@ -40,6 +43,12 @@ public class MailTemplateDto extends BaseDto {
 
 	/** メール本文。 */
 	private String body;
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.SHORT_PREFIX_STYLE);
+	}
 
 	public Integer getId() {
 		return id;

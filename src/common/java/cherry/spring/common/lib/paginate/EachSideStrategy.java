@@ -22,30 +22,30 @@ package cherry.spring.common.lib.paginate;
 public class EachSideStrategy implements PaginateStrategy {
 
 	/** 下位に表示するページ数を保持する。 */
-	private int lowerSide;
+	private long lowerSide;
 
 	/** 上位に表示するページ数を保持する。 */
-	private int upperSide;
+	private long upperSide;
 
 	/** ページ番号の下限設定を保持する。「0 + 設定値」以上に調整する */
-	private int lowerTrim = 0;
+	private long lowerTrim = 0L;
 
 	/** ページ番号の上限設定を保持する。「最終ページ番号 - 設定値」以下に調整する。 */
-	private int upperTrim = 0;
+	private long upperTrim = 0L;
 
-	public void setLowerSide(int lowerSide) {
+	public void setLowerSide(long lowerSide) {
 		this.lowerSide = lowerSide;
 	}
 
-	public void setUpperSide(int upperSide) {
+	public void setUpperSide(long upperSide) {
 		this.upperSide = upperSide;
 	}
 
-	public void setLowerTrim(int lowerTrim) {
+	public void setLowerTrim(long lowerTrim) {
 		this.lowerTrim = lowerTrim;
 	}
 
-	public void setUpperTrim(int upperTrim) {
+	public void setUpperTrim(long upperTrim) {
 		this.upperTrim = upperTrim;
 	}
 
@@ -59,14 +59,14 @@ public class EachSideStrategy implements PaginateStrategy {
 	 * @return ページ番号の範囲。
 	 */
 	@Override
-	public Iterable<Integer> calculate(int pageNo, int pageCount) {
-		int from = pageNo - lowerSide;
+	public Iterable<Long> calculate(long pageNo, long pageCount) {
+		long from = pageNo - lowerSide;
 		if (from <= lowerTrim) {
 			from = lowerTrim;
 		}
-		int to = pageNo + upperSide;
-		if (to >= (pageCount - 1) - upperTrim) {
-			to = (pageCount - 1) - upperTrim;
+		long to = pageNo + upperSide;
+		if (to >= (pageCount - 1L) - upperTrim) {
+			to = (pageCount - 1L) - upperTrim;
 		}
 		return new Range(from, to);
 	}

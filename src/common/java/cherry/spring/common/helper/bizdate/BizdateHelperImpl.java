@@ -16,38 +16,74 @@
 
 package cherry.spring.common.helper.bizdate;
 
-import java.util.List;
+import java.io.IOException;
+import java.util.Map;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.transaction.annotation.Transactional;
 
-public class BizdateHelperImpl implements BizdateHelper {
+import cherry.spring.common.helper.sql.SqlLoader;
+import cherry.spring.common.type.jdbc.RowMapperCreator;
+
+public class BizdateHelperImpl implements BizdateHelper, InitializingBean {
 
 	@Autowired
-	private BizdateDao bizdateDao;
+	private NamedParameterJdbcOperations namedParameterJdbcOperations;
 
-	@Override
-	public LocalDate today() {
-		List<BizdateDto> list = bizdateDao.selectFirst();
-		if (list.isEmpty()) {
-			return LocalDate.now();
-		}
-		BizdateDto dto = list.get(0);
-		return dto.getBizdate();
+	@Autowired
+	private RowMapperCreator rowMapperCreator;
+
+	@Autowired
+	private SqlLoader sqlLoader;
+
+	private RowMapper<BizdateDto> rowMapper;
+
+	private String findBizdate;
+
+	public void setFindBizdate(String findBizdate) {
+		this.findBizdate = findBizdate;
 	}
 
 	@Override
+	public void afterPropertiesSet() throws IOException {
+		BeanWrapper bw = new BeanWrapperImpl(this);
+		bw.setPropertyValues(sqlLoader.load(getClass()));
+		rowMapper = rowMapperCreator.create(BizdateDto.class);
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public LocalDate today() {
+		try {
+			BizdateDto dto = namedParameterJdbcOperations.queryForObject(
+					findBizdate, (Map<String, ?>) null, rowMapper);
+			return dto.getBizdate();
+		} catch (IncorrectResultSizeDataAccessException ex) {
+			return LocalDate.now();
+		}
+	}
+
+	@Transactional(readOnly = true)
+	@Override
 	public LocalDateTime now() {
-		List<BizdateDto> list = bizdateDao.selectFirst();
-		if (list.isEmpty()) {
+		try {
+			BizdateDto dto = namedParameterJdbcOperations.queryForObject(
+					findBizdate, (Map<String, ?>) null, rowMapper);
+			return dto.getCurrentDateTime().plusDays(dto.getOffsetDay())
+					.plusHours(dto.getOffsetHour())
+					.plusMinutes(dto.getOffsetMinute())
+					.plusSeconds(dto.getOffsetSecond());
+		} catch (IncorrectResultSizeDataAccessException ex) {
 			return LocalDateTime.now();
 		}
-		BizdateDto dto = list.get(0);
-		return dto.getCurrentDateTime().plusDays(dto.getOffsetDay())
-				.plusHours(dto.getOffsetHour())
-				.plusMinutes(dto.getOffsetMinute())
-				.plusSeconds(dto.getOffsetSecond());
 	}
 
 }

@@ -19,6 +19,8 @@ package cherry.sqlapp.db.dao;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -46,20 +48,30 @@ public class SqltoolStatementDaoImpl implements SqltoolStatementDao,
 	@Autowired
 	private SqlLoader sqlLoader;
 
-	private String sqlFindById;
-
-	private String sqlCreate;
-
-	private String sqlUpdate;
-
 	private RowMapper<SqltoolStatement> rowMapper;
+
+	private String findById;
+
+	private String create;
+
+	private String update;
+
+	public void setFindById(String findById) {
+		this.findById = findById;
+	}
+
+	public void setCreate(String create) {
+		this.create = create;
+	}
+
+	public void setUpdate(String update) {
+		this.update = update;
+	}
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		Map<String, String> sqlmap = sqlLoader.load(getClass());
-		sqlFindById = sqlmap.get("findById");
-		sqlCreate = sqlmap.get("create");
-		sqlUpdate = sqlmap.get("update");
+		BeanWrapper bw = new BeanWrapperImpl(this);
+		bw.setPropertyValues(sqlLoader.load(getClass()));
 		rowMapper = rowMapperCreator.create(SqltoolStatement.class);
 	}
 
@@ -67,19 +79,19 @@ public class SqltoolStatementDaoImpl implements SqltoolStatementDao,
 	public SqltoolStatement findById(Integer id) {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("id", id);
-		return namedParameterJdbcOperations.queryForObject(sqlFindById,
-				paramMap, rowMapper);
+		return namedParameterJdbcOperations.queryForObject(findById, paramMap,
+				rowMapper);
 	}
 
 	@Override
 	public int create(SqltoolStatement record) {
-		return namedParameterJdbcOperations.update(sqlCreate,
+		return namedParameterJdbcOperations.update(create,
 				sqlParameterSourceCreator.create(record));
 	}
 
 	@Override
 	public int update(SqltoolStatement record) {
-		return namedParameterJdbcOperations.update(sqlUpdate,
+		return namedParameterJdbcOperations.update(update,
 				sqlParameterSourceCreator.create(record));
 	}
 

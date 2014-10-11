@@ -16,12 +16,14 @@
 
 package cherry.spring.common.helper.bizdate;
 
+import java.io.Serializable;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
-import cherry.spring.common.db.BaseDto;
-
-public class BizdateDto extends BaseDto {
+public class BizdateDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -38,6 +40,12 @@ public class BizdateDto extends BaseDto {
 	private Integer offsetSecond;
 
 	private LocalDateTime currentDateTime;
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this,
+				ToStringStyle.SHORT_PREFIX_STYLE);
+	}
 
 	public Integer getId() {
 		return id;

@@ -24,7 +24,7 @@ import java.sql.SQLException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 
-public class ExtractorResultSetExtractor implements ResultSetExtractor<Integer> {
+public class ExtractorResultSetExtractor implements ResultSetExtractor<Long> {
 
 	private Consumer consumer;
 
@@ -36,7 +36,7 @@ public class ExtractorResultSetExtractor implements ResultSetExtractor<Integer> 
 	}
 
 	@Override
-	public Integer extractData(ResultSet rs) throws SQLException,
+	public Long extractData(ResultSet rs) throws SQLException,
 			DataAccessException {
 		try {
 
@@ -50,8 +50,8 @@ public class ExtractorResultSetExtractor implements ResultSetExtractor<Integer> 
 
 			consumer.begin(col);
 
-			int count;
-			for (count = 0; rs.next(); count++) {
+			long count;
+			for (count = 0L; rs.next(); count++) {
 
 				Object[] record = new Object[col.length];
 				for (int i = 1; i <= record.length; i++) {

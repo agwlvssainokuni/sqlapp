@@ -24,24 +24,24 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 /**
  * ページネーションリンクとして並べるページ番号の範囲。連続したページ番号を持つ。
  */
-public class Range implements Iterable<Integer> {
+public class Range implements Iterable<Long> {
 
 	/** 開始ページ番号。 */
-	private final int from;
+	private final long from;
 
 	/** 終了ページ番号。 */
-	private final int to;
+	private final long to;
 
-	public Range(int from, int to) {
+	public Range(long from, long to) {
 		this.from = from;
 		this.to = to;
 	}
 
 	@Override
-	public Iterator<Integer> iterator() {
-		return new Iterator<Integer>() {
+	public Iterator<Long> iterator() {
+		return new Iterator<Long>() {
 
-			private int current = from - 1;
+			private long current = from - 1L;
 
 			@Override
 			public boolean hasNext() {
@@ -49,11 +49,11 @@ public class Range implements Iterable<Integer> {
 			}
 
 			@Override
-			public Integer next() {
+			public Long next() {
 				if (current >= to) {
 					throw new IllegalStateException();
 				}
-				current += 1;
+				current += 1L;
 				return current;
 			}
 

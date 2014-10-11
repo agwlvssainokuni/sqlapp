@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.mail;
+package cherry.spring.common.helper.signup;
 
-import java.util.List;
-import java.util.Locale;
+import org.joda.time.LocalDateTime;
 
-public interface MailMessageDao {
+public interface SignupRequestHelper {
 
-	MailTemplateDto findTemplate(String name, Locale locale);
+	int createSignupRequest(String mailAddr, String token,
+			LocalDateTime appliedAt);
 
-	List<MailTemplateAddressDto> findAddresses(String name);
+	boolean validateMailAddr(String mailAddr, LocalDateTime intervalFrom,
+			LocalDateTime rangeFrom, int numOfReq);
+
+	boolean validateToken(String mailAddr, String token, LocalDateTime validFrom);
 
 }

@@ -49,13 +49,13 @@ public class ExtractorImpl implements Extractor {
 	 *             データ格納エラー。
 	 */
 	@Override
-	public int extract(DataSource dataSource, String sql,
+	public long extract(DataSource dataSource, String sql,
 			Map<String, ?> paramMap, Consumer consumer, Limiter limiter)
 			throws LimiterException, IOException {
 
 		NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(
 				dataSource);
-		ResultSetExtractor<Integer> extractor = new ExtractorResultSetExtractor(
+		ResultSetExtractor<Long> extractor = new ExtractorResultSetExtractor(
 				consumer, limiter);
 
 		limiter.start();

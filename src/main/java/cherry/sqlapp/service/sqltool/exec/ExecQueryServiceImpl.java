@@ -50,10 +50,10 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 		DataSource dataSource = dataSourceDef.getDataSource(databaseName);
 		try {
 
-			int numOfItems = extractor.extract(dataSource, sql, paramMap,
+			long numOfItems = extractor.extract(dataSource, sql, paramMap,
 					consumer, new NoneLimiter());
-			PageSet pageSet = paginator.paginate(0, numOfItems,
-					(numOfItems <= 0 ? 1 : numOfItems));
+			PageSet pageSet = paginator.paginate(0L, numOfItems,
+					(numOfItems <= 0L ? 1L : numOfItems));
 
 			return pageSet;
 		} catch (IOException ex) {
@@ -64,14 +64,14 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 	@Transactional
 	@Override
 	public PageSet query(String databaseName, QueryBuilder queryBuilder,
-			Map<String, ?> paramMap, int pageNo, int pageSz, Consumer consumer) {
+			Map<String, ?> paramMap, long pageNo, long pageSz, Consumer consumer) {
 		DataSource dataSource = dataSourceDef.getDataSource(databaseName);
 		try {
 
-			int count = count(dataSource, queryBuilder.buildCount(), paramMap);
+			long count = count(dataSource, queryBuilder.buildCount(), paramMap);
 			PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
 
-			int numOfItems = extractor.extract(dataSource,
+			long numOfItems = extractor.extract(dataSource,
 					queryBuilder.build(pageSz, pageSet.getCurrent().getFrom()),
 					paramMap, consumer, new NoneLimiter());
 			if (numOfItems != pageSet.getCurrent().getCount()) {
@@ -84,10 +84,11 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 		}
 	}
 
-	private int count(DataSource dataSource, String sql, Map<String, ?> paramMap) {
+	private long count(DataSource dataSource, String sql,
+			Map<String, ?> paramMap) {
 		NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(
 				dataSource);
-		return template.queryForObject(sql, paramMap, Integer.class);
+		return template.queryForObject(sql, paramMap, Long.class);
 	}
 
 }

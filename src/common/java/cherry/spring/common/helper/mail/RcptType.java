@@ -14,18 +14,8 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.signup;
+package cherry.spring.common.helper.mail;
 
-import org.joda.time.LocalDateTime;
-
-public interface SignupRequestDao {
-
-	Integer createSignupRequest(String mailAddr, String token,
-			LocalDateTime appliedAt);
-
-	boolean validateMailAddr(String mailAddr, LocalDateTime intervalFrom,
-			LocalDateTime rangeFrom, int numOfReq);
-
-	boolean validateToken(String mailAddr, String token, LocalDateTime validFrom);
-
+public enum RcptType {
+	CC, BCC
 }

@@ -16,26 +16,24 @@
 
 package cherry.spring.common.helper.download;
 
+import static java.text.MessageFormat.format;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
-import java.text.MessageFormat;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import cherry.spring.common.log.Log;
 import cherry.spring.common.log.LogFactory;
 
-public class DownloadHelperImpl implements DownloadHelper, InitializingBean {
+public class DownloadHelperImpl implements DownloadHelper {
 
 	private final Log log = LogFactory.getLog(getClass());
 
@@ -49,21 +47,13 @@ public class DownloadHelperImpl implements DownloadHelper, InitializingBean {
 	private String headerValue;
 
 	@Value("${common.helper.download.format}")
-	private String format;
-
 	private DateTimeFormatter formatter;
-
-	@Autowired
-	public void afterPropertiesSet() {
-		formatter = DateTimeFormat.forPattern(format);
-	}
 
 	@Override
 	public void download(HttpServletResponse response, String contentType,
 			String filename, LocalDateTime timestamp, DownloadAction action) {
 
-		String fname = MessageFormat.format(filename,
-				formatter.print(timestamp));
+		String fname = format(filename, formatter.print(timestamp));
 
 		if (log.isDebugEnabled()) {
 			log.debug("Setting response headers: contentType={0}", contentType);
@@ -76,7 +66,7 @@ public class DownloadHelperImpl implements DownloadHelper, InitializingBean {
 
 		response.setContentType(contentType);
 		response.setCharacterEncoding(charset.name());
-		response.setHeader(headerName, MessageFormat.format(headerValue, fname));
+		response.setHeader(headerName, format(headerValue, fname));
 
 		if (log.isDebugEnabled()) {
 			log.debug("Download action starting.");
@@ -85,7 +75,7 @@ public class DownloadHelperImpl implements DownloadHelper, InitializingBean {
 		try (OutputStream out = response.getOutputStream();
 				Writer writer = new OutputStreamWriter(out, charset)) {
 
-			int count = action.doDownload(writer);
+			long count = action.doDownload(writer);
 
 			if (log.isDebugEnabled()) {
 				log.debug("Download action completed: result={0}", count);

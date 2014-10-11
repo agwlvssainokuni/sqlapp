@@ -1,4 +1,4 @@
--- NAME: selectFirst
+-- NAME: findBizdate
 SELECT
 	id,
 	bizdate,

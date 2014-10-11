@@ -23,11 +23,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import cherry.spring.common.lib.paginate.PageSet;
 
-public class SQLQueryResult<T> {
+public class SearchResult<T> {
 
-	private int count;
-
-	private int totalCount;
+	private long totalCount;
 
 	private PageSet pageSet;
 
@@ -39,19 +37,11 @@ public class SQLQueryResult<T> {
 				ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
-	public int getCount() {
-		return count;
-	}
-
-	public void setCount(int count) {
-		this.count = count;
-	}
-
-	public int getTotalCount() {
+	public long getTotalCount() {
 		return totalCount;
 	}
 
-	public void setTotalCount(int totalCount) {
+	public void setTotalCount(long totalCount) {
 		this.totalCount = totalCount;
 	}
 

@@ -47,11 +47,11 @@ public class PaginatorImpl implements Paginator {
 	 * @return ページ数。
 	 */
 	@Override
-	public int getPageCount(int itemCount, int pageSize) {
-		if (itemCount % pageSize == 0) {
+	public long getPageCount(long itemCount, long pageSize) {
+		if (itemCount % pageSize == 0L) {
 			return itemCount / pageSize;
 		} else {
-			return itemCount / pageSize + 1;
+			return itemCount / pageSize + 1L;
 		}
 	}
 
@@ -67,19 +67,19 @@ public class PaginatorImpl implements Paginator {
 	 * @return ページ情報。
 	 */
 	@Override
-	public Page getPage(int pageNo, int itemCount, int pageSize) {
+	public Page getPage(long pageNo, long itemCount, long pageSize) {
 
-		if (itemCount <= 0) {
+		if (itemCount <= 0L) {
 			Page page = new Page();
-			page.setNo(0);
-			page.setCount(0);
-			page.setFrom(0);
-			page.setTo(-1);
+			page.setNo(0L);
+			page.setCount(0L);
+			page.setFrom(0L);
+			page.setTo(-1L);
 			return page;
 		}
 
-		int pageCount = getPageCount(itemCount, pageSize);
-		int adjusted = adjustPageNo(pageNo, pageCount);
+		long pageCount = getPageCount(itemCount, pageSize);
+		long adjusted = adjustPageNo(pageNo, pageCount);
 		return createPage(adjusted, pageCount, itemCount, pageSize);
 	}
 
@@ -95,18 +95,18 @@ public class PaginatorImpl implements Paginator {
 	 * @return ページネーションの処理結果。
 	 */
 	@Override
-	public PageSet paginate(int pageNo, int itemCount, int pageSize) {
+	public PageSet paginate(long pageNo, long itemCount, long pageSize) {
 
-		int pageCount = getPageCount(itemCount, pageSize);
-		int curNo = adjustPageNo(pageNo, pageCount);
-		int prevNo = adjustPageNo(curNo - 1, pageCount);
-		int nextNo = adjustPageNo(curNo + 1, pageCount);
-		int firstNo = adjustPageNo(0, pageCount);
-		int lastNo = adjustPageNo(pageCount - 1, pageCount);
+		long pageCount = getPageCount(itemCount, pageSize);
+		long curNo = adjustPageNo(pageNo, pageCount);
+		long prevNo = adjustPageNo(curNo - 1L, pageCount);
+		long nextNo = adjustPageNo(curNo + 1L, pageCount);
+		long firstNo = adjustPageNo(0L, pageCount);
+		long lastNo = adjustPageNo(pageCount - 1L, pageCount);
 
 		PageSet pageSet = new PageSet();
 		List<Page> list = new ArrayList<>();
-		for (Integer no : paginateStrategy.calculate(curNo, pageCount)) {
+		for (Long no : paginateStrategy.calculate(curNo, pageCount)) {
 
 			Page page = createPage(no, pageCount, itemCount, pageSize);
 			list.add(page);
@@ -157,13 +157,13 @@ public class PaginatorImpl implements Paginator {
 	 *            ページ数。
 	 * @return 補正したページ番号。
 	 */
-	private int adjustPageNo(int pageNo, int pageCount) {
-		int adjusted = pageNo;
+	private long adjustPageNo(long pageNo, long pageCount) {
+		long adjusted = pageNo;
 		if (adjusted >= pageCount) {
-			adjusted = pageCount - 1;
+			adjusted = pageCount - 1L;
 		}
-		if (adjusted < 0) {
-			adjusted = 0;
+		if (adjusted < 0L) {
+			adjusted = 0L;
 		}
 		return adjusted;
 	}
@@ -181,21 +181,21 @@ public class PaginatorImpl implements Paginator {
 	 *            ページサイズ。
 	 * @return ページ情報。
 	 */
-	private Page createPage(int pageNo, int pageCount, int itemCount,
-			int pageSize) {
+	private Page createPage(long pageNo, long pageCount, long itemCount,
+			long pageSize) {
 		Page page = new Page();
 		page.setNo(pageNo);
-		if (itemCount <= 0) {
-			page.setCount(0);
-		} else if (pageNo < pageCount - 1) {
+		if (itemCount <= 0L) {
+			page.setCount(0L);
+		} else if (pageNo < pageCount - 1L) {
 			page.setCount(pageSize);
-		} else if (itemCount % pageSize == 0) {
+		} else if (itemCount % pageSize == 0L) {
 			page.setCount(pageSize);
 		} else {
 			page.setCount(itemCount % pageSize);
 		}
 		page.setFrom(pageSize * pageNo);
-		page.setTo(page.getFrom() + page.getCount() - 1);
+		page.setTo(page.getFrom() + page.getCount() - 1L);
 		return page;
 	}
 

@@ -26,9 +26,9 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.spring.common.helper.querydsl.SQLQueryConfigurer;
+import cherry.spring.common.helper.querydsl.QueryConfigurer;
 import cherry.spring.common.helper.querydsl.SQLQueryHelper;
-import cherry.spring.common.helper.querydsl.SQLQueryResult;
+import cherry.spring.common.helper.querydsl.SearchResult;
 import cherry.spring.common.type.DeletedFlag;
 import cherry.spring.common.type.FlagCode;
 import cherry.spring.common.type.jdbc.RowMapperCreator;
@@ -70,11 +70,11 @@ public class MetadataServiceImpl implements MetadataService {
 
 	@Transactional
 	@Override
-	public Result search(MetadataCondition cond, int pageNo, int pageSz) {
+	public Result search(MetadataCondition cond, long pageNo, long pageSz) {
 
 		QSqltoolMetadata m = new QSqltoolMetadata("m");
-		SQLQueryResult<SqltoolMetadata> r = sqlQueryHelper.search(
-				getConfigurer(m, cond), pageNo, pageSz,
+		SearchResult<SqltoolMetadata> r = sqlQueryHelper.search(
+				commonClause(m, cond), orderByClause(m, cond), pageNo, pageSz,
 				rowMapperCreator.create(SqltoolMetadata.class), getColumns(m));
 
 		Result result = new Result();
@@ -89,23 +89,22 @@ public class MetadataServiceImpl implements MetadataService {
 				m.createdAt, m.lockVersion, m.deletedFlg };
 	}
 
-	private SQLQueryConfigurer getConfigurer(final QSqltoolMetadata m,
+	private QueryConfigurer commonClause(final QSqltoolMetadata m,
 			final MetadataCondition cond) {
-		return new SQLQueryConfigurer() {
-
+		return new QueryConfigurer() {
 			@Override
 			public SQLQuery configure(SQLQuery query) {
+				query.from(m);
 
-				BooleanBuilder where = new BooleanBuilder();
 				if (StringUtils.isNotEmpty(cond.getName())) {
-					where.and(m.name.startsWith(cond.getName()));
+					query.where(m.name.startsWith(cond.getName()));
 				}
 
 				if (cond.getRegisteredFrom() != null) {
-					where.and(m.registeredAt.goe(cond.getRegisteredFrom()));
+					query.where(m.registeredAt.goe(cond.getRegisteredFrom()));
 				}
 				if (cond.getRegisteredTo() != null) {
-					where.and(m.registeredAt.lt(cond.getRegisteredTo()));
+					query.where(m.registeredAt.lt(cond.getRegisteredTo()));
 				}
 
 				BooleanBuilder bb = new BooleanBuilder();
@@ -118,23 +117,27 @@ public class MetadataServiceImpl implements MetadataService {
 					bb.or(m.publishedFlg.eq(FlagCode.FALSE.code()).and(
 							m.ownedBy.eq(cond.getLoginId())));
 				}
-				where.and(bb);
+				query.where(bb);
 
 				if (!cond.getSqlType().isEmpty()) {
 					List<String> code = new ArrayList<>();
 					for (SqlTypeCode c : cond.getSqlType()) {
 						code.add(c.code());
 					}
-					where.and(m.sqlType.in(code));
+					query.where(m.sqlType.in(code));
 				}
 
-				where.and(m.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-
-				return query.from(m).where(where);
+				query.where(m.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
+				return query;
 			}
+		};
+	}
 
+	private QueryConfigurer orderByClause(final QSqltoolMetadata m,
+			final MetadataCondition cond) {
+		return new QueryConfigurer() {
 			@Override
-			public SQLQuery orderBy(SQLQuery query) {
+			public SQLQuery configure(SQLQuery query) {
 				return query.orderBy(m.id.asc());
 			}
 		};

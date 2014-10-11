@@ -24,6 +24,6 @@ public interface MetadataService {
 
 	boolean update(SqltoolMetadata record);
 
-	Result search(MetadataCondition cond, int pageNo, int pageSz);
+	Result search(MetadataCondition cond, long pageNo, long pageSz);
 
 }

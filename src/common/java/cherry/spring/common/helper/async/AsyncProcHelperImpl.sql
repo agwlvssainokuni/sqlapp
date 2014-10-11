@@ -9,7 +9,7 @@ VALUES (
 	:name,
 	:launcherId,
 	'PREPARING',
-	CURRENT_TIMESTAMP
+	:registeredAt
 )
 ;
 
@@ -17,7 +17,7 @@ VALUES (
 UPDATE async_proc
 SET
 	status = 'INVOKED',
-	invoked_at = CURRENT_TIMESTAMP,
+	invoked_at = :invokedAt,
 	updated_at = CURRENT_TIMESTAMP,
 	lock_version = lock_version + 1
 WHERE
@@ -30,7 +30,7 @@ WHERE
 UPDATE async_proc
 SET
 	status = 'PROCESSING',
-	started_at = CURRENT_TIMESTAMP,
+	started_at = :startedAt,
 	updated_at = CURRENT_TIMESTAMP,
 	lock_version = lock_version + 1
 WHERE
@@ -43,7 +43,7 @@ WHERE
 UPDATE async_proc
 SET
 	status = 'SUCCESS',
-	finished_at = CURRENT_TIMESTAMP,
+	finished_at = :finishedAt,
 	result = :result,
 	updated_at = CURRENT_TIMESTAMP,
 	lock_version = lock_version + 1
@@ -57,7 +57,7 @@ WHERE
 UPDATE async_proc
 SET
 	status = 'ERROR',
-	finished_at = CURRENT_TIMESTAMP,
+	finished_at = :finishedAt,
 	result = :result,
 	updated_at = CURRENT_TIMESTAMP,
 	lock_version = lock_version + 1

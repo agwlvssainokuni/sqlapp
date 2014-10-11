@@ -45,7 +45,7 @@ public interface Extractor {
 	 * @throws IOException
 	 *             データ格納エラー。
 	 */
-	int extract(DataSource dataSource, String sql, Map<String, ?> paramMap,
+	long extract(DataSource dataSource, String sql, Map<String, ?> paramMap,
 			Consumer consumer, Limiter limiter) throws LimiterException,
 			IOException;
 

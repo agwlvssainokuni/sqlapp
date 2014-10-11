@@ -30,6 +30,6 @@ public interface PaginateStrategy {
 	 *            ページ数。
 	 * @return ページ番号の範囲。
 	 */
-	Iterable<Integer> calculate(int pageNo, int pageCount);
+	Iterable<Long> calculate(long pageNo, long pageCount);
 
 }

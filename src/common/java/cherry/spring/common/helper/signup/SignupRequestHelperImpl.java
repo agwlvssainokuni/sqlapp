@@ -16,21 +16,26 @@
 
 package cherry.spring.common.helper.signup;
 
+import static com.google.common.base.Preconditions.checkState;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.joda.time.LocalDateTime;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.helper.sql.SqlLoader;
 
-public class SignupRequestDaoImpl implements SignupRequestDao, InitializingBean {
+public class SignupRequestHelperImpl implements SignupRequestHelper, InitializingBean {
 
 	@Autowired
 	private NamedParameterJdbcOperations namedParameterJdbcOperations;
@@ -38,36 +43,51 @@ public class SignupRequestDaoImpl implements SignupRequestDao, InitializingBean 
 	@Autowired
 	private SqlLoader sqlLoader;
 
-	private String sqlCreateSignupRequest;
+	private String createSignupRequest;
 
-	private String sqlValidateMailAddr;
+	private String validateMailAddr;
 
-	private String sqlValidateToken;
+	private String validateToken;
 
-	@Override
-	public void afterPropertiesSet() throws IOException {
-		Map<String, String> sqlmap = sqlLoader.load(getClass());
-		this.sqlCreateSignupRequest = sqlmap.get("createSignupRequest");
-		this.sqlValidateMailAddr = sqlmap.get("validateMailAddr");
-		this.sqlValidateToken = sqlmap.get("validateToken");
+	public void setCreateSignupRequest(String createSignupRequest) {
+		this.createSignupRequest = createSignupRequest;
+	}
+
+	public void setValidateMailAddr(String validateMailAddr) {
+		this.validateMailAddr = validateMailAddr;
+	}
+
+	public void setValidateToken(String validateToken) {
+		this.validateToken = validateToken;
 	}
 
 	@Override
-	public Integer createSignupRequest(String mailAddr, String token,
+	public void afterPropertiesSet() throws IOException {
+		BeanWrapper bw = new BeanWrapperImpl(this);
+		bw.setPropertyValues(sqlLoader.load(getClass()));
+	}
+
+	@Transactional
+	@Override
+	public int createSignupRequest(String mailAddr, String token,
 			LocalDateTime appliedAt) {
+
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("mailAddr", mailAddr);
 		paramMap.put("token", token);
 		paramMap.put("appliedAt", appliedAt.toDate());
+
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		int count = namedParameterJdbcOperations.update(sqlCreateSignupRequest,
+		int count = namedParameterJdbcOperations.update(createSignupRequest,
 				new MapSqlParameterSource(paramMap), keyHolder);
-		if (count != 1) {
-			return null;
-		}
+		checkState(
+				count == 1,
+				"failed to create signup_request: mailAddr={0}, token={1}, appliedAt={2}, count={3}",
+				mailAddr, token, appliedAt, count);
 		return keyHolder.getKey().intValue();
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public boolean validateMailAddr(String mailAddr,
 			LocalDateTime intervalFrom, LocalDateTime rangeFrom, int numOfReq) {
@@ -76,10 +96,11 @@ public class SignupRequestDaoImpl implements SignupRequestDao, InitializingBean 
 		paramMap.put("intervalFrom", intervalFrom.toDate());
 		paramMap.put("rangeFrom", rangeFrom.toDate());
 		paramMap.put("numOfReq", numOfReq);
-		return namedParameterJdbcOperations.queryForObject(sqlValidateMailAddr,
+		return namedParameterJdbcOperations.queryForObject(validateMailAddr,
 				paramMap, Boolean.class);
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public boolean validateToken(String mailAddr, String token,
 			LocalDateTime validFrom) {
@@ -87,7 +108,7 @@ public class SignupRequestDaoImpl implements SignupRequestDao, InitializingBean 
 		paramMap.put("mailAddr", mailAddr);
 		paramMap.put("token", token);
 		paramMap.put("validFrom", validFrom.toDate());
-		return namedParameterJdbcOperations.queryForObject(sqlValidateToken,
+		return namedParameterJdbcOperations.queryForObject(validateToken,
 				paramMap, Boolean.class);
 	}
 

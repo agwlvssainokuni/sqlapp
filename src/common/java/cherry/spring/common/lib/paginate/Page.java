@@ -30,16 +30,16 @@ public class Page implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** ページ番号。 */
-	private int no = 0;
+	private long no = 0L;
 
 	/** 当該ページの項目数。 */
-	private int count = 0;
+	private long count = 0L;
 
 	/** 当該ページの開始項目番号。 */
-	private int from = 0;
+	private long from = 0L;
 
 	/** 当該ページの終了項目番号。 */
-	private int to = 0;
+	private long to = 0L;
 
 	@Override
 	public String toString() {
@@ -47,35 +47,35 @@ public class Page implements Serializable {
 				ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
-	public int getNo() {
+	public long getNo() {
 		return no;
 	}
 
-	public void setNo(int no) {
+	public void setNo(long no) {
 		this.no = no;
 	}
 
-	public int getCount() {
+	public long getCount() {
 		return count;
 	}
 
-	public void setCount(int count) {
+	public void setCount(long count) {
 		this.count = count;
 	}
 
-	public int getFrom() {
+	public long getFrom() {
 		return from;
 	}
 
-	public void setFrom(int from) {
+	public void setFrom(long from) {
 		this.from = from;
 	}
 
-	public int getTo() {
+	public long getTo() {
 		return to;
 	}
 
-	public void setTo(int to) {
+	public void setTo(long to) {
 		this.to = to;
 	}
 

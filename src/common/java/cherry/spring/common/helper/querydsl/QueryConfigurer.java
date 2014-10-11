@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.password;
+package cherry.spring.common.helper.querydsl;
 
-public interface UserPasswordDao {
+import com.mysema.query.sql.SQLQuery;
 
-	int updatePassword(int id, String password);
+public interface QueryConfigurer {
 
-	int changePassword(String loginId, String password);
+	SQLQuery configure(SQLQuery query);
 
 }

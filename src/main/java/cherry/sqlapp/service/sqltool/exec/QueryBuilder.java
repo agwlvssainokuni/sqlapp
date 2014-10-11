@@ -52,7 +52,7 @@ public class QueryBuilder {
 		return builder.toString();
 	}
 
-	public String build(Integer limit, Integer offset) {
+	public String build(Long limit, Long offset) {
 		StringBuilder builder = new StringBuilder();
 		append(builder, "SELECT ", select);
 		append(builder, " FROM ", from);
@@ -83,7 +83,7 @@ public class QueryBuilder {
 		}
 	}
 
-	private void append(StringBuilder builder, String clause, Integer value) {
+	private void append(StringBuilder builder, String clause, Long value) {
 		if (value != null) {
 			builder.append(clause).append(value);
 		}

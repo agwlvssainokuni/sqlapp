@@ -16,65 +16,154 @@
 
 package cherry.spring.common.helper.async;
 
+import static com.google.common.base.Preconditions.checkState;
 import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.joda.time.LocalDateTime;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.transaction.annotation.Transactional;
 
-public class AsyncProcHelperImpl implements AsyncProcHelper {
+import cherry.spring.common.helper.sql.SqlLoader;
+
+public class AsyncProcHelperImpl implements AsyncProcHelper, InitializingBean {
 
 	@Autowired
-	private AsyncProcDao asyncProcDao;
+	private NamedParameterJdbcTemplate namedParameterJdbcOperations;
+
+	@Autowired
+	private SqlLoader sqlLoader;
+
+	private String createAsyncProc;
+
+	private String invokeAsyncProc;
+
+	private String startAsyncProc;
+
+	private String successAsyncProc;
+
+	private String errorAsyncProc;
+
+	public void setCreateAsyncProc(String createAsyncProc) {
+		this.createAsyncProc = createAsyncProc;
+	}
+
+	public void setInvokeAsyncProc(String invokeAsyncProc) {
+		this.invokeAsyncProc = invokeAsyncProc;
+	}
+
+	public void setStartAsyncProc(String startAsyncProc) {
+		this.startAsyncProc = startAsyncProc;
+	}
+
+	public void setSuccessAsyncProc(String successAsyncProc) {
+		this.successAsyncProc = successAsyncProc;
+	}
+
+	public void setErrorAsyncProc(String errorAsyncProc) {
+		this.errorAsyncProc = errorAsyncProc;
+	}
+
+	@Override
+	public void afterPropertiesSet() throws IOException {
+		BeanWrapper bw = new BeanWrapperImpl(this);
+		bw.setPropertyValues(sqlLoader.load(getClass()));
+	}
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
-	public int createAsyncProc(String name, String launcherId) {
-		Integer id = asyncProcDao.createAsyncProc(name, launcherId);
-		if (id == null) {
-			throw new IllegalStateException(
-					"async_procs is not created for name=" + name);
-		}
-		return id;
+	public int createAsyncProc(String name, String launcherId, LocalDateTime dtm) {
+
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("name", name);
+		paramMap.put("launcherId", launcherId);
+		paramMap.put("registeredAt", dtm.toDate());
+
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		int count = namedParameterJdbcOperations.update(createAsyncProc,
+				new MapSqlParameterSource(paramMap), keyHolder);
+		checkState(
+				count == 1,
+				"failed to create async_proc: name={0}, launcherId={1}, registeredAt={2}, count={3}",
+				name, launcherId, dtm, count);
+
+		return keyHolder.getKey().intValue();
 	}
 
 	@Transactional
 	@Override
-	public void invokeAsyncProc(int id) {
-		int count = asyncProcDao.invokeAsyncProc(id);
-		if (count != 1) {
-			throw new IllegalStateException(
-					"async_procs is not updated (invoke) for id=" + id);
-		}
+	public void invokeAsyncProc(int id, LocalDateTime dtm) {
+
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("id", id);
+		paramMap.put("invokedAt", dtm.toDate());
+
+		int count = namedParameterJdbcOperations.update(invokeAsyncProc,
+				paramMap);
+		checkState(
+				count == 1,
+				"failed to update async_proc: id={0}, invokedAt={1}, count={2}",
+				id, dtm, count);
 	}
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
-	public void startAsyncProc(int id) {
-		int count = asyncProcDao.startAsyncProc(id);
-		if (count != 1) {
-			throw new IllegalStateException(
-					"async_procs is not updated (start) for id=" + id);
-		}
+	public void startAsyncProc(int id, LocalDateTime dtm) {
+
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("id", id);
+		paramMap.put("startedAt", dtm.toDate());
+
+		int count = namedParameterJdbcOperations.update(startAsyncProc,
+				paramMap);
+		checkState(
+				count == 1,
+				"failed to update async_proc: id={0}, startedAt={1}, count={2}",
+				id, dtm, count);
 	}
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
-	public void successAsyncProc(int id, String result) {
-		int count = asyncProcDao.successAsyncProc(id, result);
-		if (count != 1) {
-			throw new IllegalStateException(
-					"async_procs is not updated (success) for id=" + id);
-		}
+	public void successAsyncProc(int id, LocalDateTime dtm, String result) {
+
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("id", id);
+		paramMap.put("finishedAt", dtm.toDate());
+		paramMap.put("result", result);
+
+		int count = namedParameterJdbcOperations.update(successAsyncProc,
+				paramMap);
+		checkState(
+				count == 1,
+				"failed to update async_proc: id={0}, finishedAt={1}, count={2}",
+				id, dtm, count);
 	}
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
-	public void errorAsyncProc(int id, String result) {
-		int count = asyncProcDao.errorAsyncProc(id, result);
-		if (count != 1) {
-			throw new IllegalStateException(
-					"async_procs is not updated (error) for id=" + id);
-		}
+	public void errorAsyncProc(int id, LocalDateTime dtm, String result) {
+
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("id", id);
+		paramMap.put("finishedAt", dtm.toDate());
+		paramMap.put("result", result);
+
+		int count = namedParameterJdbcOperations.update(errorAsyncProc,
+				paramMap);
+		checkState(
+				count == 1,
+				"failed to update async_proc: id={0}, finishedAt={1}, count={2}",
+				id, dtm, count);
 	}
 
 }

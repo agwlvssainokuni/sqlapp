@@ -27,6 +27,6 @@ public interface ExecQueryService {
 			Consumer consumer);
 
 	PageSet query(String databaseName, QueryBuilder queryBuilder,
-			Map<String, ?> paramMap, int pageNo, int pageSz, Consumer consumer);
+			Map<String, ?> paramMap, long pageNo, long pageSz, Consumer consumer);
 
 }

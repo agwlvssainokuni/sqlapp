@@ -63,7 +63,7 @@ import cherry.sqlapp.service.sqltool.query.ClauseService;
 public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController {
 
 	@Value("${sqlapp.app.paginator.pageSize}")
-	private int defaultPageSize;
+	private long defaultPageSize;
 
 	@Value("${sqlapp.app.export.contentType}")
 	private String contentType;
@@ -137,8 +137,8 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 
 		QueryBuilder builder = formUtil.getQueryBuilder(form);
 		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
-		int pageNo = form.getPageNo();
-		int pageSz = (form.getPageSz() <= 0 ? defaultPageSize : form
+		long pageNo = form.getPageNo();
+		long pageSz = (form.getPageSz() <= 0L ? defaultPageSize : form
 				.getPageSz());
 
 		try {
@@ -184,11 +184,11 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 
 			DownloadAction action = new DownloadAction() {
 				@Override
-				public int doDownload(Writer writer) throws IOException {
+				public long doDownload(Writer writer) throws IOException {
 					PageSet ps = execQueryService.query(form.getDatabaseName(),
 							builder.build(), paramMap, new CsvConsumer(writer,
 									true));
-					return ps.getLast().getTo() + 1;
+					return ps.getLast().getTo() + 1L;
 				}
 			};
 			downloadHelper.download(response, contentType, filename,

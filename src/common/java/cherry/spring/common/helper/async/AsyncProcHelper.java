@@ -16,16 +16,18 @@
 
 package cherry.spring.common.helper.async;
 
+import org.joda.time.LocalDateTime;
+
 public interface AsyncProcHelper {
 
-	int createAsyncProc(String name, String launcherId);
+	int createAsyncProc(String name, String launcherId, LocalDateTime dtm);
 
-	void invokeAsyncProc(int id);
+	void invokeAsyncProc(int id, LocalDateTime dtm);
 
-	void startAsyncProc(int id);
+	void startAsyncProc(int id, LocalDateTime dtm);
 
-	void successAsyncProc(int id, String result);
+	void successAsyncProc(int id, LocalDateTime dtm, String result);
 
-	void errorAsyncProc(int id, String result);
+	void errorAsyncProc(int id, LocalDateTime dtm, String result);
 
 }

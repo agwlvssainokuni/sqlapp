@@ -115,7 +115,8 @@ public class SqltoolStatementIdControllerImpl implements
 	@Override
 	public ModelAndView init(int id, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+		ModelAndView mav = new ModelAndView(
+				PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 		mav.addObject(PathDef.PATH_VAR_ID, id);
 		return mav;
 	}
@@ -126,7 +127,8 @@ public class SqltoolStatementIdControllerImpl implements
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
@@ -139,7 +141,8 @@ public class SqltoolStatementIdControllerImpl implements
 			PageSet pageSet = execQueryService.query(form.getDatabaseName(),
 					form.getSql(), paramMap, resultSet);
 
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			mav.addObject(pageSet);
 			mav.addObject(resultSet);
@@ -147,7 +150,8 @@ public class SqltoolStatementIdControllerImpl implements
 
 		} catch (BadSqlGrammarException ex) {
 			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
@@ -160,7 +164,8 @@ public class SqltoolStatementIdControllerImpl implements
 			HttpServletResponse response) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
@@ -172,11 +177,11 @@ public class SqltoolStatementIdControllerImpl implements
 
 			DownloadAction action = new DownloadAction() {
 				@Override
-				public int doDownload(Writer writer) throws IOException {
+				public long doDownload(Writer writer) throws IOException {
 					PageSet ps = execQueryService.query(form.getDatabaseName(),
 							form.getSql(), paramMap, new CsvConsumer(writer,
 									true));
-					return ps.getLast().getTo() + 1;
+					return ps.getLast().getTo() + 1L;
 				}
 			};
 			downloadHelper.download(response, contentType, filename,
@@ -186,7 +191,8 @@ public class SqltoolStatementIdControllerImpl implements
 
 		} catch (BadSqlGrammarException ex) {
 			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
@@ -198,7 +204,8 @@ public class SqltoolStatementIdControllerImpl implements
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
@@ -219,7 +226,8 @@ public class SqltoolStatementIdControllerImpl implements
 			return mav;
 		} else {
 			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
@@ -231,7 +239,8 @@ public class SqltoolStatementIdControllerImpl implements
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
@@ -252,7 +261,8 @@ public class SqltoolStatementIdControllerImpl implements
 			return mav;
 		} else {
 			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
-			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			ModelAndView mav = new ModelAndView(
+					PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}

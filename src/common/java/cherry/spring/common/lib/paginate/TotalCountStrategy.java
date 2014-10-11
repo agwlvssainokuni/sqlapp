@@ -22,30 +22,30 @@ package cherry.spring.common.lib.paginate;
 public class TotalCountStrategy implements PaginateStrategy {
 
 	/** ページ番号の総数を保持する。 */
-	private int totalCount;
+	private long totalCount;
 
 	/** 下位に表示するページ数のヒントを保持する。 */
-	private int lowerSideHint;
+	private long lowerSideHint;
 
 	/** ページ番号の下限設定を保持する。「0 + 設定値」以上に調整する */
-	private int lowerTrim = 0;
+	private long lowerTrim = 0L;
 
 	/** ページ番号の上限設定を保持する。「最終ページ番号 - 設定値」以下に調整する。 */
-	private int upperTrim = 0;
+	private long upperTrim = 0L;
 
-	public void setTotalCount(int totalCount) {
+	public void setTotalCount(long totalCount) {
 		this.totalCount = totalCount;
 	}
 
-	public void setLowerSideHint(int lowerSideHint) {
+	public void setLowerSideHint(long lowerSideHint) {
 		this.lowerSideHint = lowerSideHint;
 	}
 
-	public void setLowerTrim(int lowerTrim) {
+	public void setLowerTrim(long lowerTrim) {
 		this.lowerTrim = lowerTrim;
 	}
 
-	public void setUpperTrim(int upperTrim) {
+	public void setUpperTrim(long upperTrim) {
 		this.upperTrim = upperTrim;
 	}
 
@@ -59,15 +59,15 @@ public class TotalCountStrategy implements PaginateStrategy {
 	 * @return ページ番号の範囲。
 	 */
 	@Override
-	public Iterable<Integer> calculate(int pageNo, int pageCount) {
-		int from = pageNo - lowerSideHint;
+	public Iterable<Long> calculate(long pageNo, long pageCount) {
+		long from = pageNo - lowerSideHint;
 		if (from <= lowerTrim) {
 			from = lowerTrim;
 		}
-		int to = from + (totalCount - 1);
-		if (to >= (pageCount - 1) - upperTrim) {
-			to = (pageCount - 1) - upperTrim;
-			from = to - (totalCount - 1);
+		long to = from + (totalCount - 1L);
+		if (to >= (pageCount - 1L) - upperTrim) {
+			to = (pageCount - 1L) - upperTrim;
+			from = to - (totalCount - 1L);
 			if (from <= lowerTrim) {
 				from = lowerTrim;
 			}

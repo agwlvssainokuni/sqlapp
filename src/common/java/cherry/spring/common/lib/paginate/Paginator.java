@@ -30,7 +30,7 @@ public interface Paginator {
 	 *            ページサイズ。
 	 * @return ページ数。
 	 */
-	int getPageCount(int itemCount, int pageSize);
+	long getPageCount(long itemCount, long pageSize);
 
 	/**
 	 * ページ情報を取得する。
@@ -43,7 +43,7 @@ public interface Paginator {
 	 *            ページサイズ。
 	 * @return ページ情報。
 	 */
-	Page getPage(int pageNo, int itemCount, int pageSize);
+	Page getPage(long pageNo, long itemCount, long pageSize);
 
 	/**
 	 * ページネーション情報を取得する。
@@ -56,6 +56,6 @@ public interface Paginator {
 	 *            ページサイズ。
 	 * @return ページネーション情報。
 	 */
-	PageSet paginate(int pageNo, int itemCount, int pageSize);
+	PageSet paginate(long pageNo, long itemCount, long pageSize);
 
 }
