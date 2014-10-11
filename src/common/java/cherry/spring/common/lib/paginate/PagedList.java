@@ -14,35 +14,32 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.querydsl;
+package cherry.spring.common.lib.paginate;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import cherry.spring.common.lib.paginate.PageSet;
+/**
+ * ページネーション機能において、画面上に表示するページリンクの情報と一覧データの情報を合わせて保持する。
+ */
+public class PagedList<T> implements Serializable {
 
-public class SearchResult<T> {
+	/** シリアルバージョンID。 */
+	private static final long serialVersionUID = 1L;
 
-	private long totalCount;
-
+	/** ページリンクの情報。 */
 	private PageSet pageSet;
 
-	private List<T> resultList;
+	/** 一覧データの情報。 */
+	private List<T> list;
 
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this,
 				ToStringStyle.SHORT_PREFIX_STYLE);
-	}
-
-	public long getTotalCount() {
-		return totalCount;
-	}
-
-	public void setTotalCount(long totalCount) {
-		this.totalCount = totalCount;
 	}
 
 	public PageSet getPageSet() {
@@ -53,12 +50,12 @@ public class SearchResult<T> {
 		this.pageSet = pageSet;
 	}
 
-	public List<T> getResultList() {
-		return resultList;
+	public List<T> getList() {
+		return list;
 	}
 
-	public void setResultList(List<T> resultList) {
-		this.resultList = resultList;
+	public void setList(List<T> list) {
+		this.list = list;
 	}
 
 }

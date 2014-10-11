@@ -30,6 +30,12 @@ public class PageSet implements Serializable {
 	/** シリアルバージョンID。 */
 	private static final long serialVersionUID = 1L;
 
+	/** 全件数。 */
+	private long totalCount = 0L;
+
+	/** ページ件数。 */
+	private long pageSz = 0L;
+
 	/** 現ページ。 */
 	private Page current = null;
 
@@ -52,6 +58,22 @@ public class PageSet implements Serializable {
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this,
 				ToStringStyle.SHORT_PREFIX_STYLE);
+	}
+
+	public long getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(long totalCount) {
+		this.totalCount = totalCount;
+	}
+
+	public long getPageSz() {
+		return pageSz;
+	}
+
+	public void setPageSz(long pageSz) {
+		this.pageSz = pageSz;
 	}
 
 	public Page getCurrent() {

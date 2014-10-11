@@ -126,13 +126,6 @@
 		<constructor-arg ref="dataSource" />
 	</bean>
 
-	<bean id="sqlQueryOperations" class="cherry.spring.common.lib.querydsl.SQLQueryTemplate">
-		<constructor-arg ref="dataSource" />
-		<constructor-arg>
-			<bean class="com.mysema.query.sql.H2Templates" />
-		</constructor-arg>
-	</bean>
-
 	<bean class="cherry.spring.common.helper.async.AsyncProcHelperImpl" />
 	<bean class="cherry.spring.common.helper.bizdate.BizdateHelperImpl" />
 	<bean class="cherry.spring.common.helper.mail.MailMessageHelperImpl" />

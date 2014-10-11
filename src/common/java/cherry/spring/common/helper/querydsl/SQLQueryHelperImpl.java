@@ -29,6 +29,7 @@ import cherry.spring.common.lib.etl.ExtractorResultSetExtractor;
 import cherry.spring.common.lib.etl.Limiter;
 import cherry.spring.common.lib.etl.LimiterException;
 import cherry.spring.common.lib.paginate.PageSet;
+import cherry.spring.common.lib.paginate.PagedList;
 import cherry.spring.common.lib.paginate.Paginator;
 
 import com.mysema.query.sql.SQLQuery;
@@ -43,7 +44,7 @@ public class SQLQueryHelperImpl implements SQLQueryHelper {
 	private Paginator paginator;
 
 	@Override
-	public <T> SearchResult<T> search(QueryConfigurer commonClause,
+	public <T> PagedList<T> search(QueryConfigurer commonClause,
 			QueryConfigurer orderByClause, long pageNo, long pageSz,
 			RowMapper<T> rowMapper, Expression<?>... projection) {
 
@@ -57,10 +58,9 @@ public class SQLQueryHelperImpl implements SQLQueryHelper {
 		List<T> list = queryDslJdbcOperations.query(query, rowMapper,
 				projection);
 
-		SearchResult<T> result = new SearchResult<>();
-		result.setTotalCount(count);
+		PagedList<T> result = new PagedList<>();
 		result.setPageSet(pageSet);
-		result.setResultList(list);
+		result.setList(list);
 		return result;
 	}
 

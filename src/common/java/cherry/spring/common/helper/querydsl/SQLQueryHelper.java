@@ -23,12 +23,13 @@ import org.springframework.jdbc.core.RowMapper;
 import cherry.spring.common.lib.etl.Consumer;
 import cherry.spring.common.lib.etl.Limiter;
 import cherry.spring.common.lib.etl.LimiterException;
+import cherry.spring.common.lib.paginate.PagedList;
 
 import com.mysema.query.types.Expression;
 
 public interface SQLQueryHelper {
 
-	<T> SearchResult<T> search(QueryConfigurer commonClause,
+	<T> PagedList<T> search(QueryConfigurer commonClause,
 			QueryConfigurer orderByClause, long pageNo, long pageSz,
 			RowMapper<T> rowMapper, Expression<?>... expressions);
 

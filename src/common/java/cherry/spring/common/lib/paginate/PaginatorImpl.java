@@ -105,6 +105,8 @@ public class PaginatorImpl implements Paginator {
 		long lastNo = adjustPageNo(pageCount - 1L, pageCount);
 
 		PageSet pageSet = new PageSet();
+		pageSet.setTotalCount(itemCount);
+		pageSet.setPageSz(pageSize);
 		List<Page> list = new ArrayList<>();
 		for (Long no : paginateStrategy.calculate(curNo, pageCount)) {
 
