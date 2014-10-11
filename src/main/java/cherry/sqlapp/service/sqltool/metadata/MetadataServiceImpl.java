@@ -28,7 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.helper.querydsl.QueryConfigurer;
 import cherry.spring.common.helper.querydsl.SQLQueryHelper;
-import cherry.spring.common.helper.querydsl.SearchResult;
+import cherry.spring.common.lib.paginate.PagedList;
 import cherry.spring.common.type.DeletedFlag;
 import cherry.spring.common.type.FlagCode;
 import cherry.spring.common.type.jdbc.RowMapperCreator;
@@ -70,17 +70,12 @@ public class MetadataServiceImpl implements MetadataService {
 
 	@Transactional
 	@Override
-	public Result search(MetadataCondition cond, long pageNo, long pageSz) {
-
+	public PagedList<SqltoolMetadata> search(MetadataCondition cond,
+			long pageNo, long pageSz) {
 		QSqltoolMetadata m = new QSqltoolMetadata("m");
-		SearchResult<SqltoolMetadata> r = sqlQueryHelper.search(
-				commonClause(m, cond), orderByClause(m, cond), pageNo, pageSz,
+		return sqlQueryHelper.search(commonClause(m, cond),
+				orderByClause(m, cond), pageNo, pageSz,
 				rowMapperCreator.create(SqltoolMetadata.class), getColumns(m));
-
-		Result result = new Result();
-		result.setPageSet(r.getPageSet());
-		result.setMetadataList(r.getResultList());
-		return result;
 	}
 
 	private Expression<?>[] getColumns(QSqltoolMetadata m) {

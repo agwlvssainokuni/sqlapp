@@ -16,6 +16,7 @@
 
 package cherry.sqlapp.service.sqltool.metadata;
 
+import cherry.spring.common.lib.paginate.PagedList;
 import cherry.sqlapp.db.dto.SqltoolMetadata;
 
 public interface MetadataService {
@@ -24,6 +25,7 @@ public interface MetadataService {
 
 	boolean update(SqltoolMetadata record);
 
-	Result search(MetadataCondition cond, long pageNo, long pageSz);
+	PagedList<SqltoolMetadata> search(MetadataCondition cond, long pageNo,
+			long pageSz);
 
 }

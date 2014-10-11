@@ -11,7 +11,7 @@
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="common" uri="urn:springapp:common"%>
 <c:set var="hasResultList"
-	value="${result != null && !result.metadataList.isEmpty()}" />
+	value="${pagedList != null && !pagedList.list.isEmpty()}" />
 <h2 class="page-header">
 	<s:message code="sqltool/search/init.message.0" />
 </h2>
@@ -38,7 +38,7 @@
 						</div>
 					</div>
 				</s:hasBindErrors>
-				<c:if test="${result != null && result.metadataList.isEmpty()}">
+				<c:if test="${pagedList != null && pagedList.list.isEmpty()}">
 					<div class="col-sm-offset-2 col-sm-10">
 						<div class="alert alert-danger" role="alert">
 							<s:message code="sqltool/search/init.message.3" />
@@ -162,9 +162,9 @@
 					<div>
 						<div class="app-pager-desc">
 							<s:message code="common/pager.message.0"
-								arguments="${result.pageSet.last.to+1},${result.pageSet.current.from+1},${result.pageSet.current.to+1}" />
+								arguments="${pagedList.pageSet.last.to+1},${pagedList.pageSet.current.from+1},${pagedList.pageSet.current.to+1}" />
 						</div>
-						<app:pagerLink pageSet="${result.pageSet}" />
+						<app:pagerLink pageSet="${pagedList.pageSet}" />
 					</div>
 					<table id="searchResultList" class="table table-striped">
 						<thead>
@@ -182,9 +182,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="count" begin="1"
-								end="${result.metadataList.size()}">
-								<s:nestedPath path="result.metadataList[${count - 1}]">
+							<c:forEach var="count" begin="1" end="${pagedList.list.size()}">
+								<s:nestedPath path="pagedList.list[${count - 1}]">
 									<s:url var="uri" value="/sqltool/{type}/{id}">
 										<s:param name="type">
 											<s:bind path="sqlType">${status.value}</s:bind>
@@ -195,7 +194,7 @@
 									</s:url>
 									<tr>
 										<td class="text-right"><c:out
-												value="${result.pageSet.current.from + count}" /></td>
+												value="${pagedList.pageSet.current.from + count}" /></td>
 										<td><s:bind path="name">
 												<a href="${uri}" title="${status.value}"><c:out
 														value="${status.value}" /></a>
@@ -214,7 +213,7 @@
 						</tbody>
 					</table>
 					<div>
-						<app:pagerLink pageSet="${result.pageSet}" />
+						<app:pagerLink pageSet="${pagedList.pageSet}" />
 					</div>
 				</div>
 			</div>

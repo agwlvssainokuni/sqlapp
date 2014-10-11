@@ -32,11 +32,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
 import cherry.spring.common.helper.bizdate.BizdateHelper;
+import cherry.spring.common.lib.paginate.PagedList;
 import cherry.spring.common.lib.util.LocalDateTimeUtil;
 import cherry.sqlapp.controller.PathDef;
+import cherry.sqlapp.db.dto.SqltoolMetadata;
 import cherry.sqlapp.service.sqltool.metadata.MetadataCondition;
 import cherry.sqlapp.service.sqltool.metadata.MetadataService;
-import cherry.sqlapp.service.sqltool.metadata.Result;
 
 @Controller
 public class SqltoolSearchControllerImpl implements SqltoolSearchController {
@@ -101,7 +102,8 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 		int pageSz = (form.getPageSz() <= 0 ? defaultPageSize : form
 				.getPageSz());
 
-		Result result = metadataService.search(cond, pageNo, pageSz);
+		PagedList<SqltoolMetadata> result = metadataService.search(cond,
+				pageNo, pageSz);
 
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_SEARCH_INIT);
 		mav.addObject(result);
