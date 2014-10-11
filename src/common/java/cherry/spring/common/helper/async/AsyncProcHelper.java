@@ -16,6 +16,8 @@
 
 package cherry.spring.common.helper.async;
 
+import java.util.Map;
+
 import org.joda.time.LocalDateTime;
 
 public interface AsyncProcHelper {
@@ -26,8 +28,8 @@ public interface AsyncProcHelper {
 
 	void startAsyncProc(int id, LocalDateTime dtm);
 
-	void successAsyncProc(int id, LocalDateTime dtm, String result);
+	void successAsyncProc(int id, LocalDateTime dtm, Map<?, ?> result);
 
-	void errorAsyncProc(int id, LocalDateTime dtm, String result);
+	void errorAsyncProc(int id, LocalDateTime dtm, Map<?, ?> result);
 
 }

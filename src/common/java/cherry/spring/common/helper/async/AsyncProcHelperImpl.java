@@ -36,10 +36,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.helper.sql.SqlLoader;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class AsyncProcHelperImpl implements AsyncProcHelper, InitializingBean {
 
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcOperations;
+
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	@Autowired
 	private SqlLoader sqlLoader;
@@ -134,12 +140,12 @@ public class AsyncProcHelperImpl implements AsyncProcHelper, InitializingBean {
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
-	public void successAsyncProc(int id, LocalDateTime dtm, String result) {
+	public void successAsyncProc(int id, LocalDateTime dtm, Map<?, ?> result) {
 
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("id", id);
 		paramMap.put("finishedAt", dtm.toDate());
-		paramMap.put("result", result);
+		paramMap.put("result", mapToString(result));
 
 		int count = namedParameterJdbcOperations.update(successAsyncProc,
 				paramMap);
@@ -151,12 +157,12 @@ public class AsyncProcHelperImpl implements AsyncProcHelper, InitializingBean {
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
-	public void errorAsyncProc(int id, LocalDateTime dtm, String result) {
+	public void errorAsyncProc(int id, LocalDateTime dtm, Map<?, ?> result) {
 
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("id", id);
 		paramMap.put("finishedAt", dtm.toDate());
-		paramMap.put("result", result);
+		paramMap.put("result", mapToString(result));
 
 		int count = namedParameterJdbcOperations.update(errorAsyncProc,
 				paramMap);
@@ -166,4 +172,11 @@ public class AsyncProcHelperImpl implements AsyncProcHelper, InitializingBean {
 				id, dtm, count);
 	}
 
+	private String mapToString(Map<?, ?> map) {
+		try {
+			return objectMapper.writeValueAsString(map);
+		} catch (JsonProcessingException ex) {
+			throw new IllegalArgumentException(ex);
+		}
+	}
 }

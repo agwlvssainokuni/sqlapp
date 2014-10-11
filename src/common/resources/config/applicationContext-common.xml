@@ -139,7 +139,6 @@
 	<bean class="cherry.spring.common.helper.signup.SignupRequestHelperImpl" />
 
 	<bean class="cherry.spring.common.helper.download.DownloadHelperImpl" />
-	<bean class="cherry.spring.common.helper.json.JsonHelperImpl" />
 	<bean class="cherry.spring.common.helper.logicalerror.LogicalErrorHelperImpl" />
 	<bean class="cherry.spring.common.helper.onetimetoken.OneTimeTokenIssuerImpl" />
 	<bean
