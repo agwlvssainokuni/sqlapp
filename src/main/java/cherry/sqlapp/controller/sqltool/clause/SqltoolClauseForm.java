@@ -63,4 +63,28 @@ public class SqltoolClauseForm implements Serializable {
 
 	private long pageSz = 0L;
 
+	@Getter
+	public enum Prop {
+		DatabaseName("databaseName", "sqltoolClauseForm.databaseName"), //
+		Select("select", "sqltoolClauseForm.select"), //
+		From("from", "sqltoolClauseForm.from"), //
+		Where("where", "sqltoolClauseForm.where"), //
+		GroupBy("groupBy", "sqltoolClauseForm.groupBy"), //
+		Having("having", "sqltoolClauseForm.having"), //
+		OrderBy("orderBy", "sqltoolClauseForm.orderBy"), //
+		ParamMap("paramMap", "sqltoolClauseForm.paramMap"), //
+		LockVersion("lockVersion", "sqltoolClauseForm.lockVersion"), //
+		PageNo("pageNo", "sqltoolClauseForm.pageNo"), //
+		PageSz("pageSz", "sqltoolClauseForm.pageSz"), //
+		DUMMY("dummy", "dummy");
+
+		private final String name;
+		private final String nameWithForm;
+
+		private Prop(String name, String nameWithForm) {
+			this.name = name;
+			this.nameWithForm = nameWithForm;
+		}
+	}
+
 }

@@ -54,4 +54,28 @@ public class SqltoolSearchForm implements Serializable {
 
 	private long pageSz = 0L;
 
+	@Getter
+	public enum Prop {
+		Name("name", "sqltoolSearchForm.name"), //
+		RegisteredFrom("registeredFrom", "sqltoolSearchForm.registeredFrom"), //
+		RegisteredFromDt("registeredFromDt", "sqltoolSearchForm.registeredFromDt"), //
+		RegisteredFromTm("registeredFromTm", "sqltoolSearchForm.registeredFromTm"), //
+		RegisteredTo("registeredTo", "sqltoolSearchForm.registeredTo"), //
+		RegisteredToDt("registeredToDt", "sqltoolSearchForm.registeredToDt"), //
+		RegisteredToTm("registeredToTm", "sqltoolSearchForm.registeredToTm"), //
+		SqlType("sqlType", "sqltoolSearchForm.sqlType"), //
+		Published("published", "sqltoolSearchForm.published"), //
+		PageNo("pageNo", "sqltoolSearchForm.pageNo"), //
+		PageSz("pageSz", "sqltoolSearchForm.pageSz"), //
+		DUMMY("dummy", "dummy");
+
+		private final String name;
+		private final String nameWithForm;
+
+		private Prop(String name, String nameWithForm) {
+			this.name = name;
+			this.nameWithForm = nameWithForm;
+		}
+	}
+
 }

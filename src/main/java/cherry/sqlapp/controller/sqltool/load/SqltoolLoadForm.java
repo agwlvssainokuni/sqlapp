@@ -42,4 +42,21 @@ public class SqltoolLoadForm implements Serializable {
 
 	private Integer lockVersion;
 
+	@Getter
+	public enum Prop {
+		DatabaseName("databaseName", "sqltoolLoadForm.databaseName"), //
+		Sql("sql", "sqltoolLoadForm.sql"), //
+		File("file", "sqltoolLoadForm.file"), //
+		LockVersion("lockVersion", "sqltoolLoadForm.lockVersion"), //
+		DUMMY("dummy", "dummy");
+
+		private final String name;
+		private final String nameWithForm;
+
+		private Prop(String name, String nameWithForm) {
+			this.name = name;
+			this.nameWithForm = nameWithForm;
+		}
+	}
+
 }

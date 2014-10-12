@@ -43,4 +43,21 @@ public class SqltoolStatementForm implements Serializable {
 
 	private Integer lockVersion;
 
+	@Getter
+	public enum Prop {
+		DatabaseName("databaseName", "sqltoolStatementForm.databaseName"), //
+		Sql("sql", "sqltoolStatementForm.sql"), //
+		ParamMap("paramMap", "sqltoolStatementForm.paramMap"), //
+		LockVersion("lockVersion", "sqltoolStatementForm.lockVersion"), //
+		DUMMY("dummy", "dummy");
+
+		private final String name;
+		private final String nameWithForm;
+
+		private Prop(String name, String nameWithForm) {
+			this.name = name;
+			this.nameWithForm = nameWithForm;
+		}
+	}
+
 }

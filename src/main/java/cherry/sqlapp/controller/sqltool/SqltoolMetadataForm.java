@@ -45,4 +45,22 @@ public class SqltoolMetadataForm implements Serializable {
 
 	private Integer lockVersion;
 
+	@Getter
+	public enum Prop {
+		Name("name", "sqltoolMetadataForm.name"), //
+		Description("description", "sqltoolMetadataForm.description"), //
+		OwnedBy("ownedBy", "sqltoolMetadataForm.ownedBy"), //
+		PublishedFlg("publishedFlg", "sqltoolMetadataForm.publishedFlg"), //
+		LockVersion("lockVersion", "sqltoolMetadataForm.lockVersion"), //
+		DUMMY("dummy", "dummy");
+
+		private final String name;
+		private final String nameWithForm;
+
+		private Prop(String name, String nameWithForm) {
+			this.name = name;
+			this.nameWithForm = nameWithForm;
+		}
+	}
+
 }
