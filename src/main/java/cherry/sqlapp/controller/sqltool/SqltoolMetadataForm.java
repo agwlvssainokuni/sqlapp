@@ -16,8 +16,6 @@
 
 package cherry.sqlapp.controller.sqltool;
 
-import java.io.Serializable;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,42 +23,10 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
-public class SqltoolMetadataForm implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class SqltoolMetadataForm extends SqltoolMetadataFormBase {
 
 	private static final long serialVersionUID = 1L;
-
-	@org.hibernate.validator.constraints.NotEmpty
-	@cherry.spring.common.validator.MaxLength(50)
-	private String name;
-
-	@org.hibernate.validator.constraints.NotEmpty
-	@cherry.spring.common.validator.MaxLength(500)
-	private String description;
-
-	private String ownedBy;
-
-	private boolean publishedFlg;
-
-	private Integer lockVersion;
-
-	@Getter
-	public enum Prop {
-		Name("name", "sqltoolMetadataForm.name"), //
-		Description("description", "sqltoolMetadataForm.description"), //
-		OwnedBy("ownedBy", "sqltoolMetadataForm.ownedBy"), //
-		PublishedFlg("publishedFlg", "sqltoolMetadataForm.publishedFlg"), //
-		LockVersion("lockVersion", "sqltoolMetadataForm.lockVersion"), //
-		DUMMY("dummy", "dummy");
-
-		private final String name;
-		private final String nameWithForm;
-
-		private Prop(String name, String nameWithForm) {
-			this.name = name;
-			this.nameWithForm = nameWithForm;
-		}
-	}
 
 }

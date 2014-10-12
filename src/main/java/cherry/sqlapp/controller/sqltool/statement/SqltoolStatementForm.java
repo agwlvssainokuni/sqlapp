@@ -16,8 +16,6 @@
 
 package cherry.sqlapp.controller.sqltool.statement;
 
-import java.io.Serializable;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,39 +23,10 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
-public class SqltoolStatementForm implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class SqltoolStatementForm extends SqltoolStatementFormBase {
 
 	private static final long serialVersionUID = 1L;
-
-	@org.hibernate.validator.constraints.NotEmpty
-	private String databaseName;
-
-	@org.hibernate.validator.constraints.NotEmpty
-	@cherry.spring.common.validator.MaxLength(5000)
-	private String sql;
-
-	@cherry.spring.common.validator.MaxLength(5000)
-	private String paramMap;
-
-	private Integer lockVersion;
-
-	@Getter
-	public enum Prop {
-		DatabaseName("databaseName", "sqltoolStatementForm.databaseName"), //
-		Sql("sql", "sqltoolStatementForm.sql"), //
-		ParamMap("paramMap", "sqltoolStatementForm.paramMap"), //
-		LockVersion("lockVersion", "sqltoolStatementForm.lockVersion"), //
-		DUMMY("dummy", "dummy");
-
-		private final String name;
-		private final String nameWithForm;
-
-		private Prop(String name, String nameWithForm) {
-			this.name = name;
-			this.nameWithForm = nameWithForm;
-		}
-	}
 
 }

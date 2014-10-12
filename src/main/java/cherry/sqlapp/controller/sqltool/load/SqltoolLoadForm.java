@@ -16,8 +16,6 @@
 
 package cherry.sqlapp.controller.sqltool.load;
 
-import java.io.Serializable;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,38 +23,10 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
-public class SqltoolLoadForm implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class SqltoolLoadForm extends SqltoolLoadFormBase {
 
 	private static final long serialVersionUID = 1L;
-
-	@org.hibernate.validator.constraints.NotEmpty
-	private String databaseName;
-
-	@org.hibernate.validator.constraints.NotEmpty
-	@cherry.spring.common.validator.MaxLength(5000)
-	private String sql;
-
-	private org.springframework.web.multipart.MultipartFile file;
-
-	private Integer lockVersion;
-
-	@Getter
-	public enum Prop {
-		DatabaseName("databaseName", "sqltoolLoadForm.databaseName"), //
-		Sql("sql", "sqltoolLoadForm.sql"), //
-		File("file", "sqltoolLoadForm.file"), //
-		LockVersion("lockVersion", "sqltoolLoadForm.lockVersion"), //
-		DUMMY("dummy", "dummy");
-
-		private final String name;
-		private final String nameWithForm;
-
-		private Prop(String name, String nameWithForm) {
-			this.name = name;
-			this.nameWithForm = nameWithForm;
-		}
-	}
 
 }
