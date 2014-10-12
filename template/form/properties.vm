@@ -1,0 +1,3 @@
+#foreach ($prop in $formDef.propertyDef)
+${formDef.formName}.${prop.name}=${prop.label}
+#end

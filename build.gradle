@@ -199,3 +199,9 @@ task deliveryTar(type: Tar) { compression = Compression.GZIP }
 		}
 	})
 }
+
+task generateForm(type: cherry.gradle.task.GenerateForm) {
+	definitionFiles = [file("sqlappform.xls")]
+	javaBaseDir = file("src/main/java")
+	propertiesFile = file("src/main/resources/message/form.properties")
+}
