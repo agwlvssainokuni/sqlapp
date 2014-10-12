@@ -23,25 +23,20 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
-import cherry.sqlapp.validation.DescriptionSize;
-import cherry.sqlapp.validation.NameSize;
-
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 @ToString
 public class SqltoolMetadataForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotEmpty
-	@NameSize
+	@org.hibernate.validator.constraints.NotEmpty
+	@cherry.spring.common.validator.MaxLength(50)
 	private String name;
 
-	@NotEmpty
-	@DescriptionSize
+	@org.hibernate.validator.constraints.NotEmpty
+	@cherry.spring.common.validator.MaxLength(500)
 	private String description;
 
 	private String ownedBy;

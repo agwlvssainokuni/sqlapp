@@ -93,6 +93,11 @@ public class ${formDef.className} implements Serializable {
 	private java.util.List<${prop.subtype}> ${prop.name};
 
 ########################################################################
+#elseif ($prop.type == "ロックバージョン")
+################ 変数宣言
+	private Integer ${prop.name};
+
+########################################################################
 #elseif ($prop.type == "ページネーション")
 ################ 変数宣言
 	private long ${prop.name} = 0L;

@@ -23,27 +23,22 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.web.multipart.MultipartFile;
-
-import cherry.sqlapp.validation.SqlStatementSize;
-
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 @ToString
 public class SqltoolLoadForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotEmpty
+	@org.hibernate.validator.constraints.NotEmpty
 	private String databaseName;
 
-	@NotEmpty
-	@SqlStatementSize
+	@org.hibernate.validator.constraints.NotEmpty
+	@cherry.spring.common.validator.MaxLength(5000)
 	private String sql;
 
-	private MultipartFile file;
+	private org.springframework.web.multipart.MultipartFile file;
 
 	private Integer lockVersion;
 

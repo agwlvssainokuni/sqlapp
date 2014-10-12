@@ -23,49 +23,44 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
-import cherry.sqlapp.validation.ParamMapSize;
-import cherry.sqlapp.validation.SqlClauseSize;
-
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 @ToString
 public class SqltoolClauseForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotEmpty
+	@org.hibernate.validator.constraints.NotEmpty
 	private String databaseName;
 
-	@NotEmpty
-	@SqlClauseSize
+	@org.hibernate.validator.constraints.NotEmpty
+	@cherry.spring.common.validator.MaxLength(500)
 	private String select;
 
-	@NotEmpty
-	@SqlClauseSize
+	@org.hibernate.validator.constraints.NotEmpty
+	@cherry.spring.common.validator.MaxLength(500)
 	private String from;
 
-	@SqlClauseSize
+	@cherry.spring.common.validator.MaxLength(500)
 	private String where;
 
-	@SqlClauseSize
+	@cherry.spring.common.validator.MaxLength(500)
 	private String groupBy;
 
-	@SqlClauseSize
+	@cherry.spring.common.validator.MaxLength(500)
 	private String having;
 
-	@SqlClauseSize
+	@cherry.spring.common.validator.MaxLength(500)
 	private String orderBy;
 
-	@ParamMapSize
+	@cherry.spring.common.validator.MaxLength(5000)
 	private String paramMap;
 
 	private Integer lockVersion;
 
-	private long pageNo;
+	private long pageNo = 0L;
 
-	private long pageSz;
+	private long pageSz = 0L;
 
 }

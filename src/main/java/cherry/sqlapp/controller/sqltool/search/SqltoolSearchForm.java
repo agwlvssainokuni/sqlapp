@@ -17,49 +17,41 @@
 package cherry.sqlapp.controller.sqltool.search;
 
 import java.io.Serializable;
-import java.util.List;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
-
-import cherry.spring.common.type.format.CustomDateTimeFormat;
-import cherry.spring.common.type.format.CustomDateTimeFormat.Range;
-import cherry.sqlapp.validation.NameSize;
-
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 @ToString
 public class SqltoolSearchForm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NameSize
+	@cherry.spring.common.validator.MaxLength(50)
 	private String name;
 
-	@CustomDateTimeFormat(Range.FROM)
-	private LocalDate registeredFromDt;
+	@cherry.spring.common.type.format.CustomDateTimeFormat(cherry.spring.common.type.format.CustomDateTimeFormat.Range.FROM)
+	private org.joda.time.LocalDate registeredFromDt;
 
-	@CustomDateTimeFormat(Range.FROM)
-	private LocalTime registeredFromTm;
+	@cherry.spring.common.type.format.CustomDateTimeFormat(cherry.spring.common.type.format.CustomDateTimeFormat.Range.FROM)
+	private org.joda.time.LocalTime registeredFromTm;
 
-	@CustomDateTimeFormat(Range.TO)
-	private LocalDate registeredToDt;
+	@cherry.spring.common.type.format.CustomDateTimeFormat(cherry.spring.common.type.format.CustomDateTimeFormat.Range.TO)
+	private org.joda.time.LocalDate registeredToDt;
 
-	@CustomDateTimeFormat(Range.TO)
-	private LocalTime registeredToTm;
+	@cherry.spring.common.type.format.CustomDateTimeFormat(cherry.spring.common.type.format.CustomDateTimeFormat.Range.TO)
+	private org.joda.time.LocalTime registeredToTm;
 
-	private List<SqlType> sqlType;
+	private java.util.List<cherry.sqlapp.controller.sqltool.search.SqlType> sqlType;
 
-	private List<Published> published;
+	private java.util.List<cherry.sqlapp.controller.sqltool.search.Published> published;
 
-	private int pageNo = 0;
+	private long pageNo = 0L;
 
-	private int pageSz = 0;
+	private long pageSz = 0L;
 
 }

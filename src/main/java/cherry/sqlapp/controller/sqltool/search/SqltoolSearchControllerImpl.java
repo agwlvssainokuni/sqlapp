@@ -98,8 +98,8 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 
 		MetadataCondition cond = formUtil.createSqlCondition(form,
 				auth.getName());
-		int pageNo = form.getPageNo();
-		int pageSz = (form.getPageSz() <= 0 ? defaultPageSize : form
+		long pageNo = form.getPageNo();
+		long pageSz = (form.getPageSz() <= 0 ? defaultPageSize : form
 				.getPageSz());
 
 		PagedList<SqltoolMetadata> result = metadataService.search(cond,
