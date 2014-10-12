@@ -63,6 +63,8 @@ public class GenerateForm extends DefaultTask {
 
 	private String templateJava = "form/java.vm";
 
+	private String templateJavaBase = "form/javabase.vm";
+
 	private String templateProperties = "form/properties.vm";
 
 	private String templateEncoding = "UTF-8";
@@ -96,6 +98,8 @@ public class GenerateForm extends DefaultTask {
 
 		message("Loading templates.");
 		Template javaTempl = engine.getTemplate(templateJava, templateEncoding);
+		Template javaBaseTempl = engine.getTemplate(templateJavaBase,
+				templateEncoding);
 		Template propTempl = engine.getTemplate(templateProperties,
 				templateEncoding);
 
@@ -128,13 +132,22 @@ public class GenerateForm extends DefaultTask {
 
 			message("{0}", formDef.getFullyQualifiedClassName());
 
-			String pkg = formDef.getPackageName();
-			File pkgDir = new File(javaBaseDir, pkg.replaceAll("\\.", "/"));
+			File pkgDir = new File(javaBaseDir, formDef.getDirName());
 			pkgDir.mkdirs();
-			try (OutputStream jout = new FileOutputStream(new File(pkgDir,
-					formDef.getClassName() + ".java"));
+
+			File javaFile = new File(pkgDir, formDef.getClassName() + ".java");
+			File javaBaseFile = new File(pkgDir, formDef.getClassName()
+					+ "Base.java");
+
+			try (OutputStream jout = new FileOutputStream(javaFile);
 					Writer jwriter = new OutputStreamWriter(jout, javaEncoding)) {
 				javaTempl.merge(context, jwriter);
+				jwriter.flush();
+			}
+
+			try (OutputStream jout = new FileOutputStream(javaBaseFile);
+					Writer jwriter = new OutputStreamWriter(jout, javaEncoding)) {
+				javaBaseTempl.merge(context, jwriter);
 				jwriter.flush();
 			}
 		}

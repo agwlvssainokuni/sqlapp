@@ -16,8 +16,6 @@
 
 package ${formDef.packageName};
 
-import java.io.Serializable;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,126 +23,10 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
-public class ${formDef.className} implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class ${formDef.className} extends ${formDef.className}Base {
 
 	private static final long serialVersionUID = 1L;
-
-#foreach ($prop in $formDef.propertyDef)
-########################################################################
-#if ($prop.type == "数値")
-#if ($prop.required == "○")
-	@javax.validation.constraints.NotNull
-#end
-#if ($prop.min)
-	@javax.validation.constraints.Min($prop.min)
-#end
-#if ($prop.max)
-	@javax.validation.constraints.Max($prop.max)
-#end
-################ サブ型
-#if ($prop.subtype == "整数")
-	private Integer ${prop.name};
-#elseif ($prop.subtype == "整数(Long)")
-	private Long ${prop.name};
-#else
-	private java.math.BigDecimal ${prop.name};
-#end
-
-########################################################################
-#elseif ($prop.type == "日付" || $prop.type == "時刻" || $prop.type == "日時")
-#if ($prop.required == "○")
-	@javax.validation.constraints.NotNull
-#end
-################ サブ型
-#if ($prop.subtype == "範囲下限")
-	@cherry.spring.common.type.format.CustomDateTimeFormat(cherry.spring.common.type.format.CustomDateTimeFormat.Range.FROM)
-#elseif ($prop.subtype == "範囲上限")
-	@cherry.spring.common.type.format.CustomDateTimeFormat(cherry.spring.common.type.format.CustomDateTimeFormat.Range.TO)
-#else
-	@cherry.spring.common.type.format.CustomDateTimeFormat()
-#end
-################ 変数宣言
-#if ($prop.type == "日付")
-	private org.joda.time.LocalDate ${prop.name};
-#elseif ($prop.type == "時刻")
-	private org.joda.time.LocalTime ${prop.name};
-#else
-	private org.joda.time.LocalDateTime ${prop.name};
-#end
-
-########################################################################
-#elseif ($prop.type == "ファイル")
-#if ($prop.required == "○")
-	@javax.validation.constraints.NotNull
-#end
-################ 変数宣言
-	private org.springframework.web.multipart.MultipartFile ${prop.name};
-
-########################################################################
-#elseif ($prop.type == "フラグ")
-################ 変数宣言
-	private boolean ${prop.name};
-
-########################################################################
-#elseif ($prop.type == "リスト")
-################ 変数宣言
-	private java.util.List<${prop.subtype}> ${prop.name};
-
-########################################################################
-#elseif ($prop.type == "ロックバージョン")
-################ 変数宣言
-	private Integer ${prop.name};
-
-########################################################################
-#elseif ($prop.type == "ページネーション")
-################ 変数宣言
-	private long ${prop.name} = 0L;
-
-########################################################################
-#elseif ($prop.type == "文字列")
-#if ($prop.required == "○")
-	@org.hibernate.validator.constraints.NotEmpty
-#end
-#if ($prop.minlen)
-	@cherry.spring.common.validator.MinLength($prop.minlen)
-#end
-#if ($prop.maxlen)
-	@cherry.spring.common.validator.MaxLength($prop.maxlen)
-#end
-################ サブ型
-#if ($prop.subtype == "メール")
-	@org.hibernate.validator.constraints.Email
-#elseif ($prop.subtype == "半角")
-	@cherry.spring.common.validator.CharType(cherry.spring.common.validator.CharType.Mode.BasicLatin)
-#elseif ($prop.subtype == "半角(カナ含む)")
-	@cherry.spring.common.validator.CharType(cherry.spring.common.validator.CharType.Mode.HalfWidth)
-#elseif ($prop.subtype == "全角")
-	@cherry.spring.common.validator.CharType(cherry.spring.common.validator.CharType.Mode.FullWidth)
-#else
-#end
-################ 変数宣言
-	private String ${prop.name};
-
-########################################################################
-#else
-#end
-#end
-	@Getter
-	public enum Prop {
-#foreach ($prop in $formDef.propertyDef)
-		${prop.capitalize("name")}("${prop.name}", "${formDef.formName}.${prop.name}"), //
-#end
-		DUMMY("dummy", "dummy");
-
-		private final String name;
-		private final String nameWithForm;
-
-		private Prop(String name, String nameWithForm) {
-			this.name = name;
-			this.nameWithForm = nameWithForm;
-		}
-	}
 
 }
