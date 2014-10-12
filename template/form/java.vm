@@ -131,4 +131,20 @@ public class ${formDef.className} implements Serializable {
 #else
 #end
 #end
+	@Getter
+	public enum Prop {
+#foreach ($prop in $formDef.propertyDef)
+		${prop.capitalize("name")}("${prop.name}", "${formDef.formName}.${prop.name}"), //
+#end
+		DUMMY("dummy", "dummy");
+
+		private final String name;
+		private final String nameWithForm;
+
+		private Prop(String name, String nameWithForm) {
+			this.name = name;
+			this.nameWithForm = nameWithForm;
+		}
+	}
+
 }
