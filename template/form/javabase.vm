@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ${formDef.packageName};
+package ${typeDef.packageName};
 
 import java.io.Serializable;
 
@@ -27,11 +27,11 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode
 @ToString
-public abstract class ${formDef.className}Base implements Serializable {
+public abstract class ${typeDef.className}Base implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-#foreach ($prop in $formDef.propertyDef)
+#foreach ($prop in $typeDef.itemDef)
 ########################################################################
 #if ($prop.type == "数値")
 #if ($prop.required == "○")
@@ -137,8 +137,8 @@ public abstract class ${formDef.className}Base implements Serializable {
 #end
 	@Getter
 	public enum Prop {
-#foreach ($prop in $formDef.propertyDef)
-		${prop.capitalize("name")}("${prop.name}", "${formDef.formName}.${prop.name}"), //
+#foreach ($prop in $typeDef.itemDef)
+		${prop.capitalize("name")}("${prop.name}", "${typeDef.formName}.${prop.name}"), //
 #end
 		DUMMY("dummy", "dummy");
 

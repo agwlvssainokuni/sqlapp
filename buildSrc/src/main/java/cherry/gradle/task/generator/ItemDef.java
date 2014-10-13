@@ -14,19 +14,23 @@
  * limitations under the License.
  */
 
-package ${typeDef.packageName};
+package cherry.gradle.task.generator;
+
+import java.util.LinkedHashMap;
 
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
-@Getter
-@Setter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class ${typeDef.className} extends ${typeDef.className}Base {
+public class ItemDef extends LinkedHashMap<String, String> {
 
 	private static final long serialVersionUID = 1L;
+
+	public String capitalize(String key) {
+		StringBuilder b = new StringBuilder(get(key));
+		b.setCharAt(0, Character.toUpperCase(b.charAt(0)));
+		return b.toString();
+	}
 
 }

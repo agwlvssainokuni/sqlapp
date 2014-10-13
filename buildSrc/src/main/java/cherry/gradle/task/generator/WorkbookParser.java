@@ -14,19 +14,14 @@
  * limitations under the License.
  */
 
-package ${typeDef.packageName};
+package cherry.gradle.task.generator;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import java.util.List;
 
-@Getter
-@Setter
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class ${typeDef.className} extends ${typeDef.className}Base {
+import org.apache.poi.ss.usermodel.Workbook;
 
-	private static final long serialVersionUID = 1L;
+public interface WorkbookParser {
+
+	List<TypeDef> parse(Workbook workbook);
 
 }
