@@ -22,7 +22,7 @@ ext {
 	versionFluentLogger = "0.3.0"
 	versionSlf4j = "1.7.7"
 	versionLogback = "1.1.2"
-	versionMyBatis = "3.2.7"
+	versionMyBatis = "3.2.8"
 	versionMyBatisSpring = "1.2.2"
 	versionVividJts = "1.11"
 	versionQuerydsl = "3.5.0"
@@ -42,7 +42,7 @@ ext {
 	versionJavaTransaction = "1.1-rev-1"
 	versionLombok = "1.14.8"
 	versionJunit = "4.11"
-	versionMockito = "1.9.5"
+	versionMockito = "1.10.8"
 }
 
 dependencies {
