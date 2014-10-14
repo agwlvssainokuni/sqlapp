@@ -47,8 +47,10 @@
 
 	<cache:annotation-driven />
 
-	<bean id="cacheManager"
-		class="org.springframework.cache.concurrent.ConcurrentMapCacheManager" />
+	<bean id="cacheManager" class="org.springframework.cache.guava.GuavaCacheManager">
+		<property name="cacheSpecification"
+			value="concurrencyLevel=4,expireAfterWrite=1m,weakKeys,weakValues" />
+	</bean>
 
 	<bean id="objectMapper"
 		class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
