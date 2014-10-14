@@ -17,6 +17,8 @@
 package cherry.sqlapp.service.sqltool.query;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +36,7 @@ public class ClauseServiceImpl implements ClauseService {
 	@Autowired
 	private SqltoolMetadataDao sqltoolMetadataDao;
 
+	@Cacheable(value = "SqltoolClause", key = "#id")
 	@Transactional
 	@Override
 	public SqltoolClause findById(int id) {
@@ -61,6 +64,7 @@ public class ClauseServiceImpl implements ClauseService {
 		return metadata.getId();
 	}
 
+	@CacheEvict(value = "SqltoolClause", key = "#record.id")
 	@Transactional
 	@Override
 	public boolean update(SqltoolClause record) {
