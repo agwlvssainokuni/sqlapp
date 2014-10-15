@@ -55,7 +55,13 @@ public class MetadataServiceImpl implements MetadataService {
 	@Override
 	public SqltoolMetadata findById(int id, String loginId) {
 		SqltoolMetadata record = sqltoolMetadataDao.findById(id, loginId);
-		return record;
+		if (record.getPublishedFlg().booleanValue()) {
+			return record;
+		}
+		if (record.getOwnedBy().equals(loginId)) {
+			return record;
+		}
+		return null;
 	}
 
 	@Transactional
