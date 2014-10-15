@@ -20,7 +20,7 @@ import cherry.sqlapp.db.dto.SqltoolMetadata;
 
 public interface SqltoolMetadataDao {
 
-	SqltoolMetadata findById(Integer id, String loginId);
+	SqltoolMetadata findById(int id, String loginId);
 
 	int create(SqltoolMetadata record);
 

@@ -19,6 +19,8 @@ package cherry.sqlapp.db.dao;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Setter;
+
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.InitializingBean;
@@ -34,6 +36,7 @@ import cherry.spring.common.type.jdbc.RowMapperCreator;
 import cherry.spring.common.type.jdbc.SqlParameterSourceCreator;
 import cherry.sqlapp.db.dto.SqltoolLoad;
 
+@Setter
 @Component
 public class SqltoolLoadDaoImpl implements SqltoolLoadDao, InitializingBean {
 
@@ -57,18 +60,6 @@ public class SqltoolLoadDaoImpl implements SqltoolLoadDao, InitializingBean {
 
 	private String update;
 
-	public void setFindById(String findById) {
-		this.findById = findById;
-	}
-
-	public void setCreate(String create) {
-		this.create = create;
-	}
-
-	public void setUpdate(String update) {
-		this.update = update;
-	}
-
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		BeanWrapper bw = new BeanWrapperImpl(this);
@@ -78,7 +69,7 @@ public class SqltoolLoadDaoImpl implements SqltoolLoadDao, InitializingBean {
 
 	@Cacheable(value = "SqltoolLoad", key = "#id")
 	@Override
-	public SqltoolLoad findById(Integer id) {
+	public SqltoolLoad findById(int id) {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("id", id);
 		return namedParameterJdbcOperations.queryForObject(findById, paramMap,

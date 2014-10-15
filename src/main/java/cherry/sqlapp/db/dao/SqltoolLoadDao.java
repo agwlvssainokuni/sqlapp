@@ -20,7 +20,7 @@ import cherry.sqlapp.db.dto.SqltoolLoad;
 
 public interface SqltoolLoadDao {
 
-	SqltoolLoad findById(Integer id);
+	SqltoolLoad findById(int id);
 
 	int create(SqltoolLoad record);
 

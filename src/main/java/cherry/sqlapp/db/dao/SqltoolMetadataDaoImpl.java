@@ -19,6 +19,8 @@ package cherry.sqlapp.db.dao;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Setter;
+
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.InitializingBean;
@@ -36,6 +38,7 @@ import cherry.spring.common.type.jdbc.RowMapperCreator;
 import cherry.spring.common.type.jdbc.SqlParameterSourceCreator;
 import cherry.sqlapp.db.dto.SqltoolMetadata;
 
+@Setter
 @Component
 public class SqltoolMetadataDaoImpl implements SqltoolMetadataDao,
 		InitializingBean {
@@ -60,18 +63,6 @@ public class SqltoolMetadataDaoImpl implements SqltoolMetadataDao,
 
 	private String update;
 
-	public void setFindById(String findById) {
-		this.findById = findById;
-	}
-
-	public void setCreate(String create) {
-		this.create = create;
-	}
-
-	public void setUpdate(String update) {
-		this.update = update;
-	}
-
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		BeanWrapper bw = new BeanWrapperImpl(this);
@@ -81,7 +72,7 @@ public class SqltoolMetadataDaoImpl implements SqltoolMetadataDao,
 
 	@Cacheable(value = "SqltoolMetadata", key = "#id")
 	@Override
-	public SqltoolMetadata findById(Integer id, String loginId) {
+	public SqltoolMetadata findById(int id, String loginId) {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("id", id);
 		paramMap.put("loginId", loginId);

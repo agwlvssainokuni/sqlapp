@@ -20,7 +20,7 @@ import cherry.sqlapp.db.dto.SqltoolClause;
 
 public interface SqltoolClauseDao {
 
-	SqltoolClause findById(Integer id);
+	SqltoolClause findById(int id);
 
 	int create(SqltoolClause record);
 
