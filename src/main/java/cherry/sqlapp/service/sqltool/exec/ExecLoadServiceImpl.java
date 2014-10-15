@@ -109,7 +109,7 @@ public class ExecLoadServiceImpl implements ExecLoadService {
 	@Autowired
 	private JmsOperations jmsOperations;
 
-	@Transactional
+	@Transactional("jtaTransactionManager")
 	@Override
 	public Map<String, String> launch(String databaseName, String sql,
 			MultipartFile file, String launcherId) {
