@@ -21,8 +21,6 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,14 +51,12 @@ public class MetadataServiceImpl implements MetadataService {
 	@Autowired
 	private RowMapperCreator rowMapperCreator;
 
-	@Cacheable(value = "SqltoolMetadata", key = "#id")
 	@Transactional
 	@Override
 	public SqltoolMetadata findById(int id, String loginId) {
 		return sqltoolMetadataDao.findById(id, loginId);
 	}
 
-	@CacheEvict(value = "SqltoolMetadata", key = "#record.id")
 	@Transactional
 	@Override
 	public boolean update(SqltoolMetadata record) {

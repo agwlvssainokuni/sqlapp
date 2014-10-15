@@ -23,6 +23,8 @@ import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -77,6 +79,7 @@ public class SqltoolMetadataDaoImpl implements SqltoolMetadataDao,
 		rowMapper = rowMapperCreator.create(SqltoolMetadata.class);
 	}
 
+	@Cacheable(value = "SqltoolMetadata", key = "#id")
 	@Override
 	public SqltoolMetadata findById(Integer id, String loginId) {
 		Map<String, Object> paramMap = new HashMap<>();
@@ -97,6 +100,7 @@ public class SqltoolMetadataDaoImpl implements SqltoolMetadataDao,
 		return count;
 	}
 
+	@CacheEvict(value = "SqltoolMetadata", key = "#record.id")
 	@Override
 	public int update(SqltoolMetadata record) {
 		return namedParameterJdbcOperations.update(update,

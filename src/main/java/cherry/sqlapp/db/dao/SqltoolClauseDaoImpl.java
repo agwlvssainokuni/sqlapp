@@ -23,6 +23,8 @@ import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Component;
@@ -74,6 +76,7 @@ public class SqltoolClauseDaoImpl implements SqltoolClauseDao, InitializingBean 
 		rowMapper = rowMapperCreator.create(SqltoolClause.class);
 	}
 
+	@Cacheable(value = "SqltoolClause", key = "#id")
 	@Override
 	public SqltoolClause findById(Integer id) {
 		Map<String, Object> paramMap = new HashMap<>();
@@ -88,6 +91,7 @@ public class SqltoolClauseDaoImpl implements SqltoolClauseDao, InitializingBean 
 				sqlParameterSourceCreator.create(record));
 	}
 
+	@CacheEvict(value = "SqltoolClause", key = "#record.id")
 	@Override
 	public int update(SqltoolClause record) {
 		return namedParameterJdbcOperations.update(update,
