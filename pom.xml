@@ -7,7 +7,7 @@
 	<artifactId>sqlapp</artifactId>
 	<version>1.0</version>
 	<properties>
-		<versionH2db>1.4.180</versionH2db>
+		<versionH2db>1.4.181</versionH2db>
 		<versionMyBatisGenerator>1.3.2</versionMyBatisGenerator>
 		<versionQuerydsl>3.4.3</versionQuerydsl>
 	</properties>
@@ -43,6 +43,11 @@
 						<groupId>com.h2database</groupId>
 						<artifactId>h2</artifactId>
 						<version>${versionH2db}</version>
+					</dependency>
+					<dependency>
+						<groupId>cherry</groupId>
+						<artifactId>mybatis-generator-custom</artifactId>
+						<version>0.0</version>
 					</dependency>
 				</dependencies>
 			</plugin>
