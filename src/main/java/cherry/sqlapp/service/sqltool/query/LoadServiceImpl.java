@@ -34,7 +34,7 @@ public class LoadServiceImpl implements LoadService {
 	@Autowired
 	private SqltoolMetadataDao sqltoolMetadataDao;
 
-	@Transactional
+	@Transactional(readOnly = true)
 	@Override
 	public SqltoolLoad findById(int id) {
 		return sqltoolLoadDao.findById(id);

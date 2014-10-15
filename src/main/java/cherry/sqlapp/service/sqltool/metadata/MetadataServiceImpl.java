@@ -51,10 +51,11 @@ public class MetadataServiceImpl implements MetadataService {
 	@Autowired
 	private RowMapperCreator rowMapperCreator;
 
-	@Transactional
+	@Transactional(readOnly = true)
 	@Override
 	public SqltoolMetadata findById(int id, String loginId) {
-		return sqltoolMetadataDao.findById(id, loginId);
+		SqltoolMetadata record = sqltoolMetadataDao.findById(id, loginId);
+		return record;
 	}
 
 	@Transactional
@@ -64,7 +65,7 @@ public class MetadataServiceImpl implements MetadataService {
 		return count == 1;
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	@Override
 	public PagedList<SqltoolMetadata> search(MetadataCondition cond,
 			long pageNo, long pageSz) {

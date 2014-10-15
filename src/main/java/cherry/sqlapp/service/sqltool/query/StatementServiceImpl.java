@@ -34,7 +34,7 @@ public class StatementServiceImpl implements StatementService {
 	@Autowired
 	private SqltoolMetadataDao sqltoolMetadataDao;
 
-	@Transactional
+	@Transactional(readOnly = true)
 	@Override
 	public SqltoolStatement findById(int id) {
 		return sqltoolStatementDao.findById(id);

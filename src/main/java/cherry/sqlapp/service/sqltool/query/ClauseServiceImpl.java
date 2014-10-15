@@ -34,7 +34,7 @@ public class ClauseServiceImpl implements ClauseService {
 	@Autowired
 	private SqltoolMetadataDao sqltoolMetadataDao;
 
-	@Transactional
+	@Transactional(readOnly = true)
 	@Override
 	public SqltoolClause findById(int id) {
 		return sqltoolClauseDao.findById(id);
