@@ -30,7 +30,7 @@ ext {
 	versionAopalliance = "1.0"
 	versionSpring = "4.1.1.RELEASE"
 	versionSpringSecurity = "3.2.5.RELEASE"
-	versionSpringMobile = "1.1.2.RELEASE"
+	versionSpringMobile = "1.1.3.RELEASE"
 	versionHibernateValidator = "5.1.2.Final"
 	versionJavaValidation = "1.1.0.Final"
 	versionTiles = "3.0.4"
