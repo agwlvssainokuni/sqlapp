@@ -49,7 +49,7 @@
 
 	<bean id="cacheManager" class="org.springframework.cache.guava.GuavaCacheManager">
 		<property name="cacheSpecification"
-			value="concurrencyLevel=4,expireAfterWrite=1m,weakKeys,weakValues" />
+			value="concurrencyLevel=4,expireAfterAccess=10s,expireAfterWrite=1m,weakKeys,weakValues" />
 	</bean>
 
 </beans>
