@@ -43,6 +43,10 @@ import org.apache.velocity.app.VelocityEngine;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.TaskAction;
 
+import cherry.parser.worksheet.SheetBasedParser;
+import cherry.parser.worksheet.TypeDef;
+import cherry.parser.worksheet.WorkbookParser;
+
 @Setter
 public class GenerateForm extends DefaultTask {
 
