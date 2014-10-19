@@ -28,7 +28,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
-import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.common.helper.sql.SqlLoader;
 import cherry.spring.common.type.jdbc.RowMapperCreator;
@@ -59,7 +58,6 @@ public class BizdateHelperImpl implements BizdateHelper, InitializingBean {
 		rowMapper = rowMapperCreator.create(BizdateDto.class);
 	}
 
-	@Transactional(readOnly = true)
 	@Override
 	public LocalDate today() {
 		try {
@@ -71,7 +69,6 @@ public class BizdateHelperImpl implements BizdateHelper, InitializingBean {
 		}
 	}
 
-	@Transactional(readOnly = true)
 	@Override
 	public LocalDateTime now() {
 		try {

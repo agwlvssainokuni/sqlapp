@@ -86,7 +86,7 @@ public class AsyncProcHelperImpl implements AsyncProcHelper, InitializingBean {
 		bw.setPropertyValues(sqlLoader.load(getClass()));
 	}
 
-	@Transactional(propagation = REQUIRES_NEW)
+	@Transactional(value = "jtaTransactionManager", propagation = REQUIRES_NEW)
 	@Override
 	public int createAsyncProc(String name, String launcherId, LocalDateTime dtm) {
 
@@ -106,7 +106,7 @@ public class AsyncProcHelperImpl implements AsyncProcHelper, InitializingBean {
 		return keyHolder.getKey().intValue();
 	}
 
-	@Transactional
+	@Transactional("jtaTransactionManager")
 	@Override
 	public void invokeAsyncProc(int id, LocalDateTime dtm) {
 
@@ -179,4 +179,5 @@ public class AsyncProcHelperImpl implements AsyncProcHelper, InitializingBean {
 			throw new IllegalArgumentException(ex);
 		}
 	}
+
 }
