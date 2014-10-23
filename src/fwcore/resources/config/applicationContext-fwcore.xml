@@ -33,7 +33,7 @@
 		<property name="objectLengthLimit" value="${fwcore.trace.objectLengthLimit}" />
 		<property name="packagePrefix">
 			<list>
-				<value>cherry.spring</value>
+				<value>cherry</value>
 			</list>
 		</property>
 	</bean>
