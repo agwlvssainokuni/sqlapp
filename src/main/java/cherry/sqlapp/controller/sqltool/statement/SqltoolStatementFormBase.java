@@ -35,10 +35,10 @@ public abstract class SqltoolStatementFormBase implements Serializable {
 	private String databaseName;
 
 	@org.hibernate.validator.constraints.NotEmpty
-	@cherry.spring.common.validator.MaxLength(5000)
+	@cherry.spring.fwcore.validator.MaxLength(5000)
 	private String sql;
 
-	@cherry.spring.common.validator.MaxLength(5000)
+	@cherry.spring.fwcore.validator.MaxLength(5000)
 	private String paramMap;
 
 	private Integer lockVersion;

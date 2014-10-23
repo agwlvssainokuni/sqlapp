@@ -3,6 +3,8 @@
 	xmlns="http://www.springframework.org/schema/beans"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
 
+	<import resource="applicationContext-fwcore.xml" />
+	<import resource="applicationContext-fwcoreMapper.xml" />
 	<import resource="applicationContext-common.xml" />
 	<import resource="applicationContext-commonMapper.xml" />
 	<import resource="applicationContext-sqlapp.xml" />

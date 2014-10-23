@@ -28,7 +28,7 @@
 		<security:csrf request-matcher-ref="csrfRequestMatcher" />
 	</security:http>
 
-	<bean id="csrfRequestMatcher" class="cherry.spring.common.mvc.CsrfRequestMatcher">
+	<bean id="csrfRequestMatcher" class="cherry.spring.fwcore.mvc.CsrfRequestMatcher">
 		<property name="excludes">
 			<list>
 				<bean
@@ -49,7 +49,7 @@
 			<mvc:mapping path="/logout/**" />
 			<mvc:mapping path="/secure/**" />
 			<mvc:mapping path="/sqltool/**" />
-			<bean class="cherry.spring.common.log.web.OperationLogHandlerInterceptor" />
+			<bean class="cherry.spring.fwcore.log.web.OperationLogHandlerInterceptor" />
 		</mvc:interceptor>
 		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
 		<bean

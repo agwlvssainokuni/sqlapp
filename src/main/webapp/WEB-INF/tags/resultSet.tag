@@ -8,7 +8,7 @@
 <%@ attribute name="resultSet" required="true" rtexprvalue="true"
 	type="cherry.sqlapp.service.sqltool.exec.ResultSet"%>
 <%@ attribute name="pageSet" required="true" rtexprvalue="true"
-	type="cherry.spring.common.lib.paginate.PageSet"%>
+	type="cherry.goods.paginate.PageSet"%>
 <table id="${id}" class="table table-striped">
 	<thead>
 		<tr>

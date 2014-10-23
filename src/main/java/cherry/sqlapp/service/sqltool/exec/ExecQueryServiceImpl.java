@@ -25,11 +25,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.spring.common.lib.etl.Consumer;
-import cherry.spring.common.lib.etl.Extractor;
-import cherry.spring.common.lib.etl.NoneLimiter;
-import cherry.spring.common.lib.paginate.PageSet;
-import cherry.spring.common.lib.paginate.Paginator;
+import cherry.goods.paginate.PageSet;
+import cherry.goods.paginate.Paginator;
+import cherry.spring.fwcore.etl.Consumer;
+import cherry.spring.fwcore.etl.Extractor;
+import cherry.spring.fwcore.etl.NoneLimiter;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
 
 public class ExecQueryServiceImpl implements ExecQueryService {
