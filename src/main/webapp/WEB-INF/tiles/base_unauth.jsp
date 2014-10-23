@@ -8,7 +8,7 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<%@ taglib prefix="common" uri="urn:springapp:common"%>
+<%@ taglib prefix="fwcore" uri="urn:springapp:fwcore"%>
 <c:set var="name">
 	<tiles:getAsString name="name" />
 </c:set>
