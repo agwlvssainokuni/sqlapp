@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ attribute name="pageSet" required="true" rtexprvalue="true"
-	type="cherry.spring.common.lib.paginate.PageSet"%>
+	type="cherry.goods.paginate.PageSet"%>
 <div class="app-pager-link">
 	<span class="app-page-current" title="${pageSet.current.no + 1}"></span>
 	<ul class="pagination">
