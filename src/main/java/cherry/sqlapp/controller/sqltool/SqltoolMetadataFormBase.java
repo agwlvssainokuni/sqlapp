@@ -32,11 +32,11 @@ public abstract class SqltoolMetadataFormBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@org.hibernate.validator.constraints.NotEmpty
-	@cherry.spring.common.validator.MaxLength(50)
+	@cherry.spring.fwcore.validator.MaxLength(50)
 	private String name;
 
 	@org.hibernate.validator.constraints.NotEmpty
-	@cherry.spring.common.validator.MaxLength(500)
+	@cherry.spring.fwcore.validator.MaxLength(500)
 	private String description;
 
 	private String ownedBy;
