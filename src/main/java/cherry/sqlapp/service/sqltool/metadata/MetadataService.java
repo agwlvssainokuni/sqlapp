@@ -16,7 +16,7 @@
 
 package cherry.sqlapp.service.sqltool.metadata;
 
-import cherry.spring.common.lib.paginate.PagedList;
+import cherry.goods.paginate.PagedList;
 import cherry.sqlapp.db.dto.SqltoolMetadata;
 
 public interface MetadataService {

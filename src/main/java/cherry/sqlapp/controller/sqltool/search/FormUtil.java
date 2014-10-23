@@ -21,8 +21,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import cherry.spring.common.lib.util.LocalDateTimeUtil;
-import cherry.spring.common.type.FlagCode;
+import cherry.goods.util.LocalDateTimeUtil;
+import cherry.spring.fwcore.type.FlagCode;
 import cherry.sqlapp.code.SqlTypeCode;
 import cherry.sqlapp.service.sqltool.metadata.MetadataCondition;
 
