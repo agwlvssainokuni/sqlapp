@@ -9,6 +9,8 @@
 	<context:property-placeholder location="classpath:env.properties"
 		ignore-unresolvable="true" />
 
+	<import resource="applicationContext-fwcore.xml" />
+	<import resource="applicationContext-fwcoreMapper.xml" />
 	<import resource="applicationContext-common.xml" />
 	<import resource="applicationContext-commonMapper.xml" />
 	<import resource="applicationContext-sqlapp.xml" />

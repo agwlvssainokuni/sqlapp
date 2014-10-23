@@ -11,14 +11,14 @@
 
 	<context:component-scan base-package="cherry.sqlapp" />
 
-	<bean id="navigator" class="cherry.spring.common.helper.navi.NavigatorImpl">
+	<bean id="navigator" class="cherry.spring.fwcore.navi.NavigatorImpl">
 		<property name="navigationDef" value="classpath:navi.json" />
 		<property name="objectMapper" ref="objectMapper" />
 	</bean>
 
-	<bean id="paginator" class="cherry.spring.common.lib.paginate.PaginatorImpl">
+	<bean id="paginator" class="cherry.goods.paginate.PaginatorImpl">
 		<property name="paginateStrategy">
-			<bean class="cherry.spring.common.lib.paginate.TotalCountStrategy">
+			<bean class="cherry.goods.paginate.TotalCountStrategy">
 				<property name="totalCount" value="${sqlapp.app.paginator.totalCount}" />
 				<property name="lowerSideHint" value="${sqlapp.app.paginator.lowerSideHint}" />
 				<property name="lowerTrim" value="1" />
@@ -27,7 +27,7 @@
 		</property>
 	</bean>
 
-	<bean class="cherry.spring.common.log.Log" factory-method="setMessageDef">
+	<bean class="cherry.goods.log.Log" factory-method="setMessageDef">
 		<constructor-arg value="log" />
 	</bean>
 
