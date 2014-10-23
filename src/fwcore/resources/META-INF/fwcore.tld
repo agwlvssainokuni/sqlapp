@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+	version="2.1">
+
+	<description>SpringApp FwCore Tag Library</description>
+	<display-name>SpringApp FwCore Tag Library</display-name>
+	<tlib-version>1.0</tlib-version>
+	<short-name>fwcore</short-name>
+	<uri>urn:springapp:fwcore</uri>
+
+	<function>
+		<description>Navigate</description>
+		<name>navigate</name>
+		<function-class>cherry.spring.fwcore.navi.NavigatorTag</function-class>
+		<function-signature>java.util.List navigate(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<description>OneTimeToken</description>
+		<name>onetimetoken</name>
+		<function-class>cherry.spring.fwcore.onetimetoken.OneTimeTokenTag</function-class>
+		<function-signature>
+			cherry.spring.fwcore.onetimetoken.OneTimeToken newToken(javax.servlet.http.HttpServletRequest)
+		</function-signature>
+	</function>
+
+	<function>
+		<description>getLabeledEnumList</description>
+		<name>getLabeledEnumList</name>
+		<function-class>cherry.spring.fwcore.type.EnumUtil</function-class>
+		<function-signature>java.util.List getLabeledEnumList(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<description>getLabeledCodeList</description>
+		<name>getLabeledCodeList</name>
+		<function-class>cherry.spring.fwcore.type.CodeUtil</function-class>
+		<function-signature>java.util.List getLabeledCodeList(java.lang.String)</function-signature>
+	</function>
+
+</taglib>

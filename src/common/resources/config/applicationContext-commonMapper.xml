@@ -7,26 +7,4 @@
 
 	<mybatis-spring:scan base-package="cherry.spring.common.db" />
 
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
-		<property name="typeHandlers">
-			<list>
-				<bean class="cherry.spring.common.type.mybatis.JodaLocalDateTypeHandler" />
-				<bean class="cherry.spring.common.type.mybatis.JodaLocalTimeTypeHandler" />
-				<bean
-					class="cherry.spring.common.type.mybatis.JodaLocalDateTimeTypeHandler" />
-				<bean class="cherry.spring.common.type.mybatis.JodaDateTimeTypeHandler" />
-				<bean class="cherry.spring.common.type.mybatis.SecureStringTypeHandler" />
-				<bean class="cherry.spring.common.type.mybatis.SecureIntegerTypeHandler" />
-				<bean class="cherry.spring.common.type.mybatis.SecureLongTypeHandler" />
-				<bean
-					class="cherry.spring.common.type.mybatis.SecureBigIntegerTypeHandler" />
-				<bean
-					class="cherry.spring.common.type.mybatis.SecureBigDecimalTypeHandler" />
-				<bean class="cherry.spring.common.type.mybatis.DeletedFlagTypeHandler" />
-				<bean class="cherry.spring.common.type.mybatis.FlagCodeTypeHandler" />
-			</list>
-		</property>
-	</bean>
-
 </beans>
