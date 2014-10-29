@@ -43,7 +43,7 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 	@Autowired
 	private Paginator paginator;
 
-	@Transactional
+	@Transactional(readOnly = true)
 	@Override
 	public PageSet query(String databaseName, String sql,
 			Map<String, ?> paramMap, Consumer consumer) {
@@ -61,7 +61,7 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 		}
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	@Override
 	public PageSet query(String databaseName, QueryBuilder queryBuilder,
 			Map<String, ?> paramMap, long pageNo, long pageSz, Consumer consumer) {

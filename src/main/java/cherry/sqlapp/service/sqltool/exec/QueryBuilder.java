@@ -73,7 +73,7 @@ public class QueryBuilder {
 		append(builder, " WHERE ", where);
 		append(builder, " GROUP BY ", groupBy);
 		append(builder, " HAVING ", having);
-		builder.append(")");
+		builder.append(") AS A");
 		return builder.toString();
 	}
 
