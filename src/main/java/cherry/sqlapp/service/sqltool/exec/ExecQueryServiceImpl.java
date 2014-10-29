@@ -23,7 +23,13 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionOperations;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import cherry.goods.paginate.PageSet;
 import cherry.goods.paginate.Paginator;
@@ -43,45 +49,70 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 	@Autowired
 	private Paginator paginator;
 
-	@Transactional(readOnly = true)
 	@Override
-	public PageSet query(String databaseName, String sql,
-			Map<String, ?> paramMap, Consumer consumer) {
-		DataSource dataSource = dataSourceDef.getDataSource(databaseName);
-		try {
+	public PageSet query(String databaseName, final String sql,
+			final Map<String, ?> paramMap, final Consumer consumer) {
 
-			long numOfItems = extractor.extract(dataSource, sql, paramMap,
-					consumer, new NoneLimiter());
-			PageSet pageSet = paginator.paginate(0L, numOfItems,
-					(numOfItems <= 0L ? 1L : numOfItems));
+		final DataSource dataSource = dataSourceDef.getDataSource(databaseName);
+		PlatformTransactionManager txMgr = new DataSourceTransactionManager(
+				dataSource);
+		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
+		txDef.setReadOnly(true);
 
-			return pageSet;
-		} catch (IOException ex) {
-			throw new IllegalStateException(ex);
-		}
+		TransactionOperations txOp = new TransactionTemplate(txMgr, txDef);
+		return txOp.execute(new TransactionCallback<PageSet>() {
+			@Override
+			public PageSet doInTransaction(TransactionStatus status) {
+				try {
+
+					long numOfItems = extractor.extract(dataSource, sql,
+							paramMap, consumer, new NoneLimiter());
+					PageSet pageSet = paginator.paginate(0L, numOfItems,
+							(numOfItems <= 0L ? 1L : numOfItems));
+
+					return pageSet;
+				} catch (IOException ex) {
+					throw new IllegalStateException(ex);
+				}
+			}
+		});
 	}
 
-	@Transactional(readOnly = true)
 	@Override
-	public PageSet query(String databaseName, QueryBuilder queryBuilder,
-			Map<String, ?> paramMap, long pageNo, long pageSz, Consumer consumer) {
-		DataSource dataSource = dataSourceDef.getDataSource(databaseName);
-		try {
+	public PageSet query(String databaseName, final QueryBuilder queryBuilder,
+			final Map<String, ?> paramMap, final long pageNo,
+			final long pageSz, final Consumer consumer) {
 
-			long count = count(dataSource, queryBuilder.buildCount(), paramMap);
-			PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
+		final DataSource dataSource = dataSourceDef.getDataSource(databaseName);
+		PlatformTransactionManager txMgr = new DataSourceTransactionManager(
+				dataSource);
+		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
+		txDef.setReadOnly(true);
 
-			long numOfItems = extractor.extract(dataSource,
-					queryBuilder.build(pageSz, pageSet.getCurrent().getFrom()),
-					paramMap, consumer, new NoneLimiter());
-			if (numOfItems != pageSet.getCurrent().getCount()) {
-				throw new IllegalStateException();
+		TransactionOperations txOp = new TransactionTemplate(txMgr, txDef);
+		return txOp.execute(new TransactionCallback<PageSet>() {
+			@Override
+			public PageSet doInTransaction(TransactionStatus status) {
+				try {
+
+					long count = count(dataSource, queryBuilder.buildCount(),
+							paramMap);
+					PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
+
+					long numOfItems = extractor.extract(dataSource,
+							queryBuilder.build(pageSz, pageSet.getCurrent()
+									.getFrom()), paramMap, consumer,
+							new NoneLimiter());
+					if (numOfItems != pageSet.getCurrent().getCount()) {
+						throw new IllegalStateException();
+					}
+
+					return pageSet;
+				} catch (IOException ex) {
+					throw new IllegalStateException(ex);
+				}
 			}
-
-			return pageSet;
-		} catch (IOException ex) {
-			throw new IllegalStateException(ex);
-		}
+		});
 	}
 
 	private long count(DataSource dataSource, String sql,
