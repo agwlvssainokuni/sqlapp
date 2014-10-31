@@ -31,6 +31,7 @@ ext {
 	versionSpring = "4.1.1.RELEASE"
 	versionSpringSecurity = "3.2.5.RELEASE"
 	versionSpringMobile = "1.1.3.RELEASE"
+	versionSpringDataJdbcCore = "1.1.0.RELEASE"
 	versionHibernateValidator = "5.1.2.Final"
 	versionJavaValidation = "1.1.0.Final"
 	versionTiles = "3.0.4"
@@ -89,6 +90,7 @@ dependencies {
 	compile "org.springframework.security:spring-security-taglibs:${versionSpringSecurity}"
 	compile "org.springframework.security:spring-security-config:${versionSpringSecurity}"
 	compile "org.springframework.mobile:spring-mobile-device:${versionSpringMobile}"
+	compile "org.springframework.data:spring-data-jdbc-core:${versionSpringDataJdbcCore}"
 	compile "org.hibernate:hibernate-validator:${versionHibernateValidator}"
 	compile "javax.validation:validation-api:${versionJavaValidation}"
 	compile "org.apache.tiles:tiles-core:${versionTiles}"
@@ -124,7 +126,6 @@ sourceSets.main {
 		srcDir "src/goods/java"
 		srcDir "src/fwcore/java"
 		srcDir "src/common/java"
-		srcDir "src/spring-data-jdbc-core/java"
 		srcDir "src/mybatis/java"
 		srcDir "src/querydsl/java"
 	}
