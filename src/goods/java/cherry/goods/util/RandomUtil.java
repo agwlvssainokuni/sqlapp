@@ -19,6 +19,14 @@ package cherry.goods.util;
 import java.security.SecureRandom;
 import java.util.Random;
 
+/**
+ * 乱数処理ユーティリティ。<br />
+ * 下記の機能を提供する。
+ * <ul>
+ * <li>ランダムバイト列 ({@link #randomBytes(int)})</li>
+ * <li>ランダム文字列 ({@link #randomString(int)})</li>
+ * </ul>
+ */
 public class RandomUtil {
 
 	private static Random random = new SecureRandom();
@@ -30,12 +38,26 @@ public class RandomUtil {
 		base = bs;
 	}
 
+	/**
+	 * ランダムなバイト列を生成する。
+	 * 
+	 * @param length
+	 *            生成するバイト列の長さ。
+	 * @return ランダムバイト列。
+	 */
 	public static byte[] randomBytes(int length) {
 		byte[] value = new byte[length];
 		random.nextBytes(value);
 		return value;
 	}
 
+	/**
+	 * ランダムな文字列を生成する。
+	 * 
+	 * @param length
+	 *            文字列の長さ。
+	 * @return ランダム文字列。
+	 */
 	public static String randomString(int length) {
 		char[] value = new char[length];
 		for (int i = 0; i < length; i++) {

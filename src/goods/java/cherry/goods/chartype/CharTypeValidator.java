@@ -35,23 +35,42 @@ import static cherry.goods.chartype.CharType.isUpper;
 import static java.lang.Character.codePointAt;
 import static java.lang.Character.isLowSurrogate;
 
+/**
+ * 文字列を構成する文字の種類を判別する機能を提供する。<br />
+ */
 public class CharTypeValidator {
 
+	/** 文字種指定「半角文字(半角カナ含まず)」。 */
 	public static final int BASIC_LATIN;
+	/** 文字種指定「半角文字(半角カナ含む)」。 */
 	public static final int HALF_WIDTH;
+	/** 文字種指定「全角文字」。 */
 	public static final int FULL_WIDTH;
+	/** 文字種指定「半角空白」。 */
 	public static final int SPACE;
+	/** 文字種指定「半角数字」。 */
 	public static final int NUMERIC;
+	/** 文字種指定「半角英字」。 */
 	public static final int ALPHA;
+	/** 文字種指定「半角英字大文字」。 */
 	public static final int UPPER;
+	/** 文字種指定「半角英字小文字」。 */
 	public static final int LOWER;
+	/** 文字種指定「全角空白」。 */
 	public static final int FULL_SPACE;
+	/** 文字種指定「全角数字」。 */
 	public static final int FULL_NUMERIC;
+	/** 文字種指定「全角英字」。 */
 	public static final int FULL_ALPHA;
+	/** 文字種指定「全角英字大文字」。 */
 	public static final int FULL_UPPER;
+	/** 文字種指定「全角英字大文字」。 */
 	public static final int FULL_LOWER;
+	/** 文字種指定「全角ひらがな」。 */
 	public static final int FULL_HIRAGANA;
+	/** 文字種指定「全角カタカナ」。 */
 	public static final int FULL_KATAKANA;
+	/** 文字種指定「半角カタカナ」。 */
 	public static final int HALF_KATAKANA;
 
 	static {
@@ -74,6 +93,34 @@ public class CharTypeValidator {
 		HALF_KATAKANA = (1 << (shift++));
 	}
 
+	/**
+	 * 文字の種類を判別する機能を提供する。<br />
+	 * 実態は{@link CharType}が提供するメソッドへの振分けである (ファサードとして位置付ける)。
+	 * 
+	 * @param codePoint
+	 *            対象文字 (コードポイントで指定すること)。
+	 * @param mode
+	 *            文字種指定。文字種は複数指定可能であり、下記の組合せ ("|"でマスクを組合せる) で指定することとする。
+	 *            <ul>
+	 *            <li>{@link #BASIC_LATIN}</li>
+	 *            <li>{@link #HALF_WIDTH}</li>
+	 *            <li>{@link #FULL_WIDTH}</li>
+	 *            <li>{@link #SPACE}</li>
+	 *            <li>{@link #NUMERIC}</li>
+	 *            <li>{@link #ALPHA}</li>
+	 *            <li>{@link #UPPER}</li>
+	 *            <li>{@link #LOWER}</li>
+	 *            <li>{@link #FULL_SPACE}</li>
+	 *            <li>{@link #FULL_NUMERIC}</li>
+	 *            <li>{@link #FULL_ALPHA}</li>
+	 *            <li>{@link #FULL_UPPER}</li>
+	 *            <li>{@link #FULL_LOWER}</li>
+	 *            <li>{@link #FULL_HIRAGANA}</li>
+	 *            <li>{@link #FULL_KATAKANA}</li>
+	 *            <li>{@link #HALF_KATAKANA}</li>
+	 *            </ul>
+	 * @return 対象文字が文字種指定で指定された文字種のいずれかであれば真(true)、さもなくば、偽(false)。
+	 */
 	public static boolean isValid(int codePoint, int mode) {
 		if ((mode & BASIC_LATIN) != 0 && isBasicLatin(codePoint)) {
 			return true;
@@ -126,6 +173,38 @@ public class CharTypeValidator {
 		return false;
 	}
 
+	/**
+	 * 文字の種類を判別する機能を提供する。<br />
+	 * 実態は{@link CharType}が提供するメソッドへの振分けである (ファサードとして位置付ける)。<br />
+	 * 基本的な機能は{@link #isValid(int, int)}
+	 * と同等であり、これに加えて、許容文字として指定した文字も文字種が合致したものとして判定する。
+	 * 
+	 * @param codePoint
+	 *            対象文字 (コードポイントで指定すること)。
+	 * @param mode
+	 *            文字種指定。文字種は複数指定可能であり、下記の組合せ ("|"でマスクを組合せる) で指定することとする。
+	 *            <ul>
+	 *            <li>{@link #BASIC_LATIN}</li>
+	 *            <li>{@link #HALF_WIDTH}</li>
+	 *            <li>{@link #FULL_WIDTH}</li>
+	 *            <li>{@link #SPACE}</li>
+	 *            <li>{@link #NUMERIC}</li>
+	 *            <li>{@link #ALPHA}</li>
+	 *            <li>{@link #UPPER}</li>
+	 *            <li>{@link #LOWER}</li>
+	 *            <li>{@link #FULL_SPACE}</li>
+	 *            <li>{@link #FULL_NUMERIC}</li>
+	 *            <li>{@link #FULL_ALPHA}</li>
+	 *            <li>{@link #FULL_UPPER}</li>
+	 *            <li>{@link #FULL_LOWER}</li>
+	 *            <li>{@link #FULL_HIRAGANA}</li>
+	 *            <li>{@link #FULL_KATAKANA}</li>
+	 *            <li>{@link #HALF_KATAKANA}</li>
+	 *            </ul>
+	 * @param acceptable
+	 *            許容文字。文字種指定で指定した文字種に加えて、当引数に指定した文字も文字種が合致したものとして判定する。
+	 * @return 対象文字が、文字種指定で指定された文字種のいずれか、または、許容文字に含まれるならば真(true)、さもなくば、偽(false)。
+	 */
 	public static boolean isValid(int codePoint, int mode, int[] acceptable) {
 		if (isValid(codePoint, mode)) {
 			return true;
@@ -140,6 +219,36 @@ public class CharTypeValidator {
 		return false;
 	}
 
+	/**
+	 * 文字列を構成する文字の種類を判別する機能を提供する。<br />
+	 * 
+	 * @param seq
+	 *            対象文字列。
+	 * @param mode
+	 *            文字種指定。文字種は複数指定可能であり、下記の組合せ ("|"でマスクを組合せる) で指定することとする。
+	 *            <ul>
+	 *            <li>{@link #BASIC_LATIN}</li>
+	 *            <li>{@link #HALF_WIDTH}</li>
+	 *            <li>{@link #FULL_WIDTH}</li>
+	 *            <li>{@link #SPACE}</li>
+	 *            <li>{@link #NUMERIC}</li>
+	 *            <li>{@link #ALPHA}</li>
+	 *            <li>{@link #UPPER}</li>
+	 *            <li>{@link #LOWER}</li>
+	 *            <li>{@link #FULL_SPACE}</li>
+	 *            <li>{@link #FULL_NUMERIC}</li>
+	 *            <li>{@link #FULL_ALPHA}</li>
+	 *            <li>{@link #FULL_UPPER}</li>
+	 *            <li>{@link #FULL_LOWER}</li>
+	 *            <li>{@link #FULL_HIRAGANA}</li>
+	 *            <li>{@link #FULL_KATAKANA}</li>
+	 *            <li>{@link #HALF_KATAKANA}</li>
+	 *            </ul>
+	 * @param acceptable
+	 *            許容文字。文字種指定で指定した文字種に加えて、当引数に指定した文字も文字種が合致したものとして判定する。
+	 * @return 対象文字列を構成する全ての文字が、文字種指定で指定された文字種のいずれか、または、許容文字に含まれるならば真(true)、
+	 *         さもなくば、偽 (false )。
+	 */
 	public static CharTypeResult validate(CharSequence seq, int mode,
 			int[] acceptable) {
 		for (int i = 0; i < seq.length(); i++) {

@@ -21,6 +21,16 @@ import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.joda.time.Period;
 
+/**
+ * 日時操作ユーティリティ。<br />
+ * 下記の機能を提供する。
+ * <ul>
+ * <li>日時範囲(FROM)の条件指定値決定 ({@link #rangeFrom(LocalDate)},
+ * {@link #rangeFrom(LocalDate, LocalTime)}, {@link #rangeFrom(LocalDateTime)}</li>
+ * <li>日時範囲(TO)の条件指定値決定 ({@link #rangeTo(LocalDate)},
+ * {@link #rangeTo(LocalDate, LocalTime)}, {@link #rangeTo(LocalDateTime)}</li>
+ * </ul>
+ */
 public class LocalDateTimeUtil {
 
 	private static Period unitOfTime = Period.seconds(1);
@@ -30,6 +40,13 @@ public class LocalDateTimeUtil {
 		return unitOfTime;
 	}
 
+	/**
+	 * 日時範囲(FROM)の条件指定値を決定する。
+	 * 
+	 * @param from
+	 *            入力された日付値。
+	 * @return 入力された日付に対する日時範囲(FROM)の条件指定値。
+	 */
 	public static LocalDateTime rangeFrom(LocalDate from) {
 		if (from == null) {
 			return null;
@@ -37,6 +54,15 @@ public class LocalDateTimeUtil {
 		return from.toLocalDateTime(LocalTime.MIDNIGHT);
 	}
 
+	/**
+	 * 日時範囲(FROM)の条件指定値を決定する。
+	 * 
+	 * @param fromD
+	 *            入力された日付値。
+	 * @param fromT
+	 *            　入力された時刻値。
+	 * @return 入力された日付と時刻に対する日時範囲(FROM)の条件指定値。
+	 */
 	public static LocalDateTime rangeFrom(LocalDate fromD, LocalTime fromT) {
 		if (fromD == null) {
 			return null;
@@ -47,10 +73,24 @@ public class LocalDateTimeUtil {
 		return fromD.toLocalDateTime(fromT);
 	}
 
+	/**
+	 * 日時範囲(FROM)の条件指定値を決定する。
+	 * 
+	 * @param from
+	 *            入力された日時値。
+	 * @return 入力された日時に対する日時範囲(FROM)の条件指定値。
+	 */
 	public static LocalDateTime rangeFrom(LocalDateTime from) {
 		return from;
 	}
 
+	/**
+	 * 日時範囲(TO)の条件指定値を決定する。
+	 * 
+	 * @param to
+	 *            入力された日付値。
+	 * @return 入力された日付に対する日時範囲(TO)の条件指定値。
+	 */
 	public static LocalDateTime rangeTo(LocalDate to) {
 		if (to == null) {
 			return null;
@@ -58,6 +98,15 @@ public class LocalDateTimeUtil {
 		return to.toLocalDateTime(LocalTime.MIDNIGHT).plusDays(1);
 	}
 
+	/**
+	 * 日時範囲(TO)の条件指定値を決定する。
+	 * 
+	 * @param toD
+	 *            入力された日付値。
+	 * @param toT
+	 *            入力された時刻値。
+	 * @return 入力された日付と時刻に対する日時範囲(TO)の条件指定値。
+	 */
 	public static LocalDateTime rangeTo(LocalDate toD, LocalTime toT) {
 		if (toD == null) {
 			return null;
@@ -68,6 +117,13 @@ public class LocalDateTimeUtil {
 		return toD.toLocalDateTime(toT).plus(unitOfTime);
 	}
 
+	/**
+	 * 日時範囲(TO)の条件指定値を決定する。
+	 * 
+	 * @param to
+	 *            入力された日時値。
+	 * @return 入力された日時に対する日時範囲(TO)の条件指定値。
+	 */
 	public static LocalDateTime rangeTo(LocalDateTime to) {
 		if (to == null) {
 			return null;

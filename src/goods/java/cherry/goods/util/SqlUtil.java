@@ -16,6 +16,13 @@
 
 package cherry.goods.util;
 
+/**
+ * SQL関連操作ユーティリティ。<br />
+ * 下記の機能を提供する。
+ * <ul>
+ * <li>LIKE条件用エスケープ ({@link #escapeForLike(String)})</li>
+ * </ul>
+ */
 public class SqlUtil {
 
 	public static String escapeForLike(String text) {

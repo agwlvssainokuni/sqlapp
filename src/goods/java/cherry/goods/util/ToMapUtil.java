@@ -21,8 +21,23 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * {@link Map}変換ユーティリティ。
+ * <ul>
+ * <li>{@link Throwable}を変換する ({@link #fromThrowable(Throwable, int)})</li>
+ * </ul>
+ */
 public class ToMapUtil {
 
+	/**
+	 * {@link Throwable}を{@link Map}に変換する。
+	 * 
+	 * @param th
+	 *            変換対象の{@link Throwable}。
+	 * @param maxDepth
+	 *            {@link Map}に格納するスタックトレースの最大段数。
+	 * @return {@link Throwable}の情報を保持する{@link Map}。
+	 */
 	public static Map<String, Object> fromThrowable(Throwable th, int maxDepth) {
 
 		Map<String, Object> map = new LinkedHashMap<>();

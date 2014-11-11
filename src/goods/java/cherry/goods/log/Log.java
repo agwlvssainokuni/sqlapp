@@ -17,6 +17,10 @@
 package cherry.goods.log;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
@@ -28,17 +32,32 @@ import org.slf4j.LoggerFactory;
 public class Log {
 
 	/** ログ文言定義を保持する。 */
-	private static ResourceBundle messageDef;
+	private static List<ResourceBundle> messageDef = null;
 
 	/**
 	 * ログ文言定義を設定する。
 	 * 
 	 * @param msgDef
 	 *            ログ文言定義。
-	 * @return ログ文言定義 (引数に指定されたものをそのまま返却する)。
+	 * @return ログ文言定義 (現在の定義を返却する)。
 	 */
-	public static ResourceBundle setMessageDef(ResourceBundle msgDef) {
-		messageDef = msgDef;
+	public static List<ResourceBundle> setMessageDef(ResourceBundle... msgDef) {
+		messageDef = Arrays.asList(msgDef);
+		return messageDef;
+	}
+
+	/**
+	 * ログ文言定義を設定する。
+	 * 
+	 * @param msgDef
+	 *            ログ文言定義。
+	 * @return ログ文言定義 (現在の定義を返却する)。
+	 */
+	public static List<ResourceBundle> addMessageDef(ResourceBundle... msgDef) {
+		if (messageDef == null) {
+			messageDef = new ArrayList<>();
+		}
+		messageDef.addAll(Arrays.asList(msgDef));
 		return messageDef;
 	}
 
@@ -210,8 +229,15 @@ public class Log {
 	 * @return ログ文言。
 	 */
 	private String createMessage(ILogId id, Object... args) {
-		String msg = messageDef.getString(id.getId());
-		return MessageFormat.format(msg, args);
+		for (ResourceBundle msgDef : messageDef) {
+			try {
+				String msg = msgDef.getString(id.getId());
+				return MessageFormat.format(msg, args);
+			} catch (MissingResourceException ex) {
+				// IGNORE
+			}
+		}
+		return "";
 	}
 
 }
