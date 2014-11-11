@@ -42,7 +42,7 @@
 	</servlet-mapping>
 	<filter>
 		<filter-name>mdcFilter</filter-name>
-		<filter-class>ch.qos.logback.classic.helpers.MDCInsertingServletFilter</filter-class>
+		<filter-class>cherry.spring.fwcore.log.filter.MDCInsertingServletFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>mdcFilter</filter-name>
