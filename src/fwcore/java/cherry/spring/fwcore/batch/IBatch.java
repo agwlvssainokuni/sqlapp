@@ -16,8 +16,18 @@
 
 package cherry.spring.fwcore.batch;
 
+/**
+ * バッチプログラムが実装すべきインタフェースを規定する。
+ */
 public interface IBatch {
 
+	/**
+	 * バッチプログラムの処理本体。
+	 * 
+	 * @param args
+	 *            起動時にコマンドラインに指定された引数。
+	 * @return バッチプログラムの終了ステータス。
+	 */
 	ExitStatus execute(String... args);
 
 }

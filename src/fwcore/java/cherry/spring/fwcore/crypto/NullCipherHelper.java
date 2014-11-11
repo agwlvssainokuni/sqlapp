@@ -16,6 +16,9 @@
 
 package cherry.spring.fwcore.crypto;
 
+/**
+ * 暗号化/復号化のインタフェースで、実際は暗号化/復号化しない機能を提供する。
+ */
 public class NullCipherHelper implements CipherHelper {
 
 	@Override

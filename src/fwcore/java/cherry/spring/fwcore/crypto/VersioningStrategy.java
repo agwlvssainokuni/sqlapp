@@ -19,27 +19,78 @@ package cherry.spring.fwcore.crypto;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+/**
+ * データの版管理の方式を規定するインタフェースを定義する。<br />
+ * 下記の2つのメソッドを規定する。
+ * <ul>
+ * <li>素データに版情報を付加したデータを生成する ({@link #encode})</li>
+ * <li>データから版情報と素データを分離する ({@link #decode})</li>
+ * </ul>
+ *
+ * @param <T>
+ *            データの型。
+ * @param <V>
+ *            版情報の型。
+ */
 public interface VersioningStrategy<T, V> {
 
+	/**
+	 * 素データに版情報を付加したデータを生成する。
+	 * 
+	 * @param data
+	 *            素データ。
+	 * @param version
+	 *            版情報。
+	 * @return 版情報を付加したデータ。
+	 */
 	T encode(T data, V version);
 
+	/**
+	 * データから版情報と素データを分離する。
+	 * 
+	 * @param encoded
+	 *            版情報を付加したデータ。
+	 * @return 分離したデータ (版情報と素データを保持する)。
+	 */
 	VersionedData<T, V> decode(T encoded);
 
+	/**
+	 * 分離された版情報と素データを保持する。
+	 *
+	 * @param <T>
+	 *            データの型。
+	 * @param <V>
+	 *            版情報の型。
+	 */
 	public static class VersionedData<T, V> {
 
+		/** 素データを保持する。 */
 		private T data;
 
+		/** 版情報を保持する。 */
 		private V version;
 
+		/**
+		 * @param data
+		 *            素データ。
+		 * @param version
+		 *            版情報。
+		 */
 		public VersionedData(T data, V version) {
 			this.data = data;
 			this.version = version;
 		}
 
+		/**
+		 * @return 素データ。
+		 */
 		public T getData() {
 			return data;
 		}
 
+		/**
+		 * @return 版情報。
+		 */
 		public V getVersion() {
 			return version;
 		}

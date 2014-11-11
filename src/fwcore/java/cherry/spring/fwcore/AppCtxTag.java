@@ -18,16 +18,45 @@ package cherry.spring.fwcore;
 
 import static cherry.spring.fwcore.AppCtxHolder.getAppCtx;
 
+import org.springframework.context.ApplicationContext;
+
+/**
+ * アプリケーションコンテキスト ({@link ApplicationContext}) が管理するBeanを取出す機能を提供する。<br />
+ * 特に、JSPカスタムタグ (関数) として使用することを想定する。
+ */
 public class AppCtxTag {
 
+	/**
+	 * 名前とクラスを指定してBeanを取出す。
+	 * 
+	 * @param name
+	 *            Beanの名前。
+	 * @param requiredType
+	 *            Beanのクラス。
+	 * @return 名前とクラスから特定されるBean。
+	 */
 	public static <T> T getBean(String name, Class<T> requiredType) {
 		return getAppCtx().getBean(name, requiredType);
 	}
 
+	/**
+	 * 名前を指定してBeanを取出す。
+	 * 
+	 * @param name
+	 *            Beanの名前。
+	 * @return 名前から特定されるBean。
+	 */
 	public static Object getBeanByName(String name) {
 		return getAppCtx().getBean(name);
 	}
 
+	/**
+	 * クラスを指定してBeanを取出す。
+	 * 
+	 * @param requiredType
+	 *            Beanのクラス。
+	 * @return クラスから特定されるBean。
+	 */
 	public static <T> T getBeanByClass(Class<T> requiredType) {
 		return getAppCtx().getBean(requiredType);
 	}

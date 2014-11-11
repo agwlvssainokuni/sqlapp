@@ -16,6 +16,16 @@
 
 package cherry.spring.fwcore.batch;
 
+/**
+ * バッチプログラムの終了ステータスを表す。<br />
+ * 具体的には、下記の4種類を定義する。
+ * <ul>
+ * <li>正常終了 ({@link #NORMAL})</li>
+ * <li>警告終了 ({@link #WARN})</li>
+ * <li>異常終了 ({@link #ERROR})</li>
+ * <li>致命的異常 ({@link #FATAL})</li>
+ * </ul>
+ */
 public enum ExitStatus {
 	/** 正常終了 (0) */
 	NORMAL(0),
@@ -26,12 +36,22 @@ public enum ExitStatus {
 	/** 致命的異常 (150) */
 	FATAL(150);
 
+	/** 終了コード値を保持する。 */
 	private final int code;
 
+	/**
+	 * 終了ステータスを生成する。
+	 * 
+	 * @param code
+	 *            終了コード。
+	 */
 	private ExitStatus(int code) {
 		this.code = code;
 	}
 
+	/**
+	 * @return 終了コード値。
+	 */
 	public int getCode() {
 		return code;
 	}

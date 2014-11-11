@@ -22,11 +22,36 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 
+/**
+ * 公開鍵暗号の鍵を読込む機能のインタフェースを規定する。
+ */
 public interface KeyLoader {
 
+	/**
+	 * 公開鍵を読込む。
+	 * 
+	 * @param in
+	 *            読込み元。
+	 * @return 公開鍵。
+	 * @throws IOException
+	 *             読込みで異常が発生したことを表す。
+	 * @throws InvalidKeySpecException
+	 *             読込んだ鍵データの形式が正しくないことを表す。
+	 */
 	PublicKey loadPublicKey(InputStream in) throws IOException,
 			InvalidKeySpecException;
 
+	/**
+	 * 秘密鍵を読込む。
+	 * 
+	 * @param in
+	 *            読込み元。
+	 * @return 秘密鍵。
+	 * @throws IOException
+	 *             読込みで異常が発生したことを表す。
+	 * @throws InvalidKeySpecException
+	 *             読込んだ鍵データの形式が正しくないことを表す。
+	 */
 	PrivateKey loadPrivateKey(InputStream in) throws IOException,
 			InvalidKeySpecException;
 

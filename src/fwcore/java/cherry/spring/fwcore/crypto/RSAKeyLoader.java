@@ -27,10 +27,20 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
+/**
+ * RSA公開鍵暗号方式の鍵 (公開鍵と秘密鍵) を読込む機能を提供する。
+ */
 public class RSAKeyLoader implements KeyLoader {
 
+	/** 鍵インスタンスを生成するためのファクトリを保持する。 */
 	private final KeyFactory keyFactory;
 
+	/**
+	 * 鍵を読込む機能を作成する。
+	 * 
+	 * @throws NoSuchAlgorithmException
+	 *             RSA公開鍵暗号方式がサポートされていないことを表す。
+	 */
 	public RSAKeyLoader() throws NoSuchAlgorithmException {
 		keyFactory = KeyFactory.getInstance("RSA");
 	}

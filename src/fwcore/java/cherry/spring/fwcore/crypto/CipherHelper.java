@@ -16,10 +16,27 @@
 
 package cherry.spring.fwcore.crypto;
 
+/**
+ * 暗号化/復号化の機能のインタフェースを規定する。
+ */
 public interface CipherHelper {
 
+	/**
+	 * 暗号化する。
+	 * 
+	 * @param in
+	 *            平文。
+	 * @return 暗号文。
+	 */
 	byte[] encrypt(byte[] in);
 
+	/**
+	 * 復号化する。
+	 * 
+	 * @param in
+	 *            暗号文。
+	 * @return 平文。
+	 */
 	byte[] decrypt(byte[] in);
 
 }

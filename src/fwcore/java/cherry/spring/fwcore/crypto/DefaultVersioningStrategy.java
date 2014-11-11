@@ -22,6 +22,10 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+/**
+ * データの版管理の機能を提供する。<br />
+ * 素データはバイト列、版情報は整数とする。版管理の方式は、版情報 (4バイト) を素データの先頭に付加する形式をとる。
+ */
 public class DefaultVersioningStrategy implements
 		VersioningStrategy<byte[], Integer> {
 

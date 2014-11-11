@@ -30,18 +30,27 @@ import javax.crypto.NoSuchPaddingException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.io.Resource;
 
+/**
+ * RSA暗号アルゴリズムによる暗号化/復号化の機能を提供する。
+ */
 public class RSACipherHelper implements CipherHelper, InitializingBean {
 
+	/** RSA暗号アルゴリズムを使用するためのアルゴリズム名を保持する。 */
 	private String algorithm = "RSA/ECB/PKCS1Padding";
 
+	/** RSA暗号アルゴリズムで使用する公開鍵が定義されたファイルのパスを保持する。 */
 	private Resource publicKey;
 
+	/** RSA暗号アルゴリズムで使用する秘密鍵が定義されたファイルのパスを保持する。 */
 	private Resource privateKey;
 
+	/** 鍵を読込む機能を保持する。 */
 	private KeyLoader keyLoader;
 
+	/** RSA暗号アルゴリズムで使用する公開鍵を保持する。 */
 	private PublicKey pubKey;
 
+	/** RSA暗号アルゴリズムで使用する秘密鍵を保持する。 */
 	private PrivateKey privKey;
 
 	public void setAlgorithm(String algorithm) {
@@ -60,6 +69,10 @@ public class RSACipherHelper implements CipherHelper, InitializingBean {
 		this.keyLoader = keyLoader;
 	}
 
+	/**
+	 * RSA暗号アルゴリズムによる暗号化/復号化の機能を初期化する。<br />
+	 * 具体的には、ファイルのパスとして指定された公開鍵と秘密鍵を、ファイルから読込み、復号化し、JCE APIで使用する形式で保持する。
+	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		try (InputStream in = publicKey.getInputStream()) {

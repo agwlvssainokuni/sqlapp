@@ -29,19 +29,37 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import cherry.spring.fwcore.batch.ExitStatus;
 import cherry.spring.fwcore.batch.IBatch;
 
+/**
+ * バッチプログラムを起動する機能を提供する。
+ */
 public class Launcher {
 
+	/** アプリケーションコンテキスト定義ファイルのパス。 */
 	public static final String APPCTX = "classpath:config/applicationContext.xml";
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 
+	/** 起動すべきバッチプログラムの識別名を保持する。 */
 	private String batchId;
 
+	/**
+	 * バッチプログラム起動機能を生成する。
+	 * 
+	 * @param batchId
+	 *            起動すべきバッチプログラムの識別名。
+	 */
 	public Launcher(String batchId) {
 		this.batchId = batchId;
 		MDC.put("batchId", batchId);
 	}
 
+	/**
+	 * バッチプログラムを起動する。
+	 * 
+	 * @param args
+	 *            起動時にコマンドラインに指定された引数。
+	 * @return バッチプログラムの終了ステータス。
+	 */
 	public ExitStatus launch(String... args) {
 		Msg msg = new Msg();
 		try {
@@ -85,22 +103,53 @@ public class Launcher {
 		}
 	}
 
+	/**
+	 * バッチプログラムの実装本体を取出す。
+	 * 
+	 * @param id
+	 *            バッチプログラムの識別名。
+	 * @return バッチプログラムの実装本体。
+	 */
 	private IBatch getBatch(String id) {
 		@SuppressWarnings("resource")
 		ApplicationContext appCtx = new ClassPathXmlApplicationContext(APPCTX);
 		return appCtx.getBean(id, IBatch.class);
 	}
 
+	/**
+	 * バッチプログラムを起動する際に出力するログの文言を解決する機能を提供する。
+	 */
 	private class Msg {
 
+		/** 文言定義を保持する。 */
 		private MessageSource msgSrc = createMessageSource();
 
+		/**
+		 * ログの文言を解決する。
+		 * 
+		 * @param code
+		 *            ログの文言の識別名。
+		 * @param batchId
+		 *            バッチプログラムの識別名。
+		 * @return ログの文言。
+		 */
 		public String resolve(String code, String batchId) {
 			MessageSourceResolvable name = getResolvable(batchId);
 			MessageSourceResolvable msg = getResolvable(code, name);
 			return msgSrc.getMessage(msg, null);
 		}
 
+		/**
+		 * ログの文言を解決する。
+		 * 
+		 * @param code
+		 *            ログの文言の識別名。
+		 * @param batchId
+		 *            バッチプログラムの識別名。
+		 * @param status
+		 *            終了ステータス。
+		 * @return ログの文言。
+		 */
 		public String resolve(String code, String batchId, ExitStatus status) {
 			MessageSourceResolvable name = getResolvable(batchId, batchId);
 			MessageSourceResolvable msg = getResolvable(code, name,
@@ -108,12 +157,26 @@ public class Launcher {
 			return msgSrc.getMessage(msg, null);
 		}
 
+		/**
+		 * 文言を解決するためのデータ構造 ({@link MessageSourceResolvable}) を生成する。
+		 * 
+		 * @param code
+		 *            文言の識別名。
+		 * @param args
+		 *            文言に埋込むデータ。
+		 * @return 文言。
+		 */
 		private MessageSourceResolvable getResolvable(String code,
 				Object... args) {
 			return new DefaultMessageSourceResolvable(new String[] { code },
 					args);
 		}
 
+		/**
+		 * 文言定義を生成する。
+		 * 
+		 * @return 文言定義。
+		 */
 		private MessageSource createMessageSource() {
 			ResourceBundleMessageSource msgSrc = new ResourceBundleMessageSource();
 			msgSrc.setBasenames("message/launcher", "message/batchId");

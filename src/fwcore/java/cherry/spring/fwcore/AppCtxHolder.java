@@ -20,15 +20,29 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+/**
+ * アプリケーションコンテキスト ({@link ApplicationContext}) を保持する。
+ */
 @Component
 public class AppCtxHolder implements ApplicationContextAware {
 
 	private static ApplicationContext appCtx;
 
+	/**
+	 * アプリケーションコンテキストを照会する。
+	 * 
+	 * @return アプリケーションコンテキスト。
+	 */
 	public static ApplicationContext getAppCtx() {
 		return appCtx;
 	}
 
+	/**
+	 * アプリケーションコンテキストの初期化時に当該アプリケーションコンテキストを保持する。
+	 * 
+	 * @param applicationContext
+	 *            アプリケーションコンテキスト。
+	 */
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) {
 		appCtx = applicationContext;

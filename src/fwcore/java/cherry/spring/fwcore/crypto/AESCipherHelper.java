@@ -35,20 +35,30 @@ import javax.crypto.spec.SecretKeySpec;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.io.Resource;
 
+/**
+ * AES暗号アルゴリズムによる暗号化/復号化の機能を提供する。
+ */
 public class AESCipherHelper implements CipherHelper, InitializingBean {
 
+	/** AES暗号アルゴリズムを使用するためのアルゴリズム名を保持する。 */
 	private String algorithm = "AES/CBC/PKCS5Padding";
 
+	/** AES暗号アルゴリズムを使用するための鍵アルゴリズム名を保持する。 */
 	private String keyAlgorithm = "AES";
 
+	/** AES暗号アルゴリズムで使用する共通鍵が定義されたファイルのパスを保持する。 */
 	private Resource secretKey;
 
+	/** AES暗号アルゴリズムで使用する初期化ベクタが定義されたファイルのパスを保持する。 */
 	private Resource initVector;
 
+	/** AES暗号アルゴリズムで使用する共通鍵、初期化ベクタを復号化する機能を保持する。 */
 	private CipherHelper keyCipherHelper = new NullCipherHelper();
 
+	/** AES暗号アルゴリズムで使用する共通鍵を保持する。 */
 	private Key secKey;
 
+	/** AES暗号アルゴリズムで使用する初期化ベクタを保持する。 */
 	private AlgorithmParameterSpec initVec;
 
 	public void setAlgorithm(String algorithm) {
@@ -71,6 +81,10 @@ public class AESCipherHelper implements CipherHelper, InitializingBean {
 		this.keyCipherHelper = keyCipherHelper;
 	}
 
+	/**
+	 * AES暗号アルゴリズムによる暗号化/復号化の機能を初期化する。<br />
+	 * 具体的には、ファイルのパスとして指定された共通鍵と初期化ベクタを、ファイルから読込み、復号化し、JCE APIで使用する形式で保持する。
+	 */
 	@Override
 	public void afterPropertiesSet() throws IOException {
 		byte[] keyBin = keyCipherHelper.decrypt(load(secretKey));
@@ -81,6 +95,15 @@ public class AESCipherHelper implements CipherHelper, InitializingBean {
 		}
 	}
 
+	/**
+	 * ファイルの中身をバイト列として取出す。
+	 * 
+	 * @param res
+	 *            ファイルを指定する{@link Resource}。
+	 * @return ファイルの中身のバイト列。
+	 * @throws IOException
+	 *             ファイルの読込みで異常が発生したことを表す。
+	 */
 	private byte[] load(Resource res) throws IOException {
 		try (ByteArrayOutputStream out = new ByteArrayOutputStream();
 				InputStream in = res.getInputStream()) {
