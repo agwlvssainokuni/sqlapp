@@ -9,12 +9,13 @@
 	<jms:annotation-driven />
 
 	<jee:jndi-lookup id="connectionFactory" jndi-name="${sqlapp.jms.connectionFactory}" />
+	<jee:jndi-lookup id="xaConnectionFactory" jndi-name="${sqlapp.jms.xaConnectionFactory}" />
 
 	<bean id="destinationResolver"
 		class="org.springframework.jms.support.destination.JndiDestinationResolver" />
 
 	<bean id="jmsOperations" class="org.springframework.jms.core.JmsTemplate">
-		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="connectionFactory" ref="xaConnectionFactory" />
 		<property name="destinationResolver" ref="destinationResolver" />
 	</bean>
 
