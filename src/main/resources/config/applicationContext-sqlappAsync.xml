@@ -18,14 +18,18 @@
 		<property name="destinationResolver" ref="destinationResolver" />
 	</bean>
 
+	<bean id="taskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="${sqlapp.taskExecutor.corePoolSize}" />
+		<property name="maxPoolSize" value="${sqlapp.taskExecutor.maxPoolSize}" />
+		<property name="waitForTasksToCompleteOnShutdown" value="true" />
+	</bean>
+
 	<bean id="jmsListenerContainerFactory"
 		class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
 		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="destinationResolver" ref="destinationResolver" />
-		<property name="taskExecutor">
-			<bean
-				class="org.springframework.scheduling.concurrent.DefaultManagedTaskExecutor" />
-		</property>
+		<property name="taskExecutor" ref="taskExecutor" />
 	</bean>
 
 </beans>
