@@ -137,6 +137,11 @@
 	<bean class="cherry.spring.fwcore.etl.ExtractorImpl" />
 	<bean class="cherry.spring.fwcore.etl.LoaderImpl" />
 
+	<bean class="cherry.goods.command.CommandLauncherImpl">
+		<property name="charset" value="${fwcore.command.charset}" />
+		<property name="redirectErrorStream" value="${fwcore.command.redirectErrorStream}" />
+	</bean>
+
 	<bean class="cherry.spring.fwcore.type.EnumUtil" factory-method="setMessageSource">
 		<constructor-arg ref="messageSource" />
 	</bean>

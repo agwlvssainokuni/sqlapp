@@ -9,8 +9,8 @@
 
 	<context:component-scan base-package="cherry.spring.common" />
 
-	<bean class="cherry.spring.common.helper.async.AsyncProcHelperImpl" />
-	<bean class="cherry.spring.common.helper.bizdate.BizdateHelperImpl" />
+	<bean class="cherry.spring.common.helper.async.AsyncStatusStoreImpl" />
+	<bean class="cherry.spring.common.helper.bizdate.BizDateTimeImpl" />
 	<bean class="cherry.spring.common.helper.mail.MailMessageHelperImpl" />
 	<bean class="cherry.spring.common.helper.signup.SignupRequestHelperImpl" />
 
