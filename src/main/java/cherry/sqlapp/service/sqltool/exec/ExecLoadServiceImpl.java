@@ -17,7 +17,6 @@
 package cherry.sqlapp.service.sqltool.exec;
 
 import static java.io.File.createTempFile;
-import static java.lang.Integer.parseInt;
 import static java.text.MessageFormat.format;
 
 import java.io.File;
@@ -51,9 +50,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import cherry.goods.log.Log;
 import cherry.goods.log.LogFactory;
-import cherry.goods.util.ToMapUtil;
-import cherry.spring.common.helper.async.AsyncProcHelper;
-import cherry.spring.common.helper.bizdate.BizdateHelper;
+import cherry.spring.fwcore.async.AsyncStatus;
+import cherry.spring.fwcore.async.AsyncStatusStore;
+import cherry.spring.fwcore.async.FileProcessResult;
+import cherry.spring.fwcore.bizdtm.BizDateTime;
 import cherry.spring.fwcore.etl.CsvProvider;
 import cherry.spring.fwcore.etl.LimiterException;
 import cherry.spring.fwcore.etl.LoadResult;
@@ -95,10 +95,10 @@ public class ExecLoadServiceImpl implements ExecLoadService {
 	private int stackTraceDepth;
 
 	@Autowired
-	private BizdateHelper bizdateHelper;
+	private BizDateTime bizDateTime;
 
 	@Autowired
-	private AsyncProcHelper asyncProcHelper;
+	private AsyncStatusStore asyncStatusStore;
 
 	@Autowired
 	private DataSourceDef dataSourceDef;
@@ -114,25 +114,25 @@ public class ExecLoadServiceImpl implements ExecLoadService {
 	public Map<String, String> launch(String databaseName, String sql,
 			MultipartFile file, String launcherId) {
 		String name = ExecLoadService.class.getSimpleName();
-		Integer procId = asyncProcHelper.createAsyncProc(name, launcherId,
-				bizdateHelper.now());
+		long asyncId = asyncStatusStore.createFileProcess(launcherId,
+				bizDateTime.now(), null, null, null, 0, name);
 		try {
 			File tempFile = createFile(file);
 
 			Map<String, String> message = new HashMap<>();
-			message.put(PROC_ID, procId.toString());
+			message.put(PROC_ID, String.valueOf(asyncId));
 			message.put(DATABASE_NAME, databaseName);
 			message.put(SQL, sql);
 			message.put(TEMP_FILE, tempFile.getAbsolutePath());
 			message.put(LAUNCHER_ID, launcherId);
 			jmsOperations.convertAndSend(queue, message);
 
-			asyncProcHelper.invokeAsyncProc(procId, bizdateHelper.now());
+			asyncStatusStore.updateToLaunched(asyncId, bizDateTime.now());
 
 			return message;
 		} catch (IOException ex) {
-			asyncProcHelper.errorAsyncProc(procId, bizdateHelper.now(),
-					ToMapUtil.fromThrowable(ex, stackTraceDepth));
+			asyncStatusStore
+					.finishWithException(asyncId, bizDateTime.now(), ex);
 			throw new IllegalStateException(ex);
 		}
 	}
@@ -141,25 +141,26 @@ public class ExecLoadServiceImpl implements ExecLoadService {
 	@Transactional
 	@Override
 	public void handle(Map<String, String> message) {
-		Integer procId = parseInt(message.get(PROC_ID));
+		long asyncId = Long.parseLong(message.get(PROC_ID));
 		String databaseName = message.get(DATABASE_NAME);
 		DataSource dataSource = dataSourceDef.getDataSource(databaseName);
 		String sql = message.get(SQL);
 		File tempFile = new File(message.get(TEMP_FILE));
 		try {
-			asyncProcHelper.startAsyncProc(procId, bizdateHelper.now());
+			asyncStatusStore.updateToProcessing(asyncId, bizDateTime.now());
 
 			LoadResult loadResult = loadFile(dataSource, sql, tempFile);
 
-			Map<String, Integer> map = new HashMap<>();
-			map.put("total", loadResult.getTotalCount());
-			map.put("success", loadResult.getSuccessCount());
-			map.put("failed", loadResult.getFailedCount());
-			asyncProcHelper.successAsyncProc(procId, bizdateHelper.now(), map);
+			FileProcessResult result = new FileProcessResult();
+			result.setTotalCount(loadResult.getTotalCount());
+			result.setOkCount(loadResult.getSuccessCount());
+			result.setNgCount(loadResult.getFailedCount());
+			asyncStatusStore.finishFileProcess(asyncId, bizDateTime.now(),
+					AsyncStatus.SUCCESS, result);
 
 		} catch (DataAccessException | LimiterException | IllegalStateException ex) {
-			asyncProcHelper.errorAsyncProc(procId, bizdateHelper.now(),
-					ToMapUtil.fromThrowable(ex, stackTraceDepth));
+			asyncStatusStore
+					.finishWithException(asyncId, bizDateTime.now(), ex);
 			throw ex;
 		} finally {
 			if (!tempFile.delete()) {

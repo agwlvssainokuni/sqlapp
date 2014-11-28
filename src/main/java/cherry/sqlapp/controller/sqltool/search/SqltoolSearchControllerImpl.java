@@ -33,7 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cherry.goods.paginate.PagedList;
 import cherry.goods.util.LocalDateTimeUtil;
-import cherry.spring.common.helper.bizdate.BizdateHelper;
+import cherry.spring.fwcore.bizdtm.BizDateTime;
 import cherry.sqlapp.controller.PathDef;
 import cherry.sqlapp.db.dto.SqltoolMetadata;
 import cherry.sqlapp.service.sqltool.metadata.MetadataCondition;
@@ -52,14 +52,14 @@ public class SqltoolSearchControllerImpl implements SqltoolSearchController {
 	private MetadataService metadataService;
 
 	@Autowired
-	private BizdateHelper bizdateHelper;
+	private BizDateTime bizDateTime;
 
 	@Autowired
 	private FormUtil formUtil;
 
 	@Override
 	public SqltoolSearchForm getForm() {
-		LocalDate today = bizdateHelper.today();
+		LocalDate today = bizDateTime.today();
 		SqltoolSearchForm form = new SqltoolSearchForm();
 
 		LocalDateTime from = LocalDateTimeUtil.rangeFrom(today

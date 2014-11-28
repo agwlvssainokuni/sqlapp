@@ -40,7 +40,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
 import cherry.goods.paginate.PageSet;
-import cherry.spring.common.helper.bizdate.BizdateHelper;
+import cherry.spring.fwcore.bizdtm.BizDateTime;
 import cherry.spring.fwcore.download.DownloadAction;
 import cherry.spring.fwcore.download.DownloadHelper;
 import cherry.spring.fwcore.etl.CsvConsumer;
@@ -84,7 +84,7 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 	private ClauseService clauseService;
 
 	@Autowired
-	private BizdateHelper bizdateHelper;
+	private BizDateTime bizDateTime;
 
 	@Autowired
 	private DownloadHelper downloadHelper;
@@ -192,7 +192,7 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 				}
 			};
 			downloadHelper.download(response, contentType, filename,
-					bizdateHelper.now(), action);
+					bizDateTime.now(), action);
 
 			return null;
 
