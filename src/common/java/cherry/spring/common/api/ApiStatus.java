@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.bizdate;
+package cherry.spring.common.api;
 
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
+public enum ApiStatus {
+	OK(0), WARN(1), ERROR(2);
 
-public interface BizdateHelper {
+	private int value;
 
-	LocalDate today();
+	private ApiStatus(int value) {
+		this.value = value;
+	}
 
-	LocalDateTime now();
+	public int getValue() {
+		return value;
+	}
 
 }

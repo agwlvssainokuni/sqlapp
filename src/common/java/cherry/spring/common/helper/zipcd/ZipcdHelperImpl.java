@@ -14,25 +14,28 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.bizdate;
+package cherry.spring.common.helper.zipcd;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.fwcore.sql.SqlLoader;
 import cherry.spring.fwcore.type.jdbc.RowMapperCreator;
 
-public class BizdateHelperImpl implements BizdateHelper, InitializingBean {
+@Service
+public class ZipcdHelperImpl implements ZipcdHelper, InitializingBean {
 
 	@Autowired
 	private NamedParameterJdbcOperations namedParameterJdbcOperations;
@@ -43,44 +46,29 @@ public class BizdateHelperImpl implements BizdateHelper, InitializingBean {
 	@Autowired
 	private SqlLoader sqlLoader;
 
-	private RowMapper<BizdateDto> rowMapper;
+	private RowMapper<ZipcdAddress> rowMapper;
 
-	private String findBizdate;
+	private String queryByZipcd;
 
-	public void setFindBizdate(String findBizdate) {
-		this.findBizdate = findBizdate;
+	public void setQueryByZipcd(String queryByZipcd) {
+		this.queryByZipcd = queryByZipcd;
 	}
 
 	@Override
 	public void afterPropertiesSet() throws IOException {
 		BeanWrapper bw = new BeanWrapperImpl(this);
 		bw.setPropertyValues(sqlLoader.load(getClass()));
-		rowMapper = rowMapperCreator.create(BizdateDto.class);
+		rowMapper = rowMapperCreator.create(ZipcdAddress.class);
 	}
 
+	@Transactional(readOnly = true)
+	@Cacheable("zipcd")
 	@Override
-	public LocalDate today() {
-		try {
-			BizdateDto dto = namedParameterJdbcOperations.queryForObject(
-					findBizdate, (Map<String, ?>) null, rowMapper);
-			return dto.getBizdate();
-		} catch (IncorrectResultSizeDataAccessException ex) {
-			return LocalDate.now();
-		}
-	}
-
-	@Override
-	public LocalDateTime now() {
-		try {
-			BizdateDto dto = namedParameterJdbcOperations.queryForObject(
-					findBizdate, (Map<String, ?>) null, rowMapper);
-			return dto.getCurrentDateTime().plusDays(dto.getOffsetDay())
-					.plusHours(dto.getOffsetHour())
-					.plusMinutes(dto.getOffsetMinute())
-					.plusSeconds(dto.getOffsetSecond());
-		} catch (IncorrectResultSizeDataAccessException ex) {
-			return LocalDateTime.now();
-		}
+	public List<ZipcdAddress> search(String zipcd) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("zipcd", zipcd);
+		return namedParameterJdbcOperations.query(queryByZipcd, paramMap,
+				rowMapper);
 	}
 
 }

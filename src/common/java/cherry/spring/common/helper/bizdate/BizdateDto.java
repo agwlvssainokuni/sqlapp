@@ -20,16 +20,11 @@ import java.io.Serializable;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 public class BizdateDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	private Integer id;
-
-	private LocalDate bizdate;
 
 	private Integer offsetDay;
 
@@ -45,22 +40,6 @@ public class BizdateDto implements Serializable {
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this,
 				ToStringStyle.SHORT_PREFIX_STYLE);
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public LocalDate getBizdate() {
-		return bizdate;
-	}
-
-	public void setBizdate(LocalDate bizdate) {
-		this.bizdate = bizdate;
 	}
 
 	public Integer getOffsetDay() {

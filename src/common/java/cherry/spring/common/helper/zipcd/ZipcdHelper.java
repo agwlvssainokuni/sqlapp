@@ -14,22 +14,12 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.async;
+package cherry.spring.common.helper.zipcd;
 
-import java.util.Map;
+import java.util.List;
 
-import org.joda.time.LocalDateTime;
+public interface ZipcdHelper {
 
-public interface AsyncProcHelper {
-
-	int createAsyncProc(String name, String launcherId, LocalDateTime dtm);
-
-	void invokeAsyncProc(int id, LocalDateTime dtm);
-
-	void startAsyncProc(int id, LocalDateTime dtm);
-
-	void successAsyncProc(int id, LocalDateTime dtm, Map<?, ?> result);
-
-	void errorAsyncProc(int id, LocalDateTime dtm, Map<?, ?> result);
+	List<ZipcdAddress> search(String zipcd);
 
 }
