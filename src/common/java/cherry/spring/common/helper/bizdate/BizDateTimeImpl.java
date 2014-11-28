@@ -24,8 +24,6 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import cherry.spring.fwcore.bizdtm.BizDateTime;
 import cherry.spring.fwcore.type.DeletedFlag;
@@ -49,7 +47,6 @@ public class BizDateTimeImpl implements BizDateTime, InitializingBean {
 		rowMapper = rowMapperCreator.create(BizdateDto.class);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public LocalDate today() {
 		QBizdatetimeMaster a = new QBizdatetimeMaster("a");
@@ -61,7 +58,6 @@ public class BizDateTimeImpl implements BizDateTime, InitializingBean {
 		return ldt;
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public LocalDateTime now() {
 		QBizdatetimeMaster a = new QBizdatetimeMaster("a");
