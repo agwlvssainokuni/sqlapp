@@ -59,11 +59,11 @@ public abstract class ${typeDef.className}Base implements Serializable {
 #end
 ################ サブ型
 #if ($prop.subtype == "範囲下限")
-	@cherry.spring.fwcore.type.format.CustomDateTimeFormat(cherry.spring.fwcore.type.format.CustomDateTimeFormat.Range.FROM)
+	@cherry.foundation.type.format.CustomDateTimeFormat(cherry.foundation.type.format.CustomDateTimeFormat.Range.FROM)
 #elseif ($prop.subtype == "範囲上限")
-	@cherry.spring.fwcore.type.format.CustomDateTimeFormat(cherry.spring.fwcore.type.format.CustomDateTimeFormat.Range.TO)
+	@cherry.foundation.type.format.CustomDateTimeFormat(cherry.foundation.type.format.CustomDateTimeFormat.Range.TO)
 #else
-	@cherry.spring.fwcore.type.format.CustomDateTimeFormat()
+	@cherry.foundation.type.format.CustomDateTimeFormat()
 #end
 ################ 変数宣言
 #if ($prop.type == "日付")
