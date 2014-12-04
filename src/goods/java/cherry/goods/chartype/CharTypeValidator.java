@@ -16,27 +16,38 @@
 
 package cherry.goods.chartype;
 
-import static cherry.goods.chartype.CharType.isAlpha;
-import static cherry.goods.chartype.CharType.isBasicLatin;
-import static cherry.goods.chartype.CharType.isFullAlpha;
-import static cherry.goods.chartype.CharType.isFullHiragana;
-import static cherry.goods.chartype.CharType.isFullKatakana;
-import static cherry.goods.chartype.CharType.isFullLower;
-import static cherry.goods.chartype.CharType.isFullNumeric;
-import static cherry.goods.chartype.CharType.isFullSpace;
-import static cherry.goods.chartype.CharType.isFullUpper;
-import static cherry.goods.chartype.CharType.isFullWidth;
-import static cherry.goods.chartype.CharType.isHalfKatakana;
-import static cherry.goods.chartype.CharType.isHalfWidth;
-import static cherry.goods.chartype.CharType.isLower;
-import static cherry.goods.chartype.CharType.isNumeric;
-import static cherry.goods.chartype.CharType.isSpace;
-import static cherry.goods.chartype.CharType.isUpper;
 import static java.lang.Character.codePointAt;
+import static java.lang.Character.isAlphabetic;
+import static java.lang.Character.isDigit;
 import static java.lang.Character.isLowSurrogate;
+import static java.lang.Character.isLowerCase;
+import static java.lang.Character.isUpperCase;
+import static java.lang.Character.isWhitespace;
+import static java.lang.Character.UnicodeBlock.of;
+
+import java.lang.Character.UnicodeBlock;
 
 /**
  * 文字列を構成する文字の種類を判別する機能を提供する。<br />
+ * 判別する種類は下記の通り。
+ * <ul>
+ * <li>半角文字(半角カナ含まず) ({@link #isBasicLatin(int)})</li>
+ * <li>半角文字(半角カナ含む) ({@link #isHalfWidth(int)})</li>
+ * <li>全角文字 ({@link #isFullWidth(int)})</li>
+ * <li>半角空白 ({@link #isSpace(int)})</li>
+ * <li>半角数字 ({@link #isNumeric(int)})</li>
+ * <li>半角英字 ({@link #isAlpha(int)})</li>
+ * <li>半角英字大文字 ({@link #isUpper(int)})</li>
+ * <li>半角英字小文字 ({@link #isLower(int)})</li>
+ * <li>全角空白 ({@link #isFullSpace(int)})</li>
+ * <li>全角数字 ({@link #isFullNumeric(int)})</li>
+ * <li>全角英字 ({@link #isFullAlpha(int)})</li>
+ * <li>全角英字大文字 ({@link #isFullUpper(int)})</li>
+ * <li>全角英字小文字 ({@link #isFullLower(int)})</li>
+ * <li>全角ひらがな ({@link #isFullHiragana(int)})</li>
+ * <li>全角カタカナ ({@link #isFullKatakana(int)})</li>
+ * <li>半角カタカナ ({@link #isHalfKatakana(int)})</li>
+ * </ul>
  */
 public class CharTypeValidator {
 
@@ -261,6 +272,208 @@ public class CharTypeValidator {
 			return new CharTypeResult(false, i, codePointAt(seq, i));
 		}
 		return new CharTypeResult();
+	}
+
+	/**
+	 * 文字種判別「半角文字(半角カナ含まず)」。
+	 * 
+	 * @param codePoint
+	 *            対象文字 (コードポイントで指定すること)。
+	 * @return 対象文字が「半角文字(半角カナ含まず)」であれば真(true)、さもなくば、偽(false)。
+	 */
+	public static boolean isBasicLatin(int codePoint) {
+		return of(codePoint) == UnicodeBlock.BASIC_LATIN;
+	}
+
+	/**
+	 * 文字種判別「半角文字(半角カナ含む)」。
+	 * 
+	 * @param codePoint
+	 *            対象文字 (コードポイントで指定すること)。
+	 * @return 対象文字が「半角文字(半角カナ含む)」であれば真(true)、さもなくば、偽(false)。
+	 */
+	public static boolean isHalfWidth(int codePoint) {
+		return isBasicLatin(codePoint) || isHalfKatakana(codePoint);
+	}
+
+	/**
+	 * 文字種判別「全角文字」。
+	 * 
+	 * @param codePoint
+	 *            対象文字 (コードポイントで指定すること)。
+	 * @return 対象文字が「全角文字」であれば真(true)、さもなくば、偽(false)。
+	 */
+	public static boolean isFullWidth(int codePoint) {
+		return !isHalfWidth(codePoint);
+	}
+
+	/**
+	 * 文字種判別「半角空白」。
+	 * 
+	 * @param codePoint
+	 *            対象文字 (コードポイントで指定すること)。
+	 * @return 対象文字が「半角空白」であれば真(true)、さもなくば、偽(false)。
+	 */
+	public static boolean isSpace(int codePoint) {
+		return of(codePoint) == UnicodeBlock.BASIC_LATIN
+				&& isWhitespace(codePoint);
+	}
+
+	/**
+	 * 文字種判別「半角数字」。
+	 * 
+	 * @param codePoint
+	 *            対象文字 (コードポイントで指定すること)。
+	 * @return 対象文字が「半角数字」であれば真(true)、さもなくば、偽(false)。
+	 */
+	public static boolean isNumeric(int codePoint) {
+		return of(codePoint) == UnicodeBlock.BASIC_LATIN && isDigit(codePoint);
+	}
+
+	/**
+	 * 文字種判別「半角英字」。
+	 * 
+	 * @param codePoint
+	 *            対象文字 (コードポイントで指定すること)。
+	 * @return 対象文字が「半角英字」であれば真(true)、さもなくば、偽(false)。
+	 */
+	public static boolean isAlpha(int codePoint) {
+		return of(codePoint) == UnicodeBlock.BASIC_LATIN
+				&& isAlphabetic(codePoint);
+	}
+
+	/**
+	 * 文字種判別「半角英字大文字」。
+	 * 
+	 * @param codePoint
+	 *            対象文字 (コードポイントで指定すること)。
+	 * @return 対象文字が「半角英字大文字」であれば真(true)、さもなくば、偽(false)。
+	 */
+	public static boolean isUpper(int codePoint) {
+		return of(codePoint) == UnicodeBlock.BASIC_LATIN
+				&& isUpperCase(codePoint);
+	}
+
+	/**
+	 * 文字種判別「半角英字小文字」。
+	 * 
+	 * @param codePoint
+	 *            対象文字 (コードポイントで指定すること)。
+	 * @return 対象文字が「半角英字小文字」であれば真(true)、さもなくば、偽(false)。
+	 */
+	public static boolean isLower(int codePoint) {
+		return of(codePoint) == UnicodeBlock.BASIC_LATIN
+				&& isLowerCase(codePoint);
+	}
+
+	/**
+	 * 文字種判別「全角空白」。
+	 * 
+	 * @param codePoint
+	 *            対象文字 (コードポイントで指定すること)。
+	 * @return 対象文字が「全角空白」であれば真(true)、さもなくば、偽(false)。
+	 */
+	public static boolean isFullSpace(int codePoint) {
+		return of(codePoint) != UnicodeBlock.BASIC_LATIN
+				&& isWhitespace(codePoint);
+	}
+
+	/**
+	 * 文字種判別「全角数字」。
+	 * 
+	 * @param codePoint
+	 *            対象文字 (コードポイントで指定すること)。
+	 * @return 対象文字が「全角数字」であれば真(true)、さもなくば、偽(false)。
+	 */
+	public static boolean isFullNumeric(int codePoint) {
+		return of(codePoint) == UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS
+				&& isDigit(codePoint);
+	}
+
+	/**
+	 * 文字種判別「全角英字」。
+	 * 
+	 * @param codePoint
+	 *            対象文字 (コードポイントで指定すること)。
+	 * @return 対象文字が「全角英字」であれば真(true)、さもなくば、偽(false)。
+	 */
+	public static boolean isFullAlpha(int codePoint) {
+		return of(codePoint) == UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS
+				&& isAlphabetic(codePoint) && !isHalfKatakana(codePoint);
+	}
+
+	/**
+	 * 文字種判別「全角英字大文字」。
+	 * 
+	 * @param codePoint
+	 *            対象文字 (コードポイントで指定すること)。
+	 * @return 対象文字が「全角英字大文字」であれば真(true)、さもなくば、偽(false)。
+	 */
+	public static boolean isFullUpper(int codePoint) {
+		return of(codePoint) == UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS
+				&& isUpperCase(codePoint) && !isHalfKatakana(codePoint);
+	}
+
+	/**
+	 * 文字種判別「全角英字小文字」。
+	 * 
+	 * @param codePoint
+	 *            対象文字 (コードポイントで指定すること)。
+	 * @return 対象文字が「全角英字小文字」であれば真(true)、さもなくば、偽(false)。
+	 */
+	public static boolean isFullLower(int codePoint) {
+		return of(codePoint) == UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS
+				&& isLowerCase(codePoint) && !isHalfKatakana(codePoint);
+	}
+
+	/**
+	 * 文字種判別「全角ひらがな」。
+	 * 
+	 * @param codePoint
+	 *            対象文字 (コードポイントで指定すること)。
+	 * @return 対象文字が「全角ひらがな」であれば真(true)、さもなくば、偽(false)。
+	 */
+	public static boolean isFullHiragana(int codePoint) {
+		// based on Unicode 3.2
+		return of(codePoint) == UnicodeBlock.HIRAGANA || // \u3040 - \u309F
+				// import from KATAKANA (\u30A0 - \u30FF)
+				codePoint == '\u30A0' || // '゠' from KATAKANA (not in Win31J)
+				codePoint == '\u30FB' || // '・' from KATAKANA
+				codePoint == '\u30FC' || // 'ー' from KATAKANA
+				// \u30FD 'ヽ' and \u30FE 'ヾ' if iteration mark for KATAKANA
+				codePoint == '\u30FF'; // 'ヿ' from KATAKANA (not in Win31J)
+	}
+
+	/**
+	 * 文字種判別「全角カタカナ」。
+	 * 
+	 * @param codePoint
+	 *            対象文字 (コードポイントで指定すること)。
+	 * @return 対象文字が「全角カタカナ」であれば真(true)、さもなくば、偽(false)。
+	 */
+	public static boolean isFullKatakana(int codePoint) {
+		// based on Unicode 3.2
+		return of(codePoint) == UnicodeBlock.KATAKANA || // \u30A0 - \u30FF
+				of(codePoint) == UnicodeBlock.KATAKANA_PHONETIC_EXTENSIONS || // \u31F0-\u31FF
+				// import from HIRAGANA (\u3040 - \u309F)
+				// \u3040, \u3097, \u3098 is reserved
+				codePoint == '\u3099' || // MARK from HIRAGANA (not in Win31J)
+				codePoint == '\u309A' || // MARK from HIRAGANA (not in Win31J)
+				codePoint == '\u309B' || // '゛' from HIRAGANA
+				codePoint == '\u309C' || // '゜' from HIRAGANA
+				// \u309D 'ゝ' and \u309E 'ゞ' is iteration mark for HIRAGANA
+				codePoint == '\u309F'; // 'ゟ' from HIRAGANA (not in Win31J)
+	}
+
+	/**
+	 * 文字種判別「半角カタカナ」。
+	 * 
+	 * @param codePoint
+	 *            対象文字 (コードポイントで指定すること)。
+	 * @return 対象文字が「半角カタカナ」であれば真(true)、さもなくば、偽(false)。
+	 */
+	public static boolean isHalfKatakana(int codePoint) {
+		return '\uFF61' <= codePoint && codePoint <= '\uFF9F';
 	}
 
 }

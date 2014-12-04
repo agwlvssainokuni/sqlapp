@@ -20,9 +20,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+
+import com.google.common.io.CharStreams;
 
 /**
  * コマンドを実行機能。<br />
@@ -61,36 +62,17 @@ public class CommandLauncherImpl implements CommandLauncher {
 		CommandResult result = new CommandResult();
 		Process proc = (new ProcessBuilder(command)).redirectErrorStream(
 				redirectErrorStream).start();
-		try (InputStream in = proc.getErrorStream()) {
-			result.setStderr(readStream(in));
+		try (InputStream in = proc.getErrorStream();
+				Reader r = new InputStreamReader(in, charset)) {
+			result.setStderr(CharStreams.toString(r));
 		}
-		try (InputStream in = proc.getInputStream()) {
-			result.setStdout(readStream(in));
+		try (InputStream in = proc.getInputStream();
+				Reader r = new InputStreamReader(in, charset)) {
+			result.setStdout(CharStreams.toString(r));
 		}
 		int exitValue = proc.waitFor();
 		result.setExitValue(exitValue);
 		return result;
-	}
-
-	/**
-	 * 標準出力、標準エラー出力に出力された文字列を取出す。
-	 * 
-	 * @param in
-	 *            標準出力、標準エラー出力のストリーム。
-	 * @return 出力された文字列。
-	 * @throws IOException
-	 *             ストリームの読出し不正。
-	 */
-	private String readStream(InputStream in) throws IOException {
-		try (Reader r = new InputStreamReader(in, charset);
-				StringWriter w = new StringWriter()) {
-			char[] buff = new char[8192];
-			int len;
-			while ((len = r.read(buff)) >= 0) {
-				w.write(buff, 0, len);
-			}
-			return w.toString();
-		}
 	}
 
 }

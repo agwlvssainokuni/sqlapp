@@ -38,7 +38,7 @@ public class SimpleSqlParser {
 	 * @throws IOException
 	 *             読込みエラー。
 	 */
-	public String nextStatement(Reader reader) throws IOException {
+	public static String nextStatement(Reader reader) throws IOException {
 
 		StringBuilder builder = new StringBuilder();
 
@@ -99,7 +99,7 @@ public class SimpleSqlParser {
 	 * @throws IOException
 	 *             読込みエラー。
 	 */
-	public String nextComment(Reader reader) throws IOException {
+	public static String nextComment(Reader reader) throws IOException {
 
 		StringBuilder builder = new StringBuilder();
 
