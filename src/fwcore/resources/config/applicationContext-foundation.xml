@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd">
+
+	<context:property-placeholder location="classpath:foundation.properties"
+		ignore-unresolvable="true" />
+
+	<context:component-scan base-package="cherry.foundation" />
+
+	<!-- トレース設定 -->
+	<aop:config>
+		<aop:advisor advice-ref="traceInterceptor"
+			pointcut="execution(* cherry..*.*(..))
+				and !execution(* cherry.foundation.log..*.*(..))
+				and !execution(* cherry.foundation.type..*.*(..))
+				and !execution(* cherry.foundation.crypto..*.*(..))
+				and !execution(* cherry.goods.crypto..*.*(..))
+				" />
+	</aop:config>
+	<bean id="traceInterceptor" class="cherry.foundation.log.trace.TraceInterceptor">
+		<property name="arrayLengthLimit" value="${foundation.trace.arrayLengthLimit}" />
+		<property name="objectLengthLimit" value="${foundation.trace.objectLengthLimit}" />
+		<property name="packagePrefix">
+			<list>
+				<value>cherry</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 型変換設定 -->
+	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="java.util.ResourceBundle"
+					value="org.springframework.beans.propertyeditors.ResourceBundleEditor" />
+				<entry key="org.joda.time.format.DateTimeFormatter"
+					value="cherry.foundation.type.editor.DateTimeFormatEditor" />
+			</map>
+		</property>
+	</bean>
+	<bean id="conversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="registerDefaultFormatters" value="false" />
+		<property name="formatters">
+			<set>
+				<bean
+					class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
+			</set>
+		</property>
+		<property name="formatterRegistrars">
+			<set>
+				<bean class="org.springframework.format.datetime.DateFormatterRegistrar" />
+				<bean class="cherry.foundation.type.format.DelegateFormatterRegistrar">
+					<property name="formatters">
+						<list>
+							<bean
+								class="org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar">
+								<property name="dateFormatter" value="${foundation.format.date}" />
+								<property name="timeFormatter" value="${foundation.format.time}" />
+								<property name="dateTimeFormatter" value="${foundation.format.datetime}" />
+							</bean>
+							<bean
+								class="cherry.foundation.type.format.CustomDateTimeFormatAnnotationFormatterFactory">
+								<property name="dateToPrint" value="${foundation.format.dateToPrint}" />
+								<property name="dateToParse" value="${foundation.format.dateToParse}" />
+								<property name="timeToPrint" value="${foundation.format.timeToPrint}" />
+								<property name="timeToParseHm" value="${foundation.format.timeToParseHm}" />
+								<property name="timeToParseS" value="${foundation.format.timeToParseS}" />
+								<property name="delimiterToPrint" value="${foundation.format.delimiterToPrint}" />
+								<property name="delimiterToParse" value="${foundation.format.delimiterToParse}" />
+							</bean>
+							<bean
+								class="cherry.foundation.type.converter.JodaTimeSqlConverterRegistrar" />
+							<bean
+								class="cherry.foundation.type.converter.SecureTypeSqlConverterRegistrar" />
+							<bean
+								class="cherry.foundation.type.converter.CodeSqlConverterRegistrar" />
+						</list>
+					</property>
+				</bean>
+			</set>
+		</property>
+	</bean>
+
+	<!-- 単項目バリデーション設定 -->
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
+	<!-- JSONマッピング設定 -->
+	<bean id="objectMapper"
+		class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+		<property name="modules">
+			<array>
+				<bean class="com.fasterxml.jackson.datatype.joda.JodaModule" />
+			</array>
+		</property>
+		<property name="featuresToDisable">
+			<array>
+				<util:constant
+					static-field="com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS" />
+			</array>
+		</property>
+	</bean>
+
+	<!-- アプリケーションコンテキスト照会設定 -->
+	<bean class="cherry.foundation.AppCtxHolder" />
+
+	<!-- メール送信設定 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${foundation.mail.host}" />
+		<property name="port" value="${foundation.mail.port}" />
+		<property name="protocol" value="${foundation.mail.protocol}" />
+		<property name="defaultEncoding" value="${foundation.mail.encoding}" />
+	</bean>
+
+	<!-- パスワードハッシュ設定 -->
+	<bean id="passwordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+	<!-- DBアクセス設定 -->
+	<bean id="namedParameterJdbcOperations"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
+	<bean id="queryDslJdbcOperations"
+		class="org.springframework.data.jdbc.query.QueryDslJdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
+	<bean id="rowMapperCreator"
+		class="cherry.foundation.type.jdbc.CustomBeanPropertyRowMapperCreator">
+		<property name="conversionService" ref="conversionService" />
+	</bean>
+	<bean id="sqlParameterSourceCreator"
+		class="cherry.foundation.type.jdbc.CustomBeanPropertySqlParameterSourceCreator" />
+
+	<bean id="sqlQueryHelper" class="cherry.foundation.querydsl.SQLQueryHelperImpl">
+		<property name="queryDslJdbcOperations" ref="queryDslJdbcOperations" />
+		<property name="paginator" ref="paginator" />
+	</bean>
+
+	<!-- ダウンロード設定 -->
+	<bean id="downloadOperation" class="cherry.foundation.download.DownloadTemplate">
+		<property name="headerName" value="${foundation.download.headerName}" />
+		<property name="headerValue" value="${foundation.download.headerValue}" />
+		<property name="formatter" value="${foundation.download.format}" />
+	</bean>
+
+	<!-- 多重POST検出機能設定 -->
+	<bean id="oneTimeTokenIssuer" class="cherry.foundation.onetimetoken.OneTimeTokenIssuerImpl">
+		<property name="name" value="${foundation.onetimetoken.name}" />
+	</bean>
+	<bean id="oneTimeTokenValidator"
+		class="cherry.foundation.onetimetoken.OneTimeTokenValidatorImpl">
+		<property name="name" value="${foundation.onetimetoken.name}" />
+	</bean>
+
+	<!-- DB処理補助機能設定 -->
+	<bean id="sqlExecutor" class="cherry.foundation.sql.SqlExecutorImpl">
+		<property name="charset" value="${foundation.sqlexecutor.charset}" />
+	</bean>
+	<bean id="sqlLoader" class="cherry.foundation.sql.SqlLoaderImpl">
+		<property name="charset" value="${foundation.sqlloader.charset}" />
+		<property name="extension" value="${foundation.sqlloader.extension}" />
+		<property name="namePattern" value="${foundation.sqlloader.namePattern}" />
+	</bean>
+
+	<bean id="extractor" class="cherry.foundation.etl.ExtractorImpl" />
+	<bean id="loader" class="cherry.foundation.etl.LoaderImpl" />
+
+	<!-- コマンド実行機能設定 -->
+	<bean id="commandLauncher" class="cherry.goods.command.CommandLauncherImpl">
+		<property name="charset" value="${foundation.command.charset}" />
+		<property name="redirectErrorStream" value="${foundation.command.redirectErrorStream}" />
+	</bean>
+
+	<!-- 暗号機能設定 -->
+	<bean id="rsaCrypto" class="cherry.foundation.crypto.RSACryptoSupport">
+		<property name="privateKeyResource" value="classpath:crypto/rsa/privkey.pk8" />
+		<property name="publicKeyResource" value="classpath:crypto/rsa/pubkey.der" />
+	</bean>
+	<bean id="aesCrypto" class="cherry.goods.crypto.VersionedCrypto">
+		<property name="defaultVersion" value="0" />
+		<property name="cryptoMap">
+			<map key-type="java.lang.Integer" value-type="cherry.goods.crypto.Crypto">
+				<entry key="0">
+					<bean class="cherry.foundation.crypto.AESCryptoSupport">
+						<property name="secretKeyResource" value="classpath:crypto/0/key.bin" />
+						<property name="initVectorResource" value="classpath:crypto/0/iv.bin" />
+						<property name="keyCrypto" ref="rsaCrypto" />
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<!-- 型関係機能設定 -->
+	<!-- 区分値 -->
+	<bean class="cherry.foundation.type.EnumUtil" factory-method="setMessageSource">
+		<constructor-arg ref="messageSource" />
+	</bean>
+	<bean class="cherry.foundation.type.CodeUtil" factory-method="setMessageSource">
+		<constructor-arg ref="messageSource" />
+	</bean>
+	<!-- 項目暗号化 -->
+	<bean class="cherry.foundation.type.SecureString" factory-method="setEncoder">
+		<constructor-arg>
+			<bean class="cherry.foundation.crypto.SecureStringEncoder">
+				<property name="charset" value="UTF-8" />
+				<property name="crypto" ref="aesCrypto" />
+			</bean>
+		</constructor-arg>
+	</bean>
+	<bean class="cherry.foundation.type.SecureInteger" factory-method="setEncoder">
+		<constructor-arg>
+			<bean class="cherry.foundation.crypto.SecureIntegerEncoder">
+				<property name="crypto" ref="aesCrypto" />
+			</bean>
+		</constructor-arg>
+	</bean>
+	<bean class="cherry.foundation.type.SecureLong" factory-method="setEncoder">
+		<constructor-arg>
+			<bean class="cherry.foundation.crypto.SecureLongEncoder">
+				<property name="crypto" ref="aesCrypto" />
+			</bean>
+		</constructor-arg>
+	</bean>
+	<bean class="cherry.foundation.type.SecureBigInteger"
+		factory-method="setEncoder">
+		<constructor-arg>
+			<bean class="cherry.foundation.crypto.SecureBigIntegerEncoder">
+				<property name="crypto" ref="aesCrypto" />
+			</bean>
+		</constructor-arg>
+	</bean>
+	<bean class="cherry.foundation.type.SecureBigDecimal"
+		factory-method="setEncoder">
+		<constructor-arg>
+			<bean class="cherry.foundation.crypto.SecureBigDecimalEncoder">
+				<property name="crypto" ref="aesCrypto" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+</beans>
