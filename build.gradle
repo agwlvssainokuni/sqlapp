@@ -124,7 +124,7 @@ compileTestJava.options.encoding = "UTF-8"
 sourceSets.main {
 	java {
 		srcDir "src/goods/java"
-		srcDir "src/fwcore/java"
+		srcDir "src/foundation/java"
 		srcDir "src/common/java"
 		srcDir "src/mybatis/java"
 		srcDir "src/querydsl/java"
@@ -132,8 +132,8 @@ sourceSets.main {
 	resources {
 		srcDir "src/main/java"
 		srcDir "src/goods/java"
-		srcDir "src/fwcore/java"
-		srcDir "src/fwcore/resources"
+		srcDir "src/foundation/java"
+		srcDir "src/foundation/resources"
 		srcDir "src/common/java"
 		srcDir "src/common/resources"
 		srcDir "src/mybatis/java"
@@ -195,7 +195,7 @@ task deliveryTar(type: Tar) { compression = Compression.GZIP }
 		into("conf") {
 			from(sourceSets.main.output.resourcesDir) {
 				include "*.properties"
-				["sqlapp", "fwcore", "common", "log"].each { exclude "${it}.properties" }
+				["sqlapp", "foundation", "common", "log"].each { exclude "${it}.properties" }
 				rename { "${it}.template" }
 			}
 		}
