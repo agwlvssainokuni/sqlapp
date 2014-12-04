@@ -27,11 +27,11 @@ import org.springframework.data.jdbc.query.SqlInsertCallback;
 import org.springframework.data.jdbc.query.SqlUpdateCallback;
 import org.springframework.transaction.annotation.Transactional;
 
+import cherry.foundation.async.AsyncStatus;
+import cherry.foundation.async.AsyncStatusStore;
+import cherry.foundation.async.FileProcessResult;
+import cherry.foundation.type.DeletedFlag;
 import cherry.goods.command.CommandResult;
-import cherry.spring.fwcore.async.AsyncStatus;
-import cherry.spring.fwcore.async.AsyncStatusStore;
-import cherry.spring.fwcore.async.FileProcessResult;
-import cherry.spring.fwcore.type.DeletedFlag;
 import cherry.sqlapp.db.gen.query.QAsyncProc;
 
 import com.mysema.query.sql.dml.SQLInsertClause;
@@ -46,7 +46,8 @@ public class AsyncStatusStoreImpl implements AsyncStatusStore {
 	@Override
 	public long createFileProcess(final String launcherId,
 			final LocalDateTime dtm, String name, String originalFilename,
-			String contentType, long size, final String handlerName) {
+			String contentType, long size, final String handlerName,
+			String... args) {
 		final QAsyncProc a = new QAsyncProc("a");
 		return queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
 			@Override

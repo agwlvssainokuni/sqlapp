@@ -33,7 +33,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.spring.fwcore.sql.SqlLoader;
+import cherry.foundation.sql.SqlLoader;
 
 public class SignupRequestHelperImpl implements SignupRequestHelper,
 		InitializingBean {

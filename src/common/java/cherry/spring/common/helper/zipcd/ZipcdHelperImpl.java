@@ -31,8 +31,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.spring.fwcore.sql.SqlLoader;
-import cherry.spring.fwcore.type.jdbc.RowMapperCreator;
+import cherry.foundation.sql.SqlLoader;
+import cherry.foundation.type.jdbc.RowMapperCreator;
 
 @Service
 public class ZipcdHelperImpl implements ZipcdHelper, InitializingBean {

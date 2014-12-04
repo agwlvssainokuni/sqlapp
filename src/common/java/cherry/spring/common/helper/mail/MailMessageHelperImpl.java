@@ -34,8 +34,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.transaction.annotation.Transactional;
 
-import cherry.spring.fwcore.sql.SqlLoader;
-import cherry.spring.fwcore.type.jdbc.RowMapperCreator;
+import cherry.foundation.sql.SqlLoader;
+import cherry.foundation.type.jdbc.RowMapperCreator;
 
 public class MailMessageHelperImpl implements MailMessageHelper,
 		InitializingBean {
