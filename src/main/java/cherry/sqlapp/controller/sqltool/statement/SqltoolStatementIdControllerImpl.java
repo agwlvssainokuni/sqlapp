@@ -25,7 +25,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Map;
 
@@ -69,7 +68,8 @@ public class SqltoolStatementIdControllerImpl implements
 	@Value("${sqlapp.app.export.contentType}")
 	private String contentType;
 
-	private Charset charset = StandardCharsets.UTF_8;
+	@Value("${sqlapp.app.export.charset}")
+	private Charset charset;
 
 	@Value("${sqlapp.app.export.filename}")
 	private String filename;
