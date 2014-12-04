@@ -112,38 +112,38 @@ public abstract class ${typeDef.className}Base implements Serializable {
 #end
 #end
 #if ($prop.minlen)
-	@cherry.spring.fwcore.validator.MinLength($prop.minlen)
+	@cherry.foundation.validator.MinLength($prop.minlen)
 #end
 #if ($prop.maxlen)
-	@cherry.spring.fwcore.validator.MaxLength($prop.maxlen)
+	@cherry.foundation.validator.MaxLength($prop.maxlen)
 #end
 ################ サブ型
 #if ($prop.subtype == "メール")
 	@org.hibernate.validator.constraints.Email
 #elseif ($prop.subtype == "半角")
-	@cherry.spring.fwcore.validator.CharTypeBasicLatin
+	@cherry.foundation.validator.CharTypeBasicLatin
 #elseif ($prop.subtype == "半角(カナ含む)")
-	@cherry.spring.fwcore.validator.CharTypeHalfWidth
+	@cherry.foundation.validator.CharTypeHalfWidth
 #elseif ($prop.subtype == "半角数字")
-	@cherry.spring.fwcore.validator.CharTypeNumeric
+	@cherry.foundation.validator.CharTypeNumeric
 #elseif ($prop.subtype == "半角英字")
-	@cherry.spring.fwcore.validator.CharTypeAlpha
+	@cherry.foundation.validator.CharTypeAlpha
 #elseif ($prop.subtype == "半角英数字")
-	@cherry.spring.fwcore.validator.CharTypeAlphaNumeric
+	@cherry.foundation.validator.CharTypeAlphaNumeric
 #elseif ($prop.subtype == "半角カナ")
-	@cherry.spring.fwcore.validator.CharTypeHalfKatakana
+	@cherry.foundation.validator.CharTypeHalfKatakana
 #elseif ($prop.subtype == "全角")
-	@cherry.spring.fwcore.validator.CharTypeFullWidth
+	@cherry.foundation.validator.CharTypeFullWidth
 #elseif ($prop.subtype == "全角数字")
-	@cherry.spring.fwcore.validator.CharTypeFullNumeric
+	@cherry.foundation.validator.CharTypeFullNumeric
 #elseif ($prop.subtype == "全角英字")
-	@cherry.spring.fwcore.validator.CharTypeFullAlpha
+	@cherry.foundation.validator.CharTypeFullAlpha
 #elseif ($prop.subtype == "全角英数字")
-	@cherry.spring.fwcore.validator.CharTypeFullAlphaNumeric
+	@cherry.foundation.validator.CharTypeFullAlphaNumeric
 #elseif ($prop.subtype == "全角ひらがな")
-	@cherry.spring.fwcore.validator.CharTypeFullHiragana
+	@cherry.foundation.validator.CharTypeFullHiragana
 #elseif ($prop.subtype == "全角カタカナ")
-	@cherry.spring.fwcore.validator.CharTypeFullKatakana
+	@cherry.foundation.validator.CharTypeFullKatakana
 #else
 #end
 ################ 変数宣言
