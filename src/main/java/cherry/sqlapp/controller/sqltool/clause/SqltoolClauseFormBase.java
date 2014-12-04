@@ -35,26 +35,26 @@ public abstract class SqltoolClauseFormBase implements Serializable {
 	private String databaseName;
 
 	@org.hibernate.validator.constraints.NotEmpty
-	@cherry.spring.fwcore.validator.MaxLength(500)
+	@cherry.foundation.validator.MaxLength(500)
 	private String select;
 
 	@org.hibernate.validator.constraints.NotEmpty
-	@cherry.spring.fwcore.validator.MaxLength(500)
+	@cherry.foundation.validator.MaxLength(500)
 	private String from;
 
-	@cherry.spring.fwcore.validator.MaxLength(500)
+	@cherry.foundation.validator.MaxLength(500)
 	private String where;
 
-	@cherry.spring.fwcore.validator.MaxLength(500)
+	@cherry.foundation.validator.MaxLength(500)
 	private String groupBy;
 
-	@cherry.spring.fwcore.validator.MaxLength(500)
+	@cherry.foundation.validator.MaxLength(500)
 	private String having;
 
-	@cherry.spring.fwcore.validator.MaxLength(500)
+	@cherry.foundation.validator.MaxLength(500)
 	private String orderBy;
 
-	@cherry.spring.fwcore.validator.MaxLength(5000)
+	@cherry.foundation.validator.MaxLength(5000)
 	private String paramMap;
 
 	private Integer lockVersion;

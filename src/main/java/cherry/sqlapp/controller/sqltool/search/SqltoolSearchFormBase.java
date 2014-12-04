@@ -31,19 +31,19 @@ public abstract class SqltoolSearchFormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@cherry.spring.fwcore.validator.MaxLength(50)
+	@cherry.foundation.validator.MaxLength(50)
 	private String name;
 
-	@cherry.spring.fwcore.type.format.CustomDateTimeFormat(cherry.spring.fwcore.type.format.CustomDateTimeFormat.Range.FROM)
+	@cherry.foundation.type.format.CustomDateTimeFormat(cherry.foundation.type.format.CustomDateTimeFormat.Range.FROM)
 	private org.joda.time.LocalDate registeredFromDt;
 
-	@cherry.spring.fwcore.type.format.CustomDateTimeFormat(cherry.spring.fwcore.type.format.CustomDateTimeFormat.Range.FROM)
+	@cherry.foundation.type.format.CustomDateTimeFormat(cherry.foundation.type.format.CustomDateTimeFormat.Range.FROM)
 	private org.joda.time.LocalTime registeredFromTm;
 
-	@cherry.spring.fwcore.type.format.CustomDateTimeFormat(cherry.spring.fwcore.type.format.CustomDateTimeFormat.Range.TO)
+	@cherry.foundation.type.format.CustomDateTimeFormat(cherry.foundation.type.format.CustomDateTimeFormat.Range.TO)
 	private org.joda.time.LocalDate registeredToDt;
 
-	@cherry.spring.fwcore.type.format.CustomDateTimeFormat(cherry.spring.fwcore.type.format.CustomDateTimeFormat.Range.TO)
+	@cherry.foundation.type.format.CustomDateTimeFormat(cherry.foundation.type.format.CustomDateTimeFormat.Range.TO)
 	private org.joda.time.LocalTime registeredToTm;
 
 	private java.util.List<cherry.sqlapp.controller.sqltool.search.SqlType> sqlType;
