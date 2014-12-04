@@ -9,7 +9,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="app" tagdir="/WEB-INF/tags"%>
-<%@ taglib prefix="fwcore" uri="urn:springapp:fwcore"%>
+<%@ taglib prefix="foundation" uri="urn:cherry:foundation"%>
 <c:set var="hasResultList"
 	value="${pagedList != null && !pagedList.list.isEmpty()}" />
 <h2 class="page-header">
@@ -66,7 +66,7 @@
 								code="sqltool/search/init.form.type" /></label>
 						<div class="col-sm-10">
 							<c:forEach var="item"
-								items="${fwcore:getLabeledEnumList('cherry.sqlapp.controller.sqltool.search.SqlType')}">
+								items="${foundation:getLabeledEnumList('cherry.sqlapp.controller.sqltool.search.SqlType')}">
 								<div class="checkbox-inline">
 									<f:checkbox path="sqlType" value="${item.enumName}"
 										label="${item.enumLabel}" />
@@ -79,7 +79,7 @@
 								code="sqltool/search/init.form.published" /></label>
 						<div class="col-sm-10">
 							<c:forEach var="item"
-								items="${fwcore:getLabeledEnumList('cherry.sqlapp.controller.sqltool.search.Published')}">
+								items="${foundation:getLabeledEnumList('cherry.sqlapp.controller.sqltool.search.Published')}">
 								<div class="checkbox-inline">
 									<f:checkbox path="published" value="${item.enumName}"
 										label="${item.enumLabel}" />

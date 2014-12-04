@@ -3,39 +3,39 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
 	version="2.1">
 
-	<description>SpringApp FwCore Tag Library</description>
-	<display-name>SpringApp FwCore Tag Library</display-name>
+	<description>SpringApp Foundation Tag Library</description>
+	<display-name>SpringApp Foundation Tag Library</display-name>
 	<tlib-version>1.0</tlib-version>
-	<short-name>fwcore</short-name>
-	<uri>urn:springapp:fwcore</uri>
+	<short-name>foundation</short-name>
+	<uri>urn:cherry:foundation</uri>
 
 	<function>
 		<description>Navigate</description>
 		<name>navigate</name>
-		<function-class>cherry.spring.fwcore.navi.NavigatorTag</function-class>
+		<function-class>cherry.foundation.navi.NavigatorTag</function-class>
 		<function-signature>java.util.List navigate(java.lang.String)</function-signature>
 	</function>
 
 	<function>
 		<description>OneTimeToken</description>
 		<name>onetimetoken</name>
-		<function-class>cherry.spring.fwcore.onetimetoken.OneTimeTokenTag</function-class>
+		<function-class>cherry.foundation.onetimetoken.OneTimeTokenTag</function-class>
 		<function-signature>
-			cherry.spring.fwcore.onetimetoken.OneTimeToken newToken(javax.servlet.http.HttpServletRequest)
+			cherry.foundation.onetimetoken.OneTimeToken newToken(javax.servlet.http.HttpServletRequest)
 		</function-signature>
 	</function>
 
 	<function>
 		<description>getLabeledEnumList</description>
 		<name>getLabeledEnumList</name>
-		<function-class>cherry.spring.fwcore.type.EnumUtil</function-class>
+		<function-class>cherry.foundation.type.EnumUtil</function-class>
 		<function-signature>java.util.List getLabeledEnumList(java.lang.String)</function-signature>
 	</function>
 
 	<function>
 		<description>getLabeledCodeList</description>
 		<name>getLabeledCodeList</name>
-		<function-class>cherry.spring.fwcore.type.CodeUtil</function-class>
+		<function-class>cherry.foundation.type.CodeUtil</function-class>
 		<function-signature>java.util.List getLabeledCodeList(java.lang.String)</function-signature>
 	</function>
 
