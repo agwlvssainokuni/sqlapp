@@ -25,7 +25,7 @@ import lombok.ToString;
 
 import org.joda.time.LocalDateTime;
 
-import cherry.spring.fwcore.type.FlagCode;
+import cherry.foundation.type.FlagCode;
 import cherry.sqlapp.code.SqlTypeCode;
 
 @Getter

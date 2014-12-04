@@ -16,7 +16,7 @@
 
 package cherry.sqlapp.controller.sqltool.load;
 
-import static cherry.spring.fwcore.mvc.Contract.shouldExist;
+import static cherry.foundation.springmvc.Contract.shouldExist;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.fromMethodCall;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
@@ -35,7 +35,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
-import cherry.spring.fwcore.type.FlagCode;
+import cherry.foundation.type.FlagCode;
 import cherry.sqlapp.controller.PathDef;
 import cherry.sqlapp.controller.sqltool.LogicErrorUtil;
 import cherry.sqlapp.controller.sqltool.MdFormUtil;

@@ -16,7 +16,7 @@
 
 package cherry.sqlapp.service.sqltool;
 
-import cherry.spring.fwcore.AppCtxTag;
+import cherry.foundation.AppCtxTag;
 
 public class DataSourceDefTag {
 

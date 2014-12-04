@@ -31,11 +31,11 @@ import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionOperations;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import cherry.foundation.etl.Consumer;
+import cherry.foundation.etl.Extractor;
+import cherry.foundation.etl.NoneLimiter;
 import cherry.goods.paginate.PageSet;
 import cherry.goods.paginate.Paginator;
-import cherry.spring.fwcore.etl.Consumer;
-import cherry.spring.fwcore.etl.Extractor;
-import cherry.spring.fwcore.etl.NoneLimiter;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
 
 public class ExecQueryServiceImpl implements ExecQueryService {

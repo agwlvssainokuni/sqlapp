@@ -16,7 +16,7 @@
 
 package cherry.sqlapp.code.type;
 
-import cherry.spring.fwcore.type.mybatis.EnumCodeStringTypeHandler;
+import cherry.foundation.type.mybatis.EnumCodeStringTypeHandler;
 import cherry.sqlapp.code.SqlTypeCode;
 
 public class SqlTypeCodeTypeHandler extends

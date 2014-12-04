@@ -33,9 +33,9 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import cherry.spring.fwcore.sql.SqlLoader;
-import cherry.spring.fwcore.type.jdbc.RowMapperCreator;
-import cherry.spring.fwcore.type.jdbc.SqlParameterSourceCreator;
+import cherry.foundation.sql.SqlLoader;
+import cherry.foundation.type.jdbc.RowMapperCreator;
+import cherry.foundation.type.jdbc.SqlParameterSourceCreator;
 import cherry.sqlapp.db.dto.SqltoolMetadata;
 
 @Setter

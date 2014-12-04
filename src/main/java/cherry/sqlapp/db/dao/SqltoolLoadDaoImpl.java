@@ -31,9 +31,9 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Component;
 
-import cherry.spring.fwcore.sql.SqlLoader;
-import cherry.spring.fwcore.type.jdbc.RowMapperCreator;
-import cherry.spring.fwcore.type.jdbc.SqlParameterSourceCreator;
+import cherry.foundation.sql.SqlLoader;
+import cherry.foundation.type.jdbc.RowMapperCreator;
+import cherry.foundation.type.jdbc.SqlParameterSourceCreator;
 import cherry.sqlapp.db.dto.SqltoolLoad;
 
 @Setter

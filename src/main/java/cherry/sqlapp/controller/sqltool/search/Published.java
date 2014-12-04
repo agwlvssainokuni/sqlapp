@@ -16,7 +16,7 @@
 
 package cherry.sqlapp.controller.sqltool.search;
 
-import cherry.spring.fwcore.type.FlagCode;
+import cherry.foundation.type.FlagCode;
 
 public enum Published {
 	//

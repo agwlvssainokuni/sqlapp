@@ -22,8 +22,8 @@ import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import cherry.spring.fwcore.etl.Column;
-import cherry.spring.fwcore.etl.Consumer;
+import cherry.foundation.etl.Column;
+import cherry.foundation.etl.Consumer;
 
 @Getter
 @EqualsAndHashCode(callSuper = false)

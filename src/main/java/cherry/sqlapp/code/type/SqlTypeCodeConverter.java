@@ -16,7 +16,7 @@
 
 package cherry.sqlapp.code.type;
 
-import cherry.spring.fwcore.type.converter.EnumCodeConverter;
+import cherry.foundation.type.converter.EnumCodeConverter;
 import cherry.sqlapp.code.SqlTypeCode;
 
 public class SqlTypeCodeConverter extends

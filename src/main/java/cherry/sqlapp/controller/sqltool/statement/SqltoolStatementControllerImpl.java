@@ -20,7 +20,11 @@ import static org.springframework.web.servlet.mvc.method.annotation.MvcUriCompon
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Map;
 
@@ -38,11 +42,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
+import cherry.foundation.bizdtm.BizDateTime;
+import cherry.foundation.download.DownloadAction;
+import cherry.foundation.download.DownloadOperation;
+import cherry.foundation.etl.CsvConsumer;
 import cherry.goods.paginate.PageSet;
-import cherry.spring.fwcore.bizdtm.BizDateTime;
-import cherry.spring.fwcore.download.DownloadAction;
-import cherry.spring.fwcore.download.DownloadHelper;
-import cherry.spring.fwcore.etl.CsvConsumer;
 import cherry.sqlapp.controller.PathDef;
 import cherry.sqlapp.controller.sqltool.LogicErrorUtil;
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
@@ -61,6 +65,8 @@ public class SqltoolStatementControllerImpl implements
 
 	@Value("${sqlapp.app.export.contentType}")
 	private String contentType;
+
+	private Charset charset = StandardCharsets.UTF_8;
 
 	@Value("${sqlapp.app.export.filename}")
 	private String filename;
@@ -81,7 +87,7 @@ public class SqltoolStatementControllerImpl implements
 	private BizDateTime bizDateTime;
 
 	@Autowired
-	private DownloadHelper downloadHelper;
+	private DownloadOperation downloadOperation;
 
 	@Autowired
 	private FormUtil formUtil;
@@ -170,15 +176,17 @@ public class SqltoolStatementControllerImpl implements
 
 			DownloadAction action = new DownloadAction() {
 				@Override
-				public long doDownload(Writer writer) throws IOException {
-					PageSet ps = execQueryService.query(form.getDatabaseName(),
-							form.getSql(), paramMap, new CsvConsumer(writer,
-									true));
-					return ps.getLast().getTo() + 1L;
+				public long doDownload(OutputStream out) throws IOException {
+					try (Writer writer = new OutputStreamWriter(out, charset)) {
+						PageSet ps = execQueryService.query(
+								form.getDatabaseName(), form.getSql(),
+								paramMap, new CsvConsumer(writer, true));
+						return ps.getLast().getTo() + 1L;
+					}
 				}
 			};
-			downloadHelper.download(response, contentType, filename,
-					bizDateTime.now(), action);
+			downloadOperation.download(response, contentType, charset,
+					filename, bizDateTime.now(), action);
 
 			return null;
 

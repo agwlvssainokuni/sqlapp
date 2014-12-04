@@ -18,8 +18,8 @@ package cherry.sqlapp.service.sqltool.exec;
 
 import java.util.Map;
 
+import cherry.foundation.etl.Consumer;
 import cherry.goods.paginate.PageSet;
-import cherry.spring.fwcore.etl.Consumer;
 
 public interface ExecQueryService {
 
