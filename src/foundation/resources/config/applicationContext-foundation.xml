@@ -162,12 +162,12 @@
 
 	<!-- DB処理補助機能設定 -->
 	<bean id="sqlExecutor" class="cherry.foundation.sql.SqlExecutorImpl">
-		<property name="charset" value="${foundation.sqlexecutor.charset}" />
+		<property name="charset" value="UTF-8" />
 	</bean>
 	<bean id="sqlLoader" class="cherry.foundation.sql.SqlLoaderImpl">
-		<property name="charset" value="${foundation.sqlloader.charset}" />
-		<property name="extension" value="${foundation.sqlloader.extension}" />
-		<property name="namePattern" value="${foundation.sqlloader.namePattern}" />
+		<property name="charset" value="UTF-8" />
+		<property name="extension" value=".sql" />
+		<property name="namePattern" value="NAME:\s*(\w+)" />
 	</bean>
 
 	<bean id="extractor" class="cherry.foundation.etl.ExtractorImpl" />
