@@ -9,7 +9,7 @@
 	<properties>
 		<versionH2db>1.4.181</versionH2db>
 		<versionMyBatisGenerator>1.3.2</versionMyBatisGenerator>
-		<versionQuerydsl>3.4.3</versionQuerydsl>
+		<versionQuerydsl>3.6.0</versionQuerydsl>
 	</properties>
 	<build>
 		<plugins>
