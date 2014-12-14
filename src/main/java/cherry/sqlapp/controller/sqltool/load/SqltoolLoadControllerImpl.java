@@ -20,7 +20,6 @@ import static org.springframework.web.servlet.mvc.method.annotation.MvcUriCompon
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,12 +33,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
+import cherry.foundation.async.AsyncProcessFacade;
 import cherry.sqlapp.controller.PathDef;
 import cherry.sqlapp.controller.sqltool.MdFormUtil;
 import cherry.sqlapp.db.dto.SqltoolLoad;
 import cherry.sqlapp.db.dto.SqltoolMetadata;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
-import cherry.sqlapp.service.sqltool.exec.ExecLoadService;
 import cherry.sqlapp.service.sqltool.metadata.MetadataService;
 import cherry.sqlapp.service.sqltool.query.LoadService;
 
@@ -52,7 +51,7 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 	private DataSourceDef dataSourceDef;
 
 	@Autowired
-	private ExecLoadService execLoadService;
+	private AsyncProcessFacade asyncProcessFacade;
 
 	@Autowired
 	private MetadataService metadataService;
@@ -99,11 +98,12 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 			return mav;
 		}
 
-		Map<String, String> asyncParam = execLoadService.launch(
-				form.getDatabaseName(), form.getSql(), form.getFile(),
-				auth.getName());
+		long asyncId = asyncProcessFacade.launchFileProcess(auth.getName(),
+				"SqltoolLoadController", form.getFile(),
+				"execLoadFileProcessHandler", form.getDatabaseName(),
+				form.getSql());
 
-		redirAttr.addFlashAttribute(ASYNC_PARAM, asyncParam);
+		redirAttr.addFlashAttribute(ASYNC_PARAM, asyncId);
 
 		UriComponents uc = fromMethodCall(
 				on(SqltoolLoadController.class).finish(auth, locale, sitePref,

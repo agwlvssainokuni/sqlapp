@@ -21,7 +21,6 @@ import static org.springframework.web.servlet.mvc.method.annotation.MvcUriCompon
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,6 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponents;
 
+import cherry.foundation.async.AsyncProcessFacade;
 import cherry.foundation.type.FlagCode;
 import cherry.sqlapp.controller.PathDef;
 import cherry.sqlapp.controller.sqltool.LogicErrorUtil;
@@ -43,7 +43,6 @@ import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 import cherry.sqlapp.db.dto.SqltoolLoad;
 import cherry.sqlapp.db.dto.SqltoolMetadata;
 import cherry.sqlapp.service.sqltool.DataSourceDef;
-import cherry.sqlapp.service.sqltool.exec.ExecLoadService;
 import cherry.sqlapp.service.sqltool.metadata.MetadataService;
 import cherry.sqlapp.service.sqltool.query.LoadService;
 
@@ -56,7 +55,7 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 	private DataSourceDef dataSourceDef;
 
 	@Autowired
-	private ExecLoadService execLoadService;
+	private AsyncProcessFacade asyncProcessFacade;
 
 	@Autowired
 	private MetadataService metadataService;
@@ -108,11 +107,12 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 			return mav;
 		}
 
-		Map<String, String> asyncParam = execLoadService.launch(
-				form.getDatabaseName(), form.getSql(), form.getFile(),
-				auth.getName());
+		long asyncId = asyncProcessFacade.launchFileProcess(auth.getName(),
+				"SqltoolLoadIdController", form.getFile(),
+				"execLoadFileProcessHandler", form.getDatabaseName(),
+				form.getSql());
 
-		redirAttr.addFlashAttribute(ASYNC_PARAM, asyncParam);
+		redirAttr.addFlashAttribute(ASYNC_PARAM, asyncId);
 
 		UriComponents uc = fromMethodCall(
 				on(SqltoolLoadIdController.class).finish(id, auth, locale,
