@@ -73,5 +73,20 @@
 		<table tableName="async_process_command_result">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
+		<table tableName="mail_log">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		<table tableName="mail_rcpt">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		<table tableName="mail_queue">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		<table tableName="mail_template">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		<table tableName="mail_template_address">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
 	</context>
 </generatorConfiguration>
