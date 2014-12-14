@@ -18,11 +18,11 @@
 		class="cherry.spring.common.foundation.impl.AsyncProcessStoreImpl" />
 	<bean id="mailFacade" class="cherry.foundation.mail.MailFacadeImpl">
 		<property name="bizDateTime" ref="bizDateTime" />
-		<property name="messageHandler" ref="messageHandler" />
-		<property name="mailHandler" ref="mailHandler" />
+		<property name="mailDataHandler" ref="mailDataHandler" />
+		<property name="mailSendHandler" ref="mailSendHandler" />
 	</bean>
 
-	<bean id="messageHandler" class="cherry.foundation.mail.MessageHandlerImpl">
+	<bean id="mailDataHandler" class="cherry.foundation.mail.MailDataHandlerImpl">
 		<property name="templateStore">
 			<bean class="cherry.spring.common.foundation.impl.TemplateStoreImpl" />
 		</property>
@@ -31,7 +31,7 @@
 				init-method="init" />
 		</property>
 	</bean>
-	<bean id="mailHandler" class="cherry.foundation.mail.MailHandlerImpl">
+	<bean id="mailSendHandler" class="cherry.foundation.mail.MailSendHandlerImpl">
 		<property name="bizDateTime" ref="bizDateTime" />
 		<property name="messageStore">
 			<bean class="cherry.spring.common.foundation.impl.MessageStoreImpl" />

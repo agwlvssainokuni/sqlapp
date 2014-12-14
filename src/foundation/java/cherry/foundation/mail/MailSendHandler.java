@@ -16,8 +16,22 @@
 
 package cherry.foundation.mail;
 
-public interface MessageHandler {
+import java.util.List;
 
-	Message createMessage(String templateName, String to, MailModel mailModel);
+import org.joda.time.LocalDateTime;
+
+public interface MailSendHandler {
+
+	long sendLater(String launcherId, String messageName, String from,
+			List<String> to, List<String> cc, List<String> bcc, String subject,
+			String body, LocalDateTime scheduledAt);
+
+	long sendNow(String launcherId, String messageName, String from,
+			List<String> to, List<String> cc, List<String> bcc, String subject,
+			String body);
+
+	List<Long> listMessage(LocalDateTime dtm);
+
+	boolean sendMessage(long messageId);
 
 }

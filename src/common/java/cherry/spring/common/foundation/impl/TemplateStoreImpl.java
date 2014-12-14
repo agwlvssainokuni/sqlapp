@@ -27,7 +27,7 @@ import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
 
-import cherry.foundation.mail.Template;
+import cherry.foundation.mail.MailData;
 import cherry.foundation.mail.TemplateStore;
 import cherry.foundation.type.DeletedFlag;
 import cherry.foundation.type.jdbc.RowMapperCreator;
@@ -45,7 +45,7 @@ public class TemplateStoreImpl implements TemplateStore {
 	private RowMapperCreator rowMapperCreator;
 
 	@Override
-	public Template getTemplate(String templateName) {
+	public MailData getTemplate(String templateName) {
 		QMailTemplate a = new QMailTemplate("a");
 		SQLQuery querya = queryDslJdbcOperations.newSqlQuery();
 		querya.from(a);
@@ -80,7 +80,7 @@ public class TemplateStoreImpl implements TemplateStore {
 			}
 		}
 
-		Template template = new Template();
+		MailData template = new MailData();
 		template.setFromAddr(templ.getFromAddr());
 		template.setToAddr(toAddr);
 		template.setCcAddr(bccAddr);

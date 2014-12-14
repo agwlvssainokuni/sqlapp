@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.bizdtm.BizDateTime;
 
-public class MailHandlerImpl implements MailHandler {
+public class MailSendHandlerImpl implements MailSendHandler {
 
 	private BizDateTime bizDateTime;
 

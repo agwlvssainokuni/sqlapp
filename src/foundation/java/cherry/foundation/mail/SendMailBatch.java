@@ -34,7 +34,7 @@ public class SendMailBatch implements IBatch {
 
 	private BizDateTime bizDateTime;
 
-	private MailHandler mailHandler;
+	private MailSendHandler mailSendHandler;
 
 	private long intervalMillis;
 
@@ -44,8 +44,8 @@ public class SendMailBatch implements IBatch {
 		this.bizDateTime = bizDateTime;
 	}
 
-	public void setMailHandler(MailHandler mailHandler) {
-		this.mailHandler = mailHandler;
+	public void setMailSendHandler(MailSendHandler mailSendHandler) {
+		this.mailSendHandler = mailSendHandler;
 	}
 
 	public void setIntervalMillis(long intervalMillis) {
@@ -69,8 +69,8 @@ public class SendMailBatch implements IBatch {
 	private void sendMail() {
 		try {
 			LocalDateTime now = bizDateTime.now();
-			for (long messageId : mailHandler.listMessage(now)) {
-				mailHandler.sendMessage(messageId);
+			for (long messageId : mailSendHandler.listMessage(now)) {
+				mailSendHandler.sendMessage(messageId);
 			}
 		} catch (MailException | DataAccessException ex) {
 			if (log.isDebugEnabled()) {

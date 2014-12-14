@@ -22,7 +22,7 @@ import java.util.List;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-public class Message implements Serializable {
+public class MailData implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

@@ -26,33 +26,33 @@ public class MailFacadeImpl implements MailFacade {
 
 	private BizDateTime bizDateTime;
 
-	private MessageHandler messageHandler;
+	private MailDataHandler mailDataHandler;
 
-	private MailHandler mailHandler;
+	private MailSendHandler mailSendHandler;
 
 	public void setBizDateTime(BizDateTime bizDateTime) {
 		this.bizDateTime = bizDateTime;
 	}
 
-	public void setMessageHandler(MessageHandler messageHandler) {
-		this.messageHandler = messageHandler;
+	public void setMailDataHandler(MailDataHandler mailDataHandler) {
+		this.mailDataHandler = mailDataHandler;
 	}
 
-	public void setMailHandler(MailHandler mailHandler) {
-		this.mailHandler = mailHandler;
+	public void setMailSendHandler(MailSendHandler mailSendHandler) {
+		this.mailSendHandler = mailSendHandler;
 	}
 
 	@Override
-	public Message createMessage(String templateName, String to,
+	public MailData createMailData(String templateName, String to,
 			MailModel mailModel) {
-		return messageHandler.createMessage(templateName, to, mailModel);
+		return mailDataHandler.createMailData(templateName, to, mailModel);
 	}
 
 	@Override
 	public long send(String launcherId, String messageName, String from,
 			List<String> to, List<String> cc, List<String> bcc, String subject,
 			String body) {
-		return mailHandler.sendLater(launcherId, messageName, from, to, cc,
+		return mailSendHandler.sendLater(launcherId, messageName, from, to, cc,
 				bcc, subject, body, bizDateTime.now());
 	}
 
@@ -60,7 +60,7 @@ public class MailFacadeImpl implements MailFacade {
 	public long sendLater(String launcherId, String messageName, String from,
 			List<String> to, List<String> cc, List<String> bcc, String subject,
 			String body, LocalDateTime scheduledAt) {
-		return mailHandler.sendLater(launcherId, messageName, from, to, cc,
+		return mailSendHandler.sendLater(launcherId, messageName, from, to, cc,
 				bcc, subject, body, scheduledAt);
 	}
 
@@ -68,8 +68,8 @@ public class MailFacadeImpl implements MailFacade {
 	public long sendNow(String launcherId, String messageName, String from,
 			List<String> to, List<String> cc, List<String> bcc, String subject,
 			String body) {
-		return mailHandler.sendNow(launcherId, messageName, from, to, cc, bcc,
-				subject, body);
+		return mailSendHandler.sendNow(launcherId, messageName, from, to, cc,
+				bcc, subject, body);
 	}
 
 }

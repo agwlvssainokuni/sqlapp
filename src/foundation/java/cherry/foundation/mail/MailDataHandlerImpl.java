@@ -25,7 +25,7 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.transaction.annotation.Transactional;
 
-public class MessageHandlerImpl implements MessageHandler {
+public class MailDataHandlerImpl implements MailDataHandler {
 
 	private TemplateStore templateStore;
 
@@ -41,10 +41,10 @@ public class MessageHandlerImpl implements MessageHandler {
 
 	@Transactional(readOnly = true)
 	@Override
-	public Message createMessage(String templateName, String to,
+	public MailData createMailData(String templateName, String to,
 			MailModel mailModel) {
 
-		Template template = templateStore.getTemplate(templateName);
+		MailData template = templateStore.getTemplate(templateName);
 
 		List<String> toAddr = new ArrayList<>();
 		toAddr.add(to);
@@ -52,7 +52,7 @@ public class MessageHandlerImpl implements MessageHandler {
 			toAddr.addAll(template.getToAddr());
 		}
 
-		Message message = new Message();
+		MailData message = new MailData();
 		message.setFromAddr(template.getFromAddr());
 		message.setToAddr(toAddr);
 		message.setCcAddr(template.getCcAddr());
