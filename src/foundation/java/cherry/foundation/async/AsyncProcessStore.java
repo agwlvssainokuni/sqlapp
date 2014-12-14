@@ -25,15 +25,17 @@ import cherry.goods.command.CommandResult;
  * 非同期実行フレームワーク。<br />
  * 非同期処理の実行状況の管理データをDB管理するためのインタフェース。
  */
-public interface AsyncStatusStore {
+public interface AsyncProcessStore {
 
 	/**
 	 * 非同期処理 (ファイル処理) の管理データを作成する。
-	 * 
+	 *
 	 * @param launcherId
 	 *            非同期処理の実行者のID。
 	 * @param dtm
 	 *            現在日時。
+	 * @param description
+	 *            内容表記。
 	 * @param name
 	 *            HTTPリクエストで受け渡された元のパラメタ名。{@link AsyncProcessFacade}呼出しで指定した
 	 *            {@link MultipartFile}の内容を受け取る。
@@ -50,29 +52,34 @@ public interface AsyncStatusStore {
 	 *            非同期のファイル処理の処理を実装したBeanの名前。同Beanは{@link FileProcessHandler}
 	 *            を実装しなければならない。
 	 * @param args
-	 *            追加パラメタ。
+	 *            引数。
 	 * @return 非同期実行状況の管理データのID。
 	 */
-	long createFileProcess(String launcherId, LocalDateTime dtm, String name,
-			String originalFilename, String contentType, long size,
-			String handlerName, String... args);
+	long createFileProcess(String launcherId, LocalDateTime dtm,
+			String description, String name, String originalFilename,
+			String contentType, long size, String handlerName, String... args);
 
 	/**
 	 * 非同期処理 (コマンド実行) の管理データを作成する。
-	 * 
+	 *
 	 * @param launcherId
 	 *            非同期処理の実行者のID。
 	 * @param dtm
 	 *            現在日時。
+	 * @param description
+	 *            内容表記。
 	 * @param command
-	 *            実行するコマンド (コマンドライン)。
+	 *            実行するコマンド。
+	 * @param args
+	 *            引数。
 	 * @return 非同期実行状況の管理データのID。
 	 */
-	long createCommand(String launcherId, LocalDateTime dtm, String... command);
+	long createCommand(String launcherId, LocalDateTime dtm,
+			String description, String command, String... args);
 
 	/**
 	 * 非同期処理の実行状況を「キュー投入済み ({@link AsyncStatus#LAUNCHED})」に更新する。
-	 * 
+	 *
 	 * @param asyncId
 	 *            非同期実行状況の管理データのID。
 	 * @param dtm
@@ -82,7 +89,7 @@ public interface AsyncStatusStore {
 
 	/**
 	 * 非同期処理の実行状況を「非同期処理実行中 ({@link AsyncStatus#PROCESSING})」に更新する。
-	 * 
+	 *
 	 * @param asyncId
 	 *            非同期実行状況の管理データのID。
 	 * @param dtm
@@ -93,7 +100,7 @@ public interface AsyncStatusStore {
 	/**
 	 * 非同期処理 (ファイル処理) の実行状況を「非同期処理終了 ({@link AsyncStatus#SUCCESS},
 	 * {@link AsyncStatus#WARN}, {@link AsyncStatus#ERROR})」に更新する。
-	 * 
+	 *
 	 * @param asyncId
 	 *            非同期実行状況の管理データのID。
 	 * @param dtm
@@ -109,7 +116,7 @@ public interface AsyncStatusStore {
 	/**
 	 * 非同期処理 (コマンド実行) の実行状況を「非同期処理終了 ({@link AsyncStatus#SUCCESS},
 	 * {@link AsyncStatus#WARN}, {@link AsyncStatus#ERROR})」に更新する。
-	 * 
+	 *
 	 * @param asyncId
 	 *            非同期実行状況の管理データのID。
 	 * @param dtm
@@ -124,7 +131,7 @@ public interface AsyncStatusStore {
 
 	/**
 	 * 非同期処理の実行状況を「非同期処理例外終了 ({@link AsyncStatus#EXCEPTION})」に更新する。
-	 * 
+	 *
 	 * @param asyncId
 	 *            非同期実行状況の管理データのID。
 	 * @param dtm

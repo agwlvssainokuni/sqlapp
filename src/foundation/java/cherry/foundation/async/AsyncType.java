@@ -20,33 +20,23 @@ import cherry.foundation.type.Code;
 
 /**
  * 非同期実行フレームワーク。<br />
- * 非同期処理の実行状況 (ステータス) を表す。
+ * 非同期処理の種類を表す。
  */
-public enum AsyncStatus implements Code<String> {
-	/** キュー投入準備中 (初期状態)。 */
-	LAUNCHING("0"),
-	/** キュー投入済み。 */
-	LAUNCHED("1"),
-	/** 非同期処理実行中。 */
-	PROCESSING("2"),
-	/** 非同期処理正常終了 (全件OK)。 */
-	SUCCESS("3"),
-	/** 非同期処理警告終了 (NGあり)。 */
-	WARN("4"),
-	/** 非同期処理異常終了 (全件NG)。 */
-	ERROR("5"),
-	/** 非同期処理例外終了 (例外発生)。 */
-	EXCEPTION("9");
+public enum AsyncType implements Code<String> {
+	/** 非同期ファイル処理。 */
+	FILE("FIL"),
+	/** 非同期コマンド実行。 */
+	COMMAND("CMD");
 
-	/** 実行状況の区分値。 */
+	/** 非同期処理の種類。 */
 	private final String code;
 
-	private AsyncStatus(String code) {
+	private AsyncType(String code) {
 		this.code = code;
 	}
 
 	/**
-	 * @return 実行状況の区分値。
+	 * @return 非同期処理の種類。
 	 * */
 	@Override
 	public String code() {

@@ -111,14 +111,6 @@
 	<!-- アプリケーションコンテキスト照会設定 -->
 	<bean class="cherry.foundation.AppCtxHolder" />
 
-	<!-- メール送信設定 -->
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="${foundation.mail.host}" />
-		<property name="port" value="${foundation.mail.port}" />
-		<property name="protocol" value="${foundation.mail.protocol}" />
-		<property name="defaultEncoding" value="${foundation.mail.encoding}" />
-	</bean>
-
 	<!-- パスワードハッシュ設定 -->
 	<bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />

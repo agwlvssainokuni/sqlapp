@@ -26,28 +26,37 @@ public interface AsyncProcessFacade {
 
 	/**
 	 * 非同期のファイル処理を実行登録する。
-	 * 
+	 *
 	 * @param launcherId
 	 *            非同期処理の実行者のID。
+	 * @param description
+	 *            内容表記。
 	 * @param file
 	 *            処理対象のファイル。
 	 * @param handlerName
 	 *            非同期のファイル処理の処理を実装したBeanの名前。同Beanは{@link FileProcessHandler}
 	 *            を実装しなければならない。
+	 * @param args
+	 *            引数。
 	 * @return 非同期実行状況の管理データのID。
 	 */
-	long launchFileProcess(String launcherId, MultipartFile file,
-			String handlerName);
+	long launchFileProcess(String launcherId, String description,
+			MultipartFile file, String handlerName, String... args);
 
 	/**
 	 * 非同期のコマンド実行を実行登録する。
-	 * 
+	 *
 	 * @param launcherId
 	 *            非同期処理の実行者のID。
+	 * @param description
+	 *            内容表記。
 	 * @param command
-	 *            実行するコマンド (コマンドライン)。
+	 *            実行するコマンド。
+	 * @param args
+	 *            引数。
 	 * @return 非同期実行状況の管理データのID。
 	 */
-	long launchCommand(String launcherId, String... command);
+	long launchCommand(String launcherId, String description, String command,
+			String... args);
 
 }
