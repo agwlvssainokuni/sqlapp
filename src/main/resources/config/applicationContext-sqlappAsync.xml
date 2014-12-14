@@ -14,11 +14,6 @@
 	<bean id="destinationResolver"
 		class="org.springframework.jms.support.destination.JndiDestinationResolver" />
 
-	<bean id="jmsOperations" class="org.springframework.jms.core.JmsTemplate">
-		<property name="connectionFactory" ref="xaConnectionFactory" />
-		<property name="destinationResolver" ref="destinationResolver" />
-	</bean>
-
 	<bean id="taskExecutor"
 		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
 		<property name="corePoolSize" value="${sqlapp.taskExecutor.corePoolSize}" />
@@ -26,11 +21,59 @@
 		<property name="waitForTasksToCompleteOnShutdown" value="true" />
 	</bean>
 
-	<bean id="jmsListenerContainerFactory"
-		class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
-		<property name="connectionFactory" ref="connectionFactory" />
+	<jms:listener-container connection-factory="connectionFactory"
+		destination-resolver="destinationResolver" task-executor="taskExecutor">
+		<jms:listener destination="${sqlapp.async.queue}"
+			selector="type = 'asyncFileProcessHandler'" ref="asyncFileProcessHandler"
+			method="handleMessage" />
+		<jms:listener destination="${sqlapp.async.queue}"
+			selector="type = 'asyncCommandHandler'" ref="asyncCommandHandler"
+			method="handleMessage" />
+	</jms:listener-container>
+
+	<bean id="jmsOperations" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="xaConnectionFactory" />
 		<property name="destinationResolver" ref="destinationResolver" />
-		<property name="taskExecutor" ref="taskExecutor" />
+		<property name="defaultDestinationName" value="${sqlapp.async.queue}" />
+	</bean>
+
+	<bean id="asyncProcessFacade" class="cherry.foundation.async.AsyncProcessFacadeImpl">
+		<property name="asyncFileProcessHandler" ref="asyncFileProcessHandler" />
+		<property name="asyncCommandHandler" ref="asyncCommandHandler" />
+	</bean>
+
+	<bean id="asyncFileProcessHandler" class="cherry.foundation.async.AsyncFileProcessHandlerImpl">
+		<property name="bizDateTime" ref="bizDateTime" />
+		<property name="asyncProcessStore" ref="asyncProcessStore" />
+		<property name="jmsOperations" ref="jmsOperations" />
+		<property name="messagePostProcessor">
+			<bean class="cherry.foundation.async.PropertyMessagePostProcessor">
+				<property name="properties">
+					<map key-type="java.lang.String">
+						<entry key="type" value="asyncFileProcessHandler" />
+					</map>
+				</property>
+			</bean>
+		</property>
+		<property name="tempDir" value="${sqlapp.async.file.tempDir}" />
+		<property name="tempPrefix" value="${sqlapp.async.file.tempPrefix}" />
+		<property name="tempSuffix" value="${sqlapp.async.file.tempSuffix}" />
+	</bean>
+
+	<bean id="asyncCommandHandler" class="cherry.foundation.async.AsyncCommandHandlerImpl">
+		<property name="bizDateTime" ref="bizDateTime" />
+		<property name="asyncProcessStore" ref="asyncProcessStore" />
+		<property name="jmsOperations" ref="jmsOperations" />
+		<property name="messagePostProcessor">
+			<bean class="cherry.foundation.async.PropertyMessagePostProcessor">
+				<property name="properties">
+					<map key-type="java.lang.String">
+						<entry key="type" value="asyncCommandHandler" />
+					</map>
+				</property>
+			</bean>
+		</property>
+		<property name="commandLauncher" ref="commandLauncher" />
 	</bean>
 
 </beans>

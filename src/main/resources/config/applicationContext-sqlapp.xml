@@ -11,7 +11,7 @@
 
 	<context:component-scan base-package="cherry.sqlapp" />
 
-	<bean id="navigator" class="cherry.spring.fwcore.navi.NavigatorImpl">
+	<bean id="navigator" class="cherry.foundation.navi.NavigatorImpl">
 		<property name="navigationDef" value="classpath:navi.json" />
 		<property name="objectMapper" ref="objectMapper" />
 	</bean>
