@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.bizdate;
+package cherry.spring.common.foundation.impl;
 
 import static com.mysema.query.types.expr.DateTimeExpression.currentTimestamp;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -28,7 +32,7 @@ import org.springframework.jdbc.core.RowMapper;
 import cherry.foundation.bizdtm.BizDateTime;
 import cherry.foundation.type.DeletedFlag;
 import cherry.foundation.type.jdbc.RowMapperCreator;
-import cherry.sqlapp.db.gen.query.QBizdatetimeMaster;
+import cherry.spring.common.db.gen.query.QBizdatetimeMaster;
 
 import com.mysema.query.sql.SQLQuery;
 
@@ -40,11 +44,11 @@ public class BizDateTimeImpl implements BizDateTime, InitializingBean {
 	@Autowired
 	private RowMapperCreator rowMapperCreator;
 
-	private RowMapper<BizdateDto> rowMapper;
+	private RowMapper<BizDateTimeDto> rowMapper;
 
 	@Override
 	public void afterPropertiesSet() {
-		rowMapper = rowMapperCreator.create(BizdateDto.class);
+		rowMapper = rowMapperCreator.create(BizDateTimeDto.class);
 	}
 
 	@Override
@@ -62,14 +66,14 @@ public class BizDateTimeImpl implements BizDateTime, InitializingBean {
 	public LocalDateTime now() {
 		QBizdatetimeMaster a = new QBizdatetimeMaster("a");
 		SQLQuery query = createSqlQuery(a);
-		BizdateDto dto = queryDslJdbcOperations.queryForObject(query,
-				rowMapper, a.offsetDay, a.offsetHour, a.offsetMinute,
-				a.offsetSecond,
-				currentTimestamp(LocalDateTime.class).as("current_date_time"));
+		BizDateTimeDto dto = queryDslJdbcOperations.queryForObject(query,
+				rowMapper,
+				currentTimestamp(LocalDateTime.class).as("current_dtm"),
+				a.offsetDay, a.offsetHour, a.offsetMinute, a.offsetSecond);
 		if (dto == null) {
 			return LocalDateTime.now();
 		}
-		return dto.getCurrentDateTime().plusDays(dto.getOffsetDay())
+		return dto.getCurrentDtm().plusDays(dto.getOffsetDay())
 				.plusHours(dto.getOffsetHour())
 				.plusMinutes(dto.getOffsetMinute())
 				.plusSeconds(dto.getOffsetSecond());
@@ -79,6 +83,18 @@ public class BizDateTimeImpl implements BizDateTime, InitializingBean {
 		return queryDslJdbcOperations.newSqlQuery().from(a)
 				.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
 				.orderBy(a.id.desc()).limit(1);
+	}
+
+	@Setter
+	@Getter
+	@EqualsAndHashCode
+	@ToString
+	public static class BizDateTimeDto {
+		private LocalDateTime currentDtm;
+		private int offsetDay;
+		private int offsetHour;
+		private int offsetMinute;
+		private int offsetSecond;
 	}
 
 }

@@ -13,9 +13,39 @@
 
 	<tx:annotation-driven />
 
-	<bean id="asyncStatusStore" class="cherry.spring.common.helper.async.AsyncStatusStoreImpl" />
-	<bean id="bizDateTime" class="cherry.spring.common.helper.bizdate.BizDateTimeImpl" />
-	<bean id="mailMessageHelper" class="cherry.spring.common.helper.mail.MailMessageHelperImpl" />
+	<bean id="bizDateTime" class="cherry.spring.common.foundation.impl.BizDateTimeImpl" />
+	<bean id="asyncProcessStore"
+		class="cherry.spring.common.foundation.impl.AsyncProcessStoreImpl" />
+	<bean id="mailFacade" class="cherry.foundation.mail.MailFacadeImpl">
+		<property name="bizDateTime" ref="bizDateTime" />
+		<property name="messageHandler" ref="messageHandler" />
+		<property name="mailHandler" ref="mailHandler" />
+	</bean>
+
+	<bean id="messageHandler" class="cherry.foundation.mail.MessageHandlerImpl">
+		<property name="templateStore">
+			<bean class="cherry.spring.common.foundation.impl.TemplateStoreImpl" />
+		</property>
+		<property name="velocityEngine">
+			<bean class="org.apache.velocity.app.VelocityEngine"
+				init-method="init" />
+		</property>
+	</bean>
+	<bean id="mailHandler" class="cherry.foundation.mail.MailHandlerImpl">
+		<property name="bizDateTime" ref="bizDateTime" />
+		<property name="messageStore">
+			<bean class="cherry.spring.common.foundation.impl.MessageStoreImpl" />
+		</property>
+		<property name="mailSender">
+			<bean class="org.springframework.mail.javamail.JavaMailSenderImpl">
+				<property name="host" value="${common.mail.host}" />
+				<property name="port" value="${common.mail.port}" />
+				<property name="protocol" value="${common.mail.protocol}" />
+				<property name="defaultEncoding" value="${common.mail.encoding}" />
+			</bean>
+		</property>
+	</bean>
+
 	<bean id="signupRequestHelper"
 		class="cherry.spring.common.helper.signup.SignupRequestHelperImpl" />
 

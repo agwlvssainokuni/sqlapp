@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.mail;
+package cherry.spring.common.foundation.impl;
 
-public interface IMailId {
-
-	String templateName();
-
+public enum RcptType {
+	/** TO宛先。 */
+	TO,
+	/** CC宛先。 */
+	CC,
+	/** BCC宛先。 */
+	BCC
 }
