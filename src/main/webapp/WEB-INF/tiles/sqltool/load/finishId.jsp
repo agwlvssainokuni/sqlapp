@@ -13,5 +13,5 @@
 </h2>
 <div class="alert alert-info" role="alert">
 	<s:message code="sqltool/load/finishId.message.1"
-		arguments="${asyncParam.procId}" />
+		arguments="${asyncParam}" />
 </div>
