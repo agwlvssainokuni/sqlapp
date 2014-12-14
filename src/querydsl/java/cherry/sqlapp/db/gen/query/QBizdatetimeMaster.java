@@ -30,7 +30,7 @@ public class QBizdatetimeMaster extends com.mysema.query.sql.RelationalPathBase<
 
     public final NumberPath<Integer> deletedFlg = createNumber("deletedFlg", Integer.class);
 
-    public final NumberPath<Integer> id = createNumber("id", Integer.class);
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Integer> lockVersion = createNumber("lockVersion", Integer.class);
 
@@ -70,7 +70,7 @@ public class QBizdatetimeMaster extends com.mysema.query.sql.RelationalPathBase<
         addMetadata(bizdate, ColumnMetadata.named("BIZDATE").withIndex(2).ofType(Types.DATE).withSize(8).notNull());
         addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(8).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
         addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(10).ofType(Types.INTEGER).withSize(10).notNull());
-        addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.INTEGER).withSize(10).notNull());
+        addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(9).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(offsetDay, ColumnMetadata.named("OFFSET_DAY").withIndex(3).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(offsetHour, ColumnMetadata.named("OFFSET_HOUR").withIndex(4).ofType(Types.INTEGER).withSize(10).notNull());

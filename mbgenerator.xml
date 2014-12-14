@@ -43,10 +43,34 @@
 		<table tableName="sqltool_metadata">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
-		<table tableName="async_proc">
+		<table tableName="bizdatetime_master">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
-		<table tableName="bizdatetime_master">
+		<table tableName="async_process">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		<table tableName="async_process_exception">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		<table tableName="async_process_file">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		<table tableName="async_process_file_arg">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		<table tableName="async_process_file_result">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		<table tableName="async_process_file_result_detail">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		<table tableName="async_process_command">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		<table tableName="async_process_command_arg">
+			<generatedKey column="id" sqlStatement="JDBC" />
+		</table>
+		<table tableName="async_process_command_result">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
 	</context>

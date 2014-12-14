@@ -3,36 +3,52 @@ package cherry.sqlapp.db.gen.query;
 import javax.annotation.Generated;
 
 /**
- * BAsyncProc is a Querydsl bean type
+ * BAsyncProcess is a Querydsl bean type
  */
 @Generated("com.mysema.query.codegen.BeanSerializer")
-public class BAsyncProc {
+public class BAsyncProcess {
+
+    private String asyncStatus;
+
+    private String asyncType;
 
     private org.joda.time.LocalDateTime createdAt;
 
     private Integer deletedFlg;
 
+    private String description;
+
     private org.joda.time.LocalDateTime finishedAt;
 
-    private Integer id;
+    private Long id;
 
-    private org.joda.time.LocalDateTime invokedAt;
+    private org.joda.time.LocalDateTime launchedAt;
 
-    private String launcherId;
+    private String launchedBy;
 
     private Integer lockVersion;
 
-    private String name;
-
     private org.joda.time.LocalDateTime registeredAt;
-
-    private String result;
 
     private org.joda.time.LocalDateTime startedAt;
 
-    private String status;
-
     private org.joda.time.LocalDateTime updatedAt;
+
+    public String getAsyncStatus() {
+        return asyncStatus;
+    }
+
+    public void setAsyncStatus(String asyncStatus) {
+        this.asyncStatus = asyncStatus;
+    }
+
+    public String getAsyncType() {
+        return asyncType;
+    }
+
+    public void setAsyncType(String asyncType) {
+        this.asyncType = asyncType;
+    }
 
     public org.joda.time.LocalDateTime getCreatedAt() {
         return createdAt;
@@ -50,6 +66,14 @@ public class BAsyncProc {
         this.deletedFlg = deletedFlg;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public org.joda.time.LocalDateTime getFinishedAt() {
         return finishedAt;
     }
@@ -58,28 +82,28 @@ public class BAsyncProc {
         this.finishedAt = finishedAt;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public org.joda.time.LocalDateTime getInvokedAt() {
-        return invokedAt;
+    public org.joda.time.LocalDateTime getLaunchedAt() {
+        return launchedAt;
     }
 
-    public void setInvokedAt(org.joda.time.LocalDateTime invokedAt) {
-        this.invokedAt = invokedAt;
+    public void setLaunchedAt(org.joda.time.LocalDateTime launchedAt) {
+        this.launchedAt = launchedAt;
     }
 
-    public String getLauncherId() {
-        return launcherId;
+    public String getLaunchedBy() {
+        return launchedBy;
     }
 
-    public void setLauncherId(String launcherId) {
-        this.launcherId = launcherId;
+    public void setLaunchedBy(String launchedBy) {
+        this.launchedBy = launchedBy;
     }
 
     public Integer getLockVersion() {
@@ -90,14 +114,6 @@ public class BAsyncProc {
         this.lockVersion = lockVersion;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public org.joda.time.LocalDateTime getRegisteredAt() {
         return registeredAt;
     }
@@ -106,28 +122,12 @@ public class BAsyncProc {
         this.registeredAt = registeredAt;
     }
 
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
-    }
-
     public org.joda.time.LocalDateTime getStartedAt() {
         return startedAt;
     }
 
     public void setStartedAt(org.joda.time.LocalDateTime startedAt) {
         this.startedAt = startedAt;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public org.joda.time.LocalDateTime getUpdatedAt() {
@@ -139,7 +139,7 @@ public class BAsyncProc {
     }
 
     public String toString() {
-         return "createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", finishedAt = " + finishedAt + ", id = " + id + ", invokedAt = " + invokedAt + ", launcherId = " + launcherId + ", lockVersion = " + lockVersion + ", name = " + name + ", registeredAt = " + registeredAt + ", result = " + result + ", startedAt = " + startedAt + ", status = " + status + ", updatedAt = " + updatedAt;
+         return "asyncStatus = " + asyncStatus + ", asyncType = " + asyncType + ", createdAt = " + createdAt + ", deletedFlg = " + deletedFlg + ", description = " + description + ", finishedAt = " + finishedAt + ", id = " + id + ", launchedAt = " + launchedAt + ", launchedBy = " + launchedBy + ", lockVersion = " + lockVersion + ", registeredAt = " + registeredAt + ", startedAt = " + startedAt + ", updatedAt = " + updatedAt;
     }
 
 }
