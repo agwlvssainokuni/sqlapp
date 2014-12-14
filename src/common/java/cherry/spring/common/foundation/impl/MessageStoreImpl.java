@@ -91,7 +91,10 @@ public class MessageStoreImpl implements MessageStore {
 
 		QMailLog a = new QMailLog("a");
 		SQLQuery querya = queryDslJdbcOperations.newSqlQuery();
-		querya.from(a).where(a.id.eq(messageId)).forUpdate();
+		querya.from(a).forUpdate();
+		querya.where(a.id.eq(messageId));
+		querya.where(a.mailStatus.eq(FlagCode.FALSE.code()));
+		querya.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 		RowMapper<MailLog> rowMappera = rowMapperCreator.create(MailLog.class);
 		MailLog maillog = queryDslJdbcOperations.queryForObject(querya,
 				rowMappera, a.fromAddr, a.subject, a.body);
@@ -144,6 +147,7 @@ public class MessageStoreImpl implements MessageStore {
 			@Override
 			public long doInSqlUpdateClause(SQLUpdateClause update) {
 				update.set(a.mailStatus, FlagCode.TRUE.code());
+				update.set(a.lockVersion, a.lockVersion.add(1));
 				update.where(a.id.eq(messageId));
 				update.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 				return update.execute();
