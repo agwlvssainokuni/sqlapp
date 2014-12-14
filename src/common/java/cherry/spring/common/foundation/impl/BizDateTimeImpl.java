@@ -32,7 +32,7 @@ import org.springframework.jdbc.core.RowMapper;
 import cherry.foundation.bizdtm.BizDateTime;
 import cherry.foundation.type.DeletedFlag;
 import cherry.foundation.type.jdbc.RowMapperCreator;
-import cherry.spring.common.db.gen.query.QBizdatetimeMaster;
+import cherry.sqlapp.db.gen.query.QBizdatetimeMaster;
 
 import com.mysema.query.sql.SQLQuery;
 
