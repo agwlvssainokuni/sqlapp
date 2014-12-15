@@ -25,6 +25,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import cherry.goods.paginate.PagedList;
+
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.ColumnMetadata;
 import com.mysema.query.types.Expression;
@@ -74,12 +76,20 @@ public class QueryDslUtil {
 		return map;
 	}
 
-	public static List<Map<String, ?>> tupleListToMapList(
-			List<Tuple> tupleList, Expression<?>... expressions) {
+	public static List<Map<String, ?>> tupleToMap(List<Tuple> tupleList,
+			Expression<?>... expressions) {
 		List<Map<String, ?>> list = new ArrayList<>(tupleList.size());
 		for (Tuple tuple : tupleList) {
 			list.add(tupleToMap(tuple, expressions));
 		}
+		return list;
+	}
+
+	public static PagedList<Map<String, ?>> tupleToMap(
+			PagedList<Tuple> pagedList, Expression<?>... expressions) {
+		PagedList<Map<String, ?>> list = new PagedList<>();
+		list.setPageSet(pagedList.getPageSet());
+		list.setList(tupleToMap(pagedList.getList(), expressions));
 		return list;
 	}
 

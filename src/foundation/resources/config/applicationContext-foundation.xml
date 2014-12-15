@@ -51,6 +51,9 @@
 			<set>
 				<bean
 					class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
+				<bean class="org.springframework.format.number.NumberFormatter">
+					<property name="pattern" value="${foundation.format.number}" />
+				</bean>
 			</set>
 		</property>
 		<property name="formatterRegistrars">

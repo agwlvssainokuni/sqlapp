@@ -31,8 +31,10 @@ import cherry.goods.paginate.PageSet;
 import cherry.goods.paginate.PagedList;
 import cherry.goods.paginate.Paginator;
 
+import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.types.Expression;
+import com.mysema.query.types.QTuple;
 
 public class SQLQueryHelperImpl implements SQLQueryHelper {
 
@@ -52,7 +54,7 @@ public class SQLQueryHelperImpl implements SQLQueryHelper {
 	@Override
 	public <T> PagedList<T> search(QueryConfigurer commonClause,
 			QueryConfigurer orderByClause, long pageNo, long pageSz,
-			RowMapper<T> rowMapper, Expression<?>... projection) {
+			RowMapper<T> rowMapper, Expression<?>... expressions) {
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query = commonClause.configure(query);
@@ -62,7 +64,7 @@ public class SQLQueryHelperImpl implements SQLQueryHelper {
 		query.limit(pageSz).offset(pageSet.getCurrent().getFrom());
 		query = orderByClause.configure(query);
 		List<T> list = queryDslJdbcOperations.query(query, rowMapper,
-				projection);
+				expressions);
 
 		PagedList<T> result = new PagedList<>();
 		result.setPageSet(pageSet);
@@ -71,9 +73,30 @@ public class SQLQueryHelperImpl implements SQLQueryHelper {
 	}
 
 	@Override
+	public PagedList<Tuple> search(QueryConfigurer commonClause,
+			QueryConfigurer orderByClause, long pageNo, long pageSz,
+			Expression<?>... expressions) {
+
+		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
+		query = commonClause.configure(query);
+		long count = queryDslJdbcOperations.count(query);
+
+		PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
+		query.limit(pageSz).offset(pageSet.getCurrent().getFrom());
+		query = orderByClause.configure(query);
+		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(
+				expressions));
+
+		PagedList<Tuple> result = new PagedList<>();
+		result.setPageSet(pageSet);
+		result.setList(list);
+		return result;
+	}
+
+	@Override
 	public long download(QueryConfigurer commonClause,
 			QueryConfigurer orderByClause, Consumer consumer, Limiter limiter,
-			Expression<?>... projection) throws LimiterException, IOException {
+			Expression<?>... expressions) throws LimiterException, IOException {
 
 		ResultSetExtractor<Long> extractor = new ExtractorResultSetExtractor(
 				consumer, limiter);
@@ -86,7 +109,7 @@ public class SQLQueryHelperImpl implements SQLQueryHelper {
 			query = orderByClause.configure(query);
 
 			return queryDslJdbcOperations.queryForObject(query, extractor,
-					projection);
+					expressions);
 		} catch (IllegalStateException ex) {
 			throw (IOException) ex.getCause();
 		} finally {
