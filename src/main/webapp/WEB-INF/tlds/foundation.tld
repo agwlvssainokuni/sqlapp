@@ -10,6 +10,13 @@
 	<uri>urn:cherry:foundation</uri>
 
 	<function>
+		<description>Conversion</description>
+		<name>convert</name>
+		<function-class>cherry.foundation.ConversionServiceTag</function-class>
+		<function-signature>java.lang.String convert(java.lang.Object)</function-signature>
+	</function>
+
+	<function>
 		<description>Navigate</description>
 		<name>navigate</name>
 		<function-class>cherry.foundation.navi.NavigatorTag</function-class>
