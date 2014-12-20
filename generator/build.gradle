@@ -1,0 +1,14 @@
+apply plugin: "java"
+apply plugin: "eclipse"
+
+def defFile = []
+for (int count = 1; project.hasProperty("definitionFile.${count}"); count++) {
+	defFile.add(file(project.getProperty("definitionFile.${count}")))
+}
+
+task generateForm(type: cherry.gradle.task.generator.GenerateForm) {
+	definitionFiles = defFile
+	baseDir = file("../")
+	javaBaseDir = "src/main/java"
+	propBaseDir = "src/main/resources/message/form"
+}

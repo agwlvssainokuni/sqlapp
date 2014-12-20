@@ -17,6 +17,7 @@
 package cherry.gradle.task.generator;
 
 import static java.lang.System.out;
+import static java.text.MessageFormat.format;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -50,7 +51,9 @@ import cherry.parser.worksheet.WorkbookParser;
 @Setter
 public class GenerateForm extends DefaultTask {
 
-	private boolean verbose = false;
+	private boolean verbose = true;
+
+	private boolean overwrite = false;
 
 	private List<File> definitionFiles = new ArrayList<>();
 
@@ -64,14 +67,25 @@ public class GenerateForm extends DefaultTask {
 
 	private String templateEncoding = "UTF-8";
 
-	private File javaBaseDir = new File("src/generated/java");
+	private File baseDir = new File(".");
+
+	private String javaBaseDir = "src/generated/java";
 
 	private String javaEncoding = "UTF-8";
 
-	private File propertiesFile = new File(
-			"src/generated/resources/form.properties");
+	private String propBaseDir = "src/generated/resources/message/form";
 
-	private String propertiesEncoding = "UTF-8";
+	private String propEncoding = "UTF-8";
+
+	private String attrDirSpec0 = null;
+
+	private String attrDirSpec1 = null;
+
+	private String attrDirSpec2 = null;
+
+	private String attrDirSpec3 = null;
+
+	private String attrDirSpec4 = null;
 
 	@TaskAction
 	public void generate() throws IOException {
@@ -98,56 +112,54 @@ public class GenerateForm extends DefaultTask {
 		Template propTempl = engine.getTemplate(templateProperties,
 				templateEncoding);
 
-		message("Preparing destination directories.");
-
-		propertiesFile.getParentFile().mkdirs();
-		javaBaseDir.mkdirs();
-
-		message("Generating {0}", propertiesFile);
-
-		try (OutputStream pout = new FileOutputStream(propertiesFile);
-				Writer pwriter = new OutputStreamWriter(pout,
-						propertiesEncoding)) {
-			for (TypeDef typeDef : list) {
-				VelocityContext context = new VelocityContext();
-				context.put("typeDef", typeDef);
-
-				propTempl.merge(context, pwriter);
-				pwriter.flush();
-			}
-		}
-
-		message("{0}", list);
-
-		message("Generating forms.");
+		message("Generating.");
 
 		for (TypeDef typeDef : list) {
-			VelocityContext context = new VelocityContext();
-			context.put("typeDef", typeDef);
 
 			message("{0}", typeDef.getFullyQualifiedClassName());
 
-			File pkgDir = new File(javaBaseDir, typeDef.getDirName());
+			VelocityContext context = new VelocityContext();
+			context.put("typeDef", typeDef);
+
+			String dirSpec0 = typeDef.get(attrDirSpec0);
+			String dirSpec1 = typeDef.get(attrDirSpec1);
+			String dirSpec2 = typeDef.get(attrDirSpec2);
+			String dirSpec3 = typeDef.get(attrDirSpec3);
+			String dirSpec4 = typeDef.get(attrDirSpec4);
+
+			File javaDir = new File(baseDir, format(javaBaseDir, dirSpec0,
+					dirSpec1, dirSpec2, dirSpec3, dirSpec4));
+			File pkgDir = new File(javaDir, typeDef.getDirName());
 			pkgDir.mkdirs();
+
+			File propDir = new File(baseDir, format(propBaseDir, dirSpec0,
+					dirSpec1, dirSpec2, dirSpec3, dirSpec4));
+			propDir.mkdirs();
 
 			File javaFile = new File(pkgDir, typeDef.getClassName() + ".java");
 			File javaBaseFile = new File(pkgDir, typeDef.getClassName()
 					+ "Base.java");
+			File propFile = new File(propDir, typeDef.getClassName() + ".txt");
 
-			try (OutputStream jout = new FileOutputStream(javaFile);
-					Writer jwriter = new OutputStreamWriter(jout, javaEncoding)) {
-				javaTempl.merge(context, jwriter);
-				jwriter.flush();
+			if (overwrite || !javaFile.exists()) {
+				createFile(context, javaTempl, javaFile, javaEncoding);
 			}
 
-			try (OutputStream jout = new FileOutputStream(javaBaseFile);
-					Writer jwriter = new OutputStreamWriter(jout, javaEncoding)) {
-				javaBaseTempl.merge(context, jwriter);
-				jwriter.flush();
-			}
+			createFile(context, javaBaseTempl, javaBaseFile, javaEncoding);
+
+			createFile(context, propTempl, propFile, propEncoding);
 		}
 
 		message("Completed.");
+	}
+
+	private void createFile(VelocityContext context, Template template,
+			File file, String encoding) throws IOException {
+		try (OutputStream os = new FileOutputStream(file);
+				Writer w = new OutputStreamWriter(os, encoding)) {
+			template.merge(context, w);
+			w.flush();
+		}
 	}
 
 	private void message(String msg, Object... args) {

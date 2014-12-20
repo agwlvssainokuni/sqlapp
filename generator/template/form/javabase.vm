@@ -23,6 +23,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import org.springframework.context.MessageSourceResolvable;
+
+import cherry.foundation.logicalerror.LogicalErrorUtil;
+
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -30,18 +34,40 @@ import lombok.ToString;
 public abstract class ${typeDef.className}Base implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+########################################################################
+#macro (groups $prop)
+{ javax.validation.groups.Default.class##
+#if ($prop.g1 == "○"), cherry.foundation.validator.groups.G1.class#end
+#if ($prop.g2 == "○"), cherry.foundation.validator.groups.G2.class#end
+#if ($prop.g3 == "○"), cherry.foundation.validator.groups.G3.class#end
+#if ($prop.g4 == "○"), cherry.foundation.validator.groups.G4.class#end
+#if ($prop.g5 == "○"), cherry.foundation.validator.groups.G5.class#end
+#if ($prop.g6 == "○"), cherry.foundation.validator.groups.G6.class#end
+#if ($prop.g7 == "○"), cherry.foundation.validator.groups.G7.class#end
+#if ($prop.g8 == "○"), cherry.foundation.validator.groups.G8.class#end
+#if ($prop.g9 == "○"), cherry.foundation.validator.groups.G9.class#end
+ }##
+#end
 
 #foreach ($prop in $typeDef.itemDef)
 ########################################################################
 #if ($prop.type == "数値")
 #if ($prop.required == "○")
-	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.NotNull(groups = #groups($prop))
 #end
 #if ($prop.min)
-	@javax.validation.constraints.Min($prop.min)
+#if ($prop.subtype == "整数" || $prop.subtype == "整数(Long)")
+	@javax.validation.constraints.Min(value = $prop.min, groups = #groups($prop))
+#else
+	@javax.validation.constraints.DecimalMin(value = "$prop.min", groups = #groups($prop))
+#end
 #end
 #if ($prop.max)
-	@javax.validation.constraints.Max($prop.max)
+#if ($prop.subtype == "整数" || $prop.subtype == "整数(Long)")
+	@javax.validation.constraints.Max(value = $prop.max, groups = #groups($prop))
+#else
+	@javax.validation.constraints.DecimalMax(value = "$prop.max", groups = #groups($prop))
+#end
 #end
 ################ サブ型
 #if ($prop.subtype == "整数")
@@ -55,7 +81,7 @@ public abstract class ${typeDef.className}Base implements Serializable {
 ########################################################################
 #elseif ($prop.type == "日付" || $prop.type == "時刻" || $prop.type == "日時")
 #if ($prop.required == "○")
-	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.NotNull(groups = #groups($prop))
 #end
 ################ サブ型
 #if ($prop.subtype == "範囲下限")
@@ -77,7 +103,7 @@ public abstract class ${typeDef.className}Base implements Serializable {
 ########################################################################
 #elseif ($prop.type == "ファイル")
 #if ($prop.required == "○")
-	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.NotNull(groups = #groups($prop))
 #end
 ################ 変数宣言
 	private org.springframework.web.multipart.MultipartFile ${prop.name};
@@ -106,44 +132,44 @@ public abstract class ${typeDef.className}Base implements Serializable {
 #elseif ($prop.type == "文字列")
 #if ($prop.required == "○")
 #if ($prop.minlen)
-	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.NotNull(groups = #groups($prop))
 #else
-	@org.hibernate.validator.constraints.NotEmpty
+	@org.hibernate.validator.constraints.NotEmpty(groups = #groups($prop))
 #end
 #end
 #if ($prop.minlen)
-	@cherry.foundation.validator.MinLength($prop.minlen)
+	@cherry.foundation.validator.MinLength(value = $prop.minlen, groups = #groups($prop))
 #end
 #if ($prop.maxlen)
-	@cherry.foundation.validator.MaxLength($prop.maxlen)
+	@cherry.foundation.validator.MaxLength(value = $prop.maxlen, groups = #groups($prop))
 #end
 ################ サブ型
 #if ($prop.subtype == "メール")
-	@org.hibernate.validator.constraints.Email
+	@org.hibernate.validator.constraints.Email(groups = #groups($prop))
 #elseif ($prop.subtype == "半角")
-	@cherry.foundation.validator.CharTypeBasicLatin
+	@cherry.foundation.validator.CharTypeBasicLatin(groups = #groups($prop))
 #elseif ($prop.subtype == "半角(カナ含む)")
-	@cherry.foundation.validator.CharTypeHalfWidth
+	@cherry.foundation.validator.CharTypeHalfWidth(groups = #groups($prop))
 #elseif ($prop.subtype == "半角数字")
-	@cherry.foundation.validator.CharTypeNumeric
+	@cherry.foundation.validator.CharTypeNumeric(groups = #groups($prop))
 #elseif ($prop.subtype == "半角英字")
-	@cherry.foundation.validator.CharTypeAlpha
+	@cherry.foundation.validator.CharTypeAlpha(groups = #groups($prop))
 #elseif ($prop.subtype == "半角英数字")
-	@cherry.foundation.validator.CharTypeAlphaNumeric
+	@cherry.foundation.validator.CharTypeAlphaNumeric(groups = #groups($prop))
 #elseif ($prop.subtype == "半角カナ")
-	@cherry.foundation.validator.CharTypeHalfKatakana
+	@cherry.foundation.validator.CharTypeHalfKatakana(groups = #groups($prop))
 #elseif ($prop.subtype == "全角")
-	@cherry.foundation.validator.CharTypeFullWidth
+	@cherry.foundation.validator.CharTypeFullWidth(groups = #groups($prop))
 #elseif ($prop.subtype == "全角数字")
-	@cherry.foundation.validator.CharTypeFullNumeric
+	@cherry.foundation.validator.CharTypeFullNumeric(groups = #groups($prop))
 #elseif ($prop.subtype == "全角英字")
-	@cherry.foundation.validator.CharTypeFullAlpha
+	@cherry.foundation.validator.CharTypeFullAlpha(groups = #groups($prop))
 #elseif ($prop.subtype == "全角英数字")
-	@cherry.foundation.validator.CharTypeFullAlphaNumeric
+	@cherry.foundation.validator.CharTypeFullAlphaNumeric(groups = #groups($prop))
 #elseif ($prop.subtype == "全角ひらがな")
-	@cherry.foundation.validator.CharTypeFullHiragana
+	@cherry.foundation.validator.CharTypeFullHiragana(groups = #groups($prop))
 #elseif ($prop.subtype == "全角カタカナ")
-	@cherry.foundation.validator.CharTypeFullKatakana
+	@cherry.foundation.validator.CharTypeFullKatakana(groups = #groups($prop))
 #else
 #end
 ################ 変数宣言
@@ -166,6 +192,10 @@ public abstract class ${typeDef.className}Base implements Serializable {
 		private Prop(String name, String nameWithForm) {
 			this.name = name;
 			this.nameWithForm = nameWithForm;
+		}
+
+		public MessageSourceResolvable resolve() {
+			return LogicalErrorUtil.resolve(nameWithForm);
 		}
 	}
 
