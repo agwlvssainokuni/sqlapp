@@ -1,0 +1,5 @@
+sqltoolMetadataForm.name=NAME
+sqltoolMetadataForm.description=DESCRIPTION
+sqltoolMetadataForm.ownedBy=OWNER
+sqltoolMetadataForm.publishedFlg=PUBLIC
+sqltoolMetadataForm.lockVersion=LOCK VERSION

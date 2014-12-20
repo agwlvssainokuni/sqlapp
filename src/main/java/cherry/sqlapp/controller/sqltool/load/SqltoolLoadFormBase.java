@@ -23,6 +23,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import org.springframework.context.MessageSourceResolvable;
+
+import cherry.foundation.logicalerror.LogicalErrorUtil;
+
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -31,11 +35,11 @@ public abstract class SqltoolLoadFormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@org.hibernate.validator.constraints.NotEmpty
+	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class })
 	private String databaseName;
 
-	@org.hibernate.validator.constraints.NotEmpty
-	@cherry.foundation.validator.MaxLength(5000)
+	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.MaxLength(value = 5000, groups = { javax.validation.groups.Default.class })
 	private String sql;
 
 	private org.springframework.web.multipart.MultipartFile file;
@@ -56,6 +60,10 @@ public abstract class SqltoolLoadFormBase implements Serializable {
 		private Prop(String name, String nameWithForm) {
 			this.name = name;
 			this.nameWithForm = nameWithForm;
+		}
+
+		public MessageSourceResolvable resolve() {
+			return LogicalErrorUtil.resolve(nameWithForm);
 		}
 	}
 

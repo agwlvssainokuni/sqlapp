@@ -23,6 +23,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import org.springframework.context.MessageSourceResolvable;
+
+import cherry.foundation.logicalerror.LogicalErrorUtil;
+
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -31,30 +35,30 @@ public abstract class SqltoolClauseFormBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@org.hibernate.validator.constraints.NotEmpty
+	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class })
 	private String databaseName;
 
-	@org.hibernate.validator.constraints.NotEmpty
-	@cherry.foundation.validator.MaxLength(500)
+	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.MaxLength(value = 500, groups = { javax.validation.groups.Default.class })
 	private String select;
 
-	@org.hibernate.validator.constraints.NotEmpty
-	@cherry.foundation.validator.MaxLength(500)
+	@org.hibernate.validator.constraints.NotEmpty(groups = { javax.validation.groups.Default.class })
+	@cherry.foundation.validator.MaxLength(value = 500, groups = { javax.validation.groups.Default.class })
 	private String from;
 
-	@cherry.foundation.validator.MaxLength(500)
+	@cherry.foundation.validator.MaxLength(value = 500, groups = { javax.validation.groups.Default.class })
 	private String where;
 
-	@cherry.foundation.validator.MaxLength(500)
+	@cherry.foundation.validator.MaxLength(value = 500, groups = { javax.validation.groups.Default.class })
 	private String groupBy;
 
-	@cherry.foundation.validator.MaxLength(500)
+	@cherry.foundation.validator.MaxLength(value = 500, groups = { javax.validation.groups.Default.class })
 	private String having;
 
-	@cherry.foundation.validator.MaxLength(500)
+	@cherry.foundation.validator.MaxLength(value = 500, groups = { javax.validation.groups.Default.class })
 	private String orderBy;
 
-	@cherry.foundation.validator.MaxLength(5000)
+	@cherry.foundation.validator.MaxLength(value = 5000, groups = { javax.validation.groups.Default.class })
 	private String paramMap;
 
 	private Integer lockVersion;
@@ -84,6 +88,10 @@ public abstract class SqltoolClauseFormBase implements Serializable {
 		private Prop(String name, String nameWithForm) {
 			this.name = name;
 			this.nameWithForm = nameWithForm;
+		}
+
+		public MessageSourceResolvable resolve() {
+			return LogicalErrorUtil.resolve(nameWithForm);
 		}
 	}
 

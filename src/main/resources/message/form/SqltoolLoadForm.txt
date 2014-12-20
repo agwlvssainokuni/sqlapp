@@ -1,0 +1,4 @@
+sqltoolLoadForm.databaseName=DATABASE
+sqltoolLoadForm.sql=SQL
+sqltoolLoadForm.file=CSV FILE
+sqltoolLoadForm.lockVersion=LOCK VERSION
