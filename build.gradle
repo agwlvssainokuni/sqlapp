@@ -155,6 +155,17 @@ war {
 	classpath = jar.outputs.files + configurations.runtime - configurations.providedRuntime
 }
 
+def messageDir = "src/main/resources/message"
+task mergeformmessage {
+	ant.concat(destfile: "${messageDir}/form/form.properties", encoding: "UTF-8", outputencoding: "UTF-8") {
+		fileset(dir: "${messageDir}/form/") {
+			include(name: "**.txt")
+			exclude(name: "**.properties")
+		}
+	}
+	ant.native2ascii(src: "${messageDir}/form/", dest: "${messageDir}/", includes: "form.properties", encoding: "UTF-8")
+}
+
 deliveryResources {
 	from "src/main/deliveryResources"
 	tokens "filter.properties"
