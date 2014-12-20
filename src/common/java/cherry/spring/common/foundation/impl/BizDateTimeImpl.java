@@ -17,39 +17,25 @@
 package cherry.spring.common.foundation.impl;
 
 import static com.mysema.query.types.expr.DateTimeExpression.currentTimestamp;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
-import org.springframework.jdbc.core.RowMapper;
 
 import cherry.foundation.bizdtm.BizDateTime;
 import cherry.foundation.type.DeletedFlag;
-import cherry.foundation.type.jdbc.RowMapperCreator;
 import cherry.sqlapp.db.gen.query.QBizdatetimeMaster;
 
+import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
+import com.mysema.query.types.Expression;
+import com.mysema.query.types.QTuple;
 
-public class BizDateTimeImpl implements BizDateTime, InitializingBean {
+public class BizDateTimeImpl implements BizDateTime {
 
 	@Autowired
 	private QueryDslJdbcOperations queryDslJdbcOperations;
-
-	@Autowired
-	private RowMapperCreator rowMapperCreator;
-
-	private RowMapper<BizDateTimeDto> rowMapper;
-
-	@Override
-	public void afterPropertiesSet() {
-		rowMapper = rowMapperCreator.create(BizDateTimeDto.class);
-	}
 
 	@Override
 	public LocalDate today() {
@@ -64,37 +50,25 @@ public class BizDateTimeImpl implements BizDateTime, InitializingBean {
 
 	@Override
 	public LocalDateTime now() {
+		Expression<LocalDateTime> curDtm = currentTimestamp(LocalDateTime.class);
 		QBizdatetimeMaster a = new QBizdatetimeMaster("a");
 		SQLQuery query = createSqlQuery(a);
-		BizDateTimeDto dto = queryDslJdbcOperations.queryForObject(query,
-				rowMapper,
-				currentTimestamp(LocalDateTime.class).as("current_dtm"),
-				a.offsetDay, a.offsetHour, a.offsetMinute, a.offsetSecond);
-		if (dto == null) {
+		Tuple tuple = queryDslJdbcOperations.queryForObject(query, new QTuple(
+				curDtm, a.offsetDay, a.offsetHour, a.offsetMinute,
+				a.offsetSecond));
+		if (tuple == null) {
 			return LocalDateTime.now();
 		}
-		return dto.getCurrentDtm().plusDays(dto.getOffsetDay())
-				.plusHours(dto.getOffsetHour())
-				.plusMinutes(dto.getOffsetMinute())
-				.plusSeconds(dto.getOffsetSecond());
+		return tuple.get(curDtm).plusDays(tuple.get(a.offsetDay))
+				.plusHours(tuple.get(a.offsetHour))
+				.plusMinutes(tuple.get(a.offsetMinute))
+				.plusSeconds(tuple.get(a.offsetSecond));
 	}
 
 	private SQLQuery createSqlQuery(QBizdatetimeMaster a) {
 		return queryDslJdbcOperations.newSqlQuery().from(a)
 				.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
 				.orderBy(a.id.desc()).limit(1);
-	}
-
-	@Setter
-	@Getter
-	@EqualsAndHashCode
-	@ToString
-	public static class BizDateTimeDto {
-		private LocalDateTime currentDtm;
-		private int offsetDay;
-		private int offsetHour;
-		private int offsetMinute;
-		private int offsetSecond;
 	}
 
 }

@@ -21,11 +21,6 @@ import static com.google.common.base.Preconditions.checkState;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jdbc.query.QueryDslJdbcOperations;
@@ -33,7 +28,6 @@ import org.springframework.data.jdbc.query.SqlDeleteCallback;
 import org.springframework.data.jdbc.query.SqlInsertCallback;
 import org.springframework.data.jdbc.query.SqlInsertWithKeyCallback;
 import org.springframework.data.jdbc.query.SqlUpdateCallback;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.SingleColumnRowMapper;
 import org.springframework.mail.SimpleMailMessage;
 
@@ -41,15 +35,16 @@ import cherry.foundation.bizdtm.BizDateTime;
 import cherry.foundation.mail.MessageStore;
 import cherry.foundation.type.DeletedFlag;
 import cherry.foundation.type.FlagCode;
-import cherry.foundation.type.jdbc.RowMapperCreator;
 import cherry.sqlapp.db.gen.query.QMailLog;
 import cherry.sqlapp.db.gen.query.QMailQueue;
 import cherry.sqlapp.db.gen.query.QMailRcpt;
 
+import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.dml.SQLDeleteClause;
 import com.mysema.query.sql.dml.SQLInsertClause;
 import com.mysema.query.sql.dml.SQLUpdateClause;
+import com.mysema.query.types.QTuple;
 
 public class MessageStoreImpl implements MessageStore {
 
@@ -58,9 +53,6 @@ public class MessageStoreImpl implements MessageStore {
 
 	@Autowired
 	private QueryDslJdbcOperations queryDslJdbcOperations;
-
-	@Autowired
-	private RowMapperCreator rowMapperCreator;
 
 	@Override
 	public long createMessage(String launcherId, String messageName,
@@ -95,9 +87,8 @@ public class MessageStoreImpl implements MessageStore {
 		querya.where(a.id.eq(messageId));
 		querya.where(a.mailStatus.eq(FlagCode.FALSE.code()));
 		querya.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		RowMapper<MailLog> rowMappera = rowMapperCreator.create(MailLog.class);
-		MailLog maillog = queryDslJdbcOperations.queryForObject(querya,
-				rowMappera, a.fromAddr, a.subject, a.body);
+		Tuple maillog = queryDslJdbcOperations.queryForObject(querya,
+				new QTuple(a.fromAddr, a.subject, a.body));
 		if (maillog == null) {
 			return null;
 		}
@@ -105,10 +96,8 @@ public class MessageStoreImpl implements MessageStore {
 		QMailRcpt b = new QMailRcpt("b");
 		SQLQuery queryb = queryDslJdbcOperations.newSqlQuery();
 		queryb.from(b).where(b.mailId.eq(messageId)).orderBy(b.id.asc());
-		RowMapper<MailRcpt> rowMapperb = rowMapperCreator
-				.create(MailRcpt.class);
-		List<MailRcpt> mailrcpt = queryDslJdbcOperations.query(queryb,
-				rowMapperb, b.rcptType, b.rcptAddr);
+		List<Tuple> mailrcpt = queryDslJdbcOperations.query(queryb, new QTuple(
+				b.rcptType, b.rcptAddr));
 		if (mailrcpt.isEmpty()) {
 			return null;
 		}
@@ -116,16 +105,16 @@ public class MessageStoreImpl implements MessageStore {
 		List<String> to = new ArrayList<>();
 		List<String> cc = new ArrayList<>();
 		List<String> bcc = new ArrayList<>();
-		for (MailRcpt rcpt : mailrcpt) {
-			RcptType type = RcptType.valueOf(rcpt.getRcptType());
+		for (Tuple rcpt : mailrcpt) {
+			RcptType type = RcptType.valueOf(rcpt.get(b.rcptType));
 			if (type == RcptType.TO) {
-				to.add(rcpt.getRcptAddr());
+				to.add(rcpt.get(b.rcptAddr));
 			}
 			if (type == RcptType.CC) {
-				cc.add(rcpt.getRcptAddr());
+				cc.add(rcpt.get(b.rcptAddr));
 			}
 			if (type == RcptType.BCC) {
-				bcc.add(rcpt.getRcptAddr());
+				bcc.add(rcpt.get(b.rcptAddr));
 			}
 		}
 
@@ -133,9 +122,9 @@ public class MessageStoreImpl implements MessageStore {
 		msg.setTo(to.toArray(new String[to.size()]));
 		msg.setCc(cc.toArray(new String[cc.size()]));
 		msg.setBcc(bcc.toArray(new String[bcc.size()]));
-		msg.setFrom(maillog.getFromAddr());
-		msg.setSubject(maillog.getSubject());
-		msg.setText(maillog.getBody());
+		msg.setFrom(maillog.get(a.fromAddr));
+		msg.setSubject(maillog.get(a.subject));
+		msg.setText(maillog.get(a.body));
 		return msg;
 	}
 
@@ -235,25 +224,6 @@ public class MessageStoreImpl implements MessageStore {
 		checkState(count == 1L,
 				"failed to create QMailQueue: mailId={0}, scheduledAt={1}",
 				mailId, scheduledAt);
-	}
-
-	@Setter
-	@Getter
-	@EqualsAndHashCode
-	@ToString
-	public static class MailLog {
-		private String fromAddr;
-		private String subject;
-		private String body;
-	}
-
-	@Setter
-	@Getter
-	@EqualsAndHashCode
-	@ToString
-	private static class MailRcpt {
-		private String rcptType;
-		private String rcptAddr;
 	}
 
 }

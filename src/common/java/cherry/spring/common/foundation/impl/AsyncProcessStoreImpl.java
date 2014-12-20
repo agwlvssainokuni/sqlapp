@@ -16,6 +16,7 @@
 
 package cherry.spring.common.foundation.impl;
 
+import static cherry.foundation.querydsl.QueryDslUtil.adjustSize;
 import static com.google.common.base.Preconditions.checkState;
 import static com.mysema.query.types.expr.DateTimeExpression.currentTimestamp;
 import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
@@ -78,11 +79,14 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 			@Override
 			public long doInSqlInsertClause(SQLInsertClause insert) {
 				insert.set(a.asyncId, asyncId);
-				insert.set(a.paramName, name);
-				insert.set(a.originalFilename, originalFilename);
-				insert.set(a.contentType, contentType);
+				insert.set(a.paramName, adjustSize(name, a.paramName));
+				insert.set(a.originalFilename,
+						adjustSize(originalFilename, a.originalFilename));
+				insert.set(a.contentType,
+						adjustSize(contentType, a.contentType));
 				insert.set(a.fileSize, size);
-				insert.set(a.handlerName, handlerName);
+				insert.set(a.handlerName,
+						adjustSize(handlerName, a.handlerName));
 				return insert.execute();
 			}
 		});
@@ -97,7 +101,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				@Override
 				public long doInSqlInsertClause(SQLInsertClause insert) {
 					insert.set(b.asyncId, asyncId);
-					insert.set(b.argument, arg);
+					insert.set(b.argument, adjustSize(arg, b.argument));
 					return insert.execute();
 				}
 			});
@@ -122,7 +126,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 			@Override
 			public long doInSqlInsertClause(SQLInsertClause insert) {
 				insert.set(a.asyncId, asyncId);
-				insert.set(a.command, command);
+				insert.set(a.command, adjustSize(command, a.command));
 				return insert.execute();
 			}
 		});
@@ -137,7 +141,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				@Override
 				public long doInSqlInsertClause(SQLInsertClause insert) {
 					insert.set(b.asyncId, asyncId);
-					insert.set(b.argument, arg);
+					insert.set(b.argument, adjustSize(arg, b.argument));
 					return insert.execute();
 				}
 			});
@@ -230,7 +234,8 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				public long doInSqlInsertClause(SQLInsertClause insert) {
 					insert.set(b.asyncId, asyncId);
 					insert.set(b.recordNumber, r.getNumber());
-					insert.set(b.description, r.getDescription());
+					insert.set(b.description,
+							adjustSize(r.getDescription(), b.description));
 					return insert.execute();
 				}
 			});
@@ -254,8 +259,8 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 			public long doInSqlInsertClause(SQLInsertClause insert) {
 				insert.set(a.asyncId, asyncId);
 				insert.set(a.exitValue, result.getExitValue());
-				insert.set(a.stdout, result.getStdout());
-				insert.set(a.stderr, result.getStderr());
+				insert.set(a.stdout, adjustSize(result.getStdout(), a.stdout));
+				insert.set(a.stderr, adjustSize(result.getStderr(), a.stderr));
 				return insert.execute();
 			}
 		});
@@ -278,7 +283,8 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 			@Override
 			public long doInSqlInsertClause(SQLInsertClause insert) {
 				insert.set(a.asyncId, asyncId);
-				insert.set(a.exception, throwableToString(th));
+				insert.set(a.exception,
+						adjustSize(throwableToString(th), a.exception));
 				return insert.execute();
 			}
 		});
@@ -296,7 +302,8 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 			@Override
 			public Long doInSqlInsertWithKeyClause(SQLInsertClause insert) {
 				insert.set(a.launchedBy, launcherId);
-				insert.set(a.description, description);
+				insert.set(a.description,
+						adjustSize(description, a.description));
 				insert.set(a.asyncType, asyncType.code());
 				insert.set(a.asyncStatus, AsyncStatus.LAUNCHING.code());
 				insert.set(a.registeredAt, dtm);
