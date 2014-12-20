@@ -1,29 +1,21 @@
-*.class
+# Gradle
+.gradle
+build/
+gradle.properties
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# Maven
+target/
 
-# Package Files #
-*.jar
-*.war
-*.ear
+# Eclipse
+bin/
+.classpath
+.project
+.settings/
+.springBeans
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-
+# misc
+.DS_Store
 *~
 *.swp
 *.zip
 *.tgz
-.DS_Store
-/.gradle
-/gradle-app.setting
-/gradle.properties
-
-/bin
-/.classpath
-/.project
-/.settings
-/.springBeans
-/build
-/target
