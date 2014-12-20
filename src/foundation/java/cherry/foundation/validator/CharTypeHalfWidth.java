@@ -39,7 +39,7 @@ import cherry.foundation.validator.CharType.Mode;
 @ReportAsSingleViolation
 public @interface CharTypeHalfWidth {
 
-	String message() default "{cherry.spring.fwcore.validator.CharTypeHalfWidth.message}";
+	String message() default "{cherry.foundation.validator.CharTypeHalfWidth.message}";
 
 	Class<?>[] groups() default {};
 

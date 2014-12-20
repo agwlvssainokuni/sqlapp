@@ -42,7 +42,7 @@ public @interface MinLength {
 	@OverridesAttribute(constraint = Size.class, name = "min")
 	int value() default 0;
 
-	String message() default "{cherry.spring.fwcore.validator.MinLength.message}";
+	String message() default "{cherry.foundation.validator.MinLength.message}";
 
 	Class<?>[] groups() default {};
 

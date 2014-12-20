@@ -14,18 +14,7 @@
  * limitations under the License.
  */
 
-package cherry.foundation.navi;
+package cherry.foundation.validator.groups;
 
-import static cherry.foundation.AppCtxHolder.getAppCtx;
-
-import java.util.List;
-
-import cherry.foundation.navi.Navigator.Node;
-
-public class NavigatorTag {
-
-	public static List<Node> navigate(String name) {
-		return getAppCtx().getBean(Navigator.class).navigate(name);
-	}
-
+public interface G3 {
 }

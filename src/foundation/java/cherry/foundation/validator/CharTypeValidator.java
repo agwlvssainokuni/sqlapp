@@ -47,9 +47,6 @@ public class CharTypeValidator implements ConstraintValidator<CharType, String> 
 	}
 
 	private int[] createAcceptable(String acceptable) {
-		if (acceptable == null) {
-			return null;
-		}
 		int[] result = new int[acceptable
 				.codePointCount(0, acceptable.length())];
 		for (int i = 0, j = 0; i < acceptable.length(); i++) {

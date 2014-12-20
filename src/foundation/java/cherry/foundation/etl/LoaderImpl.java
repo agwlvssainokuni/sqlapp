@@ -37,10 +37,10 @@ public class LoaderImpl implements Loader {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	/** 読み込み件数。 */
-	private int batchCount;
+	private long batchCount;
 
 	/** エラーを許容する件数。 */
-	private int allowedFailCount;
+	private long allowedFailCount;
 
 	/**
 	 * 読込み件数 を設定する。
@@ -48,7 +48,7 @@ public class LoaderImpl implements Loader {
 	 * @param batchCount
 	 *            読込み件数。
 	 */
-	public void setBatchCount(int batchCount) {
+	public void setBatchCount(long batchCount) {
 		this.batchCount = batchCount;
 	}
 
@@ -58,7 +58,7 @@ public class LoaderImpl implements Loader {
 	 * @param allowedFailCount
 	 *            エラーを許容する件数。
 	 */
-	public void setAllowedFailCount(int allowedFailCount) {
+	public void setAllowedFailCount(long allowedFailCount) {
 		this.allowedFailCount = allowedFailCount;
 	}
 
@@ -92,9 +92,9 @@ public class LoaderImpl implements Loader {
 
 			provider.begin();
 
-			int totalCount = 0;
-			int successCount = 0;
-			int failedCount = 0;
+			long totalCount = 0;
+			long successCount = 0;
+			long failedCount = 0;
 			Map<String, ?> data;
 			while ((data = provider.provide()) != null) {
 

@@ -16,12 +16,13 @@
 
 package cherry.foundation.etl;
 
+import static com.google.common.base.CaseFormat.LOWER_CAMEL;
+import static com.google.common.base.CaseFormat.UPPER_UNDERSCORE;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
 
 import cherry.goods.csv.CsvParser;
 
@@ -73,18 +74,7 @@ public class CsvProvider implements Provider {
 
 		fieldName = new String[header.length];
 		for (int i = 0; i < header.length; i++) {
-			boolean first = true;
-			StringBuilder builder = new StringBuilder();
-			for (String part : StringUtils.split(header[i], "_")) {
-				if (first) {
-					builder.append(StringUtils.lowerCase(part));
-				} else {
-					builder.append(StringUtils.capitalize(StringUtils
-							.lowerCase(part)));
-				}
-				first = false;
-			}
-			fieldName[i] = builder.toString();
+			fieldName[i] = UPPER_UNDERSCORE.to(LOWER_CAMEL, header[i]);
 		}
 	}
 

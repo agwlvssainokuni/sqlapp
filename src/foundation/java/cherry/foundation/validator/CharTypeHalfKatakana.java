@@ -39,7 +39,7 @@ import cherry.foundation.validator.CharType.Mode;
 @ReportAsSingleViolation
 public @interface CharTypeHalfKatakana {
 
-	String message() default "{cherry.spring.fwcore.validator.CharTypeHalfKatakana.message}";
+	String message() default "{cherry.foundation.validator.CharTypeHalfKatakana.message}";
 
 	Class<?>[] groups() default {};
 

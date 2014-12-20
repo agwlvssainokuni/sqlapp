@@ -16,8 +16,9 @@
 
 package cherry.foundation.type.format;
 
+import static java.util.Arrays.asList;
+
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -57,7 +58,7 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 
 	private String delimiterToParse;
 
-	private Set<Class<?>> fieldTypes = new HashSet<Class<?>>(Arrays.asList(
+	private final Set<Class<?>> fieldTypes = new HashSet<Class<?>>(asList(
 			LocalDate.class, LocalTime.class, LocalDateTime.class,
 			DateTime.class));
 
@@ -87,10 +88,6 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 
 	public void setDelimiterToParse(String delimiterToParse) {
 		this.delimiterToParse = delimiterToParse;
-	}
-
-	public void setFieldTypes(Set<Class<?>> fieldTypes) {
-		this.fieldTypes = fieldTypes;
 	}
 
 	@Override

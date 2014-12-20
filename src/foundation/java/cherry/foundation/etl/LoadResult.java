@@ -25,13 +25,13 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class LoadResult {
 
 	/** 読込んだデータの件数。 */
-	private int totalCount;
+	private long totalCount;
 
 	/** 取込みに成功したデータの件数。 */
-	private int successCount;
+	private long successCount;
 
 	/** 取込みに失敗したデータの件数。 */
-	private int failedCount;
+	private long failedCount;
 
 	@Override
 	public String toString() {
@@ -39,27 +39,27 @@ public class LoadResult {
 				ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
-	public int getTotalCount() {
+	public long getTotalCount() {
 		return totalCount;
 	}
 
-	public void setTotalCount(int totalCount) {
+	public void setTotalCount(long totalCount) {
 		this.totalCount = totalCount;
 	}
 
-	public int getSuccessCount() {
+	public long getSuccessCount() {
 		return successCount;
 	}
 
-	public void setSuccessCount(int successCount) {
+	public void setSuccessCount(long successCount) {
 		this.successCount = successCount;
 	}
 
-	public int getFailedCount() {
+	public long getFailedCount() {
 		return failedCount;
 	}
 
-	public void setFailedCount(int failedCount) {
+	public void setFailedCount(long failedCount) {
 		this.failedCount = failedCount;
 	}
 

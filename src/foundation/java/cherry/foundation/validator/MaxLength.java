@@ -42,7 +42,7 @@ public @interface MaxLength {
 	@OverridesAttribute(constraint = Size.class, name = "max")
 	int value() default Integer.MAX_VALUE;
 
-	String message() default "{cherry.spring.fwcore.validator.MaxLength.message}";
+	String message() default "{cherry.foundation.validator.MaxLength.message}";
 
 	Class<?>[] groups() default {};
 
