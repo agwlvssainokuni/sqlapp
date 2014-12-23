@@ -20,18 +20,7 @@ public class SecureString extends SecureTypeBase<String> {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Encoder<String> encoder = new Encoder<String>() {
-
-		@Override
-		public String encode(String s) {
-			return s;
-		}
-
-		@Override
-		public String decode(String s) {
-			return s;
-		}
-	};
+	private static Encoder<String> encoder;
 
 	public static Encoder<String> setEncoder(Encoder<String> e) {
 		encoder = e;
@@ -48,6 +37,19 @@ public class SecureString extends SecureTypeBase<String> {
 
 	private SecureString(String p, String c, Encoder<String> e) {
 		super(p, c, e);
+	}
+
+	public static class NoneEncoder implements Encoder<String> {
+
+		@Override
+		public String encode(String s) {
+			return s;
+		}
+
+		@Override
+		public String decode(String s) {
+			return s;
+		}
 	}
 
 }

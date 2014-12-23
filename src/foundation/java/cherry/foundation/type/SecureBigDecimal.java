@@ -22,7 +22,26 @@ public class SecureBigDecimal extends SecureTypeBase<BigDecimal> {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Encoder<BigDecimal> encoder = new Encoder<BigDecimal>() {
+	private static Encoder<BigDecimal> encoder;
+
+	public static Encoder<BigDecimal> setEncoder(Encoder<BigDecimal> e) {
+		encoder = e;
+		return encoder;
+	}
+
+	public static SecureBigDecimal plainValueOf(BigDecimal bd) {
+		return new SecureBigDecimal(bd, null, encoder);
+	}
+
+	public static SecureBigDecimal cryptoValueOf(String s) {
+		return new SecureBigDecimal(null, s, encoder);
+	}
+
+	private SecureBigDecimal(BigDecimal p, String c, Encoder<BigDecimal> e) {
+		super(p, c, e);
+	}
+
+	public static class NoneEncoder implements Encoder<BigDecimal> {
 
 		@Override
 		public String encode(BigDecimal bd) {
@@ -41,23 +60,6 @@ public class SecureBigDecimal extends SecureTypeBase<BigDecimal> {
 				return new BigDecimal(s);
 			}
 		}
-	};
-
-	public static Encoder<BigDecimal> setEncoder(Encoder<BigDecimal> e) {
-		encoder = e;
-		return encoder;
-	}
-
-	public static SecureBigDecimal plainValueOf(BigDecimal bd) {
-		return new SecureBigDecimal(bd, null, encoder);
-	}
-
-	public static SecureBigDecimal cryptoValueOf(String s) {
-		return new SecureBigDecimal(null, s, encoder);
-	}
-
-	private SecureBigDecimal(BigDecimal p, String c, Encoder<BigDecimal> e) {
-		super(p, c, e);
 	}
 
 }

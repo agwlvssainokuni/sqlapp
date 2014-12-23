@@ -20,7 +20,26 @@ public class SecureInteger extends SecureTypeBase<Integer> {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Encoder<Integer> encoder = new Encoder<Integer>() {
+	private static Encoder<Integer> encoder;
+
+	public static Encoder<Integer> setEncoder(Encoder<Integer> e) {
+		encoder = e;
+		return encoder;
+	}
+
+	public static SecureInteger plainValueOf(Integer i) {
+		return new SecureInteger(i, null, encoder);
+	}
+
+	public static SecureInteger cryptoValueOf(String s) {
+		return new SecureInteger(null, s, encoder);
+	}
+
+	private SecureInteger(Integer p, String c, Encoder<Integer> e) {
+		super(p, c, e);
+	}
+
+	public static class NoneEncoder implements Encoder<Integer> {
 
 		@Override
 		public String encode(Integer i) {
@@ -39,23 +58,6 @@ public class SecureInteger extends SecureTypeBase<Integer> {
 				return Integer.parseInt(s);
 			}
 		}
-	};
-
-	public static Encoder<Integer> setEncoder(Encoder<Integer> e) {
-		encoder = e;
-		return encoder;
-	}
-
-	public static SecureInteger plainValueOf(Integer i) {
-		return new SecureInteger(i, null, encoder);
-	}
-
-	public static SecureInteger cryptoValueOf(String s) {
-		return new SecureInteger(null, s, encoder);
-	}
-
-	private SecureInteger(Integer p, String c, Encoder<Integer> e) {
-		super(p, c, e);
 	}
 
 }

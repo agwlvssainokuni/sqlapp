@@ -36,12 +36,16 @@ public class LogicalErrorUtil {
 		return new DefaultMessageSourceResolvable(code);
 	}
 
+	public static void rejectOnOneTimeTokenError(BindingResult binding) {
+		reject(binding, LogicalError.OneTimeTokenError);
+	}
+
 	public static void rejectOnOptimisticLockError(BindingResult binding) {
 		reject(binding, LogicalError.OptimisticLockError);
 	}
 
-	public static void rejectOnOneTimeTokenError(BindingResult binding) {
-		reject(binding, LogicalError.OneTimeTokenError);
+	public static void rejectOnSearchResultEmpty(BindingResult binding) {
+		reject(binding, LogicalError.SearchResultEmpty);
 	}
 
 }

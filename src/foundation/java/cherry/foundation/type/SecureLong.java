@@ -20,7 +20,26 @@ public class SecureLong extends SecureTypeBase<Long> {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Encoder<Long> encoder = new Encoder<Long>() {
+	private static Encoder<Long> encoder;
+
+	public static Encoder<Long> setEncoder(Encoder<Long> e) {
+		encoder = e;
+		return encoder;
+	}
+
+	public static SecureLong plainValueOf(Long l) {
+		return new SecureLong(l, null, encoder);
+	}
+
+	public static SecureLong cryptoValueOf(String s) {
+		return new SecureLong(null, s, encoder);
+	}
+
+	private SecureLong(Long p, String c, Encoder<Long> e) {
+		super(p, c, e);
+	}
+
+	public static class NoneEncoder implements Encoder<Long> {
 
 		@Override
 		public String encode(Long l) {
@@ -39,23 +58,6 @@ public class SecureLong extends SecureTypeBase<Long> {
 				return Long.parseLong(s);
 			}
 		}
-	};
-
-	public static Encoder<Long> setEncoder(Encoder<Long> e) {
-		encoder = e;
-		return encoder;
-	}
-
-	public static SecureLong plainValueOf(Long l) {
-		return new SecureLong(l, null, encoder);
-	}
-
-	public static SecureLong cryptoValueOf(String s) {
-		return new SecureLong(null, s, encoder);
-	}
-
-	private SecureLong(Long p, String c, Encoder<Long> e) {
-		super(p, c, e);
 	}
 
 }

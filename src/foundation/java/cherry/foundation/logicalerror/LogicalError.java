@@ -17,10 +17,11 @@
 package cherry.foundation.logicalerror;
 
 public enum LogicalError implements ILogicalError {
-	OptimisticLockError, OneTimeTokenError;
+	OneTimeTokenError, OptimisticLockError, SearchResultEmpty;
 
 	@Override
 	public String code() {
 		return name();
 	}
+
 }

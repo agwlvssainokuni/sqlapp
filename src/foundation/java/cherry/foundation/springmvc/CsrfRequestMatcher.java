@@ -45,7 +45,7 @@ public class CsrfRequestMatcher implements RequestMatcher {
 			return false;
 		}
 		for (RequestMatcher matcher : excludes) {
-			if (!matcher.matches(request)) {
+			if (matcher.matches(request)) {
 				return false;
 			}
 		}

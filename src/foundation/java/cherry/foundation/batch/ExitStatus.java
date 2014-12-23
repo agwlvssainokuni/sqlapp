@@ -32,7 +32,7 @@ public enum ExitStatus {
 	/** 警告終了 (1) */
 	WARN(1),
 	/** 異常修了 (-1) */
-	ERROR(1),
+	ERROR(-1),
 	/** 致命的異常 (-2) */
 	FATAL(-2);
 

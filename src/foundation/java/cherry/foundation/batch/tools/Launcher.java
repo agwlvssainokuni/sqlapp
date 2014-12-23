@@ -34,10 +34,18 @@ import cherry.foundation.batch.IBatch;
  */
 public class Launcher {
 
-	/** アプリケーションコンテキスト定義ファイルのパス。 */
-	public static final String APPCTX = "classpath:config/applicationContext.xml";
+	/** アプリケーションコンテキスト定義ファイルのパスを指定するシステムプロパティ名。 */
+	public static final String APPCTX_SYSPROP = "batch.appCtx";
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+	/** アプリケーションコンテキスト定義ファイルのパスのデフォルト値。 */
+	public static final String APPCTX_DEFAULT = "classpath:config/applicationContext.xml";
+
+	/** ログ出力。 */
+	private final Logger log = LoggerFactory.getLogger(getClass());
+
+	/** アプリケーションコンテキスト定義ファイルのパス。 */
+	private final String APPCTX = System.getProperty(APPCTX_SYSPROP,
+			APPCTX_DEFAULT);
 
 	/** 起動すべきバッチプログラムの識別名を保持する。 */
 	private String batchId;

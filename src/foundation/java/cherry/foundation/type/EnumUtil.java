@@ -16,8 +16,6 @@
 
 package cherry.foundation.type;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,8 +56,6 @@ public class EnumUtil {
 
 	public static <E extends Enum<E>> List<LabeledEnum<E>> getLabeledEnumList(
 			Class<E> type) {
-		checkArgument(type.getEnumConstants() != null,
-				"%s does not represent an enum type.", type.getSimpleName());
 		List<LabeledEnum<E>> list = new ArrayList<>();
 		for (E e : type.getEnumConstants()) {
 			list.add(getLabeledEnum(e));

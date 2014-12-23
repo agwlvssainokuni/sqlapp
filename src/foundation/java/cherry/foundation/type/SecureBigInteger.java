@@ -22,7 +22,26 @@ public class SecureBigInteger extends SecureTypeBase<BigInteger> {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Encoder<BigInteger> encoder = new Encoder<BigInteger>() {
+	private static Encoder<BigInteger> encoder;
+
+	public static Encoder<BigInteger> setEncoder(Encoder<BigInteger> e) {
+		encoder = e;
+		return encoder;
+	}
+
+	public static SecureBigInteger plainValueOf(BigInteger bi) {
+		return new SecureBigInteger(bi, null, encoder);
+	}
+
+	public static SecureBigInteger cryptoValueOf(String s) {
+		return new SecureBigInteger(null, s, encoder);
+	}
+
+	private SecureBigInteger(BigInteger p, String c, Encoder<BigInteger> e) {
+		super(p, c, e);
+	}
+
+	public static class NoneEncoder implements Encoder<BigInteger> {
 
 		@Override
 		public String encode(BigInteger bi) {
@@ -41,23 +60,6 @@ public class SecureBigInteger extends SecureTypeBase<BigInteger> {
 				return new BigInteger(s);
 			}
 		}
-	};
-
-	public static Encoder<BigInteger> setEncoder(Encoder<BigInteger> e) {
-		encoder = e;
-		return encoder;
-	}
-
-	public static SecureBigInteger plainValueOf(BigInteger bi) {
-		return new SecureBigInteger(bi, null, encoder);
-	}
-
-	public static SecureBigInteger cryptoValueOf(String s) {
-		return new SecureBigInteger(null, s, encoder);
-	}
-
-	private SecureBigInteger(BigInteger p, String c, Encoder<BigInteger> e) {
-		super(p, c, e);
 	}
 
 }
