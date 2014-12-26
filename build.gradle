@@ -126,8 +126,7 @@ sourceSets.main {
 		srcDir "src/goods/java"
 		srcDir "src/foundation/java"
 		srcDir "src/common/java"
-		srcDir "src/mybatis/java"
-		srcDir "src/querydsl/java"
+		srcDir "src/generated/java"
 	}
 	resources {
 		srcDir "src/main/java"
@@ -136,8 +135,7 @@ sourceSets.main {
 		srcDir "src/foundation/resources"
 		srcDir "src/common/java"
 		srcDir "src/common/resources"
-		srcDir "src/mybatis/java"
-		srcDir "src/querydsl/java"
+		srcDir "src/generated/java"
 	}
 }
 sourceSets.test.resources.srcDir "src/test/java"
