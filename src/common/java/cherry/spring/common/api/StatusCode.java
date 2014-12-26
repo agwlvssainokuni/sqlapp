@@ -14,18 +14,19 @@
  * limitations under the License.
  */
 
-package cherry.spring.common.helper.signup;
+package cherry.spring.common.api;
 
-import org.joda.time.LocalDateTime;
+public enum StatusCode {
+	OK(0), WARN(1), ERROR(2);
 
-public interface SignupRequestHelper {
+	private int value;
 
-	int createSignupRequest(String mailAddr, String token,
-			LocalDateTime appliedAt);
+	private StatusCode(int value) {
+		this.value = value;
+	}
 
-	boolean validateMailAddr(String mailAddr, LocalDateTime intervalFrom,
-			LocalDateTime rangeFrom, int numOfReq);
-
-	boolean validateToken(String mailAddr, String token, LocalDateTime validFrom);
+	public int getValue() {
+		return value;
+	}
 
 }

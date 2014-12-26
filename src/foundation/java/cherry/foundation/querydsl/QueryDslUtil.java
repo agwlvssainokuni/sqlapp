@@ -46,7 +46,7 @@ public class QueryDslUtil {
 		} else if (value.length() <= metadata.getSize()) {
 			return value;
 		} else {
-			return value.substring(0, metadata.getSize() + 1);
+			return value.substring(0, metadata.getSize());
 		}
 	}
 
