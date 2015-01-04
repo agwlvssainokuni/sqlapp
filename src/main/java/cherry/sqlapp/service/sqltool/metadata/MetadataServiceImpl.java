@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.querydsl.QueryConfigurer;
-import cherry.foundation.querydsl.SQLQueryHelper;
+import cherry.foundation.querydsl.QueryDslSupport;
 import cherry.foundation.type.DeletedFlag;
 import cherry.foundation.type.FlagCode;
 import cherry.foundation.type.jdbc.RowMapperCreator;
@@ -46,7 +46,7 @@ public class MetadataServiceImpl implements MetadataService {
 	private SqltoolMetadataDao sqltoolMetadataDao;
 
 	@Autowired
-	private SQLQueryHelper sqlQueryHelper;
+	private QueryDslSupport queryDslSupport;
 
 	@Autowired
 	private RowMapperCreator rowMapperCreator;
@@ -76,7 +76,7 @@ public class MetadataServiceImpl implements MetadataService {
 	public PagedList<SqltoolMetadata> search(MetadataCondition cond,
 			long pageNo, long pageSz) {
 		QSqltoolMetadata m = new QSqltoolMetadata("m");
-		return sqlQueryHelper.search(commonClause(m, cond),
+		return queryDslSupport.search(commonClause(m, cond),
 				orderByClause(m, cond), pageNo, pageSz,
 				rowMapperCreator.create(SqltoolMetadata.class), getColumns(m));
 	}
