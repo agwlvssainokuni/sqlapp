@@ -114,6 +114,12 @@
 	<!-- アプリケーションコンテキスト照会設定 -->
 	<bean class="cherry.foundation.AppCtxHolder" />
 
+	<!-- メッセージソースユーティリティ設定 -->
+	<bean class="cherry.foundation.util.MessageSourceUtil"
+		factory-method="setMessageSource">
+		<constructor-arg ref="messageSource" />
+	</bean>
+
 	<!-- パスワードハッシュ設定 -->
 	<bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
@@ -134,7 +140,7 @@
 	<bean id="sqlParameterSourceCreator"
 		class="cherry.foundation.type.jdbc.CustomBeanPropertySqlParameterSourceCreator" />
 
-	<bean id="sqlQueryHelper" class="cherry.foundation.querydsl.SQLQueryHelperImpl">
+	<bean id="queryDslSupport" class="cherry.foundation.querydsl.QueryDslSupportImpl">
 		<property name="queryDslJdbcOperations" ref="queryDslJdbcOperations" />
 		<property name="paginator" ref="paginator" />
 	</bean>

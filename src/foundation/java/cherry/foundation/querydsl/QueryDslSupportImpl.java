@@ -31,12 +31,10 @@ import cherry.goods.paginate.PageSet;
 import cherry.goods.paginate.PagedList;
 import cherry.goods.paginate.Paginator;
 
-import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.types.Expression;
-import com.mysema.query.types.QTuple;
 
-public class SQLQueryHelperImpl implements SQLQueryHelper {
+public class QueryDslSupportImpl implements QueryDslSupport {
 
 	private QueryDslJdbcOperations queryDslJdbcOperations;
 
@@ -73,9 +71,9 @@ public class SQLQueryHelperImpl implements SQLQueryHelper {
 	}
 
 	@Override
-	public PagedList<Tuple> search(QueryConfigurer commonClause,
+	public <T> PagedList<T> search(QueryConfigurer commonClause,
 			QueryConfigurer orderByClause, long pageNo, long pageSz,
-			Expression<?>... expressions) {
+			Expression<T> expression) {
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query = commonClause.configure(query);
@@ -84,10 +82,9 @@ public class SQLQueryHelperImpl implements SQLQueryHelper {
 		PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
 		query.limit(pageSz).offset(pageSet.getCurrent().getFrom());
 		query = orderByClause.configure(query);
-		List<Tuple> list = queryDslJdbcOperations.query(query, new QTuple(
-				expressions));
+		List<T> list = queryDslJdbcOperations.query(query, expression);
 
-		PagedList<Tuple> result = new PagedList<>();
+		PagedList<T> result = new PagedList<>();
 		result.setPageSet(pageSet);
 		result.setList(list);
 		return result;

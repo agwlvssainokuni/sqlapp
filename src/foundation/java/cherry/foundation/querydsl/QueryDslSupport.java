@@ -25,18 +25,17 @@ import cherry.foundation.etl.Limiter;
 import cherry.foundation.etl.LimiterException;
 import cherry.goods.paginate.PagedList;
 
-import com.mysema.query.Tuple;
 import com.mysema.query.types.Expression;
 
-public interface SQLQueryHelper {
+public interface QueryDslSupport {
 
 	<T> PagedList<T> search(QueryConfigurer commonClause,
 			QueryConfigurer orderByClause, long pageNo, long pageSz,
 			RowMapper<T> rowMapper, Expression<?>... expressions);
 
-	PagedList<Tuple> search(QueryConfigurer commonClause,
+	<T> PagedList<T> search(QueryConfigurer commonClause,
 			QueryConfigurer orderByClause, long pageNo, long pageSz,
-			Expression<?>... expressions);
+			Expression<T> expression);
 
 	long download(QueryConfigurer commonClause, QueryConfigurer orderByClause,
 			Consumer consumer, Limiter limiter, Expression<?>... expressions)

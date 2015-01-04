@@ -25,6 +25,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.joda.time.LocalTime;
+
 import cherry.goods.paginate.PagedList;
 
 import com.mysema.query.Tuple;
@@ -33,8 +37,23 @@ import com.mysema.query.types.Expression;
 import com.mysema.query.types.Operation;
 import com.mysema.query.types.Ops;
 import com.mysema.query.types.Path;
+import com.mysema.query.types.expr.DateExpression;
+import com.mysema.query.types.expr.DateTimeExpression;
+import com.mysema.query.types.expr.TimeExpression;
 
 public class QueryDslUtil {
+
+	public static DateExpression<LocalDate> currentDate() {
+		return DateExpression.currentDate(LocalDate.class);
+	}
+
+	public static TimeExpression<LocalTime> currentTime() {
+		return TimeExpression.currentTime(LocalTime.class);
+	}
+
+	public static DateTimeExpression<LocalDateTime> currentTimestamp() {
+		return DateTimeExpression.currentTimestamp(LocalDateTime.class);
+	}
 
 	public static String adjustSize(String value, Path<?> path) {
 		if (value == null) {
