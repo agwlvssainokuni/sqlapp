@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -108,10 +108,8 @@ public class CharTypeValidator {
 	 * 文字の種類を判別する機能を提供する。<br />
 	 * 実態は{@link CharType}が提供するメソッドへの振分けである (ファサードとして位置付ける)。
 	 * 
-	 * @param codePoint
-	 *            対象文字 (コードポイントで指定すること)。
-	 * @param mode
-	 *            文字種指定。文字種は複数指定可能であり、下記の組合せ ("|"でマスクを組合せる) で指定することとする。
+	 * @param codePoint 対象文字 (コードポイントで指定すること)。
+	 * @param mode 文字種指定。文字種は複数指定可能であり、下記の組合せ ("|"でマスクを組合せる) で指定することとする。
 	 *            <ul>
 	 *            <li>{@link #BASIC_LATIN}</li>
 	 *            <li>{@link #HALF_WIDTH}</li>
@@ -187,13 +185,10 @@ public class CharTypeValidator {
 	/**
 	 * 文字の種類を判別する機能を提供する。<br />
 	 * 実態は{@link CharType}が提供するメソッドへの振分けである (ファサードとして位置付ける)。<br />
-	 * 基本的な機能は{@link #isValid(int, int)}
-	 * と同等であり、これに加えて、許容文字として指定した文字も文字種が合致したものとして判定する。
+	 * 基本的な機能は{@link #isValid(int, int)} と同等であり、これに加えて、許容文字として指定した文字も文字種が合致したものとして判定する。
 	 * 
-	 * @param codePoint
-	 *            対象文字 (コードポイントで指定すること)。
-	 * @param mode
-	 *            文字種指定。文字種は複数指定可能であり、下記の組合せ ("|"でマスクを組合せる) で指定することとする。
+	 * @param codePoint 対象文字 (コードポイントで指定すること)。
+	 * @param mode 文字種指定。文字種は複数指定可能であり、下記の組合せ ("|"でマスクを組合せる) で指定することとする。
 	 *            <ul>
 	 *            <li>{@link #BASIC_LATIN}</li>
 	 *            <li>{@link #HALF_WIDTH}</li>
@@ -212,8 +207,7 @@ public class CharTypeValidator {
 	 *            <li>{@link #FULL_KATAKANA}</li>
 	 *            <li>{@link #HALF_KATAKANA}</li>
 	 *            </ul>
-	 * @param acceptable
-	 *            許容文字。文字種指定で指定した文字種に加えて、当引数に指定した文字も文字種が合致したものとして判定する。
+	 * @param acceptable 許容文字。文字種指定で指定した文字種に加えて、当引数に指定した文字も文字種が合致したものとして判定する。
 	 * @return 対象文字が、文字種指定で指定された文字種のいずれか、または、許容文字に含まれるならば真(true)、さもなくば、偽(false)。
 	 */
 	public static boolean isValid(int codePoint, int mode, int[] acceptable) {
@@ -233,10 +227,8 @@ public class CharTypeValidator {
 	/**
 	 * 文字列を構成する文字の種類を判別する機能を提供する。<br />
 	 * 
-	 * @param seq
-	 *            対象文字列。
-	 * @param mode
-	 *            文字種指定。文字種は複数指定可能であり、下記の組合せ ("|"でマスクを組合せる) で指定することとする。
+	 * @param seq 対象文字列。
+	 * @param mode 文字種指定。文字種は複数指定可能であり、下記の組合せ ("|"でマスクを組合せる) で指定することとする。
 	 *            <ul>
 	 *            <li>{@link #BASIC_LATIN}</li>
 	 *            <li>{@link #HALF_WIDTH}</li>
@@ -255,13 +247,10 @@ public class CharTypeValidator {
 	 *            <li>{@link #FULL_KATAKANA}</li>
 	 *            <li>{@link #HALF_KATAKANA}</li>
 	 *            </ul>
-	 * @param acceptable
-	 *            許容文字。文字種指定で指定した文字種に加えて、当引数に指定した文字も文字種が合致したものとして判定する。
-	 * @return 対象文字列を構成する全ての文字が、文字種指定で指定された文字種のいずれか、または、許容文字に含まれるならば真(true)、
-	 *         さもなくば、偽 (false )。
+	 * @param acceptable 許容文字。文字種指定で指定した文字種に加えて、当引数に指定した文字も文字種が合致したものとして判定する。
+	 * @return 対象文字列を構成する全ての文字が、文字種指定で指定された文字種のいずれか、または、許容文字に含まれるならば真(true)、 さもなくば、偽 (false )。
 	 */
-	public static CharTypeResult validate(CharSequence seq, int mode,
-			int[] acceptable) {
+	public static CharTypeResult validate(CharSequence seq, int mode, int[] acceptable) {
 		for (int i = 0; i < seq.length(); i++) {
 			if (isLowSurrogate(seq.charAt(i))) {
 				continue;
@@ -277,8 +266,7 @@ public class CharTypeValidator {
 	/**
 	 * 文字種判別「半角文字(半角カナ含まず)」。
 	 * 
-	 * @param codePoint
-	 *            対象文字 (コードポイントで指定すること)。
+	 * @param codePoint 対象文字 (コードポイントで指定すること)。
 	 * @return 対象文字が「半角文字(半角カナ含まず)」であれば真(true)、さもなくば、偽(false)。
 	 */
 	public static boolean isBasicLatin(int codePoint) {
@@ -288,8 +276,7 @@ public class CharTypeValidator {
 	/**
 	 * 文字種判別「半角文字(半角カナ含む)」。
 	 * 
-	 * @param codePoint
-	 *            対象文字 (コードポイントで指定すること)。
+	 * @param codePoint 対象文字 (コードポイントで指定すること)。
 	 * @return 対象文字が「半角文字(半角カナ含む)」であれば真(true)、さもなくば、偽(false)。
 	 */
 	public static boolean isHalfWidth(int codePoint) {
@@ -299,8 +286,7 @@ public class CharTypeValidator {
 	/**
 	 * 文字種判別「全角文字」。
 	 * 
-	 * @param codePoint
-	 *            対象文字 (コードポイントで指定すること)。
+	 * @param codePoint 対象文字 (コードポイントで指定すること)。
 	 * @return 対象文字が「全角文字」であれば真(true)、さもなくば、偽(false)。
 	 */
 	public static boolean isFullWidth(int codePoint) {
@@ -310,20 +296,17 @@ public class CharTypeValidator {
 	/**
 	 * 文字種判別「半角空白」。
 	 * 
-	 * @param codePoint
-	 *            対象文字 (コードポイントで指定すること)。
+	 * @param codePoint 対象文字 (コードポイントで指定すること)。
 	 * @return 対象文字が「半角空白」であれば真(true)、さもなくば、偽(false)。
 	 */
 	public static boolean isSpace(int codePoint) {
-		return of(codePoint) == UnicodeBlock.BASIC_LATIN
-				&& isWhitespace(codePoint);
+		return of(codePoint) == UnicodeBlock.BASIC_LATIN && isWhitespace(codePoint);
 	}
 
 	/**
 	 * 文字種判別「半角数字」。
 	 * 
-	 * @param codePoint
-	 *            対象文字 (コードポイントで指定すること)。
+	 * @param codePoint 対象文字 (コードポイントで指定すること)。
 	 * @return 対象文字が「半角数字」であれば真(true)、さもなくば、偽(false)。
 	 */
 	public static boolean isNumeric(int codePoint) {
@@ -333,104 +316,90 @@ public class CharTypeValidator {
 	/**
 	 * 文字種判別「半角英字」。
 	 * 
-	 * @param codePoint
-	 *            対象文字 (コードポイントで指定すること)。
+	 * @param codePoint 対象文字 (コードポイントで指定すること)。
 	 * @return 対象文字が「半角英字」であれば真(true)、さもなくば、偽(false)。
 	 */
 	public static boolean isAlpha(int codePoint) {
-		return of(codePoint) == UnicodeBlock.BASIC_LATIN
-				&& isAlphabetic(codePoint);
+		return of(codePoint) == UnicodeBlock.BASIC_LATIN && isAlphabetic(codePoint);
 	}
 
 	/**
 	 * 文字種判別「半角英字大文字」。
 	 * 
-	 * @param codePoint
-	 *            対象文字 (コードポイントで指定すること)。
+	 * @param codePoint 対象文字 (コードポイントで指定すること)。
 	 * @return 対象文字が「半角英字大文字」であれば真(true)、さもなくば、偽(false)。
 	 */
 	public static boolean isUpper(int codePoint) {
-		return of(codePoint) == UnicodeBlock.BASIC_LATIN
-				&& isUpperCase(codePoint);
+		return of(codePoint) == UnicodeBlock.BASIC_LATIN && isUpperCase(codePoint);
 	}
 
 	/**
 	 * 文字種判別「半角英字小文字」。
 	 * 
-	 * @param codePoint
-	 *            対象文字 (コードポイントで指定すること)。
+	 * @param codePoint 対象文字 (コードポイントで指定すること)。
 	 * @return 対象文字が「半角英字小文字」であれば真(true)、さもなくば、偽(false)。
 	 */
 	public static boolean isLower(int codePoint) {
-		return of(codePoint) == UnicodeBlock.BASIC_LATIN
-				&& isLowerCase(codePoint);
+		return of(codePoint) == UnicodeBlock.BASIC_LATIN && isLowerCase(codePoint);
 	}
 
 	/**
 	 * 文字種判別「全角空白」。
 	 * 
-	 * @param codePoint
-	 *            対象文字 (コードポイントで指定すること)。
+	 * @param codePoint 対象文字 (コードポイントで指定すること)。
 	 * @return 対象文字が「全角空白」であれば真(true)、さもなくば、偽(false)。
 	 */
 	public static boolean isFullSpace(int codePoint) {
-		return of(codePoint) != UnicodeBlock.BASIC_LATIN
-				&& isWhitespace(codePoint);
+		return of(codePoint) != UnicodeBlock.BASIC_LATIN && isWhitespace(codePoint);
 	}
 
 	/**
 	 * 文字種判別「全角数字」。
 	 * 
-	 * @param codePoint
-	 *            対象文字 (コードポイントで指定すること)。
+	 * @param codePoint 対象文字 (コードポイントで指定すること)。
 	 * @return 対象文字が「全角数字」であれば真(true)、さもなくば、偽(false)。
 	 */
 	public static boolean isFullNumeric(int codePoint) {
-		return of(codePoint) == UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS
-				&& isDigit(codePoint);
+		return of(codePoint) == UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS && isDigit(codePoint);
 	}
 
 	/**
 	 * 文字種判別「全角英字」。
 	 * 
-	 * @param codePoint
-	 *            対象文字 (コードポイントで指定すること)。
+	 * @param codePoint 対象文字 (コードポイントで指定すること)。
 	 * @return 対象文字が「全角英字」であれば真(true)、さもなくば、偽(false)。
 	 */
 	public static boolean isFullAlpha(int codePoint) {
-		return of(codePoint) == UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS
-				&& isAlphabetic(codePoint) && !isHalfKatakana(codePoint);
+		return of(codePoint) == UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS && isAlphabetic(codePoint)
+				&& !isHalfKatakana(codePoint);
 	}
 
 	/**
 	 * 文字種判別「全角英字大文字」。
 	 * 
-	 * @param codePoint
-	 *            対象文字 (コードポイントで指定すること)。
+	 * @param codePoint 対象文字 (コードポイントで指定すること)。
 	 * @return 対象文字が「全角英字大文字」であれば真(true)、さもなくば、偽(false)。
 	 */
 	public static boolean isFullUpper(int codePoint) {
-		return of(codePoint) == UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS
-				&& isUpperCase(codePoint) && !isHalfKatakana(codePoint);
+		return of(codePoint) == UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS && isUpperCase(codePoint)
+				&& !isHalfKatakana(codePoint);
 	}
 
 	/**
 	 * 文字種判別「全角英字小文字」。
 	 * 
-	 * @param codePoint
-	 *            対象文字 (コードポイントで指定すること)。
+	 * @param codePoint 対象文字 (コードポイントで指定すること)。
 	 * @return 対象文字が「全角英字小文字」であれば真(true)、さもなくば、偽(false)。
 	 */
 	public static boolean isFullLower(int codePoint) {
-		return of(codePoint) == UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS
-				&& isLowerCase(codePoint) && !isHalfKatakana(codePoint);
+		return of(codePoint) == UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS && isLowerCase(codePoint)
+				&& !isHalfKatakana(codePoint);
 	}
 
 	/**
 	 * 文字種判別「全角ひらがな」。
 	 * 
-	 * @param codePoint
-	 *            対象文字 (コードポイントで指定すること)。
+	 * @param codePoint 対象文字 (コードポイントで指定すること)。
 	 * @return 対象文字が「全角ひらがな」であれば真(true)、さもなくば、偽(false)。
 	 */
 	public static boolean isFullHiragana(int codePoint) {
@@ -447,8 +416,7 @@ public class CharTypeValidator {
 	/**
 	 * 文字種判別「全角カタカナ」。
 	 * 
-	 * @param codePoint
-	 *            対象文字 (コードポイントで指定すること)。
+	 * @param codePoint 対象文字 (コードポイントで指定すること)。
 	 * @return 対象文字が「全角カタカナ」であれば真(true)、さもなくば、偽(false)。
 	 */
 	public static boolean isFullKatakana(int codePoint) {
@@ -468,8 +436,7 @@ public class CharTypeValidator {
 	/**
 	 * 文字種判別「半角カタカナ」。
 	 * 
-	 * @param codePoint
-	 *            対象文字 (コードポイントで指定すること)。
+	 * @param codePoint 対象文字 (コードポイントで指定すること)。
 	 * @return 対象文字が「半角カタカナ」であれば真(true)、さもなくば、偽(false)。
 	 */
 	public static boolean isHalfKatakana(int codePoint) {

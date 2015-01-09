@@ -1,5 +1,5 @@
 /*
- * Copyright 2012,2014 agwlvssainokuni
+ * Copyright 2012,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,37 +30,35 @@ import ch.qos.logback.classic.spi.StackTraceElementProxy;
 import ch.qos.logback.core.UnsynchronizedAppenderBase;
 
 /**
- * Logbackに出力されたログをfluentdサーバに転送する.
+ * Logbackに出力されたログをfluentdサーバに転送する。
  */
-public class FluentLoggerAppender extends
-		UnsynchronizedAppenderBase<ILoggingEvent> {
+public class FluentLoggerAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
 
-	/** fluentdタグ. */
+	/** fluentdタグ。 */
 	private String tag = "myapp";
 
-	/** fluentdサーバホスト. */
+	/** fluentdサーバホスト。 */
 	private String host = "localhost";
 
-	/** fluentdサーバポート. */
+	/** fluentdサーバポート。 */
 	private int port = 24224;
 
-	/** fluentdサーバ通信タイムアウト. */
+	/** fluentdサーバ通信タイムアウト。 */
 	private Integer timeout = null;
 
-	/** fluentdサーバ通信バッファサイズ. */
+	/** fluentdサーバ通信バッファサイズ。 */
 	private Integer bufferCapacity = null;
 
-	/** MDC出力フラグ. */
+	/** MDC出力フラグ。 */
 	private boolean outputMdc = true;
 
-	/** fluent-logger-java */
+	/** fluent-logger-java。 */
 	private FluentLogger fluentLogger = null;
 
 	/**
-	 * Logbackに出力されたログをfluentdサーバに転送する.
+	 * Logbackに出力されたログをfluentdサーバに転送する。
 	 * 
-	 * @param event
-	 *            ログイベント
+	 * @param event ログイベント。
 	 */
 	@Override
 	protected void append(ILoggingEvent event) {
@@ -77,27 +75,24 @@ public class FluentLoggerAppender extends
 
 		if (outputMdc) {
 			Map<String, String> mdc = new LinkedHashMap<>();
-			for (Map.Entry<String, String> entry : event.getMDCPropertyMap()
-					.entrySet()) {
+			for (Map.Entry<String, String> entry : event.getMDCPropertyMap().entrySet()) {
 				mdc.put(entry.getKey().replace(".", "_"), entry.getValue());
 			}
 			data.put("mdc", mdc);
 		}
 
 		if (event.getThrowableProxy() != null) {
-			data.put("throwable",
-					createThrowableData(event.getThrowableProxy()));
+			data.put("throwable", createThrowableData(event.getThrowableProxy()));
 		}
 
 		fluentLogger.log(level.toString(), data, timestamp / 1000L);
 	}
 
 	/**
-	 * fluentdサーバに転送するログデータに格納する例外情報を生成する.
+	 * fluentdサーバに転送するログデータに格納する例外情報を生成する。
 	 * 
-	 * @param th
-	 *            例外データ
-	 * @return 例外情報
+	 * @param th 例外データ。
+	 * @return 例外情報。
 	 */
 	private Map<String, Object> createThrowableData(IThrowableProxy th) {
 
@@ -119,19 +114,18 @@ public class FluentLoggerAppender extends
 	}
 
 	/**
-	 * ログ転送を開始する.<br>
-	 * fluent-logger-java のインスタンスを生成する.
+	 * ログ転送を開始する。<br />
+	 * fluent-logger-java のインスタンスを生成する。
 	 */
 	@Override
 	public void start() {
-		fluentLogger = createFluentLogger(tag, host, port, timeout,
-				bufferCapacity);
+		fluentLogger = createFluentLogger(tag, host, port, timeout, bufferCapacity);
 		super.start();
 	}
 
 	/**
-	 * ログ転送を終了する.<br>
-	 * fluent-logger-java のインスタンスを閉じる.
+	 * ログ転送を終了する。<br />
+	 * fluent-logger-java のインスタンスを閉じる。
 	 */
 	@Override
 	public void stop() {
@@ -143,85 +137,72 @@ public class FluentLoggerAppender extends
 	}
 
 	/**
-	 * fluent-logger-java のインスタンスを生成する.
+	 * fluent-logger-java のインスタンスを生成する。
 	 * 
-	 * @param tag
-	 *            fluentdタグ
-	 * @param host
-	 *            fluentdサーバホスト
-	 * @param port
-	 *            fluentdサーバポート
-	 * @param timeout
-	 *            fluentdサーバ通信タイムアウト
-	 * @param bufferCapacity
-	 *            fluentdサーバ通信バッファサイズ
-	 * @return fluent-logger-javaインスタンス
+	 * @param tag fluentdタグ。
+	 * @param host fluentdサーバホスト。
+	 * @param port fluentdサーバポート。
+	 * @param timeout fluentdサーバ通信タイムアウト。
+	 * @param bufferCapacity fluentdサーバ通信バッファサイズ。
+	 * @return fluent-logger-javaインスタンス。
 	 */
-	private FluentLogger createFluentLogger(String tag, String host, int port,
-			Integer timeout, Integer bufferCapacity) {
+	private FluentLogger createFluentLogger(String tag, String host, int port, Integer timeout, Integer bufferCapacity) {
 		if (timeout == null || bufferCapacity == null) {
 			return FluentLogger.getLogger(tag, host, port);
 		} else {
-			return FluentLogger.getLogger(tag, host, port, timeout,
-					bufferCapacity);
+			return FluentLogger.getLogger(tag, host, port, timeout, bufferCapacity);
 		}
 	}
 
 	/**
-	 * fluentdタグ を設定する.
+	 * fluentdタグ を設定する。
 	 * 
-	 * @param tag
-	 *            fluentdタグ
+	 * @param tag fluentdタグ。
 	 */
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
 
 	/**
-	 * fluentdサーバホスト を設定する.
+	 * fluentdサーバホスト を設定する。
 	 * 
-	 * @param host
-	 *            fluentdサーバホスト
+	 * @param host fluentdサーバホスト。
 	 */
 	public void setHost(String host) {
 		this.host = host;
 	}
 
 	/**
-	 * fluentdサーバポート を設定する.
+	 * fluentdサーバポート を設定する。
 	 * 
-	 * @param port
-	 *            fluentdサーバポート
+	 * @param port fluentdサーバポート。
 	 */
 	public void setPort(int port) {
 		this.port = port;
 	}
 
 	/**
-	 * fluentdサーバ通信タイムアウト を設定する.
+	 * fluentdサーバ通信タイムアウト を設定する。
 	 * 
-	 * @param timeout
-	 *            fluentdサーバ通信タイムアウト
+	 * @param timeout fluentdサーバ通信タイムアウト。
 	 */
 	public void setTimeout(Integer timeout) {
 		this.timeout = timeout;
 	}
 
 	/**
-	 * fluentdサーバ通信バッファサイズ を設定する.
+	 * fluentdサーバ通信バッファサイズ を設定する。
 	 * 
-	 * @param bufferCapacity
-	 *            fluentdサーバ通信バッファサイズ
+	 * @param bufferCapacity fluentdサーバ通信バッファサイズ。
 	 */
 	public void setBufferCapacity(Integer bufferCapacity) {
 		this.bufferCapacity = bufferCapacity;
 	}
 
 	/**
-	 * MDC出力フラグ を設定する.
+	 * MDC出力フラグ を設定する。
 	 * 
-	 * @param outputMdc
-	 *            MDC出力フラグ
+	 * @param outputMdc MDC出力フラグ。
 	 */
 	public void setOutputMdc(boolean outputMdc) {
 		this.outputMdc = outputMdc;

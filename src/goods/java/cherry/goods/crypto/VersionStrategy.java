@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,20 +27,16 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * <li>データから版情報と素データを分離する ({@link #decode})</li>
  * </ul>
  *
- * @param <T>
- *            データの型。
- * @param <V>
- *            版情報の型。
+ * @param <T> データの型。
+ * @param <V> 版情報の型。
  */
 public interface VersionStrategy<T, V> {
 
 	/**
 	 * 素データに版情報を付加したデータを生成する。
 	 * 
-	 * @param data
-	 *            素データ。
-	 * @param version
-	 *            版情報。
+	 * @param data 素データ。
+	 * @param version 版情報。
 	 * @return 版情報を付加したデータ。
 	 */
 	T encode(T data, V version);
@@ -48,8 +44,7 @@ public interface VersionStrategy<T, V> {
 	/**
 	 * データから版情報と素データを分離する。
 	 * 
-	 * @param encoded
-	 *            版情報を付加したデータ。
+	 * @param encoded 版情報を付加したデータ。
 	 * @return 分離したデータ (版情報と素データを保持する)。
 	 */
 	VersionedData<T, V> decode(T encoded);
@@ -57,10 +52,8 @@ public interface VersionStrategy<T, V> {
 	/**
 	 * 分離された版情報と素データを保持する。
 	 *
-	 * @param <T>
-	 *            データの型。
-	 * @param <V>
-	 *            版情報の型。
+	 * @param <T> データの型。
+	 * @param <V> 版情報の型。
 	 */
 	public static class VersionedData<T, V> {
 
@@ -71,10 +64,8 @@ public interface VersionStrategy<T, V> {
 		private V version;
 
 		/**
-		 * @param data
-		 *            素データ。
-		 * @param version
-		 *            版情報。
+		 * @param data 素データ。
+		 * @param version 版情報。
 		 */
 		public VersionedData(T data, V version) {
 			this.data = data;
@@ -97,8 +88,7 @@ public interface VersionStrategy<T, V> {
 
 		@Override
 		public String toString() {
-			return ToStringBuilder.reflectionToString(this,
-					ToStringStyle.SHORT_PREFIX_STYLE);
+			return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 		}
 	}
 

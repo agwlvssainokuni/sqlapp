@@ -1,5 +1,5 @@
 /*
- * Copyright 2011,2014 agwlvssainokuni
+ * Copyright 2011,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,16 +19,16 @@ package cherry.goods.csv;
 import java.io.IOException;
 
 /**
- * CSV形式データ解析エラー.<br>
+ * CSV形式データ解析エラー。<br />
  * CSV形式が不正であることを表す。
  */
 public class CsvException extends IOException {
 
-	/** シリアルバージョンID. */
+	/** シリアルバージョンID。 */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 例外オブジェクトを生成する.
+	 * 例外オブジェクトを生成する。
 	 */
 	public CsvException(String message) {
 		super(message);

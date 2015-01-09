@@ -1,5 +1,5 @@
 /*
- * Copyright 2011,2014 agwlvssainokuni
+ * Copyright 2011,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,43 +23,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * CSVパーサ.<br>
- * CSV形式データを解析して、レコード (文字列のリスト) 単位で取得する。サポートするCSV形式は RFC 4180
- * (http://www.ietf.org/rfc/rfc4180.txt) を基本とする。ただし、下記の点が RFC 4180 と異なる (RFC
- * 4180 の上位互換)。
+ * CSVパーサ。<br />
+ * CSV形式データを解析して、レコード (文字列のリスト) 単位で取得する。サポートするCSV形式は RFC 4180 (http://www.ietf.org/rfc/rfc4180.txt) を基本とする。ただし、下記の点が RFC
+ * 4180 と異なる (RFC 4180 の上位互換)。
  * <ul>
- * <li>文字データ (TEXTDATA) の範囲はUnicode (Javaが文字として扱うもの) とする。(RFC 4180
- * はASCIIの範囲に限定している)</li>
- * <li>引用無しフィールド (non-escaped) は、データ内に引用符 (DQUOTE)
- * を含んでもエラーとしない。引用符も文字データの1文字と同じように扱う。</li>
+ * <li>文字データ (TEXTDATA) の範囲はUnicode (Javaが文字として扱うもの) とする。(RFC 4180 はASCIIの範囲に限定している)</li>
+ * <li>引用無しフィールド (non-escaped) は、データ内に引用符 (DQUOTE) を含んでもエラーとしない。引用符も文字データの1文字と同じように扱う。</li>
  * <li>LF, CRLF, CRCRLF, ... を一つの改行として扱う。(RFC 4180 はCRLFを改行とする)</li>
  * <li>データの最後 (end of file) はLFが無くてもエラーとはしない。(引用データ (escaped) 中を除く)</li>
  * </ul>
  */
 public class CsvParser implements Closeable {
 
-	/** データ読取り元. */
+	/** データ読取り元。 */
 	private final Reader reader;
 
 	/**
-	 * CSVパーサを生成する.<br>
+	 * CSVパーサを生成する。<br />
 	 * 
-	 * @param r
-	 *            データ読取り元。
+	 * @param r データ読取り元。
 	 */
 	public CsvParser(final Reader r) {
 		reader = r;
 	}
 
 	/**
-	 * CSVレコード読取り.<br>
+	 * CSVレコード読取り。<br />
 	 * データ読取り元からCSVデータを1レコード読取る。
 	 * 
 	 * @return CSVデータの1レコード。
-	 * @throws CsvException
-	 *             CSV形式不正。
-	 * @throws IOException
-	 *             データ読取りエラー。
+	 * @throws CsvException CSV形式不正。
+	 * @throws IOException データ読取りエラー。
 	 */
 	public String[] read() throws CsvException, IOException {
 
@@ -108,10 +102,9 @@ public class CsvParser implements Closeable {
 	}
 
 	/**
-	 * データ読取り元をクローズする.<br>
+	 * データ読取り元をクローズする。<br />
 	 * 
-	 * @throws IOException
-	 *             データ読取り元のクローズエラー。
+	 * @throws IOException データ読取り元のクローズエラー。
 	 */
 	@Override
 	public void close() throws IOException {

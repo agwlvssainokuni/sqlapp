@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,7 @@ import org.joda.time.LocalDate;
 
 public abstract class LocalDateMasker implements Masker<LocalDate> {
 
-	public static LocalDateMasker newMasker(LocalDate mask, boolean year,
-			boolean month, boolean day) {
+	public static LocalDateMasker newMasker(LocalDate mask, boolean year, boolean month, boolean day) {
 		return new MaskerImpl(mask, year, month, day);
 	}
 
@@ -35,8 +34,7 @@ public abstract class LocalDateMasker implements Masker<LocalDate> {
 
 		private final boolean day;
 
-		public MaskerImpl(LocalDate mask, boolean year, boolean month,
-				boolean day) {
+		public MaskerImpl(LocalDate mask, boolean year, boolean month, boolean day) {
 			this.mask = mask;
 			this.year = year;
 			this.month = month;
@@ -49,8 +47,7 @@ public abstract class LocalDateMasker implements Masker<LocalDate> {
 				return value;
 			}
 			int year = (this.year ? mask.getYear() : value.getYear());
-			int month = (this.month ? mask.getMonthOfYear() : value
-					.getMonthOfYear());
+			int month = (this.month ? mask.getMonthOfYear() : value.getMonthOfYear());
 			int day = (this.day ? mask.getDayOfMonth() : value.getDayOfMonth());
 			return new LocalDate(year, month, day);
 		}

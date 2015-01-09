@@ -1,5 +1,5 @@
 /*
- * Copyright 2011,2014 agwlvssainokuni
+ * Copyright 2011,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,33 +21,30 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
- * CSVデータ生成機能.<br>
+ * CSVデータ生成機能。<br />
  */
 public class CsvCreator implements Closeable {
 
-	/** データ書込み先. */
+	/** データ書込み先。 */
 	private final Writer writer;
 
-	/** レコードセパレータ. */
+	/** レコードセパレータ。 */
 	private final String recordSeparator;
 
 	/**
-	 * CSVデータ生成機能を作成する.
+	 * CSVデータ生成機能を作成する。
 	 * 
-	 * @param w
-	 *            データ書込み先
+	 * @param w データ書込み先。
 	 */
 	public CsvCreator(Writer w) {
 		this(w, "\n");
 	}
 
 	/**
-	 * CSVデータ生成機能を作成する.
+	 * CSVデータ生成機能を作成する。
 	 * 
-	 * @param w
-	 *            データ書込み先
-	 * @param rs
-	 *            レコードセパレータ
+	 * @param w データ書込み先。
+	 * @param rs レコードセパレータ。
 	 */
 	public CsvCreator(Writer w, String rs) {
 		writer = w;
@@ -55,13 +52,11 @@ public class CsvCreator implements Closeable {
 	}
 
 	/**
-	 * CSVレコード書込み.<br>
+	 * CSVレコード書込み。<br />
 	 * データ書込み先にCSVデータを1レコード書込む。
 	 * 
-	 * @param record
-	 *            CSVデータの1レコード。
-	 * @throws IOException
-	 *             データ書込みエラー
+	 * @param record CSVデータの1レコード。
+	 * @throws IOException データ書込みエラー。
 	 */
 	public void write(String[] record) throws IOException {
 
@@ -80,20 +75,18 @@ public class CsvCreator implements Closeable {
 	}
 
 	/**
-	 * データ書き込み先をフラッシュする.<br>
+	 * データ書き込み先をフラッシュする。<br />
 	 * 
-	 * @throws IOException
-	 *             データ書込み先のフラッシュエラー
+	 * @throws IOException データ書込み先のフラッシュエラー。
 	 */
 	public void flush() throws IOException {
 		writer.flush();
 	}
 
 	/**
-	 * データ書込み先をクローズする.<br>
+	 * データ書込み先をクローズする。<br />
 	 * 
-	 * @throws IOException
-	 *             データ書込み先のクローズエラー
+	 * @throws IOException データ書込み先のクローズエラー。
 	 */
 	@Override
 	public void close() throws IOException {
@@ -101,14 +94,11 @@ public class CsvCreator implements Closeable {
 	}
 
 	/**
-	 * フィールドデータを書込む.<br>
+	 * フィールドデータを書込む。<br />
 	 * 
-	 * @param writer
-	 *            データ書込み先
-	 * @param field
-	 *            フィールドデータ
-	 * @throws IOException
-	 *             データ書込みエラー
+	 * @param writer データ書込み先。
+	 * @param field フィールドデータ。
+	 * @throws IOException データ書込みエラー。
 	 */
 	private void writeField(Writer writer, String field) throws IOException {
 

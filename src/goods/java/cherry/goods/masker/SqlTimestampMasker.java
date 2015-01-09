@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,8 @@ import org.joda.time.LocalDateTime;
 
 public abstract class SqlTimestampMasker implements Masker<Timestamp> {
 
-	public static SqlTimestampMasker newMasker(LocalDateTime mask,
-			boolean year, boolean month, boolean day, boolean hour,
-			boolean minute, boolean second) {
+	public static SqlTimestampMasker newMasker(LocalDateTime mask, boolean year, boolean month, boolean day,
+			boolean hour, boolean minute, boolean second) {
 		return new MaskerImpl(mask, year, month, day, hour, minute, second);
 	}
 
@@ -32,10 +31,9 @@ public abstract class SqlTimestampMasker implements Masker<Timestamp> {
 
 		private final LocalDateTimeMasker masker;
 
-		public MaskerImpl(LocalDateTime mask, boolean year, boolean month,
-				boolean day, boolean hour, boolean minute, boolean second) {
-			this.masker = LocalDateTimeMasker.newMasker(mask, year, month, day,
-					hour, minute, second);
+		public MaskerImpl(LocalDateTime mask, boolean year, boolean month, boolean day, boolean hour, boolean minute,
+				boolean second) {
+			this.masker = LocalDateTimeMasker.newMasker(mask, year, month, day, hour, minute, second);
 		}
 
 		@Override
@@ -43,8 +41,7 @@ public abstract class SqlTimestampMasker implements Masker<Timestamp> {
 			if (value == null) {
 				return value;
 			}
-			LocalDateTime masked = masker.mask(new LocalDateTime(value
-					.getTime()));
+			LocalDateTime masked = masker.mask(new LocalDateTime(value.getTime()));
 			return new Timestamp(masked.toDate().getTime());
 		}
 	}

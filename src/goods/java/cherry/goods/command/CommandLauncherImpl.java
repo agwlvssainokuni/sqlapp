@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,26 +48,19 @@ public class CommandLauncherImpl implements CommandLauncher {
 	/**
 	 * コマンドを実行し、実行結果 (終了コード、標準出力、標準エラー出力) を取得する。
 	 * 
-	 * @param command
-	 *            実行するコマンド (コマンドライン)。
+	 * @param command 実行するコマンド (コマンドライン)。
 	 * @return　実行結果 (終了コード、標準出力、標準エラー出力)。
-	 * @throws IOException
-	 *             コマンド不正 (存在しない)、または、標準出力、標準エラー出力の読取り不正。
-	 * @throws InterruptedException
-	 *             コマンドの終了待機時に割込みが発生したことを表す。
+	 * @throws IOException コマンド不正 (存在しない)、または、標準出力、標準エラー出力の読取り不正。
+	 * @throws InterruptedException コマンドの終了待機時に割込みが発生したことを表す。
 	 */
 	@Override
-	public CommandResult launch(String... command) throws IOException,
-			InterruptedException {
+	public CommandResult launch(String... command) throws IOException, InterruptedException {
 		CommandResult result = new CommandResult();
-		Process proc = (new ProcessBuilder(command)).redirectErrorStream(
-				redirectErrorStream).start();
-		try (InputStream in = proc.getErrorStream();
-				Reader r = new InputStreamReader(in, charset)) {
+		Process proc = (new ProcessBuilder(command)).redirectErrorStream(redirectErrorStream).start();
+		try (InputStream in = proc.getErrorStream(); Reader r = new InputStreamReader(in, charset)) {
 			result.setStderr(CharStreams.toString(r));
 		}
-		try (InputStream in = proc.getInputStream();
-				Reader r = new InputStreamReader(in, charset)) {
+		try (InputStream in = proc.getInputStream(); Reader r = new InputStreamReader(in, charset)) {
 			result.setStdout(CharStreams.toString(r));
 		}
 		int exitValue = proc.waitFor();

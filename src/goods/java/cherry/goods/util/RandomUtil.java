@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,8 +31,7 @@ public class RandomUtil {
 
 	private static Random random = new SecureRandom();
 
-	private static char[] base = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-			.toCharArray();
+	private static char[] base = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
 
 	public static void setBase(char[] bs) {
 		base = bs;
@@ -41,8 +40,7 @@ public class RandomUtil {
 	/**
 	 * ランダムなバイト列を生成する。
 	 * 
-	 * @param length
-	 *            生成するバイト列の長さ。
+	 * @param length 生成するバイト列の長さ。
 	 * @return ランダムバイト列。
 	 */
 	public static byte[] randomBytes(int length) {
@@ -54,8 +52,7 @@ public class RandomUtil {
 	/**
 	 * ランダムな文字列を生成する。
 	 * 
-	 * @param length
-	 *            文字列の長さ。
+	 * @param length 文字列の長さ。
 	 * @return ランダム文字列。
 	 */
 	public static String randomString(int length) {

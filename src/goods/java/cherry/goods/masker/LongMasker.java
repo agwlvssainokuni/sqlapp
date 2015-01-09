@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,8 +55,7 @@ public abstract class LongMasker implements Masker<Long> {
 				}
 			}
 
-			long maskedValue = (Math.abs(value) / digitMask) * digitMask
-					+ (mask % digitMask);
+			long maskedValue = (Math.abs(value) / digitMask) * digitMask + (mask % digitMask);
 
 			if (value < 0) {
 				return -maskedValue;
@@ -130,8 +129,7 @@ public abstract class LongMasker implements Masker<Long> {
 				digitMask *= 10;
 			}
 
-			long maskedValue = (mask / digitMask) * digitMask
-					+ (Math.abs(value) % digitMask);
+			long maskedValue = (mask / digitMask) * digitMask + (Math.abs(value) % digitMask);
 
 			if (value < 0) {
 				return -maskedValue;

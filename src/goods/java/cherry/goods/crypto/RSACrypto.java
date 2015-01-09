@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,13 +45,11 @@ public class RSACrypto implements Crypto {
 		this.algorithm = algorithm;
 	}
 
-	public void setPublicKeyBytes(byte[] publicKeyBytes)
-			throws InvalidKeySpecException {
+	public void setPublicKeyBytes(byte[] publicKeyBytes) throws InvalidKeySpecException {
 		this.publicKey = KeyUtil.createRsaPublicKey(publicKeyBytes);
 	}
 
-	public void setPrivateKeyBytes(byte[] privateKeyBytes)
-			throws InvalidKeySpecException {
+	public void setPrivateKeyBytes(byte[] privateKeyBytes) throws InvalidKeySpecException {
 		this.privateKey = KeyUtil.createRsaPrivateKey(privateKeyBytes);
 	}
 
@@ -61,8 +59,7 @@ public class RSACrypto implements Crypto {
 			Cipher cipher = Cipher.getInstance(algorithm);
 			cipher.init(Cipher.ENCRYPT_MODE, publicKey);
 			return cipher.doFinal(in);
-		} catch (NoSuchAlgorithmException | NoSuchPaddingException
-				| InvalidKeyException | IllegalBlockSizeException
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException
 				| BadPaddingException ex) {
 			throw new IllegalStateException(ex);
 		}
@@ -74,8 +71,7 @@ public class RSACrypto implements Crypto {
 			Cipher cipher = Cipher.getInstance(algorithm);
 			cipher.init(Cipher.DECRYPT_MODE, privateKey);
 			return cipher.doFinal(in);
-		} catch (NoSuchAlgorithmException | NoSuchPaddingException
-				| InvalidKeyException | IllegalBlockSizeException
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException
 				| BadPaddingException ex) {
 			throw new IllegalStateException(ex);
 		}

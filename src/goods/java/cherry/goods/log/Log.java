@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,8 +37,7 @@ public class Log {
 	/**
 	 * ログ文言定義を設定する。
 	 * 
-	 * @param msgDef
-	 *            ログ文言定義。
+	 * @param msgDef ログ文言定義。
 	 * @return ログ文言定義 (現在の定義を返却する)。
 	 */
 	public static List<ResourceBundle> setMessageDef(ResourceBundle... msgDef) {
@@ -49,8 +48,7 @@ public class Log {
 	/**
 	 * ログ文言定義を設定する。
 	 * 
-	 * @param msgDef
-	 *            ログ文言定義。
+	 * @param msgDef ログ文言定義。
 	 * @return ログ文言定義 (現在の定義を返却する)。
 	 */
 	public static List<ResourceBundle> addMessageDef(ResourceBundle... msgDef) {
@@ -67,8 +65,7 @@ public class Log {
 	/**
 	 * ログ出力機能を生成する。ログ出力機能は{@link LoggerFactory}を介して生成することとし、これを直接呼び出してはならない。
 	 * 
-	 * @param logger
-	 *            ログ出力の実態。
+	 * @param logger ログ出力の実態。
 	 */
 	Log(Logger logger) {
 		this.logger = logger;
@@ -77,10 +74,8 @@ public class Log {
 	/**
 	 * デバッグレベルのログを出力する。
 	 * 
-	 * @param msg
-	 *            ログ文言。
-	 * @param args
-	 *            ログ文言に埋め込むデータ。
+	 * @param msg ログ文言。
+	 * @param args ログ文言に埋め込むデータ。
 	 */
 	public void debug(String msg, Object... args) {
 		logger.debug(createMessage(msg, args));
@@ -89,12 +84,9 @@ public class Log {
 	/**
 	 * デバッグレベルのログを出力する。
 	 * 
-	 * @param ex
-	 *            例外オブジェクト。
-	 * @param msg
-	 *            ログ文言。
-	 * @param args
-	 *            ログ文言に埋め込むデータ。
+	 * @param ex 例外オブジェクト。
+	 * @param msg ログ文言。
+	 * @param args ログ文言に埋め込むデータ。
 	 */
 	public void debug(Throwable ex, String msg, Object... args) {
 		logger.debug(createMessage(msg, args), ex);
@@ -103,10 +95,8 @@ public class Log {
 	/**
 	 * 通常、警告、異常レベルのログを出力する。
 	 * 
-	 * @param id
-	 *            ログID。
-	 * @param args
-	 *            ログ文言に埋め込むデータ。
+	 * @param id ログID。
+	 * @param args ログ文言に埋め込むデータ。
 	 */
 	public void log(ILogId id, Object... args) {
 		switch (id.getLevel()) {
@@ -136,12 +126,9 @@ public class Log {
 	/**
 	 * 通常、警告、異常レベルのログを出力する。
 	 * 
-	 * @param ex
-	 *            例外オブジェクト。
-	 * @param id
-	 *            ログID。
-	 * @param args
-	 *            ログ文言に埋め込むデータ。
+	 * @param ex 例外オブジェクト。
+	 * @param id ログID。
+	 * @param args ログ文言に埋め込むデータ。
 	 */
 	public void log(Throwable ex, ILogId id, Object... args) {
 		switch (id.getLevel()) {
@@ -207,10 +194,8 @@ public class Log {
 	/**
 	 * ログ出力する文言を形成する。
 	 * 
-	 * @param msg
-	 *            ログ文言テンプレート。
-	 * @param args
-	 *            ログ文言に埋め込むデータ。
+	 * @param msg ログ文言テンプレート。
+	 * @param args ログ文言に埋め込むデータ。
 	 * @return ログ文言。
 	 */
 	private String createMessage(String msg, Object... args) {
@@ -220,12 +205,9 @@ public class Log {
 	/**
 	 * ログ出力する文言を形成する。
 	 * 
-	 * @param id
-	 *            ログID。
-	 * @param msg
-	 *            ログ文言テンプレート。
-	 * @param args
-	 *            ログ文言に埋め込むデータ。
+	 * @param id ログID。
+	 * @param msg ログ文言テンプレート。
+	 * @param args ログ文言に埋め込むデータ。
 	 * @return ログ文言。
 	 */
 	private String createMessage(ILogId id, Object... args) {

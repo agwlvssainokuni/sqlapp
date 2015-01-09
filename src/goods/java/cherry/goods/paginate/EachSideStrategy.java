@@ -1,5 +1,5 @@
 /*
- * Copyright 2004,2014 agwlvssainokuni
+ * Copyright 2004,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,10 +52,8 @@ public class EachSideStrategy implements PaginateStrategy {
 	/**
 	 * ページネーションリンクとして並べるページ番号の範囲を算出する。現在のページの前後それぞれにできるだけ表示範囲を広げる。
 	 * 
-	 * @param pageNo
-	 *            ページ番号。
-	 * @param pageCount
-	 *            ページ数。
+	 * @param pageNo ページ番号。
+	 * @param pageCount ページ数。
 	 * @return ページ番号の範囲。
 	 */
 	@Override

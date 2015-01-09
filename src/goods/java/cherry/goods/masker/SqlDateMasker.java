@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,7 @@ import org.joda.time.LocalDate;
 
 public abstract class SqlDateMasker implements Masker<Date> {
 
-	public static SqlDateMasker newMasker(LocalDate mask, boolean year,
-			boolean month, boolean day) {
+	public static SqlDateMasker newMasker(LocalDate mask, boolean year, boolean month, boolean day) {
 		return new MaskerImpl(mask, year, month, day);
 	}
 
@@ -31,8 +30,7 @@ public abstract class SqlDateMasker implements Masker<Date> {
 
 		private final LocalDateMasker masker;
 
-		public MaskerImpl(LocalDate mask, boolean year, boolean month,
-				boolean day) {
+		public MaskerImpl(LocalDate mask, boolean year, boolean month, boolean day) {
 			this.masker = LocalDateMasker.newMasker(mask, year, month, day);
 		}
 

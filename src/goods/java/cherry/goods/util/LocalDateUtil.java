@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,10 +23,8 @@ import org.joda.time.LocalDateTime;
  * 日付操作ユーティリティ。<br />
  * 下記の機能を提供する。
  * <ul>
- * <li>日付範囲(FROM)の条件指定値決定 ({@link #rangeFrom(LocalDate)},
- * {@link #rangeFrom(LocalDateTime)}</li>
- * <li>日付範囲(TO)の条件指定値決定 ({@link #rangeTo(LocalDate)},
- * {@link #rangeTo(LocalDateTime)}</li>
+ * <li>日付範囲(FROM)の条件指定値決定 ({@link #rangeFrom(LocalDate)}, {@link #rangeFrom(LocalDateTime)}</li>
+ * <li>日付範囲(TO)の条件指定値決定 ({@link #rangeTo(LocalDate)}, {@link #rangeTo(LocalDateTime)}</li>
  * </ul>
  */
 public class LocalDateUtil {
@@ -34,8 +32,7 @@ public class LocalDateUtil {
 	/**
 	 * 日付範囲(FROM)の条件指定値を決定する。
 	 * 
-	 * @param from
-	 *            入力された日付値。
+	 * @param from 入力された日付値。
 	 * @return 入力された日付に対する日付範囲(FROM)の条件指定値。
 	 */
 	public static LocalDate rangeFrom(LocalDate from) {
@@ -45,8 +42,7 @@ public class LocalDateUtil {
 	/**
 	 * 日付範囲(FROM)の条件指定値を決定する。
 	 * 
-	 * @param from
-	 *            入力された日時値。
+	 * @param from 入力された日時値。
 	 * @return 入力された日時に対する日付範囲(FROM)の条件指定値。
 	 */
 	public static LocalDate rangeFrom(LocalDateTime from) {
@@ -59,8 +55,7 @@ public class LocalDateUtil {
 	/**
 	 * 日付範囲(TO)の条件指定値を決定する。
 	 * 
-	 * @param to
-	 *            入力された日付値。
+	 * @param to 入力された日付値。
 	 * @return 入力された日付に対する日付範囲(TO)の条件指定値。
 	 */
 	public static LocalDate rangeTo(LocalDate to) {
@@ -73,8 +68,7 @@ public class LocalDateUtil {
 	/**
 	 * 日付範囲(TO)の条件指定値を決定する。
 	 * 
-	 * @param to
-	 *            入力された日時値。
+	 * @param to 入力された日時値。
 	 * @return 入力された日時に対する日付範囲(TO)の条件指定値。
 	 */
 	public static LocalDate rangeTo(LocalDateTime to) {

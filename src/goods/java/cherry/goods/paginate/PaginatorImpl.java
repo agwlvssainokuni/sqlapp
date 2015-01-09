@@ -1,5 +1,5 @@
 /*
- * Copyright 2004,2014 agwlvssainokuni
+ * Copyright 2004,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,8 +30,7 @@ public class PaginatorImpl implements Paginator {
 	/**
 	 * ページネーションリンクとして並べるページ番号の範囲の算出方法を設定する。
 	 * 
-	 * @param paginateStrategy
-	 *            ページネーションリンクとして並べるページ番号の範囲の算出方法。
+	 * @param paginateStrategy ページネーションリンクとして並べるページ番号の範囲の算出方法。
 	 */
 	public void setPaginateStrategy(PaginateStrategy paginateStrategy) {
 		this.paginateStrategy = paginateStrategy;
@@ -40,10 +39,8 @@ public class PaginatorImpl implements Paginator {
 	/**
 	 * ページ数を計算する。
 	 * 
-	 * @param itemCount
-	 *            項目数。
-	 * @param pageSize
-	 *            ページサイズ。
+	 * @param itemCount 項目数。
+	 * @param pageSize ページサイズ。
 	 * @return ページ数。
 	 */
 	@Override
@@ -58,12 +55,9 @@ public class PaginatorImpl implements Paginator {
 	/**
 	 * ページ情報を取得する。
 	 * 
-	 * @param pageNo
-	 *            ページ番号。
-	 * @param itemCount
-	 *            項目数。
-	 * @param pageSize
-	 *            ページサイズ。
+	 * @param pageNo ページ番号。
+	 * @param itemCount 項目数。
+	 * @param pageSize ページサイズ。
 	 * @return ページ情報。
 	 */
 	@Override
@@ -86,12 +80,9 @@ public class PaginatorImpl implements Paginator {
 	/**
 	 * ページネーションの処理を実行する。
 	 * 
-	 * @param pageNo
-	 *            ページ番号。
-	 * @param itemCount
-	 *            項目数。
-	 * @param pageSize
-	 *            ページサイズ。
+	 * @param pageNo ページ番号。
+	 * @param itemCount 項目数。
+	 * @param pageSize ページサイズ。
 	 * @return ページネーションの処理結果。
 	 */
 	@Override
@@ -153,10 +144,8 @@ public class PaginatorImpl implements Paginator {
 	/**
 	 * ページ番号を適正な範囲内に補正する。
 	 * 
-	 * @param pageNo
-	 *            ページ番号。
-	 * @param pageCount
-	 *            ページ数。
+	 * @param pageNo ページ番号。
+	 * @param pageCount ページ数。
 	 * @return 補正したページ番号。
 	 */
 	private long adjustPageNo(long pageNo, long pageCount) {
@@ -173,18 +162,13 @@ public class PaginatorImpl implements Paginator {
 	/**
 	 * ページ情報を作成する。
 	 * 
-	 * @param pageNo
-	 *            ページ番号。
-	 * @param pageCount
-	 *            ページ数。
-	 * @param itemCount
-	 *            項目数。
-	 * @param pageSize
-	 *            ページサイズ。
+	 * @param pageNo ページ番号。
+	 * @param pageCount ページ数。
+	 * @param itemCount 項目数。
+	 * @param pageSize ページサイズ。
 	 * @return ページ情報。
 	 */
-	private Page createPage(long pageNo, long pageCount, long itemCount,
-			long pageSize) {
+	private Page createPage(long pageNo, long pageCount, long itemCount, long pageSize) {
 		Page page = new Page();
 		page.setNo(pageNo);
 		if (itemCount <= 0L) {

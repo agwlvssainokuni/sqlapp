@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,7 @@ public abstract class StringMasker implements Masker<String> {
 		return new TailImpl(maskChar, count);
 	}
 
-	public static StringMasker fixedTail(String maskChar, int count,
-			int fixedLength) {
+	public static StringMasker fixedTail(String maskChar, int count, int fixedLength) {
 		return new FixedTailImpl(maskChar, count, fixedLength);
 	}
 

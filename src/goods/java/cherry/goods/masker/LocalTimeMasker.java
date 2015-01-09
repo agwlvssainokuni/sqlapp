@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,7 @@ import org.joda.time.LocalTime;
 
 public abstract class LocalTimeMasker implements Masker<LocalTime> {
 
-	public static LocalTimeMasker newMasker(LocalTime mask, boolean hour,
-			boolean minute, boolean second) {
+	public static LocalTimeMasker newMasker(LocalTime mask, boolean hour, boolean minute, boolean second) {
 		return new MaskerImpl(mask, hour, minute, second);
 	}
 
@@ -35,8 +34,7 @@ public abstract class LocalTimeMasker implements Masker<LocalTime> {
 
 		private final boolean second;
 
-		public MaskerImpl(LocalTime mask, boolean hour, boolean minute,
-				boolean second) {
+		public MaskerImpl(LocalTime mask, boolean hour, boolean minute, boolean second) {
 			this.mask = mask;
 			this.hour = hour;
 			this.minute = minute;
@@ -49,10 +47,8 @@ public abstract class LocalTimeMasker implements Masker<LocalTime> {
 				return value;
 			}
 			int hour = (this.hour ? mask.getHourOfDay() : value.getHourOfDay());
-			int minute = (this.minute ? mask.getMinuteOfHour() : value
-					.getMinuteOfHour());
-			int second = (this.second ? mask.getSecondOfMinute() : value
-					.getSecondOfMinute());
+			int minute = (this.minute ? mask.getMinuteOfHour() : value.getMinuteOfHour());
+			int second = (this.second ? mask.getSecondOfMinute() : value.getSecondOfMinute());
 			return new LocalTime(hour, minute, second);
 		}
 	}

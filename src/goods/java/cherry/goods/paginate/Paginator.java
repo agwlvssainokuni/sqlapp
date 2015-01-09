@@ -1,5 +1,5 @@
 /*
- * Copyright 2004,2014 agwlvssainokuni
+ * Copyright 2004,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,10 +24,8 @@ public interface Paginator {
 	/**
 	 * ページ数を計算する。
 	 * 
-	 * @param itemCount
-	 *            項目数。
-	 * @param pageSize
-	 *            ページサイズ。
+	 * @param itemCount 項目数。
+	 * @param pageSize ページサイズ。
 	 * @return ページ数。
 	 */
 	long getPageCount(long itemCount, long pageSize);
@@ -35,12 +33,9 @@ public interface Paginator {
 	/**
 	 * ページ情報を取得する。
 	 * 
-	 * @param pageNo
-	 *            ページ番号。
-	 * @param itemCount
-	 *            項目数。
-	 * @param pageSize
-	 *            ページサイズ。
+	 * @param pageNo ページ番号。
+	 * @param itemCount 項目数。
+	 * @param pageSize ページサイズ。
 	 * @return ページ情報。
 	 */
 	Page getPage(long pageNo, long itemCount, long pageSize);
@@ -48,12 +43,9 @@ public interface Paginator {
 	/**
 	 * ページネーション情報を取得する。
 	 * 
-	 * @param pageNo
-	 *            ページ番号。
-	 * @param itemCount
-	 *            項目数。
-	 * @param pageSize
-	 *            ページサイズ。
+	 * @param pageNo ページ番号。
+	 * @param itemCount 項目数。
+	 * @param pageSize ページサイズ。
 	 * @return ページネーション情報。
 	 */
 	PageSet paginate(long pageNo, long itemCount, long pageSize);

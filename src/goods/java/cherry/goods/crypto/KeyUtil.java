@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,14 +47,11 @@ public class KeyUtil {
 	/**
 	 * バイト列からRSA公開鍵を生成する。
 	 * 
-	 * @param b
-	 *            生成元バイト列。
+	 * @param b 生成元バイト列。
 	 * @return RSA公開鍵。
-	 * @throws InvalidKeySpecException
-	 *             読込んだ鍵データの形式が正しくないことを表す。
+	 * @throws InvalidKeySpecException 読込んだ鍵データの形式が正しくないことを表す。
 	 */
-	public static PublicKey createRsaPublicKey(byte[] b)
-			throws InvalidKeySpecException {
+	public static PublicKey createRsaPublicKey(byte[] b) throws InvalidKeySpecException {
 		X509EncodedKeySpec keySpec = new X509EncodedKeySpec(b);
 		return rsaKeyFactory.generatePublic(keySpec);
 	}
@@ -62,14 +59,11 @@ public class KeyUtil {
 	/**
 	 * バイト列からRSA秘密鍵を生成する。
 	 * 
-	 * @param b
-	 *            生成バイト列。
+	 * @param b 生成バイト列。
 	 * @return RSA秘密鍵。
-	 * @throws InvalidKeySpecException
-	 *             読込んだ鍵データの形式が正しくないことを表す。
+	 * @throws InvalidKeySpecException 読込んだ鍵データの形式が正しくないことを表す。
 	 */
-	public static PrivateKey createRsaPrivateKey(byte[] b)
-			throws InvalidKeySpecException {
+	public static PrivateKey createRsaPrivateKey(byte[] b) throws InvalidKeySpecException {
 		PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(b);
 		return rsaKeyFactory.generatePrivate(keySpec);
 	}
@@ -77,8 +71,7 @@ public class KeyUtil {
 	/**
 	 * バイト列からAES共通鍵を生成する。
 	 * 
-	 * @param b
-	 *            生成元バイト列。
+	 * @param b 生成元バイト列。
 	 * @return AES共通鍵。
 	 */
 	public static Key createAesSecretKey(byte[] b) {
@@ -88,8 +81,7 @@ public class KeyUtil {
 	/**
 	 * バイト列からAES初期化ベクタを生成する。
 	 * 
-	 * @param b
-	 *            生成元バイト列。
+	 * @param b 生成元バイト列。
 	 * @return AES初期化ベクタ。
 	 */
 	public static IvParameterSpec createAesInitVector(byte[] b) {

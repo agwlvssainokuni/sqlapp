@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,15 +55,13 @@ public abstract class BigIntegerMasker implements Masker<BigInteger> {
 
 			BigInteger digitMask = ONE;
 			BigInteger curValue = value.abs();
-			for (int i = 0; curValue.signum() > 0; i++, curValue = curValue
-					.divide(TEN)) {
+			for (int i = 0; curValue.signum() > 0; i++, curValue = curValue.divide(TEN)) {
 				if (i >= count) {
 					digitMask = digitMask.multiply(TEN);
 				}
 			}
 
-			BigInteger maskedValue = value.abs().divide(digitMask)
-					.multiply(digitMask).add(mask.remainder(digitMask));
+			BigInteger maskedValue = value.abs().divide(digitMask).multiply(digitMask).add(mask.remainder(digitMask));
 
 			if (value.signum() < 0) {
 				return maskedValue.negate();
@@ -96,11 +94,9 @@ public abstract class BigIntegerMasker implements Masker<BigInteger> {
 			BigInteger curMask = mask;
 			for (int i = 0;; i++, digitMask = digitMask.multiply(TEN)) {
 				if (i < count) {
-					maskedValue = maskedValue.add(curValue.remainder(TEN)
-							.multiply(digitMask));
+					maskedValue = maskedValue.add(curValue.remainder(TEN).multiply(digitMask));
 				} else {
-					maskedValue = maskedValue.add(curMask.remainder(TEN)
-							.multiply(digitMask));
+					maskedValue = maskedValue.add(curMask.remainder(TEN).multiply(digitMask));
 				}
 				curValue = curValue.divide(TEN);
 				curMask = curMask.divide(TEN);
@@ -139,8 +135,7 @@ public abstract class BigIntegerMasker implements Masker<BigInteger> {
 				digitMask = digitMask.multiply(TEN);
 			}
 
-			BigInteger maskedValue = mask.divide(digitMask).multiply(digitMask)
-					.add(value.abs().remainder(digitMask));
+			BigInteger maskedValue = mask.divide(digitMask).multiply(digitMask).add(value.abs().remainder(digitMask));
 
 			if (value.signum() < 0) {
 				return maskedValue.negate();

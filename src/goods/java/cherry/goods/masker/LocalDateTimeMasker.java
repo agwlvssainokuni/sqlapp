@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +20,8 @@ import org.joda.time.LocalDateTime;
 
 public abstract class LocalDateTimeMasker implements Masker<LocalDateTime> {
 
-	public static LocalDateTimeMasker newMasker(LocalDateTime mask,
-			boolean year, boolean month, boolean day, boolean hour,
-			boolean minute, boolean second) {
+	public static LocalDateTimeMasker newMasker(LocalDateTime mask, boolean year, boolean month, boolean day,
+			boolean hour, boolean minute, boolean second) {
 		return new MaskerImpl(mask, year, month, day, hour, minute, second);
 	}
 
@@ -42,8 +41,8 @@ public abstract class LocalDateTimeMasker implements Masker<LocalDateTime> {
 
 		private final boolean second;
 
-		public MaskerImpl(LocalDateTime mask, boolean year, boolean month,
-				boolean day, boolean hour, boolean minute, boolean second) {
+		public MaskerImpl(LocalDateTime mask, boolean year, boolean month, boolean day, boolean hour, boolean minute,
+				boolean second) {
 			this.mask = mask;
 			this.year = year;
 			this.month = month;
@@ -59,14 +58,11 @@ public abstract class LocalDateTimeMasker implements Masker<LocalDateTime> {
 				return value;
 			}
 			int year = (this.year ? mask.getYear() : value.getYear());
-			int month = (this.month ? mask.getMonthOfYear() : value
-					.getMonthOfYear());
+			int month = (this.month ? mask.getMonthOfYear() : value.getMonthOfYear());
 			int day = (this.day ? mask.getDayOfMonth() : value.getDayOfMonth());
 			int hour = (this.hour ? mask.getHourOfDay() : value.getHourOfDay());
-			int minute = (this.minute ? mask.getMinuteOfHour() : value
-					.getMinuteOfHour());
-			int second = (this.second ? mask.getSecondOfMinute() : value
-					.getSecondOfMinute());
+			int minute = (this.minute ? mask.getMinuteOfHour() : value.getMinuteOfHour());
+			int second = (this.second ? mask.getSecondOfMinute() : value.getSecondOfMinute());
 			return new LocalDateTime(year, month, day, hour, minute, second);
 		}
 	}

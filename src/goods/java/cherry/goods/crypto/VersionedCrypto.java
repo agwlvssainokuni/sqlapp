@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,8 +36,7 @@ public class VersionedCrypto implements Crypto {
 		this.cryptoMap = cryptoMap;
 	}
 
-	public void setVersionStrategy(
-			VersionStrategy<byte[], Integer> versionStrategy) {
+	public void setVersionStrategy(VersionStrategy<byte[], Integer> versionStrategy) {
 		this.versionStrategy = versionStrategy;
 	}
 
@@ -45,8 +44,7 @@ public class VersionedCrypto implements Crypto {
 	public byte[] encrypt(byte[] in) {
 		Crypto crypto = cryptoMap.get(defaultVersion);
 		if (crypto == null) {
-			throw new IllegalStateException("No matching Crypto for version "
-					+ defaultVersion);
+			throw new IllegalStateException("No matching Crypto for version " + defaultVersion);
 		}
 		byte[] b = crypto.encrypt(in);
 		return versionStrategy.encode(b, defaultVersion);
@@ -57,8 +55,7 @@ public class VersionedCrypto implements Crypto {
 		VersionedData<byte[], Integer> vd = versionStrategy.decode(in);
 		Crypto crypto = cryptoMap.get(vd.getVersion());
 		if (crypto == null) {
-			throw new IllegalStateException("No matching Crypto for version "
-					+ vd.getVersion());
+			throw new IllegalStateException("No matching Crypto for version " + vd.getVersion());
 		}
 		return crypto.decrypt(vd.getData());
 	}

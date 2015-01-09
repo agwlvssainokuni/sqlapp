@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,10 +32,8 @@ public class ToMapUtil {
 	/**
 	 * {@link Throwable}を{@link Map}に変換する。
 	 * 
-	 * @param th
-	 *            変換対象の{@link Throwable}。
-	 * @param maxDepth
-	 *            {@link Map}に格納するスタックトレースの最大段数。
+	 * @param th 変換対象の{@link Throwable}。
+	 * @param maxDepth {@link Map}に格納するスタックトレースの最大段数。
 	 * @return {@link Throwable}の情報を保持する{@link Map}。
 	 */
 	public static Map<String, Object> fromThrowable(Throwable th, int maxDepth) {

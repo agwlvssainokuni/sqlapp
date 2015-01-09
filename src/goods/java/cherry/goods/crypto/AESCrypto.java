@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,9 +72,8 @@ public class AESCrypto implements Crypto {
 				cipher.init(Cipher.ENCRYPT_MODE, secretKey, initVector);
 			}
 			return cipher.doFinal(in);
-		} catch (NoSuchAlgorithmException | NoSuchPaddingException
-				| InvalidAlgorithmParameterException | InvalidKeyException
-				| BadPaddingException | IllegalBlockSizeException ex) {
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException
+				| InvalidKeyException | BadPaddingException | IllegalBlockSizeException ex) {
 			throw new IllegalStateException(ex);
 		}
 	}
@@ -89,9 +88,8 @@ public class AESCrypto implements Crypto {
 				cipher.init(Cipher.DECRYPT_MODE, secretKey, initVector);
 			}
 			return cipher.doFinal(in);
-		} catch (NoSuchAlgorithmException | NoSuchPaddingException
-				| InvalidAlgorithmParameterException | InvalidKeyException
-				| BadPaddingException | IllegalBlockSizeException ex) {
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException
+				| InvalidKeyException | BadPaddingException | IllegalBlockSizeException ex) {
 			throw new IllegalStateException(ex);
 		}
 	}

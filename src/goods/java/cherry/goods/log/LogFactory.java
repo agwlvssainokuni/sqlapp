@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,7 @@ public class LogFactory {
 	/**
 	 * ログ出力機能を生成する。
 	 * 
-	 * @param klass
-	 *            ログに紐付けるクラス。
+	 * @param klass ログに紐付けるクラス。
 	 * @return ログ出力機能。
 	 */
 	public static Log getLog(Class<?> klass) {
@@ -37,8 +36,7 @@ public class LogFactory {
 	/**
 	 * ログ出力機能を生成する。
 	 * 
-	 * @param name
-	 *            ログに紐付ける名前。
+	 * @param name ログに紐付ける名前。
 	 * @return ログ出力機能。
 	 */
 	public static Log getLog(String name) {

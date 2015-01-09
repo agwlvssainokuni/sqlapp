@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -64,15 +64,13 @@ public abstract class BigDecimalMasker implements Masker<BigDecimal> {
 
 			BigInteger digitMask = ONE;
 			BigInteger curValue = biValue;
-			for (int i = 0; curValue.signum() > 0; i++, curValue = curValue
-					.divide(TEN)) {
+			for (int i = 0; curValue.signum() > 0; i++, curValue = curValue.divide(TEN)) {
 				if (i >= count) {
 					digitMask = digitMask.multiply(TEN);
 				}
 			}
 
-			BigInteger maskedValue = biValue.divide(digitMask)
-					.multiply(digitMask).add(maskInt.remainder(digitMask));
+			BigInteger maskedValue = biValue.divide(digitMask).multiply(digitMask).add(maskInt.remainder(digitMask));
 
 			if (value.signum() < 0) {
 				return maskFrac.add(new BigDecimal(maskedValue)).negate();
@@ -113,11 +111,9 @@ public abstract class BigDecimalMasker implements Masker<BigDecimal> {
 			BigInteger curMask = maskInt;
 			for (int i = 0;; i++, digitMask = digitMask.multiply(TEN)) {
 				if (i < count) {
-					maskedValue = maskedValue.add(curValue.remainder(TEN)
-							.multiply(digitMask));
+					maskedValue = maskedValue.add(curValue.remainder(TEN).multiply(digitMask));
 				} else {
-					maskedValue = maskedValue.add(curMask.remainder(TEN)
-							.multiply(digitMask));
+					maskedValue = maskedValue.add(curMask.remainder(TEN).multiply(digitMask));
 				}
 				curValue = curValue.divide(TEN);
 				curMask = curMask.divide(TEN);
@@ -164,8 +160,7 @@ public abstract class BigDecimalMasker implements Masker<BigDecimal> {
 				digitMask = digitMask.multiply(TEN);
 			}
 
-			BigInteger maskedValue = maskInt.divide(digitMask)
-					.multiply(digitMask).add(biValue.remainder(digitMask));
+			BigInteger maskedValue = maskInt.divide(digitMask).multiply(digitMask).add(biValue.remainder(digitMask));
 
 			if (value.signum() < 0) {
 				return maskFrac.add(new BigDecimal(maskedValue)).negate();

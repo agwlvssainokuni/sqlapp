@@ -1,5 +1,5 @@
 /*
- * Copyright 2012,2014 agwlvssainokuni
+ * Copyright 2012,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,11 +32,9 @@ public class SimpleSqlParser {
 	/**
 	 * SQL文を切出す。
 	 * 
-	 * @param reader
-	 *            SQL文の読込み元。
+	 * @param reader SQL文の読込み元。
 	 * @return 切出したSQL文。
-	 * @throws IOException
-	 *             読込みエラー。
+	 * @throws IOException 読込みエラー。
 	 */
 	public static String nextStatement(Reader reader) throws IOException {
 
@@ -93,11 +91,9 @@ public class SimpleSqlParser {
 	/**
 	 * SQLコメントを切出す。
 	 * 
-	 * @param reader
-	 *            SQLコメントの読込み元。
+	 * @param reader SQLコメントの読込み元。
 	 * @return 切出したSQLコメント。
-	 * @throws IOException
-	 *             読込みエラー。
+	 * @throws IOException 読込みエラー。
 	 */
 	public static String nextComment(Reader reader) throws IOException {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,8 +23,7 @@ import org.joda.time.LocalTime;
 
 public abstract class SqlTimeMasker implements Masker<Time> {
 
-	public static SqlTimeMasker newMasker(LocalTime mask, boolean hour,
-			boolean minute, boolean second) {
+	public static SqlTimeMasker newMasker(LocalTime mask, boolean hour, boolean minute, boolean second) {
 		return new MaskerImpl(mask, hour, minute, second);
 	}
 
@@ -32,8 +31,7 @@ public abstract class SqlTimeMasker implements Masker<Time> {
 
 		private final LocalTimeMasker masker;
 
-		public MaskerImpl(LocalTime mask, boolean hour, boolean minute,
-				boolean second) {
+		public MaskerImpl(LocalTime mask, boolean hour, boolean minute, boolean second) {
 			this.masker = LocalTimeMasker.newMasker(mask, hour, minute, second);
 		}
 
@@ -42,8 +40,7 @@ public abstract class SqlTimeMasker implements Masker<Time> {
 			if (value == null) {
 				return value;
 			}
-			LocalTime masked = masker.mask(new LocalTime(value.getTime()
-					+ LocalDate.now().toDate().getTime()));
+			LocalTime masked = masker.mask(new LocalTime(value.getTime() + LocalDate.now().toDate().getTime()));
 			return new Time(masked.getMillisOfDay());
 		}
 	}

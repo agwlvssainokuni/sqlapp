@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,8 +24,7 @@ public interface Crypto {
 	/**
 	 * 暗号化する。
 	 * 
-	 * @param in
-	 *            平文。
+	 * @param in 平文。
 	 * @return 暗号文。
 	 */
 	byte[] encrypt(byte[] in);
@@ -33,8 +32,7 @@ public interface Crypto {
 	/**
 	 * 復号化する。
 	 * 
-	 * @param in
-	 *            暗号文。
+	 * @param in 暗号文。
 	 * @return 平文。
 	 */
 	byte[] decrypt(byte[] in);

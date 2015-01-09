@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,12 +45,9 @@ public class CharTypeResult {
 	/**
 	 * 文字の種別の判別結果オブジェクトを生成する。
 	 * 
-	 * @param valid
-	 *            文字の種別の判別結果。
-	 * @param index
-	 *            合致しない文字の位置(添字)。
-	 * @param codePoint
-	 *            合致しない文字のコードポイント。
+	 * @param valid 文字の種別の判別結果。
+	 * @param index 合致しない文字の位置(添字)。
+	 * @param codePoint 合致しない文字のコードポイント。
 	 */
 	public CharTypeResult(boolean valid, int index, int codePoint) {
 		this.valid = valid;
@@ -60,8 +57,7 @@ public class CharTypeResult {
 
 	@Override
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.SHORT_PREFIX_STYLE);
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 	/**
