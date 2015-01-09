@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,21 +72,18 @@ public class SqltoolLoadDaoImpl implements SqltoolLoadDao, InitializingBean {
 	public SqltoolLoad findById(int id) {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("id", id);
-		return namedParameterJdbcOperations.queryForObject(findById, paramMap,
-				rowMapper);
+		return namedParameterJdbcOperations.queryForObject(findById, paramMap, rowMapper);
 	}
 
 	@Override
 	public int create(SqltoolLoad record) {
-		return namedParameterJdbcOperations.update(create,
-				sqlParameterSourceCreator.create(record));
+		return namedParameterJdbcOperations.update(create, sqlParameterSourceCreator.create(record));
 	}
 
 	@CacheEvict(value = "SqltoolLoad", key = "#record.id")
 	@Override
 	public int update(SqltoolLoad record) {
-		return namedParameterJdbcOperations.update(update,
-				sqlParameterSourceCreator.create(record));
+		return namedParameterJdbcOperations.update(update, sqlParameterSourceCreator.create(record));
 	}
 
 }

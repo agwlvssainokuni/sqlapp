@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,22 +73,18 @@ public class MetadataServiceImpl implements MetadataService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public PagedList<SqltoolMetadata> search(MetadataCondition cond,
-			long pageNo, long pageSz) {
+	public PagedList<SqltoolMetadata> search(MetadataCondition cond, long pageNo, long pageSz) {
 		QSqltoolMetadata m = new QSqltoolMetadata("m");
-		return queryDslSupport.search(commonClause(m, cond),
-				orderByClause(m, cond), pageNo, pageSz,
+		return queryDslSupport.search(commonClause(m, cond), orderByClause(m, cond), pageNo, pageSz,
 				rowMapperCreator.create(SqltoolMetadata.class), getColumns(m));
 	}
 
 	private Expression<?>[] getColumns(QSqltoolMetadata m) {
-		return new Expression<?>[] { m.id, m.sqlType, m.name, m.description,
-				m.ownedBy, m.publishedFlg, m.registeredAt, m.updatedAt,
-				m.createdAt, m.lockVersion, m.deletedFlg };
+		return new Expression<?>[] { m.id, m.sqlType, m.name, m.description, m.ownedBy, m.publishedFlg, m.registeredAt,
+				m.updatedAt, m.createdAt, m.lockVersion, m.deletedFlg };
 	}
 
-	private QueryConfigurer commonClause(final QSqltoolMetadata m,
-			final MetadataCondition cond) {
+	private QueryConfigurer commonClause(final QSqltoolMetadata m, final MetadataCondition cond) {
 		return new QueryConfigurer() {
 			@Override
 			public SQLQuery configure(SQLQuery query) {
@@ -106,14 +102,11 @@ public class MetadataServiceImpl implements MetadataService {
 				}
 
 				BooleanBuilder bb = new BooleanBuilder();
-				if (cond.getPublishedFlg().isEmpty()
-						|| cond.getPublishedFlg().contains(FlagCode.TRUE)) {
+				if (cond.getPublishedFlg().isEmpty() || cond.getPublishedFlg().contains(FlagCode.TRUE)) {
 					bb.or(m.publishedFlg.ne(FlagCode.FALSE.code()));
 				}
-				if (cond.getPublishedFlg().isEmpty()
-						|| cond.getPublishedFlg().contains(FlagCode.FALSE)) {
-					bb.or(m.publishedFlg.eq(FlagCode.FALSE.code()).and(
-							m.ownedBy.eq(cond.getLoginId())));
+				if (cond.getPublishedFlg().isEmpty() || cond.getPublishedFlg().contains(FlagCode.FALSE)) {
+					bb.or(m.publishedFlg.eq(FlagCode.FALSE.code()).and(m.ownedBy.eq(cond.getLoginId())));
 				}
 				query.where(bb);
 
@@ -131,8 +124,7 @@ public class MetadataServiceImpl implements MetadataService {
 		};
 	}
 
-	private QueryConfigurer orderByClause(final QSqltoolMetadata m,
-			final MetadataCondition cond) {
+	private QueryConfigurer orderByClause(final QSqltoolMetadata m, final MetadataCondition cond) {
 		return new QueryConfigurer() {
 			@Override
 			public SQLQuery configure(SQLQuery query) {

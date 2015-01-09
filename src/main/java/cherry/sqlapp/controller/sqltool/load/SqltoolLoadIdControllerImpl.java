@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -87,36 +87,30 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 	}
 
 	@Override
-	public ModelAndView init(int id, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView init(int id, Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_LOAD_ID_INIT);
 		mav.addObject(PathDef.PATH_VAR_ID, id);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView execute(int id, SqltoolLoadForm form,
-			BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request,
-			RedirectAttributes redirAttr) {
+	public ModelAndView execute(int id, SqltoolLoadForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, HttpServletRequest request, RedirectAttributes redirAttr) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_LOAD_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_LOAD_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 
-		long asyncId = asyncProcessFacade.launchFileProcess(auth.getName(),
-				"SqltoolLoadIdController", form.getFile(),
-				"execLoadFileProcessHandler", form.getDatabaseName(),
-				form.getSql());
+		long asyncId = asyncProcessFacade.launchFileProcess(auth.getName(), "SqltoolLoadIdController", form.getFile(),
+				"execLoadFileProcessHandler", form.getDatabaseName(), form.getSql());
 
 		redirAttr.addFlashAttribute(ASYNC_PARAM, asyncId);
 
-		UriComponents uc = fromMethodCall(
-				on(SqltoolLoadIdController.class).finish(id, auth, locale,
-						sitePref, request)).build();
+		UriComponents uc = fromMethodCall(on(SqltoolLoadIdController.class).finish(id, auth, locale, sitePref, request))
+				.build();
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
@@ -124,22 +118,19 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 	}
 
 	@Override
-	public ModelAndView finish(int id, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView finish(int id, Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_LOAD_ID_FINISH);
 		mav.addObject(PathDef.PATH_VAR_ID, id);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView update(int id, SqltoolLoadForm form,
-			BindingResult binding, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+	public ModelAndView update(int id, SqltoolLoadForm form, BindingResult binding, Authentication authentication,
+			Locale locale, SitePreference sitePreference, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_LOAD_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_LOAD_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
@@ -157,22 +148,18 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 			return mav;
 		} else {
 			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_LOAD_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_LOAD_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 	}
 
 	@Override
-	public ModelAndView metadata(int id, SqltoolMetadataForm mdForm,
-			BindingResult binding, Authentication authentication,
-			Locale locale, SitePreference sitePreference,
-			HttpServletRequest request) {
+	public ModelAndView metadata(int id, SqltoolMetadataForm mdForm, BindingResult binding,
+			Authentication authentication, Locale locale, SitePreference sitePreference, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_LOAD_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_LOAD_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
@@ -191,8 +178,7 @@ public class SqltoolLoadIdControllerImpl implements SqltoolLoadIdController {
 			return mav;
 		} else {
 			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_LOAD_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_LOAD_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -122,21 +122,19 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 	}
 
 	@Override
-	public ModelAndView init(int id, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView init(int id, Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
 		mav.addObject(PathDef.PATH_VAR_ID, id);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView execute(int id, SqltoolClauseForm form,
-			BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView execute(int id, SqltoolClauseForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
@@ -144,17 +142,15 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 		QueryBuilder builder = formUtil.getQueryBuilder(form);
 		Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
 		long pageNo = form.getPageNo();
-		long pageSz = (form.getPageSz() <= 0L ? defaultPageSize : form
-				.getPageSz());
+		long pageSz = (form.getPageSz() <= 0L ? defaultPageSize : form.getPageSz());
 
 		try {
 
 			ResultSet resultSet = new ResultSet();
-			PageSet pageSet = execQueryService.query(form.getDatabaseName(),
-					builder, paramMap, pageNo, pageSz, resultSet);
+			PageSet pageSet = execQueryService.query(form.getDatabaseName(), builder, paramMap, pageNo, pageSz,
+					resultSet);
 
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			mav.addObject(pageSet);
 			mav.addObject(resultSet);
@@ -162,29 +158,24 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 
 		} catch (BadSqlGrammarException ex) {
 			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 	}
 
 	@Override
-	public ModelAndView download(int id, final SqltoolClauseForm form,
-			BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView download(int id, final SqltoolClauseForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, HttpServletRequest request, HttpServletResponse response) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 
 		final QueryBuilder builder = formUtil.getQueryBuilder(form);
-		final Map<String, ?> paramMap = paramMapUtil.getParamMap(form
-				.getParamMap());
+		final Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
 
 		try {
 
@@ -192,38 +183,33 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 				@Override
 				public long doDownload(OutputStream out) throws IOException {
 					try (Writer writer = new OutputStreamWriter(out, charset)) {
-						PageSet ps = execQueryService.query(
-								form.getDatabaseName(), builder.build(),
-								paramMap, new CsvConsumer(writer, true));
+						PageSet ps = execQueryService.query(form.getDatabaseName(), builder.build(), paramMap,
+								new CsvConsumer(writer, true));
 						return ps.getLast().getTo() + 1L;
 					}
 				}
 			};
-			downloadOperation.download(response, contentType, charset,
-					filename, bizDateTime.now(), action);
+			downloadOperation.download(response, contentType, charset, filename, bizDateTime.now(), action);
 
 			return null;
 
 		} catch (BadSqlGrammarException ex) {
 			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 	}
 
 	@Override
-	public ModelAndView update(int id, SqltoolClauseForm form,
-			BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView update(int id, SqltoolClauseForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, HttpServletRequest request) {
 
 		SqltoolMetadata md = metadataService.findById(id, auth.getName());
 		SqltoolMetadataForm mdForm = mdFormUtil.getMdForm(md);
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			mav.addObject(mdForm);
 			return mav;
@@ -243,15 +229,13 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 
 		if (clauseService.update(record)) {
 			UriComponents uc = fromMethodCall(
-					on(SqltoolClauseIdController.class).init(id, auth, locale,
-							sitePref, request)).build();
+					on(SqltoolClauseIdController.class).init(id, auth, locale, sitePref, request)).build();
 			ModelAndView mav = new ModelAndView();
 			mav.setView(new RedirectView(uc.toUriString(), true));
 			return mav;
 		} else {
 			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			mav.addObject(mdForm);
 			return mav;
@@ -260,13 +244,11 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 	}
 
 	@Override
-	public ModelAndView metadata(int id, SqltoolMetadataForm mdForm,
-			BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView metadata(int id, SqltoolMetadataForm mdForm, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
@@ -280,15 +262,13 @@ public class SqltoolClauseIdControllerImpl implements SqltoolClauseIdController 
 
 		if (metadataService.update(md)) {
 			UriComponents uc = fromMethodCall(
-					on(SqltoolClauseIdController.class).init(id, auth, locale,
-							sitePref, request)).build();
+					on(SqltoolClauseIdController.class).init(id, auth, locale, sitePref, request)).build();
 			ModelAndView mav = new ModelAndView();
 			mav.setView(new RedirectView(uc.toUriString(), true));
 			return mav;
 		} else {
 			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_CLAUSE_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}

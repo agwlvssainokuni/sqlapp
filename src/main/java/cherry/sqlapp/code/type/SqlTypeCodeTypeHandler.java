@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,7 @@ package cherry.sqlapp.code.type;
 import cherry.foundation.type.mybatis.EnumCodeStringTypeHandler;
 import cherry.sqlapp.code.SqlTypeCode;
 
-public class SqlTypeCodeTypeHandler extends
-		EnumCodeStringTypeHandler<SqlTypeCode> {
+public class SqlTypeCodeTypeHandler extends EnumCodeStringTypeHandler<SqlTypeCode> {
 
 	public SqlTypeCodeTypeHandler() {
 		super(SqlTypeCode.class, null);

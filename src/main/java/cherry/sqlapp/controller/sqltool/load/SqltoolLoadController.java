@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,27 +36,20 @@ import cherry.sqlapp.controller.PathDef;
 public interface SqltoolLoadController {
 
 	@ModelAttribute()
-	SqltoolLoadForm getForm(
-			@RequestParam(value = PathDef.PARAM_REF, required = false) Integer ref,
-			Authentication auth);
+	SqltoolLoadForm getForm(@RequestParam(value = PathDef.PARAM_REF, required = false) Integer ref, Authentication auth);
 
 	@RequestMapping()
-	ModelAndView init(Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request);
+	ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_EXECUTE)
-	ModelAndView execute(@Validated SqltoolLoadForm form,
-			BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request,
-			RedirectAttributes redirAttr);
+	ModelAndView execute(@Validated SqltoolLoadForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request, RedirectAttributes redirAttr);
 
 	@RequestMapping(PathDef.SUBURI_FINISH)
-	ModelAndView finish(Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request);
+	ModelAndView finish(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_CREATE)
-	ModelAndView create(@Validated SqltoolLoadForm form, BindingResult binding,
-			Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request);
+	ModelAndView create(@Validated SqltoolLoadForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,17 +25,15 @@ import cherry.sqlapp.LogicError;
 @Component("logicErrorUtil")
 public class LogicErrorUtil {
 
-	public void rejectOnBadSqlGrammer(BindingResult binding,
-			BadSqlGrammarException ex) {
+	public void rejectOnBadSqlGrammer(BindingResult binding, BadSqlGrammarException ex) {
 		Throwable rootCause = getRootCause(ex);
-		binding.reject(LogicError.BadSqlGrammer.name(),
-				new Object[] { rootCause.getMessage() },
+		binding.reject(LogicError.BadSqlGrammer.name(), new Object[] { rootCause.getMessage() },
 				LogicError.BadSqlGrammer.name());
 	}
 
 	public void rejectOnOptimisticLockingFailure(BindingResult binding) {
-		binding.reject(LogicError.OptimisticLockingFailure.name(),
-				new Object[] {}, LogicError.OptimisticLockingFailure.name());
+		binding.reject(LogicError.OptimisticLockingFailure.name(), new Object[] {},
+				LogicError.OptimisticLockingFailure.name());
 	}
 
 	private Throwable getRootCause(Throwable ex) {

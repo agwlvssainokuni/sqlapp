@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,8 +62,7 @@ import cherry.sqlapp.service.sqltool.metadata.MetadataService;
 import cherry.sqlapp.service.sqltool.query.StatementService;
 
 @Controller
-public class SqltoolStatementIdControllerImpl implements
-		SqltoolStatementIdController {
+public class SqltoolStatementIdControllerImpl implements SqltoolStatementIdController {
 
 	@Value("${sqlapp.app.export.contentType}")
 	private String contentType;
@@ -119,22 +118,19 @@ public class SqltoolStatementIdControllerImpl implements
 	}
 
 	@Override
-	public ModelAndView init(int id, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView(
-				PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+	public ModelAndView init(int id, Authentication auth, Locale locale, SitePreference sitePref,
+			HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 		mav.addObject(PathDef.PATH_VAR_ID, id);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView execute(int id, SqltoolStatementForm form,
-			BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView execute(int id, SqltoolStatementForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
@@ -144,11 +140,9 @@ public class SqltoolStatementIdControllerImpl implements
 		try {
 
 			ResultSet resultSet = new ResultSet();
-			PageSet pageSet = execQueryService.query(form.getDatabaseName(),
-					form.getSql(), paramMap, resultSet);
+			PageSet pageSet = execQueryService.query(form.getDatabaseName(), form.getSql(), paramMap, resultSet);
 
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			mav.addObject(pageSet);
 			mav.addObject(resultSet);
@@ -156,28 +150,23 @@ public class SqltoolStatementIdControllerImpl implements
 
 		} catch (BadSqlGrammarException ex) {
 			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 	}
 
 	@Override
-	public ModelAndView download(int id, final SqltoolStatementForm form,
-			BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView download(int id, final SqltoolStatementForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, HttpServletRequest request, HttpServletResponse response) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 
-		final Map<String, ?> paramMap = paramMapUtil.getParamMap(form
-				.getParamMap());
+		final Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
 
 		try {
 
@@ -185,35 +174,30 @@ public class SqltoolStatementIdControllerImpl implements
 				@Override
 				public long doDownload(OutputStream out) throws IOException {
 					try (Writer writer = new OutputStreamWriter(out, charset)) {
-						PageSet ps = execQueryService.query(
-								form.getDatabaseName(), form.getSql(),
-								paramMap, new CsvConsumer(writer, true));
+						PageSet ps = execQueryService.query(form.getDatabaseName(), form.getSql(), paramMap,
+								new CsvConsumer(writer, true));
 						return ps.getLast().getTo() + 1L;
 					}
 				}
 			};
-			downloadOperation.download(response, contentType, charset,
-					filename, bizDateTime.now(), action);
+			downloadOperation.download(response, contentType, charset, filename, bizDateTime.now(), action);
 
 			return null;
 
 		} catch (BadSqlGrammarException ex) {
 			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 	}
 
 	@Override
-	public ModelAndView update(int id, SqltoolStatementForm form,
-			BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView update(int id, SqltoolStatementForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
@@ -227,28 +211,24 @@ public class SqltoolStatementIdControllerImpl implements
 
 		if (statementService.update(record)) {
 			UriComponents uc = fromMethodCall(
-					on(SqltoolStatementIdController.class).init(id, auth,
-							locale, sitePref, request)).build();
+					on(SqltoolStatementIdController.class).init(id, auth, locale, sitePref, request)).build();
 			ModelAndView mav = new ModelAndView();
 			mav.setView(new RedirectView(uc.toUriString(), true));
 			return mav;
 		} else {
 			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
 	}
 
 	@Override
-	public ModelAndView metadata(int id, SqltoolMetadataForm mdForm,
-			BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView metadata(int id, SqltoolMetadataForm mdForm, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}
@@ -262,15 +242,13 @@ public class SqltoolStatementIdControllerImpl implements
 
 		if (metadataService.update(md)) {
 			UriComponents uc = fromMethodCall(
-					on(SqltoolStatementIdController.class).init(id, auth,
-							locale, sitePref, request)).build();
+					on(SqltoolStatementIdController.class).init(id, auth, locale, sitePref, request)).build();
 			ModelAndView mav = new ModelAndView();
 			mav.setView(new RedirectView(uc.toUriString(), true));
 			return mav;
 		} else {
 			logicErrorUtil.rejectOnOptimisticLockingFailure(binding);
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_ID_INIT);
 			mav.addObject(PathDef.PATH_VAR_ID, id);
 			return mav;
 		}

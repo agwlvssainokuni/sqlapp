@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,15 +31,14 @@ import cherry.sqlapp.controller.PathDef;
 public interface LoginController {
 
 	@RequestMapping()
-	ModelAndView init(Locale locale, SitePreference sitePref,
-			HttpServletRequest request);
+	ModelAndView init(Locale locale, SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(params = PathDef.METHOD_LOGIN_FAILED)
-	ModelAndView loginFailed(Locale locale, SitePreference sitePref,
-			HttpServletRequest request, RedirectAttributes redirAttr);
+	ModelAndView loginFailed(Locale locale, SitePreference sitePref, HttpServletRequest request,
+			RedirectAttributes redirAttr);
 
 	@RequestMapping(params = PathDef.METHOD_LOGGED_OUT)
-	ModelAndView loggedOut(Locale locale, SitePreference sitePref,
-			HttpServletRequest request, RedirectAttributes redirAttr);
+	ModelAndView loggedOut(Locale locale, SitePreference sitePref, HttpServletRequest request,
+			RedirectAttributes redirAttr);
 
 }

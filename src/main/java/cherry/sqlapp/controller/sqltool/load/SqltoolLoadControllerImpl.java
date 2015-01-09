@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -82,32 +82,27 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 	}
 
 	@Override
-	public ModelAndView init(Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_LOAD_INIT);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView execute(SqltoolLoadForm form, BindingResult binding,
-			Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request, RedirectAttributes redirAttr) {
+	public ModelAndView execute(SqltoolLoadForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request, RedirectAttributes redirAttr) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_LOAD_INIT);
 			return mav;
 		}
 
-		long asyncId = asyncProcessFacade.launchFileProcess(auth.getName(),
-				"SqltoolLoadController", form.getFile(),
-				"execLoadFileProcessHandler", form.getDatabaseName(),
-				form.getSql());
+		long asyncId = asyncProcessFacade.launchFileProcess(auth.getName(), "SqltoolLoadController", form.getFile(),
+				"execLoadFileProcessHandler", form.getDatabaseName(), form.getSql());
 
 		redirAttr.addFlashAttribute(ASYNC_PARAM, asyncId);
 
-		UriComponents uc = fromMethodCall(
-				on(SqltoolLoadController.class).finish(auth, locale, sitePref,
-						request)).build();
+		UriComponents uc = fromMethodCall(on(SqltoolLoadController.class).finish(auth, locale, sitePref, request))
+				.build();
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));
@@ -115,16 +110,14 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 	}
 
 	@Override
-	public ModelAndView finish(Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView finish(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_LOAD_FINISH);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView create(SqltoolLoadForm form, BindingResult binding,
-			Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request) {
+	public ModelAndView create(SqltoolLoadForm form, BindingResult binding, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
 			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_LOAD_INIT);
@@ -138,9 +131,8 @@ public class SqltoolLoadControllerImpl implements SqltoolLoadController {
 
 		int id = loadService.create(record, auth.getName());
 
-		UriComponents uc = fromMethodCall(
-				on(SqltoolLoadIdController.class).init(id, auth, locale,
-						sitePref, request)).build();
+		UriComponents uc = fromMethodCall(on(SqltoolLoadIdController.class).init(id, auth, locale, sitePref, request))
+				.build();
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));

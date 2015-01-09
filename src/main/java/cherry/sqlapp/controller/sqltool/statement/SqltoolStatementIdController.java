@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,39 +37,33 @@ import cherry.sqlapp.controller.sqltool.SqltoolMetadataForm;
 public interface SqltoolStatementIdController {
 
 	@ModelAttribute()
-	SqltoolMetadataForm getMetadata(@PathVariable(PathDef.PATH_VAR_ID) int id,
-			Authentication auth);
+	SqltoolMetadataForm getMetadata(@PathVariable(PathDef.PATH_VAR_ID) int id, Authentication auth);
 
 	@ModelAttribute()
 	SqltoolStatementForm getForm(@PathVariable(PathDef.PATH_VAR_ID) int id);
 
 	@RequestMapping()
-	ModelAndView init(@PathVariable(PathDef.PATH_VAR_ID) int id,
-			Authentication auth, Locale locale, SitePreference sitePref,
-			HttpServletRequest request);
+	ModelAndView init(@PathVariable(PathDef.PATH_VAR_ID) int id, Authentication auth, Locale locale,
+			SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_EXECUTE)
-	ModelAndView execute(@PathVariable(PathDef.PATH_VAR_ID) int id,
-			@Validated SqltoolStatementForm form, BindingResult binding,
-			Authentication auth, Locale locale, SitePreference sitePref,
+	ModelAndView execute(@PathVariable(PathDef.PATH_VAR_ID) int id, @Validated SqltoolStatementForm form,
+			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
 	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_DOWNLOAD)
-	ModelAndView download(@PathVariable(PathDef.PATH_VAR_ID) int id,
-			@Validated SqltoolStatementForm form, BindingResult binding,
-			Authentication auth, Locale locale, SitePreference sitePref,
+	ModelAndView download(@PathVariable(PathDef.PATH_VAR_ID) int id, @Validated SqltoolStatementForm form,
+			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request, HttpServletResponse response);
 
 	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_UPDATE)
-	ModelAndView update(@PathVariable(PathDef.PATH_VAR_ID) int id,
-			@Validated SqltoolStatementForm form, BindingResult binding,
-			Authentication auth, Locale locale, SitePreference sitePref,
+	ModelAndView update(@PathVariable(PathDef.PATH_VAR_ID) int id, @Validated SqltoolStatementForm form,
+			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_METADATA)
-	ModelAndView metadata(@PathVariable(PathDef.PATH_VAR_ID) int id,
-			@Validated SqltoolMetadataForm mdForm, BindingResult binding,
-			Authentication auth, Locale locale, SitePreference sitePref,
+	ModelAndView metadata(@PathVariable(PathDef.PATH_VAR_ID) int id, @Validated SqltoolMetadataForm mdForm,
+			BindingResult binding, Authentication auth, Locale locale, SitePreference sitePref,
 			HttpServletRequest request);
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,8 +38,7 @@ import cherry.sqlapp.db.dto.SqltoolStatement;
 
 @Setter
 @Component
-public class SqltoolStatementDaoImpl implements SqltoolStatementDao,
-		InitializingBean {
+public class SqltoolStatementDaoImpl implements SqltoolStatementDao, InitializingBean {
 
 	@Autowired
 	private NamedParameterJdbcOperations namedParameterJdbcOperations;
@@ -73,21 +72,18 @@ public class SqltoolStatementDaoImpl implements SqltoolStatementDao,
 	public SqltoolStatement findById(int id) {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("id", id);
-		return namedParameterJdbcOperations.queryForObject(findById, paramMap,
-				rowMapper);
+		return namedParameterJdbcOperations.queryForObject(findById, paramMap, rowMapper);
 	}
 
 	@Override
 	public int create(SqltoolStatement record) {
-		return namedParameterJdbcOperations.update(create,
-				sqlParameterSourceCreator.create(record));
+		return namedParameterJdbcOperations.update(create, sqlParameterSourceCreator.create(record));
 	}
 
 	@CacheEvict(value = "SqltoolStatement", key = "#record.id")
 	@Override
 	public int update(SqltoolStatement record) {
-		return namedParameterJdbcOperations.update(update,
-				sqlParameterSourceCreator.create(record));
+		return namedParameterJdbcOperations.update(update, sqlParameterSourceCreator.create(record));
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,28 +36,22 @@ import cherry.sqlapp.controller.PathDef;
 public interface SqltoolStatementController {
 
 	@ModelAttribute()
-	SqltoolStatementForm getForm(
-			@RequestParam(value = PathDef.PARAM_REF, required = false) Integer ref,
+	SqltoolStatementForm getForm(@RequestParam(value = PathDef.PARAM_REF, required = false) Integer ref,
 			Authentication auth);
 
 	@RequestMapping()
-	ModelAndView init(Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request);
+	ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_EXECUTE)
-	ModelAndView execute(@Validated SqltoolStatementForm form,
-			BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request);
+	ModelAndView execute(@Validated SqltoolStatementForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_DOWNLOAD)
-	ModelAndView download(@Validated SqltoolStatementForm form,
-			BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request,
-			HttpServletResponse response);
+	ModelAndView download(@Validated SqltoolStatementForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, HttpServletRequest request, HttpServletResponse response);
 
 	@RequestMapping(value = PathDef.SUBURI_EXECUTE, params = PathDef.METHOD_CREATE)
-	ModelAndView create(@Validated SqltoolStatementForm form,
-			BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request);
+	ModelAndView create(@Validated SqltoolStatementForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, HttpServletRequest request);
 
 }

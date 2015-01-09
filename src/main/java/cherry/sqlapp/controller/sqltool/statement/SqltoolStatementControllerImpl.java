@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,8 +59,7 @@ import cherry.sqlapp.service.sqltool.metadata.MetadataService;
 import cherry.sqlapp.service.sqltool.query.StatementService;
 
 @Controller
-public class SqltoolStatementControllerImpl implements
-		SqltoolStatementController {
+public class SqltoolStatementControllerImpl implements SqltoolStatementController {
 
 	@Value("${sqlapp.app.export.contentType}")
 	private String contentType;
@@ -118,20 +117,17 @@ public class SqltoolStatementControllerImpl implements
 	}
 
 	@Override
-	public ModelAndView init(Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request) {
+	public ModelAndView init(Authentication auth, Locale locale, SitePreference sitePref, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 		return mav;
 	}
 
 	@Override
-	public ModelAndView execute(SqltoolStatementForm form,
-			BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView execute(SqltoolStatementForm form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 			return mav;
 		}
 
@@ -140,37 +136,30 @@ public class SqltoolStatementControllerImpl implements
 		try {
 
 			ResultSet resultSet = new ResultSet();
-			PageSet pageSet = execQueryService.query(form.getDatabaseName(),
-					form.getSql(), paramMap, resultSet);
+			PageSet pageSet = execQueryService.query(form.getDatabaseName(), form.getSql(), paramMap, resultSet);
 
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 			mav.addObject(pageSet);
 			mav.addObject(resultSet);
 			return mav;
 
 		} catch (BadSqlGrammarException ex) {
 			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 			return mav;
 		}
 	}
 
 	@Override
-	public ModelAndView download(final SqltoolStatementForm form,
-			BindingResult binding, Authentication auth, Locale locale,
-			SitePreference sitePref, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView download(final SqltoolStatementForm form, BindingResult binding, Authentication auth,
+			Locale locale, SitePreference sitePref, HttpServletRequest request, HttpServletResponse response) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 			return mav;
 		}
 
-		final Map<String, ?> paramMap = paramMapUtil.getParamMap(form
-				.getParamMap());
+		final Map<String, ?> paramMap = paramMapUtil.getParamMap(form.getParamMap());
 
 		try {
 
@@ -178,34 +167,29 @@ public class SqltoolStatementControllerImpl implements
 				@Override
 				public long doDownload(OutputStream out) throws IOException {
 					try (Writer writer = new OutputStreamWriter(out, charset)) {
-						PageSet ps = execQueryService.query(
-								form.getDatabaseName(), form.getSql(),
-								paramMap, new CsvConsumer(writer, true));
+						PageSet ps = execQueryService.query(form.getDatabaseName(), form.getSql(), paramMap,
+								new CsvConsumer(writer, true));
 						return ps.getLast().getTo() + 1L;
 					}
 				}
 			};
-			downloadOperation.download(response, contentType, charset,
-					filename, bizDateTime.now(), action);
+			downloadOperation.download(response, contentType, charset, filename, bizDateTime.now(), action);
 
 			return null;
 
 		} catch (BadSqlGrammarException ex) {
 			logicErrorUtil.rejectOnBadSqlGrammer(binding, ex);
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 			return mav;
 		}
 	}
 
 	@Override
-	public ModelAndView create(SqltoolStatementForm form,
-			BindingResult binding, Authentication auth, Locale locale,
+	public ModelAndView create(SqltoolStatementForm form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request) {
 
 		if (binding.hasErrors()) {
-			ModelAndView mav = new ModelAndView(
-					PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
+			ModelAndView mav = new ModelAndView(PathDef.VIEW_SQLTOOL_STATEMENT_INIT);
 			return mav;
 		}
 
@@ -218,8 +202,7 @@ public class SqltoolStatementControllerImpl implements
 		int id = statementService.create(record, auth.getName());
 
 		UriComponents uc = fromMethodCall(
-				on(SqltoolStatementIdController.class).init(id, auth, locale,
-						sitePref, request)).build();
+				on(SqltoolStatementIdController.class).init(id, auth, locale, sitePref, request)).build();
 
 		ModelAndView mav = new ModelAndView();
 		mav.setView(new RedirectView(uc.toUriString(), true));

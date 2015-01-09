@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,12 +39,10 @@ public interface SqltoolSearchController {
 	SqltoolSearchForm getForm();
 
 	@RequestMapping()
-	ModelAndView init(Authentication authentication, Locale locale,
-			SitePreference sitePref, HttpServletRequest request);
+	ModelAndView init(Authentication authentication, Locale locale, SitePreference sitePref, HttpServletRequest request);
 
 	@RequestMapping(PathDef.SUBURI_EXECUTE)
-	ModelAndView execute(@Validated SqltoolSearchForm form,
-			BindingResult binding, Authentication auth, Locale locale,
+	ModelAndView execute(@Validated SqltoolSearchForm form, BindingResult binding, Authentication auth, Locale locale,
 			SitePreference sitePref, HttpServletRequest request);
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,14 +49,12 @@ public class LoadServiceImpl implements LoadService {
 		metadata.setOwnedBy(ownedBy);
 		int count0 = sqltoolMetadataDao.create(metadata);
 		if (count0 != 1) {
-			throw new IllegalArgumentException(
-					"sqltool_metadata is not created; count=" + count0);
+			throw new IllegalArgumentException("sqltool_metadata is not created; count=" + count0);
 		}
 		record.setId(metadata.getId());
 		int count1 = sqltoolLoadDao.create(record);
 		if (count1 != 1) {
-			throw new IllegalArgumentException(
-					"sqltool_load is not created; count=" + count1);
+			throw new IllegalArgumentException("sqltool_load is not created; count=" + count1);
 		}
 		return metadata.getId();
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,12 +50,10 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 	private Paginator paginator;
 
 	@Override
-	public PageSet query(String databaseName, final String sql,
-			final Map<String, ?> paramMap, final Consumer consumer) {
+	public PageSet query(String databaseName, final String sql, final Map<String, ?> paramMap, final Consumer consumer) {
 
 		final DataSource dataSource = dataSourceDef.getDataSource(databaseName);
-		PlatformTransactionManager txMgr = new DataSourceTransactionManager(
-				dataSource);
+		PlatformTransactionManager txMgr = new DataSourceTransactionManager(dataSource);
 		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
 		txDef.setReadOnly(true);
 
@@ -65,10 +63,8 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 			public PageSet doInTransaction(TransactionStatus status) {
 				try {
 
-					long numOfItems = extractor.extract(dataSource, sql,
-							paramMap, consumer, new NoneLimiter());
-					PageSet pageSet = paginator.paginate(0L, numOfItems,
-							(numOfItems <= 0L ? 1L : numOfItems));
+					long numOfItems = extractor.extract(dataSource, sql, paramMap, consumer, new NoneLimiter());
+					PageSet pageSet = paginator.paginate(0L, numOfItems, (numOfItems <= 0L ? 1L : numOfItems));
 
 					return pageSet;
 				} catch (IOException ex) {
@@ -79,13 +75,11 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 	}
 
 	@Override
-	public PageSet query(String databaseName, final QueryBuilder queryBuilder,
-			final Map<String, ?> paramMap, final long pageNo,
-			final long pageSz, final Consumer consumer) {
+	public PageSet query(String databaseName, final QueryBuilder queryBuilder, final Map<String, ?> paramMap,
+			final long pageNo, final long pageSz, final Consumer consumer) {
 
 		final DataSource dataSource = dataSourceDef.getDataSource(databaseName);
-		PlatformTransactionManager txMgr = new DataSourceTransactionManager(
-				dataSource);
+		PlatformTransactionManager txMgr = new DataSourceTransactionManager(dataSource);
 		DefaultTransactionDefinition txDef = new DefaultTransactionDefinition();
 		txDef.setReadOnly(true);
 
@@ -95,13 +89,11 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 			public PageSet doInTransaction(TransactionStatus status) {
 				try {
 
-					long count = count(dataSource, queryBuilder.buildCount(),
-							paramMap);
+					long count = count(dataSource, queryBuilder.buildCount(), paramMap);
 					PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
 
 					long numOfItems = extractor.extract(dataSource,
-							queryBuilder.build(pageSz, pageSet.getCurrent()
-									.getFrom()), paramMap, consumer,
+							queryBuilder.build(pageSz, pageSet.getCurrent().getFrom()), paramMap, consumer,
 							new NoneLimiter());
 					if (numOfItems != pageSet.getCurrent().getCount()) {
 						throw new IllegalStateException();
@@ -115,10 +107,8 @@ public class ExecQueryServiceImpl implements ExecQueryService {
 		});
 	}
 
-	private long count(DataSource dataSource, String sql,
-			Map<String, ?> paramMap) {
-		NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(
-				dataSource);
+	private long count(DataSource dataSource, String sql, Map<String, ?> paramMap) {
+		NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(dataSource);
 		return template.queryForObject(sql, paramMap, Long.class);
 	}
 
