@@ -1,5 +1,5 @@
 /*
- * Copyright 2012,2014 agwlvssainokuni
+ * Copyright 2012,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,8 +32,7 @@ public class Column {
 
 	@Override
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.SHORT_PREFIX_STYLE);
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 	public int getType() {

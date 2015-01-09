@@ -1,5 +1,5 @@
 /*
- * Copyright 2012,2014 agwlvssainokuni
+ * Copyright 2012,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,54 +33,37 @@ public interface SqlExecutor {
 	/**
 	 * SQLを実行する。
 	 * 
-	 * @param dataSource
-	 *            データソース。
-	 * @param resource
-	 *            SQL文の読込み元。
-	 * @param paramMap
-	 *            SQLに受渡すパラメタ。
-	 * @param continueOnError
-	 *            SQL実行エラーで継続するか否か。
-	 * @throws IOException
-	 *             SQL文の読込みでエラー。
+	 * @param dataSource データソース。
+	 * @param resource SQL文の読込み元。
+	 * @param paramMap SQLに受渡すパラメタ。
+	 * @param continueOnError SQL実行エラーで継続するか否か。
+	 * @throws IOException SQL文の読込みでエラー。
 	 */
-	void execute(DataSource dataSource, Resource resource,
-			Map<String, ?> paramMap, boolean continueOnError)
+	void execute(DataSource dataSource, Resource resource, Map<String, ?> paramMap, boolean continueOnError)
 			throws IOException;
 
 	/**
 	 * SQLを実行する。
 	 * 
-	 * @param dataSource
-	 *            データソース。
-	 * @param in
-	 *            SQL文の読込み元。
-	 * @param paramMap
-	 *            SQLに受渡すパラメタ。
-	 * @param continueOnError
-	 *            SQL実行エラーで継続するか否か。
-	 * @throws IOException
-	 *             SQL文の読込みでエラー。
+	 * @param dataSource データソース。
+	 * @param in SQL文の読込み元。
+	 * @param paramMap SQLに受渡すパラメタ。
+	 * @param continueOnError SQL実行エラーで継続するか否か。
+	 * @throws IOException SQL文の読込みでエラー。
 	 */
-	void execute(DataSource dataSource, InputStream in,
-			Map<String, ?> paramMap, boolean continueOnError)
+	void execute(DataSource dataSource, InputStream in, Map<String, ?> paramMap, boolean continueOnError)
 			throws IOException;
 
 	/**
 	 * SQLを実行する。
 	 * 
-	 * @param dataSource
-	 *            データソース。
-	 * @param reader
-	 *            SQL文の読込み元。
-	 * @param paramMap
-	 *            SQLに受渡すパラメタ。
-	 * @param continueOnError
-	 *            SQL実行エラーで継続するか否か。
-	 * @throws IOException
-	 *             SQL文の読込みでエラー。
+	 * @param dataSource データソース。
+	 * @param reader SQL文の読込み元。
+	 * @param paramMap SQLに受渡すパラメタ。
+	 * @param continueOnError SQL実行エラーで継続するか否か。
+	 * @throws IOException SQL文の読込みでエラー。
 	 */
-	void execute(DataSource dataSource, Reader reader, Map<String, ?> paramMap,
-			boolean continueOnError) throws IOException;
+	void execute(DataSource dataSource, Reader reader, Map<String, ?> paramMap, boolean continueOnError)
+			throws IOException;
 
 }

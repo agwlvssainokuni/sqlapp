@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,8 +44,7 @@ public class Launcher {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	/** アプリケーションコンテキスト定義ファイルのパス。 */
-	private final String APPCTX = System.getProperty(APPCTX_SYSPROP,
-			APPCTX_DEFAULT);
+	private final String APPCTX = System.getProperty(APPCTX_SYSPROP, APPCTX_DEFAULT);
 
 	/** 起動すべきバッチプログラムの識別名を保持する。 */
 	private String batchId;
@@ -53,8 +52,7 @@ public class Launcher {
 	/**
 	 * バッチプログラム起動機能を生成する。
 	 * 
-	 * @param batchId
-	 *            起動すべきバッチプログラムの識別名。
+	 * @param batchId 起動すべきバッチプログラムの識別名。
 	 */
 	public Launcher(String batchId) {
 		this.batchId = batchId;
@@ -64,8 +62,7 @@ public class Launcher {
 	/**
 	 * バッチプログラムを起動する。
 	 * 
-	 * @param args
-	 *            起動時にコマンドラインに指定された引数。
+	 * @param args 起動時にコマンドラインに指定された引数。
 	 * @return バッチプログラムの終了ステータス。
 	 */
 	public ExitStatus launch(String... args) {
@@ -85,28 +82,23 @@ public class Launcher {
 
 			switch (status) {
 			case NORMAL:
-				log.info(msg.resolve("BATCH {0} ENDED WITH {1}", batchId,
-						status));
+				log.info(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
 				break;
 			case WARN:
-				log.warn(msg.resolve("BATCH {0} ENDED WITH {1}", batchId,
-						status));
+				log.warn(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
 				break;
 			case ERROR:
-				log.error(msg.resolve("BATCH {0} ENDED WITH {1}", batchId,
-						status));
+				log.error(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
 				break;
 			default:
-				log.error(msg.resolve("BATCH {0} ENDED WITH {1}", batchId,
-						status));
+				log.error(msg.resolve("BATCH {0} ENDED WITH {1}", batchId, status));
 				break;
 			}
 
 			return status;
 
 		} catch (Exception ex) {
-			log.error(msg.resolve("BATCH {0} ENDED WITH EXCEPTION", batchId),
-					ex);
+			log.error(msg.resolve("BATCH {0} ENDED WITH EXCEPTION", batchId), ex);
 			return ExitStatus.FATAL;
 		}
 	}
@@ -114,8 +106,7 @@ public class Launcher {
 	/**
 	 * バッチプログラムの実装本体を取出す。
 	 * 
-	 * @param id
-	 *            バッチプログラムの識別名。
+	 * @param id バッチプログラムの識別名。
 	 * @return バッチプログラムの実装本体。
 	 */
 	private IBatch getBatch(String id) {
@@ -135,10 +126,8 @@ public class Launcher {
 		/**
 		 * ログの文言を解決する。
 		 * 
-		 * @param code
-		 *            ログの文言の識別名。
-		 * @param batchId
-		 *            バッチプログラムの識別名。
+		 * @param code ログの文言の識別名。
+		 * @param batchId バッチプログラムの識別名。
 		 * @return ログの文言。
 		 */
 		public String resolve(String code, String batchId) {
@@ -150,34 +139,26 @@ public class Launcher {
 		/**
 		 * ログの文言を解決する。
 		 * 
-		 * @param code
-		 *            ログの文言の識別名。
-		 * @param batchId
-		 *            バッチプログラムの識別名。
-		 * @param status
-		 *            終了ステータス。
+		 * @param code ログの文言の識別名。
+		 * @param batchId バッチプログラムの識別名。
+		 * @param status 終了ステータス。
 		 * @return ログの文言。
 		 */
 		public String resolve(String code, String batchId, ExitStatus status) {
 			MessageSourceResolvable name = getResolvable(batchId, batchId);
-			MessageSourceResolvable msg = getResolvable(code, name,
-					status.name());
+			MessageSourceResolvable msg = getResolvable(code, name, status.name());
 			return msgSrc.getMessage(msg, null);
 		}
 
 		/**
 		 * 文言を解決するためのデータ構造 ({@link MessageSourceResolvable}) を生成する。
 		 * 
-		 * @param code
-		 *            文言の識別名。
-		 * @param args
-		 *            文言に埋込むデータ。
+		 * @param code 文言の識別名。
+		 * @param args 文言に埋込むデータ。
 		 * @return 文言。
 		 */
-		private MessageSourceResolvable getResolvable(String code,
-				Object... args) {
-			return new DefaultMessageSourceResolvable(new String[] { code },
-					args);
+		private MessageSourceResolvable getResolvable(String code, Object... args) {
+			return new DefaultMessageSourceResolvable(new String[] { code }, args);
 		}
 
 		/**

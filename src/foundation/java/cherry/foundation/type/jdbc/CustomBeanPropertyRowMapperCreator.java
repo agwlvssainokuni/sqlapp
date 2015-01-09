@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,15 +33,12 @@ public class CustomBeanPropertyRowMapperCreator implements RowMapperCreator {
 
 	@Override
 	public <T> RowMapper<T> create(Class<T> mappedClass) {
-		return new CustomBeanPropertyRowMapper<T>(mappedClass,
-				conversionService, null);
+		return new CustomBeanPropertyRowMapper<T>(mappedClass, conversionService, null);
 	}
 
 	@Override
-	public <T> RowMapper<T> create(Class<T> mappedClass,
-			Map<String, Masker<?>> maskerMap) {
-		return new CustomBeanPropertyRowMapper<T>(mappedClass,
-				conversionService, maskerMap);
+	public <T> RowMapper<T> create(Class<T> mappedClass, Map<String, Masker<?>> maskerMap) {
+		return new CustomBeanPropertyRowMapper<T>(mappedClass, conversionService, maskerMap);
 	}
 
 }

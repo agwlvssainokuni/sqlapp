@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,16 +37,14 @@ public class SecureTypeSqlConverterRegistrar implements FormatterRegistrar {
 		registry.addConverter(new SecureBigDecimalConverter());
 	}
 
-	static class SecureStringConverter implements
-			Converter<String, SecureString> {
+	static class SecureStringConverter implements Converter<String, SecureString> {
 		@Override
 		public SecureString convert(String source) {
 			return SecureString.cryptoValueOf(source);
 		}
 	}
 
-	static class SecureIntegerConverter implements
-			Converter<String, SecureInteger> {
+	static class SecureIntegerConverter implements Converter<String, SecureInteger> {
 		@Override
 		public SecureInteger convert(String source) {
 			return SecureInteger.cryptoValueOf(source);
@@ -60,16 +58,14 @@ public class SecureTypeSqlConverterRegistrar implements FormatterRegistrar {
 		}
 	}
 
-	static class SecureBigIntegerConverter implements
-			Converter<String, SecureBigInteger> {
+	static class SecureBigIntegerConverter implements Converter<String, SecureBigInteger> {
 		@Override
 		public SecureBigInteger convert(String source) {
 			return SecureBigInteger.cryptoValueOf(source);
 		}
 	}
 
-	static class SecureBigDecimalConverter implements
-			Converter<String, SecureBigDecimal> {
+	static class SecureBigDecimalConverter implements Converter<String, SecureBigDecimal> {
 		@Override
 		public SecureBigDecimal convert(String source) {
 			return SecureBigDecimal.cryptoValueOf(source);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,8 +48,7 @@ public class OperationLogHandlerInterceptor implements HandlerInterceptor {
 	private final Logger loggerExit = LoggerFactory.getLogger(OPER_EXIT);
 
 	@Override
-	public boolean preHandle(HttpServletRequest request,
-			HttpServletResponse response, Object handler) throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
 		SecurityContext context = SecurityContextHolder.getContext();
 		MDC.put(LOGIN_ID, context.getAuthentication().getName());
@@ -58,8 +57,7 @@ public class OperationLogHandlerInterceptor implements HandlerInterceptor {
 
 		builder.append(" {");
 		boolean first = true;
-		for (Map.Entry<String, String[]> entry : request.getParameterMap()
-				.entrySet()) {
+		for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
 			if (!first) {
 				builder.append(", ");
 			}
@@ -68,8 +66,7 @@ public class OperationLogHandlerInterceptor implements HandlerInterceptor {
 			if (entry.getKey().toLowerCase().contains("password")) {
 				builder.append("<MASKED>");
 			} else {
-				builder.append(ToStringBuilder.reflectionToString(
-						entry.getValue(), ToStringStyle.SHORT_PREFIX_STYLE));
+				builder.append(ToStringBuilder.reflectionToString(entry.getValue(), ToStringStyle.SHORT_PREFIX_STYLE));
 			}
 		}
 		builder.append("}");
@@ -80,8 +77,7 @@ public class OperationLogHandlerInterceptor implements HandlerInterceptor {
 	}
 
 	@Override
-	public void postHandle(HttpServletRequest request,
-			HttpServletResponse response, Object handler,
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 
 		StringBuilder builder = createBasicInfo(request);
@@ -98,8 +94,7 @@ public class OperationLogHandlerInterceptor implements HandlerInterceptor {
 	}
 
 	@Override
-	public void afterCompletion(HttpServletRequest request,
-			HttpServletResponse response, Object handler, Exception ex)
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
 
 		StringBuilder builder = createBasicInfo(request);
@@ -114,8 +109,7 @@ public class OperationLogHandlerInterceptor implements HandlerInterceptor {
 
 	private StringBuilder createBasicInfo(HttpServletRequest request) {
 		StringBuilder builder = new StringBuilder();
-		return builder.append(request.getRemoteAddr()).append(" ")
-				.append(request.getMethod()).append(" ")
+		return builder.append(request.getRemoteAddr()).append(" ").append(request.getMethod()).append(" ")
 				.append(request.getRequestURI());
 	}
 

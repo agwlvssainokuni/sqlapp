@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,8 +42,7 @@ public class CodeUtil {
 		E get(C code);
 	}
 
-	public static <C, E extends Code<C>> CodeMap<C, E> getCodeMap(
-			final Class<E> type, final E defaultValue) {
+	public static <C, E extends Code<C>> CodeMap<C, E> getCodeMap(final Class<E> type, final E defaultValue) {
 		return new CodeMap<C, E>() {
 
 			private Log log = LogFactory.getLog(type);
@@ -53,12 +52,9 @@ public class CodeUtil {
 			public E get(C code) {
 				E e = map.get(code);
 				if (e == null) {
-					checkArgument(defaultValue != null,
-							"No matching enum %s for %s", type.getSimpleName(),
-							code);
+					checkArgument(defaultValue != null, "No matching enum %s for %s", type.getSimpleName(), code);
 					if (log.isDebugEnabled()) {
-						log.debug("No matching enum {0} for {1}",
-								type.getSimpleName(), code);
+						log.debug("No matching enum {0} for {1}", type.getSimpleName(), code);
 					}
 					return defaultValue;
 				}
@@ -68,8 +64,7 @@ public class CodeUtil {
 	}
 
 	public static <C, E extends Code<C>> Map<C, E> getMap(Class<E> type) {
-		checkArgument(type.getEnumConstants() != null,
-				"%s does not represent an enum type.", type.getSimpleName());
+		checkArgument(type.getEnumConstants() != null, "%s does not represent an enum type.", type.getSimpleName());
 		Map<C, E> map = new LinkedHashMap<>();
 		for (E e : type.getEnumConstants()) {
 			map.put(e.code(), e);
@@ -77,8 +72,7 @@ public class CodeUtil {
 		return map;
 	}
 
-	public static <C, E extends Code<C>> LabeledCode<C, E> getLabeledCode(
-			final E code) {
+	public static <C, E extends Code<C>> LabeledCode<C, E> getLabeledCode(final E code) {
 		return new LabeledCode<C, E>() {
 
 			@Override
@@ -93,18 +87,14 @@ public class CodeUtil {
 
 			@Override
 			public String getCodeLabel() {
-				String cd = new StringBuffer(code.getClass().getName())
-						.append(".").append(code.code()).toString();
-				return messageSource.getMessage(cd, null,
-						LocaleContextHolder.getLocale());
+				String cd = new StringBuffer(code.getClass().getName()).append(".").append(code.code()).toString();
+				return messageSource.getMessage(cd, null, LocaleContextHolder.getLocale());
 			}
 		};
 	}
 
-	public static <C, E extends Code<C>> List<LabeledCode<C, E>> getLabeledCodeList(
-			Class<E> type) {
-		checkArgument(type.getEnumConstants() != null,
-				"%s does not represent an enum type.", type.getSimpleName());
+	public static <C, E extends Code<C>> List<LabeledCode<C, E>> getLabeledCodeList(Class<E> type) {
+		checkArgument(type.getEnumConstants() != null, "%s does not represent an enum type.", type.getSimpleName());
 		List<LabeledCode<C, E>> list = new ArrayList<>();
 		for (E e : type.getEnumConstants()) {
 			list.add(getLabeledCode(e));
@@ -113,8 +103,7 @@ public class CodeUtil {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <C, E extends Code<C>> List<LabeledCode<C, E>> getLabeledCodeList(
-			String typeName) {
+	public static <C, E extends Code<C>> List<LabeledCode<C, E>> getLabeledCodeList(String typeName) {
 		try {
 			return getLabeledCodeList((Class<E>) Class.forName(typeName));
 		} catch (ClassNotFoundException ex) {

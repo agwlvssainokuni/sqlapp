@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,16 +46,13 @@ public class EnumUtil {
 
 			@Override
 			public String getEnumLabel() {
-				String cd = new StringBuffer(e.getClass().getName())
-						.append(".").append(e.name()).toString();
-				return messageSource.getMessage(cd, null,
-						LocaleContextHolder.getLocale());
+				String cd = new StringBuffer(e.getClass().getName()).append(".").append(e.name()).toString();
+				return messageSource.getMessage(cd, null, LocaleContextHolder.getLocale());
 			}
 		};
 	}
 
-	public static <E extends Enum<E>> List<LabeledEnum<E>> getLabeledEnumList(
-			Class<E> type) {
+	public static <E extends Enum<E>> List<LabeledEnum<E>> getLabeledEnumList(Class<E> type) {
 		List<LabeledEnum<E>> list = new ArrayList<>();
 		for (E e : type.getEnumConstants()) {
 			list.add(getLabeledEnum(e));
@@ -64,8 +61,7 @@ public class EnumUtil {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <E extends Enum<E>> List<LabeledEnum<E>> getLabeledEnumList(
-			String typeName) {
+	public static <E extends Enum<E>> List<LabeledEnum<E>> getLabeledEnumList(String typeName) {
 		try {
 			return getLabeledEnumList((Class<E>) Class.forName(typeName));
 		} catch (ClassNotFoundException ex) {

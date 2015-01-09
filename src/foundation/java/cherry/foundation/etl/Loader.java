@@ -1,5 +1,5 @@
 /*
- * Copyright 2012,2014 agwlvssainokuni
+ * Copyright 2012,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,21 +28,15 @@ public interface Loader {
 	/**
 	 * データを取込む。
 	 * 
-	 * @param dataSource
-	 *            データソース。
-	 * @param sql
-	 *            SQL。
-	 * @param provider
-	 *            データの取得元。
-	 * @param limit
-	 *            データ取込み制限。
+	 * @param dataSource データソース。
+	 * @param sql SQL。
+	 * @param provider データの取得元。
+	 * @param limit データ取込み制限。
 	 * @return 取込みの結果。
-	 * @throws LimiterException
-	 *             データ取込み制限超過。
-	 * @throws IOException
-	 *             データ取得でエラー。
+	 * @throws LimiterException データ取込み制限超過。
+	 * @throws IOException データ取得でエラー。
 	 */
-	LoadResult load(DataSource dataSource, String sql, Provider provider,
-			Limiter limiter) throws LimiterException, IOException;
+	LoadResult load(DataSource dataSource, String sql, Provider provider, Limiter limiter) throws LimiterException,
+			IOException;
 
 }

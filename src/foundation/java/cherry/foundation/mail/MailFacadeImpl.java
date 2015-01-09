@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,33 +43,26 @@ public class MailFacadeImpl implements MailFacade {
 	}
 
 	@Override
-	public MailData createMailData(String templateName, String to,
-			MailModel mailModel) {
+	public MailData createMailData(String templateName, String to, MailModel mailModel) {
 		return mailDataHandler.createMailData(templateName, to, mailModel);
 	}
 
 	@Override
-	public long send(String launcherId, String messageName, String from,
-			List<String> to, List<String> cc, List<String> bcc, String subject,
-			String body) {
-		return mailSendHandler.sendLater(launcherId, messageName, from, to, cc,
-				bcc, subject, body, bizDateTime.now());
+	public long send(String launcherId, String messageName, String from, List<String> to, List<String> cc,
+			List<String> bcc, String subject, String body) {
+		return mailSendHandler.sendLater(launcherId, messageName, from, to, cc, bcc, subject, body, bizDateTime.now());
 	}
 
 	@Override
-	public long sendLater(String launcherId, String messageName, String from,
-			List<String> to, List<String> cc, List<String> bcc, String subject,
-			String body, LocalDateTime scheduledAt) {
-		return mailSendHandler.sendLater(launcherId, messageName, from, to, cc,
-				bcc, subject, body, scheduledAt);
+	public long sendLater(String launcherId, String messageName, String from, List<String> to, List<String> cc,
+			List<String> bcc, String subject, String body, LocalDateTime scheduledAt) {
+		return mailSendHandler.sendLater(launcherId, messageName, from, to, cc, bcc, subject, body, scheduledAt);
 	}
 
 	@Override
-	public long sendNow(String launcherId, String messageName, String from,
-			List<String> to, List<String> cc, List<String> bcc, String subject,
-			String body) {
-		return mailSendHandler.sendNow(launcherId, messageName, from, to, cc,
-				bcc, subject, body);
+	public long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
+			List<String> bcc, String subject, String body) {
+		return mailSendHandler.sendNow(launcherId, messageName, from, to, cc, bcc, subject, body);
 	}
 
 }

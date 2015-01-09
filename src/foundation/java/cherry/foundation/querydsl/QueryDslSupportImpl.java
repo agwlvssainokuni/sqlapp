@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,8 +40,7 @@ public class QueryDslSupportImpl implements QueryDslSupport {
 
 	private Paginator paginator;
 
-	public void setQueryDslJdbcOperations(
-			QueryDslJdbcOperations queryDslJdbcOperations) {
+	public void setQueryDslJdbcOperations(QueryDslJdbcOperations queryDslJdbcOperations) {
 		this.queryDslJdbcOperations = queryDslJdbcOperations;
 	}
 
@@ -50,9 +49,8 @@ public class QueryDslSupportImpl implements QueryDslSupport {
 	}
 
 	@Override
-	public <T> PagedList<T> search(QueryConfigurer commonClause,
-			QueryConfigurer orderByClause, long pageNo, long pageSz,
-			RowMapper<T> rowMapper, Expression<?>... expressions) {
+	public <T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo,
+			long pageSz, RowMapper<T> rowMapper, Expression<?>... expressions) {
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query = commonClause.configure(query);
@@ -61,8 +59,7 @@ public class QueryDslSupportImpl implements QueryDslSupport {
 		PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
 		query.limit(pageSz).offset(pageSet.getCurrent().getFrom());
 		query = orderByClause.configure(query);
-		List<T> list = queryDslJdbcOperations.query(query, rowMapper,
-				expressions);
+		List<T> list = queryDslJdbcOperations.query(query, rowMapper, expressions);
 
 		PagedList<T> result = new PagedList<>();
 		result.setPageSet(pageSet);
@@ -71,9 +68,8 @@ public class QueryDslSupportImpl implements QueryDslSupport {
 	}
 
 	@Override
-	public <T> PagedList<T> search(QueryConfigurer commonClause,
-			QueryConfigurer orderByClause, long pageNo, long pageSz,
-			Expression<T> expression) {
+	public <T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo,
+			long pageSz, Expression<T> expression) {
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query = commonClause.configure(query);
@@ -91,12 +87,10 @@ public class QueryDslSupportImpl implements QueryDslSupport {
 	}
 
 	@Override
-	public long download(QueryConfigurer commonClause,
-			QueryConfigurer orderByClause, Consumer consumer, Limiter limiter,
-			Expression<?>... expressions) throws LimiterException, IOException {
+	public long download(QueryConfigurer commonClause, QueryConfigurer orderByClause, Consumer consumer,
+			Limiter limiter, Expression<?>... expressions) throws LimiterException, IOException {
 
-		ResultSetExtractor<Long> extractor = new ExtractorResultSetExtractor(
-				consumer, limiter);
+		ResultSetExtractor<Long> extractor = new ExtractorResultSetExtractor(consumer, limiter);
 
 		limiter.start();
 		try {
@@ -105,8 +99,7 @@ public class QueryDslSupportImpl implements QueryDslSupport {
 			query = commonClause.configure(query);
 			query = orderByClause.configure(query);
 
-			return queryDslJdbcOperations.queryForObject(query, extractor,
-					expressions);
+			return queryDslJdbcOperations.queryForObject(query, extractor, expressions);
 		} catch (IllegalStateException ex) {
 			throw (IOException) ex.getCause();
 		} finally {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,14 +26,10 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * 非同期実行フレームワーク。<br />
  * 非同期で実行したファイル処理の結果を保持する。内訳は下記の通り。
  * <ul>
- * <li>{@link #totalCount}: ファイルから読込んだレコードの総件数 (== {@link #okCount} +
- * {@link #ngCount} とすること)。</li>
- * <li>{@link #okCount}: ファイルから読込んだレコードのうち正常に処理したレコードの件数 (== {@link #totalCount}
- * - {@link #ngCount} とすること)。</li>
- * <li>{@link #ngCount}: ファイルから読込んだレコードのうち正常に処理しなかったレコードの件数 (==
- * {@link #totalCount} - {@link #okCount} とすること)。</li>
- * <li>{@link #ngRecordInfoList}: ファイルから読込んだレコードのうち正常に処理しなかったレコードの情報 (size() ==
- * {@link #ngCount} とすること)。</li>
+ * <li>{@link #totalCount}: ファイルから読込んだレコードの総件数 (== {@link #okCount} + {@link #ngCount} とすること)。</li>
+ * <li>{@link #okCount}: ファイルから読込んだレコードのうち正常に処理したレコードの件数 (== {@link #totalCount} - {@link #ngCount} とすること)。</li>
+ * <li>{@link #ngCount}: ファイルから読込んだレコードのうち正常に処理しなかったレコードの件数 (== {@link #totalCount} - {@link #okCount} とすること)。</li>
+ * <li>{@link #ngRecordInfoList}: ファイルから読込んだレコードのうち正常に処理しなかったレコードの情報 (size() == {@link #ngCount} とすること)。</li>
  * </ul>
  */
 public class FileProcessResult implements Serializable {
@@ -54,8 +50,7 @@ public class FileProcessResult implements Serializable {
 
 	@Override
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this,
-				ToStringStyle.SHORT_PREFIX_STYLE);
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
 	}
 
 	public long getTotalCount() {

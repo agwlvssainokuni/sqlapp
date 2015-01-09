@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,7 @@ import cherry.goods.masker.Masker;
 
 public class MaskerUtil {
 
-	public static Map<String, Decorator> decoratorMap(
-			Map<String, Masker<?>> maskerMap) {
+	public static Map<String, Decorator> decoratorMap(Map<String, Masker<?>> maskerMap) {
 		Map<String, Decorator> map = new LinkedHashMap<>();
 		for (Map.Entry<String, Masker<?>> entry : maskerMap.entrySet()) {
 			@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -37,8 +36,7 @@ public class MaskerUtil {
 		return map;
 	}
 
-	public static Map<String, Masker<?>> propertyMap(
-			Map<String, Masker<?>> maskerMap) {
+	public static Map<String, Masker<?>> propertyMap(Map<String, Masker<?>> maskerMap) {
 		Map<String, Masker<?>> map = new LinkedHashMap<>();
 		for (Map.Entry<String, Masker<?>> entry : maskerMap.entrySet()) {
 			String key = UPPER_UNDERSCORE.to(LOWER_CAMEL, entry.getKey());

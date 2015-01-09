@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,11 +44,9 @@ import com.google.common.io.ByteStreams;
 
 /**
  * 非同期実行フレームワーク。<br />
- * 非同期にファイル処理を実行する仕組みを提供する。ファイル処理の実体は業務ロジックごとに{@link FileProcessHandler}
- * を実装することとする。
+ * 非同期にファイル処理を実行する仕組みを提供する。ファイル処理の実体は業務ロジックごとに{@link FileProcessHandler}を実装することとする。
  */
-public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler,
-		ApplicationContextAware {
+public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler, ApplicationContextAware {
 
 	private static final String ASYNCID = "asyncId";
 	private static final String FILE = "file";
@@ -105,35 +103,26 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler,
 		this.tempSuffix = tempSuffix;
 	}
 
-	public void setMessagePostProcessor(
-			MessagePostProcessor messagePostProcessor) {
+	public void setMessagePostProcessor(MessagePostProcessor messagePostProcessor) {
 		this.messagePostProcessor = messagePostProcessor;
 	}
 
 	/**
 	 * 非同期のファイル処理を実行登録する。
 	 *
-	 * @param launcherId
-	 *            非同期処理の実行者のID。
-	 * @param description
-	 *            内容表記。
-	 * @param file
-	 *            処理対象のファイル。
-	 * @param handlerName
-	 *            非同期のファイル処理の処理を実装したBeanの名前。同Beanは{@link FileProcessHandler}
-	 *            を実装しなければならない。
-	 * @param args
-	 *            引数。
+	 * @param launcherId 非同期処理の実行者のID。
+	 * @param description 内容表記。
+	 * @param file 処理対象のファイル。
+	 * @param handlerName 非同期のファイル処理の処理を実装したBeanの名前。同Beanは{@link FileProcessHandler}を実装しなければならない。
+	 * @param args 引数。
 	 * @return 非同期実行状況の管理データのID。
 	 */
 	@Override
-	public long launchFileProcess(String launcherId, String description,
-			MultipartFile file, String handlerName, String... args) {
+	public long launchFileProcess(String launcherId, String description, MultipartFile file, String handlerName,
+			String... args) {
 
-		long asyncId = asyncProcessStore.createFileProcess(launcherId,
-				bizDateTime.now(), description, file.getName(),
-				file.getOriginalFilename(), file.getContentType(),
-				file.getSize(), handlerName, args);
+		long asyncId = asyncProcessStore.createFileProcess(launcherId, bizDateTime.now(), description, file.getName(),
+				file.getOriginalFilename(), file.getContentType(), file.getSize(), handlerName, args);
 		try {
 
 			File tempFile = createFile(file);
@@ -154,8 +143,7 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler,
 			asyncProcessStore.updateToLaunched(asyncId, bizDateTime.now());
 			return asyncId;
 		} catch (IOException ex) {
-			asyncProcessStore.finishWithException(asyncId, bizDateTime.now(),
-					ex);
+			asyncProcessStore.finishWithException(asyncId, bizDateTime.now(), ex);
 			throw new IllegalStateException(ex);
 		}
 	}
@@ -164,9 +152,7 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler,
 	 * 実行登録したファイル処理を実行する。<br />
 	 * 本メソッドはコンテナが呼出すことを意図するものである。
 	 *
-	 * @param message
-	 *            {@link #launchFileProcess(String, MultipartFile, String)}
-	 *            において登録した内容がコンテナから受渡される。
+	 * @param message {@link #launchFileProcess(String, MultipartFile, String)}において登録した内容がコンテナから受渡される。
 	 */
 	@Override
 	public void handleMessage(Map<String, String> message) {
@@ -191,10 +177,8 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler,
 		asyncProcessStore.updateToProcessing(asyncId, bizDateTime.now());
 		try {
 
-			FileProcessHandler handler = applicationContext.getBean(
-					handlerName, FileProcessHandler.class);
-			FileProcessResult result = handler.handleFile(tempFile, name,
-					originalFilename, contentType, size, asyncId,
+			FileProcessHandler handler = applicationContext.getBean(handlerName, FileProcessHandler.class);
+			FileProcessResult result = handler.handleFile(tempFile, name, originalFilename, contentType, size, asyncId,
 					args.toArray(new String[args.size()]));
 
 			AsyncStatus status;
@@ -206,24 +190,19 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler,
 				status = AsyncStatus.WARN;
 			}
 
-			asyncProcessStore.finishFileProcess(asyncId, bizDateTime.now(),
-					status, result);
+			asyncProcessStore.finishFileProcess(asyncId, bizDateTime.now(), status, result);
 		} catch (Exception ex) {
-			asyncProcessStore.finishWithException(asyncId, bizDateTime.now(),
-					ex);
+			asyncProcessStore.finishWithException(asyncId, bizDateTime.now(), ex);
 		} finally {
 			deleteFile(tempFile);
 		}
 	}
 
 	private File createFile(MultipartFile file) throws IOException {
-		File tempFile = createTempFile(
-				format(tempPrefix, LocalDateTime.now().toDate()), tempSuffix,
-				tempDir);
+		File tempFile = createTempFile(format(tempPrefix, LocalDateTime.now().toDate()), tempSuffix, tempDir);
 		tempFile.deleteOnExit();
 		try {
-			try (InputStream in = file.getInputStream();
-					OutputStream out = new FileOutputStream(tempFile)) {
+			try (InputStream in = file.getInputStream(); OutputStream out = new FileOutputStream(tempFile)) {
 				ByteStreams.copy(in, out);
 				return tempFile;
 			}
@@ -235,8 +214,7 @@ public class AsyncFileProcessHandlerImpl implements AsyncFileProcessHandler,
 
 	private void deleteFile(File file) {
 		if (!file.delete()) {
-			log.debug("failed to delete a temporary file: {0}",
-					file.getAbsolutePath());
+			log.debug("failed to delete a temporary file: {0}", file.getAbsolutePath());
 		}
 	}
 

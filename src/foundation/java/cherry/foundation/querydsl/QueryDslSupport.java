@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,16 +29,13 @@ import com.mysema.query.types.Expression;
 
 public interface QueryDslSupport {
 
-	<T> PagedList<T> search(QueryConfigurer commonClause,
-			QueryConfigurer orderByClause, long pageNo, long pageSz,
+	<T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo, long pageSz,
 			RowMapper<T> rowMapper, Expression<?>... expressions);
 
-	<T> PagedList<T> search(QueryConfigurer commonClause,
-			QueryConfigurer orderByClause, long pageNo, long pageSz,
+	<T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo, long pageSz,
 			Expression<T> expression);
 
-	long download(QueryConfigurer commonClause, QueryConfigurer orderByClause,
-			Consumer consumer, Limiter limiter, Expression<?>... expressions)
-			throws LimiterException, IOException;
+	long download(QueryConfigurer commonClause, QueryConfigurer orderByClause, Consumer consumer, Limiter limiter,
+			Expression<?>... expressions) throws LimiterException, IOException;
 
 }

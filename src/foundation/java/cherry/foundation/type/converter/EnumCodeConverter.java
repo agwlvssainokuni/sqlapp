@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,7 @@ import cherry.foundation.type.Code;
 import cherry.foundation.type.CodeUtil;
 import cherry.foundation.type.CodeUtil.CodeMap;
 
-public abstract class EnumCodeConverter<C, E extends Code<C>> implements
-		Converter<C, E> {
+public abstract class EnumCodeConverter<C, E extends Code<C>> implements Converter<C, E> {
 
 	private CodeMap<C, E> codeMap;
 

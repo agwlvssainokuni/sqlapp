@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,13 +22,11 @@ import org.springframework.validation.BindingResult;
 
 public class LogicalErrorUtil {
 
-	public static void reject(BindingResult binding,
-			ILogicalError logicalError, Object... args) {
+	public static void reject(BindingResult binding, ILogicalError logicalError, Object... args) {
 		binding.reject(logicalError.code(), args, logicalError.code());
 	}
 
-	public static void rejectValue(BindingResult binding, String name,
-			ILogicalError logicError, Object... args) {
+	public static void rejectValue(BindingResult binding, String name, ILogicalError logicError, Object... args) {
 		binding.rejectValue(name, logicError.code(), args, logicError.code());
 	}
 

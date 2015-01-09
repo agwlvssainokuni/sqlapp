@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,7 @@ package cherry.foundation.type;
 
 import java.io.Serializable;
 
-public class DeletedFlag implements Code<Integer>, Comparable<DeletedFlag>,
-		Serializable {
+public class DeletedFlag implements Code<Integer>, Comparable<DeletedFlag>, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -43,8 +42,7 @@ public class DeletedFlag implements Code<Integer>, Comparable<DeletedFlag>,
 	@Override
 	public String toString() {
 		StringBuilder b = new StringBuilder(getClass().getSimpleName());
-		b.append("[").append(isDeleted()).append(",code=").append(code)
-				.append("]");
+		b.append("[").append(isDeleted()).append(",code=").append(code).append("]");
 		return b.toString();
 	}
 

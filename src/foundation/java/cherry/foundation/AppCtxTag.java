@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,10 +29,8 @@ public class AppCtxTag {
 	/**
 	 * 名前とクラスを指定してBeanを取出す。
 	 * 
-	 * @param name
-	 *            Beanの名前。
-	 * @param requiredType
-	 *            Beanのクラス。
+	 * @param name Beanの名前。
+	 * @param requiredType Beanのクラス。
 	 * @return 名前とクラスから特定されるBean。
 	 */
 	public static <T> T getBean(String name, Class<T> requiredType) {
@@ -42,8 +40,7 @@ public class AppCtxTag {
 	/**
 	 * 名前を指定してBeanを取出す。
 	 * 
-	 * @param name
-	 *            Beanの名前。
+	 * @param name Beanの名前。
 	 * @return 名前から特定されるBean。
 	 */
 	public static Object getBeanByName(String name) {
@@ -53,8 +50,7 @@ public class AppCtxTag {
 	/**
 	 * クラスを指定してBeanを取出す。
 	 * 
-	 * @param requiredType
-	 *            Beanのクラス。
+	 * @param requiredType Beanのクラス。
 	 * @return クラスから特定されるBean。
 	 */
 	public static <T> T getBeanByClass(Class<T> requiredType) {

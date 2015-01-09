@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,16 +24,13 @@ public interface MailFacade {
 
 	MailData createMailData(String templateName, String to, MailModel mailModel);
 
-	long send(String launcherId, String messageName, String from,
-			List<String> to, List<String> cc, List<String> bcc, String subject,
-			String body);
+	long send(String launcherId, String messageName, String from, List<String> to, List<String> cc, List<String> bcc,
+			String subject, String body);
 
-	long sendLater(String launcherId, String messageName, String from,
-			List<String> to, List<String> cc, List<String> bcc, String subject,
-			String body, LocalDateTime scheduledAt);
+	long sendLater(String launcherId, String messageName, String from, List<String> to, List<String> cc,
+			List<String> bcc, String subject, String body, LocalDateTime scheduledAt);
 
-	long sendNow(String launcherId, String messageName, String from,
-			List<String> to, List<String> cc, List<String> bcc, String subject,
-			String body);
+	long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
+			List<String> bcc, String subject, String body);
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,21 +47,17 @@ public class MailSendHandlerImpl implements MailSendHandler {
 
 	@Transactional
 	@Override
-	public long sendLater(String launcherId, String messageName, String from,
-			List<String> to, List<String> cc, List<String> bcc, String subject,
-			String body, LocalDateTime scheduledAt) {
-		return messageStore.createMessage(launcherId, messageName, scheduledAt,
-				from, to, cc, bcc, subject, body);
+	public long sendLater(String launcherId, String messageName, String from, List<String> to, List<String> cc,
+			List<String> bcc, String subject, String body, LocalDateTime scheduledAt) {
+		return messageStore.createMessage(launcherId, messageName, scheduledAt, from, to, cc, bcc, subject, body);
 	}
 
 	@Transactional
 	@Override
-	public long sendNow(String launcherId, String messageName, String from,
-			List<String> to, List<String> cc, List<String> bcc, String subject,
-			String body) {
+	public long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
+			List<String> bcc, String subject, String body) {
 		LocalDateTime now = bizDateTime.now();
-		long messageId = messageStore.createMessage(launcherId, messageName,
-				now, from, to, cc, bcc, subject, body);
+		long messageId = messageStore.createMessage(launcherId, messageName, now, from, to, cc, bcc, subject, body);
 		SimpleMailMessage msg = messageStore.getMessage(messageId);
 		messageStore.finishMessage(messageId);
 		mailSender.send(msg);

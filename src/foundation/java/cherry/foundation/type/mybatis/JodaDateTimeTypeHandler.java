@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,15 +31,13 @@ import org.joda.time.DateTime;
 public class JodaDateTimeTypeHandler extends BaseTypeHandler<DateTime> {
 
 	@Override
-	public void setNonNullParameter(PreparedStatement ps, int i,
-			DateTime parameter, JdbcType jdbcType) throws SQLException {
-		ps.setTimestamp(i, new Timestamp(parameter.toDate().getTime()),
-				parameter.toCalendar(null));
+	public void setNonNullParameter(PreparedStatement ps, int i, DateTime parameter, JdbcType jdbcType)
+			throws SQLException {
+		ps.setTimestamp(i, new Timestamp(parameter.toDate().getTime()), parameter.toCalendar(null));
 	}
 
 	@Override
-	public DateTime getNullableResult(ResultSet rs, String columnName)
-			throws SQLException {
+	public DateTime getNullableResult(ResultSet rs, String columnName) throws SQLException {
 		Timestamp timestamp = rs.getTimestamp(columnName);
 		if (timestamp == null) {
 			return null;
@@ -48,8 +46,7 @@ public class JodaDateTimeTypeHandler extends BaseTypeHandler<DateTime> {
 	}
 
 	@Override
-	public DateTime getNullableResult(ResultSet rs, int columnIndex)
-			throws SQLException {
+	public DateTime getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
 		Timestamp timestamp = rs.getTimestamp(columnIndex);
 		if (timestamp == null) {
 			return null;
@@ -58,8 +55,7 @@ public class JodaDateTimeTypeHandler extends BaseTypeHandler<DateTime> {
 	}
 
 	@Override
-	public DateTime getNullableResult(CallableStatement cs, int columnIndex)
-			throws SQLException {
+	public DateTime getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
 		Timestamp timestamp = cs.getTimestamp(columnIndex);
 		if (timestamp == null) {
 			return null;

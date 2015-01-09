@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,8 +30,7 @@ public class AsyncProcessFacadeImpl implements AsyncProcessFacade {
 	/** コマンド実行の実行登録の本体。 */
 	private AsyncCommandHandler asyncCommandHandler;
 
-	public void setAsyncFileProcessHandler(
-			AsyncFileProcessHandler asyncFileProcessHandler) {
+	public void setAsyncFileProcessHandler(AsyncFileProcessHandler asyncFileProcessHandler) {
 		this.asyncFileProcessHandler = asyncFileProcessHandler;
 	}
 
@@ -42,44 +41,31 @@ public class AsyncProcessFacadeImpl implements AsyncProcessFacade {
 	/**
 	 * 非同期のファイル処理を実行登録する。
 	 *
-	 * @param launcherId
-	 *            非同期処理の実行者のID。
-	 * @param description
-	 *            内容表記。
-	 * @param file
-	 *            処理対象のファイル。
-	 * @param handlerName
-	 *            非同期のファイル処理の処理を実装したBeanの名前。同Beanは{@link FileProcessHandler}
-	 *            を実装しなければならない。
-	 * @param args
-	 *            引数。
+	 * @param launcherId 非同期処理の実行者のID。
+	 * @param description 内容表記。
+	 * @param file 処理対象のファイル。
+	 * @param handlerName 非同期のファイル処理の処理を実装したBeanの名前。同Beanは{@link FileProcessHandler}を実装しなければならない。
+	 * @param args 引数。
 	 * @return 非同期実行状況の管理データのID。
 	 */
 	@Override
-	public long launchFileProcess(String launcherId, String description,
-			MultipartFile file, String handlerName, String... args) {
-		return asyncFileProcessHandler.launchFileProcess(launcherId,
-				description, file, handlerName, args);
+	public long launchFileProcess(String launcherId, String description, MultipartFile file, String handlerName,
+			String... args) {
+		return asyncFileProcessHandler.launchFileProcess(launcherId, description, file, handlerName, args);
 	}
 
 	/**
 	 * 非同期のコマンド実行を実行登録する。
 	 *
-	 * @param launcherId
-	 *            非同期処理の実行者のID。
-	 * @param description
-	 *            内容表記。
-	 * @param command
-	 *            実行するコマンド。
-	 * @param args
-	 *            引数。
+	 * @param launcherId 非同期処理の実行者のID。
+	 * @param description 内容表記。
+	 * @param command 実行するコマンド。
+	 * @param args 引数。
 	 * @return 非同期実行状況の管理データのID。
 	 */
 	@Override
-	public long launchCommand(String launcherId, String description,
-			String command, String... args) {
-		return asyncCommandHandler.launchCommand(launcherId, description,
-				command, args);
+	public long launchCommand(String launcherId, String description, String command, String... args) {
+		return asyncCommandHandler.launchCommand(launcherId, description, command, args);
 	}
 
 }

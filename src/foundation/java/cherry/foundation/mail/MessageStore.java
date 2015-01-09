@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,8 +23,7 @@ import org.springframework.mail.SimpleMailMessage;
 
 public interface MessageStore {
 
-	long createMessage(String launcherId, String messageName,
-			LocalDateTime scheduledAt, String from, List<String> to,
+	long createMessage(String launcherId, String messageName, LocalDateTime scheduledAt, String from, List<String> to,
 			List<String> cc, List<String> bcc, String subject, String body);
 
 	List<Long> listMessage(LocalDateTime dtm);

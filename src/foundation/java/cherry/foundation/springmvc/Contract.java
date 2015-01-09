@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,7 @@ import com.google.common.base.Joiner;
 
 public class Contract {
 
-	public static <T> void shouldExist(T reference, Class<T> type,
-			Object... args) throws NotFoundException {
+	public static <T> void shouldExist(T reference, Class<T> type, Object... args) throws NotFoundException {
 		if (reference == null) {
 			StringBuilder sb = new StringBuilder();
 			sb.append(type.getSimpleName()).append(" not found");

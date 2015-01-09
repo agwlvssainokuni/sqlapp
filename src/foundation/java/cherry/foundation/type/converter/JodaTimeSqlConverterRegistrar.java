@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,13 +46,11 @@ public class JodaTimeSqlConverterRegistrar implements FormatterRegistrar {
 	static class LocalTimeConverter implements Converter<Time, LocalTime> {
 		@Override
 		public LocalTime convert(Time source) {
-			return new LocalTime(source.getTime()
-					+ LocalDate.now().toDate().getTime());
+			return new LocalTime(source.getTime() + LocalDate.now().toDate().getTime());
 		}
 	}
 
-	static class LocalDateTimeConverter implements
-			Converter<Timestamp, LocalDateTime> {
+	static class LocalDateTimeConverter implements Converter<Timestamp, LocalDateTime> {
 		@Override
 		public LocalDateTime convert(Timestamp source) {
 			return new LocalDateTime(source.getTime());

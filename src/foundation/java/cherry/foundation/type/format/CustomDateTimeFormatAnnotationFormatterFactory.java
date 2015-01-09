@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,8 +41,7 @@ import org.springframework.format.datetime.joda.ReadablePartialPrinter;
 
 import cherry.foundation.type.format.CustomDateTimeFormat.Range;
 
-public class CustomDateTimeFormatAnnotationFormatterFactory implements
-		AnnotationFormatterFactory<CustomDateTimeFormat> {
+public class CustomDateTimeFormatAnnotationFormatterFactory implements AnnotationFormatterFactory<CustomDateTimeFormat> {
 
 	private String dateToPrint;
 
@@ -58,9 +57,8 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 
 	private String delimiterToParse;
 
-	private final Set<Class<?>> fieldTypes = new HashSet<Class<?>>(asList(
-			LocalDate.class, LocalTime.class, LocalDateTime.class,
-			DateTime.class));
+	private final Set<Class<?>> fieldTypes = new HashSet<Class<?>>(asList(LocalDate.class, LocalTime.class,
+			LocalDateTime.class, DateTime.class));
 
 	public void setDateToPrint(String dateToPrint) {
 		this.dateToPrint = dateToPrint;
@@ -96,8 +94,7 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 	}
 
 	@Override
-	public Printer<?> getPrinter(CustomDateTimeFormat annotation,
-			Class<?> fieldType) {
+	public Printer<?> getPrinter(CustomDateTimeFormat annotation, Class<?> fieldType) {
 		if (fieldType == LocalDate.class) {
 			DateTimeFormatterBuilder toPrint = builder(dateToPrint);
 			return new ReadablePartialPrinter(toPrint.toFormatter());
@@ -105,12 +102,12 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 			DateTimeFormatterBuilder toPrint = builder(timeToPrint);
 			return new ReadablePartialPrinter(toPrint.toFormatter());
 		} else if (fieldType == LocalDateTime.class) {
-			DateTimeFormatterBuilder toPrint = builder(dateToPrint)
-					.appendPattern(delimiterToPrint).appendPattern(timeToPrint);
+			DateTimeFormatterBuilder toPrint = builder(dateToPrint).appendPattern(delimiterToPrint).appendPattern(
+					timeToPrint);
 			return new ReadablePartialPrinter(toPrint.toFormatter());
 		} else if (fieldType == DateTime.class) {
-			DateTimeFormatterBuilder toPrint = builder(dateToPrint)
-					.appendPattern(delimiterToPrint).appendPattern(timeToPrint);
+			DateTimeFormatterBuilder toPrint = builder(dateToPrint).appendPattern(delimiterToPrint).appendPattern(
+					timeToPrint);
 			return new ReadableInstantPrinter(toPrint.toFormatter());
 		} else {
 			throw new IllegalStateException();
@@ -118,8 +115,7 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 	}
 
 	@Override
-	public Parser<?> getParser(CustomDateTimeFormat annotation,
-			Class<?> fieldType) {
+	public Parser<?> getParser(CustomDateTimeFormat annotation, Class<?> fieldType) {
 		if (fieldType == LocalDate.class) {
 			DateTimeFormatterBuilder toParse = builder(dateToParse);
 			if (annotation.value() == Range.TO) {
@@ -131,80 +127,55 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 			if (annotation.optional()) {
 				if (annotation.value() == Range.TO) {
 					DateTimeFormatterBuilder hm = builder(timeToParseHm);
-					DateTimeFormatterBuilder hms = builder(timeToParseHm)
-							.appendPattern(timeToParseS);
-					return new LocalTimeToParser(hm.toFormatter(),
-							hms.toFormatter());
+					DateTimeFormatterBuilder hms = builder(timeToParseHm).appendPattern(timeToParseS);
+					return new LocalTimeToParser(hm.toFormatter(), hms.toFormatter());
 				} else {
-					DateTimeFormatterBuilder toParse = builder(timeToParseHm)
-							.appendOptional(builder(timeToParseS).toParser());
+					DateTimeFormatterBuilder toParse = builder(timeToParseHm).appendOptional(
+							builder(timeToParseS).toParser());
 					return new LocalTimeParser(toParse.toFormatter());
 				}
 			} else {
-				DateTimeFormatterBuilder toParse = builder(timeToParseHm)
-						.appendPattern(timeToParseS);
+				DateTimeFormatterBuilder toParse = builder(timeToParseHm).appendPattern(timeToParseS);
 				return new LocalTimeParser(toParse.toFormatter());
 			}
 		} else if (fieldType == LocalDateTime.class) {
 			if (annotation.optional()) {
 				if (annotation.value() == Range.TO) {
 					DateTimeFormatterBuilder ymd = builder(dateToParse);
-					DateTimeFormatterBuilder ymdhm = builder(dateToParse)
-							.appendPattern(delimiterToParse).appendPattern(
-									timeToParseHm);
-					DateTimeFormatterBuilder ymdhms = builder(dateToParse)
-							.appendPattern(delimiterToParse)
-							.appendPattern(timeToParseHm)
-							.appendPattern(timeToParseS);
-					return new LocalDateTimeToParser(ymd.toFormatter(),
-							ymdhm.toFormatter(), ymdhms.toFormatter());
+					DateTimeFormatterBuilder ymdhm = builder(dateToParse).appendPattern(delimiterToParse)
+							.appendPattern(timeToParseHm);
+					DateTimeFormatterBuilder ymdhms = builder(dateToParse).appendPattern(delimiterToParse)
+							.appendPattern(timeToParseHm).appendPattern(timeToParseS);
+					return new LocalDateTimeToParser(ymd.toFormatter(), ymdhm.toFormatter(), ymdhms.toFormatter());
 				} else {
-					DateTimeFormatterBuilder toParse = builder(dateToParse)
-							.appendOptional(
-									builder(delimiterToParse)
-											.appendPattern(timeToParseHm)
-											.appendOptional(
-													builder(timeToParseS)
-															.toParser())
-											.toParser());
+					DateTimeFormatterBuilder toParse = builder(dateToParse).appendOptional(
+							builder(delimiterToParse).appendPattern(timeToParseHm)
+									.appendOptional(builder(timeToParseS).toParser()).toParser());
 					return new LocalDateTimeParser(toParse.toFormatter());
 				}
 			} else {
-				DateTimeFormatterBuilder toParse = builder(dateToParse)
-						.appendPattern(delimiterToParse)
-						.appendPattern(timeToParseHm)
-						.appendPattern(timeToParseS);
+				DateTimeFormatterBuilder toParse = builder(dateToParse).appendPattern(delimiterToParse)
+						.appendPattern(timeToParseHm).appendPattern(timeToParseS);
 				return new LocalDateTimeParser(toParse.toFormatter());
 			}
 		} else if (fieldType == DateTime.class) {
 			if (annotation.optional()) {
 				if (annotation.value() == Range.TO) {
 					DateTimeFormatterBuilder ymd = builder(dateToParse);
-					DateTimeFormatterBuilder ymdhm = builder(dateToParse)
-							.appendPattern(delimiterToParse).appendPattern(
-									timeToParseHm);
-					DateTimeFormatterBuilder ymdhms = builder(dateToParse)
-							.appendPattern(delimiterToParse)
-							.appendPattern(timeToParseHm)
-							.appendPattern(timeToParseS);
-					return new DateTimeToParser(ymd.toFormatter(),
-							ymdhm.toFormatter(), ymdhms.toFormatter());
+					DateTimeFormatterBuilder ymdhm = builder(dateToParse).appendPattern(delimiterToParse)
+							.appendPattern(timeToParseHm);
+					DateTimeFormatterBuilder ymdhms = builder(dateToParse).appendPattern(delimiterToParse)
+							.appendPattern(timeToParseHm).appendPattern(timeToParseS);
+					return new DateTimeToParser(ymd.toFormatter(), ymdhm.toFormatter(), ymdhms.toFormatter());
 				} else {
-					DateTimeFormatterBuilder toParse = builder(dateToParse)
-							.appendOptional(
-									builder(delimiterToParse)
-											.appendPattern(timeToParseHm)
-											.appendOptional(
-													builder(timeToParseS)
-															.toParser())
-											.toParser());
+					DateTimeFormatterBuilder toParse = builder(dateToParse).appendOptional(
+							builder(delimiterToParse).appendPattern(timeToParseHm)
+									.appendOptional(builder(timeToParseS).toParser()).toParser());
 					return new DateTimeParser(toParse.toFormatter());
 				}
 			} else {
-				DateTimeFormatterBuilder toParse = builder(dateToParse)
-						.appendPattern(delimiterToParse)
-						.appendPattern(timeToParseHm)
-						.appendPattern(timeToParseS);
+				DateTimeFormatterBuilder toParse = builder(dateToParse).appendPattern(delimiterToParse)
+						.appendPattern(timeToParseHm).appendPattern(timeToParseS);
 				return new DateTimeParser(toParse.toFormatter());
 			}
 		} else {
@@ -225,8 +196,7 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 		}
 
 		@Override
-		public LocalDate parse(String text, Locale locale)
-				throws ParseException {
+		public LocalDate parse(String text, Locale locale) throws ParseException {
 			return parser.parse(text, locale);
 		}
 	}
@@ -237,20 +207,17 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 
 		private final LocalTimeParser parserHms;
 
-		public LocalTimeToParser(DateTimeFormatter formatterHm,
-				DateTimeFormatter formatterHms) {
+		public LocalTimeToParser(DateTimeFormatter formatterHm, DateTimeFormatter formatterHms) {
 			parserHm = new LocalTimeParser(formatterHm);
 			parserHms = new LocalTimeParser(formatterHms);
 		}
 
 		@Override
-		public LocalTime parse(String text, Locale locale)
-				throws ParseException {
+		public LocalTime parse(String text, Locale locale) throws ParseException {
 			try {
 				return parserHms.parse(text, locale);
 			} catch (IllegalArgumentException ex) {
-				return parserHm.parse(text, locale).plusMinutes(1)
-						.minusSeconds(1);
+				return parserHm.parse(text, locale).plusMinutes(1).minusSeconds(1);
 			}
 		}
 	}
@@ -263,8 +230,7 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 
 		private final LocalDateTimeParser parserYmdHms;
 
-		public LocalDateTimeToParser(DateTimeFormatter formatterYmd,
-				DateTimeFormatter formatterYmdHm,
+		public LocalDateTimeToParser(DateTimeFormatter formatterYmd, DateTimeFormatter formatterYmdHm,
 				DateTimeFormatter formatterYmdHms) {
 			parserYmd = new LocalDateTimeParser(formatterYmd);
 			parserYmdHm = new LocalDateTimeParser(formatterYmdHm);
@@ -272,17 +238,14 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 		}
 
 		@Override
-		public LocalDateTime parse(String text, Locale locale)
-				throws ParseException {
+		public LocalDateTime parse(String text, Locale locale) throws ParseException {
 			try {
 				return parserYmdHms.parse(text, locale);
 			} catch (IllegalArgumentException ex) {
 				try {
-					return parserYmdHm.parse(text, locale).plusMinutes(1)
-							.minusSeconds(1);
+					return parserYmdHm.parse(text, locale).plusMinutes(1).minusSeconds(1);
 				} catch (IllegalArgumentException ex2) {
-					return parserYmd.parse(text, locale).plusDays(1)
-							.minusSeconds(1);
+					return parserYmd.parse(text, locale).plusDays(1).minusSeconds(1);
 				}
 			}
 		}
@@ -296,8 +259,7 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 
 		private final DateTimeParser parserYmdHms;
 
-		public DateTimeToParser(DateTimeFormatter formatterYmd,
-				DateTimeFormatter formatterYmdHm,
+		public DateTimeToParser(DateTimeFormatter formatterYmd, DateTimeFormatter formatterYmdHm,
 				DateTimeFormatter formatterYmdHms) {
 			parserYmd = new DateTimeParser(formatterYmd);
 			parserYmdHm = new DateTimeParser(formatterYmdHm);
@@ -310,11 +272,9 @@ public class CustomDateTimeFormatAnnotationFormatterFactory implements
 				return parserYmdHms.parse(text, locale);
 			} catch (IllegalArgumentException ex) {
 				try {
-					return parserYmdHm.parse(text, locale).plusMinutes(1)
-							.minusSeconds(1);
+					return parserYmdHm.parse(text, locale).plusMinutes(1).minusSeconds(1);
 				} catch (IllegalArgumentException ex2) {
-					return parserYmd.parse(text, locale).plusDays(1)
-							.minusSeconds(1);
+					return parserYmd.parse(text, locale).plusDays(1).minusSeconds(1);
 				}
 			}
 		}

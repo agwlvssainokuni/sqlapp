@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,8 +41,7 @@ public class MailDataHandlerImpl implements MailDataHandler {
 
 	@Transactional(readOnly = true)
 	@Override
-	public MailData createMailData(String templateName, String to,
-			MailModel mailModel) {
+	public MailData createMailData(String templateName, String to, MailModel mailModel) {
 
 		MailData template = templateStore.getTemplate(templateName);
 
@@ -73,10 +72,8 @@ public class MailDataHandlerImpl implements MailDataHandler {
 
 	private String evaluate(String template, VelocityContext context) {
 		try (StringWriter writer = new StringWriter()) {
-			if (!velocityEngine.evaluate(context, writer, getClass().getName(),
-					template)) {
-				throw new IllegalStateException(
-						"Failed to evaluate mail template");
+			if (!velocityEngine.evaluate(context, writer, getClass().getName(), template)) {
+				throw new IllegalStateException("Failed to evaluate mail template");
 			}
 			return writer.toString();
 		} catch (IOException ex) {

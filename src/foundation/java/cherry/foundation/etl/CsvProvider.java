@@ -1,5 +1,5 @@
 /*
- * Copyright 2012,2014 agwlvssainokuni
+ * Copyright 2012,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,10 +43,8 @@ public class CsvProvider implements Provider {
 	/**
 	 * CSVデータ取込み機能を生成する。
 	 * 
-	 * @param reader
-	 *            データ読取り元。
-	 * @param withHeader
-	 *            ヘッダが存在するか否か。
+	 * @param reader データ読取り元。
+	 * @param withHeader ヘッダが存在するか否か。
 	 */
 	public CsvProvider(Reader reader, boolean withHeader) {
 		this.parser = new CsvParser(reader);
@@ -57,8 +55,7 @@ public class CsvProvider implements Provider {
 	/**
 	 * データの取得を開始する。
 	 * 
-	 * @throws IOException
-	 *             データ取得エラー。
+	 * @throws IOException データ取得エラー。
 	 */
 	@Override
 	public void begin() throws IOException {
@@ -82,8 +79,7 @@ public class CsvProvider implements Provider {
 	 * 1レコードのデータを取得する。
 	 * 
 	 * @return 1レコードのデータ。データが存在しない場合はnull。
-	 * @throws IOException
-	 *             データ取得エラー。
+	 * @throws IOException データ取得エラー。
 	 */
 	@Override
 	public Map<String, ?> provide() throws IOException {
@@ -93,8 +89,7 @@ public class CsvProvider implements Provider {
 			return null;
 		}
 
-		Map<String, String> recordData = new LinkedHashMap<String, String>(
-				record.length);
+		Map<String, String> recordData = new LinkedHashMap<String, String>(record.length);
 		for (int i = 0; i < record.length; i++) {
 			if (fieldName == null) {
 				recordData.put("field" + i, record[i]);
@@ -108,8 +103,7 @@ public class CsvProvider implements Provider {
 	/**
 	 * エータの取得を終了する。
 	 * 
-	 * @throws IOException
-	 *             データ取得エラー。
+	 * @throws IOException データ取得エラー。
 	 */
 	@Override
 	public void end() throws IOException {

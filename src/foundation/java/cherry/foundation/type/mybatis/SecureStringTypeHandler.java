@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,14 +31,13 @@ import cherry.foundation.type.SecureString;
 public class SecureStringTypeHandler extends BaseTypeHandler<SecureString> {
 
 	@Override
-	public void setNonNullParameter(PreparedStatement ps, int i,
-			SecureString parameter, JdbcType jdbcType) throws SQLException {
+	public void setNonNullParameter(PreparedStatement ps, int i, SecureString parameter, JdbcType jdbcType)
+			throws SQLException {
 		ps.setString(i, parameter.crypto());
 	}
 
 	@Override
-	public SecureString getNullableResult(ResultSet rs, String columnName)
-			throws SQLException {
+	public SecureString getNullableResult(ResultSet rs, String columnName) throws SQLException {
 		String crypto = rs.getString(columnName);
 		if (crypto == null) {
 			return null;
@@ -47,8 +46,7 @@ public class SecureStringTypeHandler extends BaseTypeHandler<SecureString> {
 	}
 
 	@Override
-	public SecureString getNullableResult(ResultSet rs, int columnIndex)
-			throws SQLException {
+	public SecureString getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
 		String crypto = rs.getString(columnIndex);
 		if (crypto == null) {
 			return null;
@@ -57,8 +55,7 @@ public class SecureStringTypeHandler extends BaseTypeHandler<SecureString> {
 	}
 
 	@Override
-	public SecureString getNullableResult(CallableStatement cs, int columnIndex)
-			throws SQLException {
+	public SecureString getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
 		String crypto = cs.getString(columnIndex);
 		if (crypto == null) {
 			return null;

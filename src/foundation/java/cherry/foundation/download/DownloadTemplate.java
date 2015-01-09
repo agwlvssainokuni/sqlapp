@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,13 +25,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormatter;
-
-import cherry.goods.log.Log;
-import cherry.goods.log.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DownloadTemplate implements DownloadOperation {
 
-	private final Log log = LogFactory.getLog(getClass());
+	public static final String OPER_DOWNLOAD = "operation.DOWNLOAD";
+
+	private final Logger loggerOper = LoggerFactory.getLogger(OPER_DOWNLOAD);
 
 	private String headerName;
 
@@ -52,43 +53,29 @@ public class DownloadTemplate implements DownloadOperation {
 	}
 
 	@Override
-	public void download(HttpServletResponse response, String contentType,
-			Charset charset, String filename, LocalDateTime timestamp,
-			DownloadAction action) {
+	public void download(HttpServletResponse response, String contentType, Charset charset, String filename,
+			LocalDateTime timestamp, DownloadAction action) {
 
-		String fname = MessageFormat.format(filename,
-				formatter.print(timestamp));
-
-		if (log.isDebugEnabled()) {
-			log.debug("Setting response headers: contentType={0}", contentType);
-			log.debug("Setting response headers:     charset={0}",
-					charset == null ? "" : charset.name());
-			log.debug("Setting response headers:  headerName={0}", headerName);
-			log.debug("Setting response headers: headerValue={0}", headerValue);
-			log.debug("Setting response headers:    filename={0}", fname);
-		}
+		String fname = MessageFormat.format(filename, formatter.print(timestamp));
 
 		response.setContentType(contentType);
 		if (charset != null) {
 			response.setCharacterEncoding(charset.name());
 		}
-		response.setHeader(headerName, MessageFormat.format(headerValue, fname));
+		String value = MessageFormat.format(headerValue, fname);
+		response.setHeader(headerName, value);
 
-		if (log.isDebugEnabled()) {
-			log.debug("Download action starting.");
-		}
+		loggerOper.info("STARTING: Content-Type={}, charset={}, {}={}", contentType,
+				charset == null ? "" : charset.name(), headerName, value);
 
 		try (OutputStream out = response.getOutputStream()) {
 
 			long count = action.doDownload(out);
 
-			if (log.isDebugEnabled()) {
-				log.debug("Download action completed: result={0}", count);
-			}
+			loggerOper.info("COMPLETED: {} items", count);
+
 		} catch (IOException ex) {
-			if (log.isDebugEnabled()) {
-				log.debug(ex, "Download action failed.");
-			}
+			loggerOper.warn("FAILED WITH I/O EXCEPTION", ex);
 			throw new IllegalStateException(ex);
 		}
 	}

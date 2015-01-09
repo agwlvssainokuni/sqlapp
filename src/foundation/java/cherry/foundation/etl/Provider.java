@@ -1,5 +1,5 @@
 /*
- * Copyright 2012,2014 agwlvssainokuni
+ * Copyright 2012,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,8 +27,7 @@ public interface Provider {
 	/**
 	 * データの取得を開始する。
 	 * 
-	 * @throws IOException
-	 *             データ取得エラー。
+	 * @throws IOException データ取得エラー。
 	 */
 	void begin() throws IOException;
 
@@ -36,16 +35,14 @@ public interface Provider {
 	 * 1レコードのデータを取得する。
 	 * 
 	 * @return 1レコードのデータ。 データが存在しない場合はnull。
-	 * @throws IOException
-	 *             データ取得エラー。
+	 * @throws IOException データ取得エラー。
 	 */
 	Map<String, ?> provide() throws IOException;
 
 	/**
 	 * エータの取得を終了する。
 	 * 
-	 * @throws IOException
-	 *             データ取得エラー。
+	 * @throws IOException データ取得エラー。
 	 */
 	void end() throws IOException;
 

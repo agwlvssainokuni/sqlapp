@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,12 @@
 package cherry.foundation.logicalerror;
 
 public enum LogicalError implements ILogicalError {
-	OneTimeTokenError, OptimisticLockError, SearchResultEmpty;
+	/** 多重ポスト判定NG。 */
+	OneTimeTokenError,
+	/** 楽観ロック判定NG。 */
+	OptimisticLockError,
+	/** 検索結果0件。 */
+	SearchResultEmpty;
 
 	@Override
 	public String code() {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012,2014 agwlvssainokuni
+ * Copyright 2012,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,10 +35,8 @@ public class CsvConsumer implements Consumer {
 	/**
 	 * CSVデータ格納機能を生成する。
 	 * 
-	 * @param writer
-	 *            データ書込み先。
-	 * @param withHeader
-	 *            ヘッダを出力するか否か。
+	 * @param writer データ書込み先。
+	 * @param withHeader ヘッダを出力するか否か。
 	 */
 	public CsvConsumer(Writer writer, boolean withHeader) {
 		this(writer, "\r\n", withHeader);
@@ -47,12 +45,9 @@ public class CsvConsumer implements Consumer {
 	/**
 	 * CSVデータ格納機能を生成する。
 	 * 
-	 * @param writer
-	 *            データ書込み先。
-	 * @param recordSeparator
-	 *            レコードセパレータ。
-	 * @param withHeader
-	 *            ヘッダを出力するか否か。
+	 * @param writer データ書込み先。
+	 * @param recordSeparator レコードセパレータ。
+	 * @param withHeader ヘッダを出力するか否か。
 	 */
 	public CsvConsumer(Writer writer, String recordSeparator, boolean withHeader) {
 		this.creator = new CsvCreator(writer, recordSeparator);
@@ -62,10 +57,8 @@ public class CsvConsumer implements Consumer {
 	/**
 	 * データの格納を開始する。
 	 * 
-	 * @param col
-	 *            カラムの情報。
-	 * @throws IOException
-	 *             データ格納エラー。
+	 * @param col カラムの情報。
+	 * @throws IOException データ格納エラー。
 	 */
 	@Override
 	public void begin(Column[] col) throws IOException {
@@ -85,10 +78,8 @@ public class CsvConsumer implements Consumer {
 	/**
 	 * 1レコードのデータを格納する。
 	 * 
-	 * @param record
-	 *            1レコードのデータ。
-	 * @throws IOException
-	 *             データ格納エラー。
+	 * @param record 1レコードのデータ。
+	 * @throws IOException データ格納エラー。
 	 */
 	@Override
 	public void consume(Object[] record) throws IOException {
@@ -108,8 +99,7 @@ public class CsvConsumer implements Consumer {
 	/**
 	 * データの格納を終了する。
 	 * 
-	 * @throws IOException
-	 *             データ格納エラー。
+	 * @throws IOException データ格納エラー。
 	 */
 	@Override
 	public void end() throws IOException {

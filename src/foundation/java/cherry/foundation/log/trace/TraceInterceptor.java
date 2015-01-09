@@ -1,5 +1,5 @@
 /*
- * Copyright 2012,2014 agwlvssainokuni
+ * Copyright 2012,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,65 +25,60 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * メソッド呼出のトレースログを出力する機能.
+ * メソッド呼出のトレースログを出力する機能。
  */
 public class TraceInterceptor implements MethodInterceptor {
 
-	/** メソッド開始時のログ出力. */
+	/** メソッド開始時のログ出力。 */
 	private final Logger traceEnter = LoggerFactory.getLogger("trace.ENTER");
 
-	/** メソッド終了時のログ出力. */
+	/** メソッド終了時のログ出力。 */
 	private final Logger traceExit = LoggerFactory.getLogger("trace.EXIT");
 
-	/** 例外発生時のログ出力. */
-	private final Logger traceException = LoggerFactory
-			.getLogger("trace.EXCEPTION");
+	/** 例外発生時のログ出力。 */
+	private final Logger traceException = LoggerFactory.getLogger("trace.EXCEPTION");
 
-	/** 配列をログ出力する際のサイズ上限. */
+	/** 配列をログ出力する際のサイズ上限。 */
 	private int arrayLengthLimit;
 
-	/** 引数・返却値をログ出力する際の文字列長上限. */
+	/** 引数・返却値をログ出力する際の文字列長上限。 */
 	private int objectLengthLimit;
 
-	/** トレースログに出力するクラス名 (インタフェース名) を抽出する条件. */
+	/** トレースログに出力するクラス名 (インタフェース名) を抽出する条件。 */
 	private String[] packagePrefix = new String[0];
 
 	/**
-	 * 配列をログ出力する際のサイズ上限 を設定する.
+	 * 配列をログ出力する際のサイズ上限 を設定する。
 	 * 
-	 * @param arrayLengthLimit
-	 *            配列をログ出力する際のサイズ上限
+	 * @param arrayLengthLimit 配列をログ出力する際のサイズ上限。
 	 */
 	public void setArrayLengthLimit(int arrayLengthLimit) {
 		this.arrayLengthLimit = arrayLengthLimit;
 	}
 
 	/**
-	 * 引数・返却値をログ出力する際の文字列長上限 を設定する.
+	 * 引数・返却値をログ出力する際の文字列長上限 を設定する。
 	 * 
-	 * @param objectLengthLimit
-	 *            引数・返却値をログ出力する際の文字列長上限
+	 * @param objectLengthLimit 引数・返却値をログ出力する際の文字列長上限。
 	 */
 	public void setObjectLengthLimit(int objectLengthLimit) {
 		this.objectLengthLimit = objectLengthLimit;
 	}
 
 	/**
-	 * トレースログに出力するクラス名 (インタフェース名) を抽出する条件 を設定する.
+	 * トレースログに出力するクラス名 (インタフェース名) を抽出する条件 を設定する。
 	 * 
-	 * @param packagePrefix
-	 *            トレースログに出力するクラス名 (インタフェース名) を抽出する条件
+	 * @param packagePrefix トレースログに出力するクラス名 (インタフェース名) を抽出する条件。
 	 */
 	public void setPackagePrefix(String... packagePrefix) {
 		this.packagePrefix = packagePrefix;
 	}
 
 	/**
-	 * トレースログを出力する.
+	 * トレースログを出力する。
 	 * 
-	 * @param inv
-	 *            メソッド呼出
-	 * @return メソッド呼出の返却値
+	 * @param inv メソッド呼出。
+	 * @return メソッド呼出の返却値。
 	 */
 	@Override
 	public Object invoke(MethodInvocation inv) throws Throwable {
@@ -99,10 +94,9 @@ public class TraceInterceptor implements MethodInterceptor {
 	}
 
 	/**
-	 * メソッド開始時のトレースログを出力する.
+	 * メソッド開始時のトレースログを出力する。
 	 * 
-	 * @param inv
-	 *            メソッド呼出
+	 * @param inv メソッド呼出。
 	 */
 	private void logTraceEnter(MethodInvocation inv) {
 
@@ -140,11 +134,10 @@ public class TraceInterceptor implements MethodInterceptor {
 	}
 
 	/**
-	 * {@link Mask}アノテーションが存在するか判定する.
+	 * {@link Mask}アノテーションが存在するか判定する。
 	 * 
-	 * @param annon
-	 *            対象アノテーション
-	 * @return {@link Mask}アノテーションの有無
+	 * @param annon 対象アノテーション。
+	 * @return {@link Mask}アノテーションの有無。
 	 */
 	private boolean isMaskAnnotationPresent(Annotation[] annon) {
 		for (int i = 0; i < annon.length; i++) {
@@ -156,12 +149,10 @@ public class TraceInterceptor implements MethodInterceptor {
 	}
 
 	/**
-	 * メソッド終了時のトレースログを出力する.
+	 * メソッド終了時のトレースログを出力する。
 	 * 
-	 * @param inv
-	 *            メソッド呼出
-	 * @param ret
-	 *            メソッド呼出の返却値
+	 * @param inv メソッド呼出。
+	 * @param ret メソッド呼出の返却値。
 	 */
 	private void logTraceExit(MethodInvocation inv, Object ret) {
 
@@ -190,12 +181,10 @@ public class TraceInterceptor implements MethodInterceptor {
 	}
 
 	/**
-	 * 例外発生時のトレースログを出力する.
+	 * 例外発生時のトレースログを出力する。
 	 * 
-	 * @param inv
-	 *            メソッド呼出
-	 * @param th
-	 *            発生した例外
+	 * @param inv メソッド呼出。
+	 * @param th 発生した例外。
 	 */
 	private void logTraceException(MethodInvocation inv, Throwable th) {
 
@@ -212,12 +201,10 @@ public class TraceInterceptor implements MethodInterceptor {
 	}
 
 	/**
-	 * トレースログにメソッド名を出力する.
+	 * トレースログにメソッド名を出力する。
 	 * 
-	 * @param builder
-	 *            ログ文字列生成
-	 * @param inv
-	 *            メソッド呼出
+	 * @param builder ログ文字列生成。
+	 * @param inv メソッド呼出。
 	 */
 	private void appendMethodName(StringBuilder builder, MethodInvocation inv) {
 		Class<?> klass = inv.getThis().getClass();
@@ -230,10 +217,8 @@ public class TraceInterceptor implements MethodInterceptor {
 	/**
 	 * トレースログに出力するクラス名 (インタフェース名) を決定する。
 	 * 
-	 * @param klass
-	 *            クラスオブジェクト。
-	 * @param packagePrefix
-	 *            抽出条件 (パッケージ名)。
+	 * @param klass クラスオブジェクト。
+	 * @param packagePrefix 抽出条件 (パッケージ名)。
 	 * @return クラス名 (インタフェース名)。
 	 */
 	private String getClassName(Class<?> klass, String[] packagePrefix) {
@@ -252,12 +237,10 @@ public class TraceInterceptor implements MethodInterceptor {
 	}
 
 	/**
-	 * トレースログに引数・返却値を出力する.
+	 * トレースログに引数・返却値を出力する。
 	 * 
-	 * @param builder
-	 *            ログ文字列生成
-	 * @param object
-	 *            引数・返却値
+	 * @param builder ログ文字列生成。
+	 * @param object 引数・返却値。
 	 */
 	private void appendObject(StringBuilder builder, Object object) {
 		if (object == null) {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,8 +47,7 @@ public class CharTypeValidator implements ConstraintValidator<CharType, String> 
 	}
 
 	private int[] createAcceptable(String acceptable) {
-		int[] result = new int[acceptable
-				.codePointCount(0, acceptable.length())];
+		int[] result = new int[acceptable.codePointCount(0, acceptable.length())];
 		for (int i = 0, j = 0; i < acceptable.length(); i++) {
 			if (Character.isLowSurrogate(acceptable.charAt(i))) {
 				continue;

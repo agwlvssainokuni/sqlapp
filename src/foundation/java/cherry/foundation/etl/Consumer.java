@@ -1,5 +1,5 @@
 /*
- * Copyright 2012,2014 agwlvssainokuni
+ * Copyright 2012,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,28 +26,23 @@ public interface Consumer {
 	/**
 	 * データの格納を開始する。
 	 * 
-	 * @param col
-	 *            カラムの情報。
-	 * @throws IOException
-	 *             データ格納エラー。
+	 * @param col カラムの情報。
+	 * @throws IOException データ格納エラー。
 	 */
 	void begin(Column[] col) throws IOException;
 
 	/**
 	 * 1レコードのデータを格納する。
 	 * 
-	 * @param record
-	 *            1レコードのデータ。
-	 * @throws IOException
-	 *             データ格納エラー。
+	 * @param record 1レコードのデータ。
+	 * @throws IOException データ格納エラー。
 	 */
 	void consume(Object[] record) throws IOException;
 
 	/**
 	 * データの格納を終了する。
 	 * 
-	 * @throws IOException
-	 *             データ格納エラー。
+	 * @throws IOException データ格納エラー。
 	 */
 	void end() throws IOException;
 

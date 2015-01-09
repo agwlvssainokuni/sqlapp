@@ -1,3 +1,19 @@
+/*
+ * Copyright 2014,2015 agwlvssainokuni
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cherry.foundation.batch.etl;
 
 import java.io.File;
@@ -50,12 +66,10 @@ public class ExtractorBatch implements IBatch {
 			log.debug("Param   {0}", paramMap.toString());
 		}
 
-		try (OutputStream out = new FileOutputStream(file);
-				Writer writer = new OutputStreamWriter(out, charset)) {
+		try (OutputStream out = new FileOutputStream(file); Writer writer = new OutputStreamWriter(out, charset)) {
 
 			Consumer consumer = new CsvConsumer(writer, withHeader);
-			long count = extractor.extract(dataSource, query, paramMap,
-					consumer, new NoneLimiter());
+			long count = extractor.extract(dataSource, query, paramMap, consumer, new NoneLimiter());
 
 			if (log.isDebugEnabled()) {
 				log.debug("Reult   {0}", count);
@@ -69,4 +83,5 @@ public class ExtractorBatch implements IBatch {
 			return ExitStatus.ERROR;
 		}
 	}
+
 }

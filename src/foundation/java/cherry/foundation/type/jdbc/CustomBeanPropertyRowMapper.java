@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,8 +33,7 @@ public class CustomBeanPropertyRowMapper<T> extends BeanPropertyRowMapper<T> {
 
 	private Map<String, Masker<?>> maskerMap;
 
-	public CustomBeanPropertyRowMapper(Class<T> mappedClass,
-			ConversionService conversionService,
+	public CustomBeanPropertyRowMapper(Class<T> mappedClass, ConversionService conversionService,
 			Map<String, Masker<?>> maskerMap) {
 		super(mappedClass);
 		this.conversionService = conversionService;
@@ -47,8 +46,7 @@ public class CustomBeanPropertyRowMapper<T> extends BeanPropertyRowMapper<T> {
 	}
 
 	@Override
-	protected Object getColumnValue(ResultSet rs, int index,
-			PropertyDescriptor pd) throws SQLException {
+	protected Object getColumnValue(ResultSet rs, int index, PropertyDescriptor pd) throws SQLException {
 
 		Object object = super.getColumnValue(rs, index, pd);
 		if (maskerMap == null || !maskerMap.containsKey(pd.getName())) {

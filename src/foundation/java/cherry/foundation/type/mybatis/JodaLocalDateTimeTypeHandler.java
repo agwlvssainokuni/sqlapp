@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,18 +28,16 @@ import org.apache.ibatis.type.MappedTypes;
 import org.joda.time.LocalDateTime;
 
 @MappedTypes(LocalDateTime.class)
-public class JodaLocalDateTimeTypeHandler extends
-		BaseTypeHandler<LocalDateTime> {
+public class JodaLocalDateTimeTypeHandler extends BaseTypeHandler<LocalDateTime> {
 
 	@Override
-	public void setNonNullParameter(PreparedStatement ps, int i,
-			LocalDateTime parameter, JdbcType jdbcType) throws SQLException {
+	public void setNonNullParameter(PreparedStatement ps, int i, LocalDateTime parameter, JdbcType jdbcType)
+			throws SQLException {
 		ps.setTimestamp(i, new Timestamp(parameter.toDate().getTime()));
 	}
 
 	@Override
-	public LocalDateTime getNullableResult(ResultSet rs, String columnName)
-			throws SQLException {
+	public LocalDateTime getNullableResult(ResultSet rs, String columnName) throws SQLException {
 		Timestamp timestamp = rs.getTimestamp(columnName);
 		if (timestamp == null) {
 			return null;
@@ -48,8 +46,7 @@ public class JodaLocalDateTimeTypeHandler extends
 	}
 
 	@Override
-	public LocalDateTime getNullableResult(ResultSet rs, int columnIndex)
-			throws SQLException {
+	public LocalDateTime getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
 		Timestamp timestamp = rs.getTimestamp(columnIndex);
 		if (timestamp == null) {
 			return null;
@@ -58,8 +55,7 @@ public class JodaLocalDateTimeTypeHandler extends
 	}
 
 	@Override
-	public LocalDateTime getNullableResult(CallableStatement cs, int columnIndex)
-			throws SQLException {
+	public LocalDateTime getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
 		Timestamp timestamp = cs.getTimestamp(columnIndex);
 		if (timestamp == null) {
 			return null;

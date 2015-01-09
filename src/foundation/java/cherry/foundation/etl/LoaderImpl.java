@@ -1,5 +1,5 @@
 /*
- * Copyright 2012,2014 agwlvssainokuni
+ * Copyright 2012,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,6 @@
  */
 
 package cherry.foundation.etl;
-
-import static java.text.MessageFormat.format;
 
 import java.io.IOException;
 import java.util.Map;
@@ -34,7 +32,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 public class LoaderImpl implements Loader {
 
 	/** ログ出力。 */
-	private final Logger log = LoggerFactory.getLogger(getClass());
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	/** 読み込み件数。 */
 	private long batchCount;
@@ -45,8 +43,7 @@ public class LoaderImpl implements Loader {
 	/**
 	 * 読込み件数 を設定する。
 	 * 
-	 * @param batchCount
-	 *            読込み件数。
+	 * @param batchCount 読込み件数。
 	 */
 	public void setBatchCount(long batchCount) {
 		this.batchCount = batchCount;
@@ -55,8 +52,7 @@ public class LoaderImpl implements Loader {
 	/**
 	 * エラーを許容する件数 を設定する。
 	 * 
-	 * @param allowedFailCount
-	 *            エラーを許容する件数。
+	 * @param allowedFailCount エラーを許容する件数。
 	 */
 	public void setAllowedFailCount(long allowedFailCount) {
 		this.allowedFailCount = allowedFailCount;
@@ -65,27 +61,19 @@ public class LoaderImpl implements Loader {
 	/**
 	 * データを取込む。
 	 * 
-	 * @param dataSource
-	 *            データソース。
-	 * @param sql
-	 *            SQL。
-	 * @param provider
-	 *            データの取得元。
-	 * @param limit
-	 *            データ取込み制限。
+	 * @param dataSource データソース。
+	 * @param sql SQL。
+	 * @param provider データの取得元。
+	 * @param limit データ取込み制限。
 	 * @return 取込みの結果。
-	 * @throws LimiterException
-	 *             データ取込み制限超過。
-	 * @throws IOException
-	 *             データ取得でエラー。
+	 * @throws LimiterException データ取込み制限超過。
+	 * @throws IOException データ取得でエラー。
 	 */
 	@Override
-	public LoadResult load(DataSource dataSource, String sql,
-			Provider provider, Limiter limiter) throws LimiterException,
-			IOException {
+	public LoadResult load(DataSource dataSource, String sql, Provider provider, Limiter limiter)
+			throws LimiterException, IOException {
 
-		NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(
-				dataSource);
+		NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(dataSource);
 
 		limiter.start();
 		try {
@@ -109,8 +97,7 @@ public class LoaderImpl implements Loader {
 					}
 
 					failedCount += 1;
-					log.warn(format("SQL failed: count={0}, message={1}",
-							failedCount, ex.getMessage()));
+					logger.warn("SQL failed: count={}, message={}", failedCount, ex.getMessage());
 					if (allowedFailCount < failedCount) {
 						throw ex;
 					}

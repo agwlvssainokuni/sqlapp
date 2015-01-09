@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,8 +36,7 @@ public enum FlagCode implements Code<Integer> {
 		return this == TRUE;
 	}
 
-	private static CodeMap<Integer, FlagCode> codeMap = CodeUtil.getCodeMap(
-			FlagCode.class, TRUE);
+	private static CodeMap<Integer, FlagCode> codeMap = CodeUtil.getCodeMap(FlagCode.class, TRUE);
 
 	public static FlagCode valueOf(int i) {
 		return codeMap.get(i);

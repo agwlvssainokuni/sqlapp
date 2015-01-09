@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,14 +31,13 @@ import cherry.foundation.type.DeletedFlag;
 public class DeletedFlagTypeHandler extends BaseTypeHandler<DeletedFlag> {
 
 	@Override
-	public void setNonNullParameter(PreparedStatement ps, int i,
-			DeletedFlag parameter, JdbcType jdbcType) throws SQLException {
+	public void setNonNullParameter(PreparedStatement ps, int i, DeletedFlag parameter, JdbcType jdbcType)
+			throws SQLException {
 		ps.setInt(i, parameter.code());
 	}
 
 	@Override
-	public DeletedFlag getNullableResult(ResultSet rs, String columnName)
-			throws SQLException {
+	public DeletedFlag getNullableResult(ResultSet rs, String columnName) throws SQLException {
 		int code = rs.getInt(columnName);
 		if (rs.wasNull()) {
 			return null;
@@ -47,8 +46,7 @@ public class DeletedFlagTypeHandler extends BaseTypeHandler<DeletedFlag> {
 	}
 
 	@Override
-	public DeletedFlag getNullableResult(ResultSet rs, int columnIndex)
-			throws SQLException {
+	public DeletedFlag getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
 		int code = rs.getInt(columnIndex);
 		if (rs.wasNull()) {
 			return null;
@@ -57,8 +55,7 @@ public class DeletedFlagTypeHandler extends BaseTypeHandler<DeletedFlag> {
 	}
 
 	@Override
-	public DeletedFlag getNullableResult(CallableStatement cs, int columnIndex)
-			throws SQLException {
+	public DeletedFlag getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
 		int code = cs.getInt(columnIndex);
 		if (cs.wasNull()) {
 			return null;

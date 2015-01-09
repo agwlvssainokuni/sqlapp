@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -86,12 +86,10 @@ public class LoaderBatch implements IBatch {
 			log.debug("Query   {0}", query);
 		}
 
-		try (InputStream in = new FileInputStream(file);
-				Reader reader = new InputStreamReader(in, charset)) {
+		try (InputStream in = new FileInputStream(file); Reader reader = new InputStreamReader(in, charset)) {
 
 			Provider provider = new CsvProvider(reader, paramByHeader);
-			LoadResult result = loader.load(dataSource, query, provider,
-					new NoneLimiter());
+			LoadResult result = loader.load(dataSource, query, provider, new NoneLimiter());
 
 			if (log.isDebugEnabled()) {
 				log.debug("Result  {0}", result.toString());

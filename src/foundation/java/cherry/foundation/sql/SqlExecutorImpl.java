@@ -1,5 +1,5 @@
 /*
- * Copyright 2012,2014 agwlvssainokuni
+ * Copyright 2012,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,20 +45,14 @@ public class SqlExecutorImpl implements SqlExecutor {
 	/**
 	 * SQLを実行する。
 	 * 
-	 * @param dataSource
-	 *            データソース。
-	 * @param resource
-	 *            SQL文の読込み元。
-	 * @param paramMap
-	 *            SQLに受渡すパラメタ。
-	 * @param continueOnError
-	 *            SQL実行エラーで継続するか否か。
-	 * @throws IOException
-	 *             SQL文の読込みでエラー。
+	 * @param dataSource データソース。
+	 * @param resource SQL文の読込み元。
+	 * @param paramMap SQLに受渡すパラメタ。
+	 * @param continueOnError SQL実行エラーで継続するか否か。
+	 * @throws IOException SQL文の読込みでエラー。
 	 */
 	@Override
-	public void execute(DataSource dataSource, Resource resource,
-			Map<String, ?> paramMap, boolean continueOnError)
+	public void execute(DataSource dataSource, Resource resource, Map<String, ?> paramMap, boolean continueOnError)
 			throws IOException {
 		try (InputStream in = resource.getInputStream()) {
 			execute(dataSource, in, paramMap, continueOnError);
@@ -68,20 +62,14 @@ public class SqlExecutorImpl implements SqlExecutor {
 	/**
 	 * SQLを実行する。
 	 * 
-	 * @param dataSource
-	 *            データソース。
-	 * @param in
-	 *            SQL文の読込み元。
-	 * @param paramMap
-	 *            SQLに受渡すパラメタ。
-	 * @param continueOnError
-	 *            SQL実行エラーで継続するか否か。
-	 * @throws IOException
-	 *             SQL文の読込みでエラー。
+	 * @param dataSource データソース。
+	 * @param in SQL文の読込み元。
+	 * @param paramMap SQLに受渡すパラメタ。
+	 * @param continueOnError SQL実行エラーで継続するか否か。
+	 * @throws IOException SQL文の読込みでエラー。
 	 */
 	@Override
-	public void execute(DataSource dataSource, InputStream in,
-			Map<String, ?> paramMap, boolean continueOnError)
+	public void execute(DataSource dataSource, InputStream in, Map<String, ?> paramMap, boolean continueOnError)
 			throws IOException {
 		try (Reader reader = new InputStreamReader(in, charset)) {
 			execute(dataSource, reader, paramMap, continueOnError);
@@ -91,24 +79,17 @@ public class SqlExecutorImpl implements SqlExecutor {
 	/**
 	 * SQLを実行する。
 	 * 
-	 * @param dataSource
-	 *            データソース。
-	 * @param reader
-	 *            SQL文の読込み元。
-	 * @param paramMap
-	 *            SQLに受渡すパラメタ。
-	 * @param continueOnError
-	 *            SQL実行エラーで継続するか否か。
-	 * @throws IOException
-	 *             SQL文の読込みでエラー。
+	 * @param dataSource データソース。
+	 * @param reader SQL文の読込み元。
+	 * @param paramMap SQLに受渡すパラメタ。
+	 * @param continueOnError SQL実行エラーで継続するか否か。
+	 * @throws IOException SQL文の読込みでエラー。
 	 */
 	@Override
-	public void execute(DataSource dataSource, Reader reader,
-			Map<String, ?> paramMap, boolean continueOnError)
+	public void execute(DataSource dataSource, Reader reader, Map<String, ?> paramMap, boolean continueOnError)
 			throws IOException {
 
-		NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(
-				dataSource);
+		NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(dataSource);
 
 		String sql;
 		while ((sql = SimpleSqlParser.nextStatement(reader)) != null) {

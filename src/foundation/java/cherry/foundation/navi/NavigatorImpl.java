@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,8 +99,7 @@ public class NavigatorImpl implements Navigator, InitializingBean {
 
 		@Override
 		public String toString() {
-			ReflectionToStringBuilder builder = new ReflectionToStringBuilder(
-					this, ToStringStyle.SHORT_PREFIX_STYLE);
+			ReflectionToStringBuilder builder = new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE);
 			builder.setExcludeFieldNames("parent");
 			return builder.build();
 		}

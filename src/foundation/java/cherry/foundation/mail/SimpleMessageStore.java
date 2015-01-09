@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,9 +34,8 @@ public class SimpleMessageStore implements MessageStore {
 			.synchronizedMap(new LinkedHashMap<Long, MessageRecord>());
 
 	@Override
-	public long createMessage(String launcherId, String messageName,
-			LocalDateTime scheduledAt, String from, List<String> to,
-			List<String> cc, List<String> bcc, String subject, String body) {
+	public long createMessage(String launcherId, String messageName, LocalDateTime scheduledAt, String from,
+			List<String> to, List<String> cc, List<String> bcc, String subject, String body) {
 
 		long messageId = nextMessageId.getAndIncrement();
 

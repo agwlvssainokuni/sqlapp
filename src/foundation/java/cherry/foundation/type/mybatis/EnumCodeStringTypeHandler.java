@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,8 +28,7 @@ import cherry.foundation.type.Code;
 import cherry.foundation.type.CodeUtil;
 import cherry.foundation.type.CodeUtil.CodeMap;
 
-public abstract class EnumCodeStringTypeHandler<E extends Code<String>> extends
-		BaseTypeHandler<E> {
+public abstract class EnumCodeStringTypeHandler<E extends Code<String>> extends BaseTypeHandler<E> {
 
 	private CodeMap<String, E> codeMap;
 
@@ -38,26 +37,22 @@ public abstract class EnumCodeStringTypeHandler<E extends Code<String>> extends
 	}
 
 	@Override
-	public void setNonNullParameter(PreparedStatement ps, int i, E parameter,
-			JdbcType jdbcType) throws SQLException {
+	public void setNonNullParameter(PreparedStatement ps, int i, E parameter, JdbcType jdbcType) throws SQLException {
 		ps.setString(i, parameter.code());
 	}
 
 	@Override
-	public E getNullableResult(ResultSet rs, String columnName)
-			throws SQLException {
+	public E getNullableResult(ResultSet rs, String columnName) throws SQLException {
 		return getEnumValue(rs.getString(columnName));
 	}
 
 	@Override
-	public E getNullableResult(ResultSet rs, int columnIndex)
-			throws SQLException {
+	public E getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
 		return getEnumValue(rs.getString(columnIndex));
 	}
 
 	@Override
-	public E getNullableResult(CallableStatement cs, int columnIndex)
-			throws SQLException {
+	public E getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
 		return getEnumValue(cs.getString(columnIndex));
 	}
 

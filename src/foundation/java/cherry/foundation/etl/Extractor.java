@@ -1,5 +1,5 @@
 /*
- * Copyright 2012,2014 agwlvssainokuni
+ * Copyright 2012,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,24 +29,16 @@ public interface Extractor {
 	/**
 	 * データを抽出する。
 	 * 
-	 * @param dataSource
-	 *            データソース。
-	 * @param sql
-	 *            SQL。
-	 * @param paramMap
-	 *            データ抽出時のパラメタ。
-	 * @param consumer
-	 *            データの格納先。
-	 * @param limiter
-	 *            データ抽出制限。
+	 * @param dataSource データソース。
+	 * @param sql SQL。
+	 * @param paramMap データ抽出時のパラメタ。
+	 * @param consumer データの格納先。
+	 * @param limiter データ抽出制限。
 	 * @return 格納したデータの件数。
-	 * @throws LimiterException
-	 *             データ抽出制限超過。
-	 * @throws IOException
-	 *             データ格納エラー。
+	 * @throws LimiterException データ抽出制限超過。
+	 * @throws IOException データ格納エラー。
 	 */
-	long extract(DataSource dataSource, String sql, Map<String, ?> paramMap,
-			Consumer consumer, Limiter limiter) throws LimiterException,
-			IOException;
+	long extract(DataSource dataSource, String sql, Map<String, ?> paramMap, Consumer consumer, Limiter limiter)
+			throws LimiterException, IOException;
 
 }

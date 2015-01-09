@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,8 +31,7 @@ public class CodeSqlConverterRegistrar implements FormatterRegistrar {
 		registry.addConverter(new FlagCodeConverter());
 	}
 
-	static class DeletedFlagConverter implements
-			Converter<Integer, DeletedFlag> {
+	static class DeletedFlagConverter implements Converter<Integer, DeletedFlag> {
 		@Override
 		public DeletedFlag convert(Integer source) {
 			return new DeletedFlag(source);

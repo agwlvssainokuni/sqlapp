@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,8 +51,7 @@ public class PathExpressions {
 		return Expressions.numberPath(Long.class, parent, property);
 	}
 
-	public static NumberPath<BigDecimal> decimalPath(Path<?> parent,
-			String property) {
+	public static NumberPath<BigDecimal> decimalPath(Path<?> parent, String property) {
 		return Expressions.numberPath(BigDecimal.class, parent, property);
 	}
 
@@ -68,8 +67,7 @@ public class PathExpressions {
 		return Expressions.timePath(LocalTime.class, parent, property);
 	}
 
-	public static DateTimePath<LocalDateTime> dateTimePath(Path<?> parent,
-			String property) {
+	public static DateTimePath<LocalDateTime> dateTimePath(Path<?> parent, String property) {
 		return Expressions.dateTimePath(LocalDateTime.class, parent, property);
 	}
 

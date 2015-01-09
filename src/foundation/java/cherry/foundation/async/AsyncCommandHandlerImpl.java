@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -63,30 +63,23 @@ public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 		this.commandLauncher = commandLauncher;
 	}
 
-	public void setMessagePostProcessor(
-			MessagePostProcessor messagePostProcessor) {
+	public void setMessagePostProcessor(MessagePostProcessor messagePostProcessor) {
 		this.messagePostProcessor = messagePostProcessor;
 	}
 
 	/**
 	 * 非同期のコマンド実行を実行登録する。
 	 *
-	 * @param launcherId
-	 *            非同期処理の実行者のID。
-	 * @param description
-	 *            内容表記。
-	 * @param command
-	 *            実行するコマンド。
-	 * @param args
-	 *            引数。
+	 * @param launcherId 非同期処理の実行者のID。
+	 * @param description 内容表記。
+	 * @param command 実行するコマンド。
+	 * @param args 引数。
 	 * @return 非同期実行状況の管理データのID。
 	 */
 	@Override
-	public long launchCommand(String launcherId, String description,
-			String command, String... args) {
+	public long launchCommand(String launcherId, String description, String command, String... args) {
 
-		long asyncId = asyncProcessStore.createCommand(launcherId,
-				bizDateTime.now(), description, command, args);
+		long asyncId = asyncProcessStore.createCommand(launcherId, bizDateTime.now(), description, command, args);
 
 		Map<String, String> message = new HashMap<>();
 		message.put(ASYNCID, String.valueOf(asyncId));
@@ -104,9 +97,7 @@ public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 	 * 実行登録したコマンドを実行する。<br />
 	 * 本メソッドはコンテナが呼出すことを意図するものである。
 	 *
-	 * @param message
-	 *            {@link #launchCommand(String, String...)}
-	 *            において登録した内容がコンテナから受渡される。
+	 * @param message {@link #launchCommand(String, String...)} において登録した内容がコンテナから受渡される。
 	 */
 	@Override
 	public void handleMessage(Map<String, String> message) {
@@ -125,8 +116,7 @@ public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 		asyncProcessStore.updateToProcessing(asyncId, bizDateTime.now());
 		try {
 
-			CommandResult result = commandLauncher.launch(cmdline
-					.toArray(new String[cmdline.size()]));
+			CommandResult result = commandLauncher.launch(cmdline.toArray(new String[cmdline.size()]));
 
 			AsyncStatus status;
 			if (result.getExitValue() == 0) {
@@ -135,11 +125,9 @@ public class AsyncCommandHandlerImpl implements AsyncCommandHandler {
 				status = AsyncStatus.ERROR;
 			}
 
-			asyncProcessStore.finishCommand(asyncId, bizDateTime.now(), status,
-					result);
+			asyncProcessStore.finishCommand(asyncId, bizDateTime.now(), status, result);
 		} catch (Exception ex) {
-			asyncProcessStore.finishWithException(asyncId, bizDateTime.now(),
-					ex);
+			asyncProcessStore.finishWithException(asyncId, bizDateTime.now(), ex);
 		}
 	}
 

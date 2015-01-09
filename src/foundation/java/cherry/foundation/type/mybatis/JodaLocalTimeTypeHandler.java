@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,42 +32,36 @@ import org.joda.time.LocalTime;
 public class JodaLocalTimeTypeHandler extends BaseTypeHandler<LocalTime> {
 
 	@Override
-	public void setNonNullParameter(PreparedStatement ps, int i,
-			LocalTime parameter, JdbcType jdbcType) throws SQLException {
+	public void setNonNullParameter(PreparedStatement ps, int i, LocalTime parameter, JdbcType jdbcType)
+			throws SQLException {
 		ps.setTime(i, new Time(parameter.getMillisOfDay()));
 	}
 
 	@Override
-	public LocalTime getNullableResult(ResultSet rs, String columnName)
-			throws SQLException {
+	public LocalTime getNullableResult(ResultSet rs, String columnName) throws SQLException {
 		Time time = rs.getTime(columnName);
 		if (time == null) {
 			return null;
 		}
-		return new LocalTime(time.getTime()
-				+ LocalDate.now().toDate().getTime());
+		return new LocalTime(time.getTime() + LocalDate.now().toDate().getTime());
 	}
 
 	@Override
-	public LocalTime getNullableResult(ResultSet rs, int columnIndex)
-			throws SQLException {
+	public LocalTime getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
 		Time time = rs.getTime(columnIndex);
 		if (time == null) {
 			return null;
 		}
-		return new LocalTime(time.getTime()
-				+ LocalDate.now().toDate().getTime());
+		return new LocalTime(time.getTime() + LocalDate.now().toDate().getTime());
 	}
 
 	@Override
-	public LocalTime getNullableResult(CallableStatement cs, int columnIndex)
-			throws SQLException {
+	public LocalTime getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
 		Time time = cs.getTime(columnIndex);
 		if (time == null) {
 			return null;
 		}
-		return new LocalTime(time.getTime()
-				+ LocalDate.now().toDate().getTime());
+		return new LocalTime(time.getTime() + LocalDate.now().toDate().getTime());
 	}
 
 }

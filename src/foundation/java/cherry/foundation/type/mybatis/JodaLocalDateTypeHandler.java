@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,14 +31,13 @@ import org.joda.time.LocalDate;
 public class JodaLocalDateTypeHandler extends BaseTypeHandler<LocalDate> {
 
 	@Override
-	public void setNonNullParameter(PreparedStatement ps, int i,
-			LocalDate parameter, JdbcType jdbcType) throws SQLException {
+	public void setNonNullParameter(PreparedStatement ps, int i, LocalDate parameter, JdbcType jdbcType)
+			throws SQLException {
 		ps.setDate(i, new Date(parameter.toDate().getTime()));
 	}
 
 	@Override
-	public LocalDate getNullableResult(ResultSet rs, String columnName)
-			throws SQLException {
+	public LocalDate getNullableResult(ResultSet rs, String columnName) throws SQLException {
 		Date date = rs.getDate(columnName);
 		if (date == null) {
 			return null;
@@ -47,8 +46,7 @@ public class JodaLocalDateTypeHandler extends BaseTypeHandler<LocalDate> {
 	}
 
 	@Override
-	public LocalDate getNullableResult(ResultSet rs, int columnIndex)
-			throws SQLException {
+	public LocalDate getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
 		Date date = rs.getDate(columnIndex);
 		if (date == null) {
 			return null;
@@ -57,8 +55,7 @@ public class JodaLocalDateTypeHandler extends BaseTypeHandler<LocalDate> {
 	}
 
 	@Override
-	public LocalDate getNullableResult(CallableStatement cs, int columnIndex)
-			throws SQLException {
+	public LocalDate getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
 		Date date = cs.getDate(columnIndex);
 		if (date == null) {
 			return null;
