@@ -12,8 +12,14 @@
 	<context:component-scan base-package="cherry.sqlapp" />
 
 	<bean id="navigator" class="cherry.foundation.navi.NavigatorImpl">
-		<property name="navigationDef" value="classpath:navi.json" />
-		<property name="objectMapper" ref="objectMapper" />
+		<property name="navigationDef" value="classpath:navi.yaml" />
+		<property name="objectMapper">
+			<bean class="com.fasterxml.jackson.databind.ObjectMapper">
+				<constructor-arg type="com.fasterxml.jackson.core.JsonFactory">
+					<bean class="com.fasterxml.jackson.dataformat.yaml.YAMLFactory" />
+				</constructor-arg>
+			</bean>
+		</property>
 	</bean>
 
 	<bean id="paginator" class="cherry.goods.paginate.PaginatorImpl">
