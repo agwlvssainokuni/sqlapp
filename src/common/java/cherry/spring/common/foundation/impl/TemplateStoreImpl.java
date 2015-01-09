@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,16 +44,14 @@ public class TemplateStoreImpl implements TemplateStore {
 		querya.from(a);
 		querya.where(a.templateName.eq(templateName));
 		querya.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		Tuple templ = queryDslJdbcOperations.queryForObject(querya, new QTuple(
-				a.id, a.fromAddr, a.subject, a.body));
+		Tuple templ = queryDslJdbcOperations.queryForObject(querya, new QTuple(a.id, a.fromAddr, a.subject, a.body));
 
 		QMailTemplateAddress b = new QMailTemplateAddress("b");
 		SQLQuery queryb = queryDslJdbcOperations.newSqlQuery();
 		queryb.from(b);
 		queryb.where(b.templateId.eq(templ.get(a.id)));
 		queryb.where(b.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		List<Tuple> templAddr = queryDslJdbcOperations.query(queryb,
-				new QTuple(b.rcptType, b.rcptAddr));
+		List<Tuple> templAddr = queryDslJdbcOperations.query(queryb, new QTuple(b.rcptType, b.rcptAddr));
 
 		List<String> toAddr = new ArrayList<>();
 		List<String> ccAddr = new ArrayList<>();

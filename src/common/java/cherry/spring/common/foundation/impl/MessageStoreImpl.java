@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,11 +55,9 @@ public class MessageStoreImpl implements MessageStore {
 	private QueryDslJdbcOperations queryDslJdbcOperations;
 
 	@Override
-	public long createMessage(String launcherId, String messageName,
-			LocalDateTime scheduledAt, String from, List<String> to,
-			List<String> cc, List<String> bcc, String subject, String body) {
-		long mailId = createMailLog(launcherId, bizDateTime.now(), messageName,
-				scheduledAt, from, subject, body);
+	public long createMessage(String launcherId, String messageName, LocalDateTime scheduledAt, String from,
+			List<String> to, List<String> cc, List<String> bcc, String subject, String body) {
+		long mailId = createMailLog(launcherId, bizDateTime.now(), messageName, scheduledAt, from, subject, body);
 		createMailRcpt(mailId, RcptType.TO.name(), to);
 		createMailRcpt(mailId, RcptType.CC.name(), cc);
 		createMailRcpt(mailId, RcptType.BCC.name(), bcc);
@@ -74,8 +72,7 @@ public class MessageStoreImpl implements MessageStore {
 		query.from(a);
 		query.where(a.scheduledAt.goe(dtm));
 		query.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		return queryDslJdbcOperations.query(query,
-				new SingleColumnRowMapper<Long>(Long.class), a.mailId);
+		return queryDslJdbcOperations.query(query, new SingleColumnRowMapper<Long>(Long.class), a.mailId);
 	}
 
 	@Override
@@ -87,8 +84,7 @@ public class MessageStoreImpl implements MessageStore {
 		querya.where(a.id.eq(messageId));
 		querya.where(a.mailStatus.eq(FlagCode.FALSE.code()));
 		querya.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
-		Tuple maillog = queryDslJdbcOperations.queryForObject(querya,
-				new QTuple(a.fromAddr, a.subject, a.body));
+		Tuple maillog = queryDslJdbcOperations.queryForObject(querya, new QTuple(a.fromAddr, a.subject, a.body));
 		if (maillog == null) {
 			return null;
 		}
@@ -96,8 +92,7 @@ public class MessageStoreImpl implements MessageStore {
 		QMailRcpt b = new QMailRcpt("b");
 		SQLQuery queryb = queryDslJdbcOperations.newSqlQuery();
 		queryb.from(b).where(b.mailId.eq(messageId)).orderBy(b.id.asc());
-		List<Tuple> mailrcpt = queryDslJdbcOperations.query(queryb, new QTuple(
-				b.rcptType, b.rcptAddr));
+		List<Tuple> mailrcpt = queryDslJdbcOperations.query(queryb, new QTuple(b.rcptType, b.rcptAddr));
 		if (mailrcpt.isEmpty()) {
 			return null;
 		}
@@ -142,9 +137,7 @@ public class MessageStoreImpl implements MessageStore {
 				return update.execute();
 			}
 		});
-		checkState(count == 1L,
-				"failed to update QMailLog: id={0}, mailStatus={1}", messageId,
-				FlagCode.TRUE.code());
+		checkState(count == 1L, "failed to update QMailLog: id={0}, mailStatus={1}", messageId, FlagCode.TRUE.code());
 
 		final QMailQueue b = new QMailQueue("b");
 		long c = queryDslJdbcOperations.delete(b, new SqlDeleteCallback() {
@@ -155,14 +148,11 @@ public class MessageStoreImpl implements MessageStore {
 				return delete.execute();
 			}
 		});
-		checkState(c == 1L, "failed to delete QMailQueue: mailId={0}",
-				messageId);
+		checkState(c == 1L, "failed to delete QMailQueue: mailId={0}", messageId);
 	}
 
-	private long createMailLog(final String launcherId,
-			final LocalDateTime launchedAt, final String messageName,
-			final LocalDateTime scheduledAt, final String from,
-			final String subject, final String body) {
+	private long createMailLog(final String launcherId, final LocalDateTime launchedAt, final String messageName,
+			final LocalDateTime scheduledAt, final String from, final String subject, final String body) {
 		final QMailLog a = new QMailLog("a");
 		SqlInsertWithKeyCallback<Long> callback = new SqlInsertWithKeyCallback<Long>() {
 			@Override
@@ -182,13 +172,11 @@ public class MessageStoreImpl implements MessageStore {
 		checkState(
 				id != null,
 				"failed to create QMailLog: launchedBy={0}, launchedAt={1}, mailStatus={2}, messageName={3}, scheduledAt={4}, fromAddr={5}, subject={6}, body={7}",
-				launcherId, launchedAt, FlagCode.FALSE.code(), messageName,
-				scheduledAt, from, subject, body);
+				launcherId, launchedAt, FlagCode.FALSE.code(), messageName, scheduledAt, from, subject, body);
 		return id.longValue();
 	}
 
-	private void createMailRcpt(final long mailId, final String rcptType,
-			List<String> rcptAddr) {
+	private void createMailRcpt(final long mailId, final String rcptType, List<String> rcptAddr) {
 		if (rcptAddr == null || rcptAddr.isEmpty()) {
 			return;
 		}
@@ -203,15 +191,12 @@ public class MessageStoreImpl implements MessageStore {
 					return insert.execute();
 				}
 			});
-			checkState(
-					c == 1L,
-					"failed to create QMailRcpt: mailId={0}, rcptType={1}, rcptAddr={2}",
-					mailId, rcptType, addr);
+			checkState(c == 1L, "failed to create QMailRcpt: mailId={0}, rcptType={1}, rcptAddr={2}", mailId, rcptType,
+					addr);
 		}
 	}
 
-	private void createMailQueue(final long mailId,
-			final LocalDateTime scheduledAt) {
+	private void createMailQueue(final long mailId, final LocalDateTime scheduledAt) {
 		final QMailQueue a = new QMailQueue("a");
 		long count = queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
 			@Override
@@ -221,9 +206,7 @@ public class MessageStoreImpl implements MessageStore {
 				return insert.execute();
 			}
 		});
-		checkState(count == 1L,
-				"failed to create QMailQueue: mailId={0}, scheduledAt={1}",
-				mailId, scheduledAt);
+		checkState(count == 1L, "failed to create QMailQueue: mailId={0}, scheduledAt={1}", mailId, scheduledAt);
 	}
 
 }

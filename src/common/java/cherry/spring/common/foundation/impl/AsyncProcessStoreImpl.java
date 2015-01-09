@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,13 +66,11 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 
 	@Transactional(value = "jtaTransactionManager", propagation = REQUIRES_NEW)
 	@Override
-	public long createFileProcess(String launcherId, LocalDateTime dtm,
-			final String description, final String name,
-			final String originalFilename, final String contentType,
-			final long size, final String handlerName, String... args) {
+	public long createFileProcess(String launcherId, LocalDateTime dtm, final String description, final String name,
+			final String originalFilename, final String contentType, final long size, final String handlerName,
+			String... args) {
 
-		final long asyncId = createAsyncProcess(launcherId, description,
-				AsyncType.FILE, dtm);
+		final long asyncId = createAsyncProcess(launcherId, description, AsyncType.FILE, dtm);
 
 		final QAsyncProcessFile a = new QAsyncProcessFile("a");
 		long count = queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
@@ -80,13 +78,10 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 			public long doInSqlInsertClause(SQLInsertClause insert) {
 				insert.set(a.asyncId, asyncId);
 				insert.set(a.paramName, adjustSize(name, a.paramName));
-				insert.set(a.originalFilename,
-						adjustSize(originalFilename, a.originalFilename));
-				insert.set(a.contentType,
-						adjustSize(contentType, a.contentType));
+				insert.set(a.originalFilename, adjustSize(originalFilename, a.originalFilename));
+				insert.set(a.contentType, adjustSize(contentType, a.contentType));
 				insert.set(a.fileSize, size);
-				insert.set(a.handlerName,
-						adjustSize(handlerName, a.handlerName));
+				insert.set(a.handlerName, adjustSize(handlerName, a.handlerName));
 				return insert.execute();
 			}
 		});
@@ -105,21 +100,17 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 					return insert.execute();
 				}
 			});
-			checkState(
-					c == 1L,
-					"failed to create QAsyncProcessFileArg: asyncId={0}, arg={1}",
-					asyncId, arg);
+			checkState(c == 1L, "failed to create QAsyncProcessFileArg: asyncId={0}, arg={1}", asyncId, arg);
 		}
 
 		return asyncId;
 	}
 
 	@Transactional(value = "jtaTransactionManager", propagation = REQUIRES_NEW)
-	public long createCommand(String launcherId, LocalDateTime dtm,
-			final String description, final String command, String... args) {
+	public long createCommand(String launcherId, LocalDateTime dtm, final String description, final String command,
+			String... args) {
 
-		final long asyncId = createAsyncProcess(launcherId, description,
-				AsyncType.COMMAND, dtm);
+		final long asyncId = createAsyncProcess(launcherId, description, AsyncType.COMMAND, dtm);
 
 		final QAsyncProcessCommand a = new QAsyncProcessCommand("a");
 		long count = queryDslJdbcOperations.insert(a, new SqlInsertCallback() {
@@ -130,10 +121,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				return insert.execute();
 			}
 		});
-		checkState(
-				count == 1L,
-				"failed to create QAsyncProcessCommand: asyncId={0}, command={1}",
-				asyncId, command);
+		checkState(count == 1L, "failed to create QAsyncProcessCommand: asyncId={0}, command={1}", asyncId, command);
 
 		final QAsyncProcessCommandArg b = new QAsyncProcessCommandArg("b");
 		for (final String arg : args) {
@@ -145,10 +133,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 					return insert.execute();
 				}
 			});
-			checkState(
-					c == 1L,
-					"failed to create QAsyncProcessCommandArg: asyncId={0}, arg={1}",
-					asyncId, arg);
+			checkState(c == 1L, "failed to create QAsyncProcessCommandArg: asyncId={0}, arg={1}", asyncId, arg);
 		}
 
 		return asyncId;
@@ -169,9 +154,7 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				return update.execute();
 			}
 		});
-		checkState(
-				count == 1L,
-				"failed to update QAsyncProcess: id={0}, asyncStatus={1}, launchedAt={2}, count={3}",
+		checkState(count == 1L, "failed to update QAsyncProcess: id={0}, asyncStatus={1}, launchedAt={2}, count={3}",
 				asyncId, AsyncStatus.LAUNCHED.code(), dtm, count);
 	}
 
@@ -191,16 +174,14 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				return update.execute();
 			}
 		});
-		checkState(
-				count == 1L,
-				"failed to update QAsyncProcess: id={0}, asyncStatus={1}, startedAt={2}, count={3}",
+		checkState(count == 1L, "failed to update QAsyncProcess: id={0}, asyncStatus={1}, startedAt={2}, count={3}",
 				asyncId, AsyncStatus.PROCESSING.code(), dtm, count);
 	}
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
-	public void finishFileProcess(final long asyncId, final LocalDateTime dtm,
-			final AsyncStatus status, final FileProcessResult result) {
+	public void finishFileProcess(final long asyncId, final LocalDateTime dtm, final AsyncStatus status,
+			final FileProcessResult result) {
 
 		finishAsyncProcess(asyncId, dtm, status);
 
@@ -215,16 +196,13 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				return insert.execute();
 			}
 		});
-		checkState(
-				count == 1L,
+		checkState(count == 1L,
 				"failed to create QAsyncProcessFileResult: asyncId={0}, totalCount={1}, okCount={2}, ngCount={3}",
-				asyncId, result.getTotalCount(), result.getOkCount(),
-				result.getNgCount());
+				asyncId, result.getTotalCount(), result.getOkCount(), result.getNgCount());
 
-		final QAsyncProcessFileResultDetail b = new QAsyncProcessFileResultDetail(
-				"b");
-		List<FileRecordInfo> list = (result.getNgRecordInfoList() == null ? new ArrayList<FileRecordInfo>()
-				: result.getNgRecordInfoList());
+		final QAsyncProcessFileResultDetail b = new QAsyncProcessFileResultDetail("b");
+		List<FileRecordInfo> list = (result.getNgRecordInfoList() == null ? new ArrayList<FileRecordInfo>() : result
+				.getNgRecordInfoList());
 		for (final FileRecordInfo r : list) {
 			if (r.isOk()) {
 				continue;
@@ -234,13 +212,11 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				public long doInSqlInsertClause(SQLInsertClause insert) {
 					insert.set(b.asyncId, asyncId);
 					insert.set(b.recordNumber, r.getNumber());
-					insert.set(b.description,
-							adjustSize(r.getDescription(), b.description));
+					insert.set(b.description, adjustSize(r.getDescription(), b.description));
 					return insert.execute();
 				}
 			});
-			checkState(
-					c == 1L,
+			checkState(c == 1L,
 					"failed to create QAsyncProcessFileResultDetail: asyncId={0}, recordNumber={1}, description={2}",
 					asyncId, r.getNumber(), r.getDescription());
 		}
@@ -248,8 +224,8 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
-	public void finishCommand(final long asyncId, final LocalDateTime dtm,
-			final AsyncStatus status, final CommandResult result) {
+	public void finishCommand(final long asyncId, final LocalDateTime dtm, final AsyncStatus status,
+			final CommandResult result) {
 
 		finishAsyncProcess(asyncId, dtm, status);
 
@@ -264,17 +240,14 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				return insert.execute();
 			}
 		});
-		checkState(
-				count == 1L,
+		checkState(count == 1L,
 				"failed to create QAsyncProcessCommandResult: asyncId={0}, exitValue={1}, stdout={2}, stderr={3}",
-				asyncId, result.getExitValue(), result.getStdout(),
-				result.getStderr());
+				asyncId, result.getExitValue(), result.getStdout(), result.getStderr());
 	}
 
 	@Transactional(propagation = REQUIRES_NEW)
 	@Override
-	public void finishWithException(final long asyncId,
-			final LocalDateTime dtm, final Throwable th) {
+	public void finishWithException(final long asyncId, final LocalDateTime dtm, final Throwable th) {
 
 		finishAsyncProcess(asyncId, dtm, AsyncStatus.EXCEPTION);
 
@@ -283,27 +256,22 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 			@Override
 			public long doInSqlInsertClause(SQLInsertClause insert) {
 				insert.set(a.asyncId, asyncId);
-				insert.set(a.exception,
-						adjustSize(throwableToString(th), a.exception));
+				insert.set(a.exception, adjustSize(throwableToString(th), a.exception));
 				return insert.execute();
 			}
 		});
-		checkState(
-				count == 1L,
-				"failed to create QAsyncProcessException: asyncId={0}, exception={1}",
-				asyncId, th.getMessage());
+		checkState(count == 1L, "failed to create QAsyncProcessException: asyncId={0}, exception={1}", asyncId,
+				th.getMessage());
 	}
 
-	private long createAsyncProcess(final String launcherId,
-			final String description, final AsyncType asyncType,
+	private long createAsyncProcess(final String launcherId, final String description, final AsyncType asyncType,
 			final LocalDateTime dtm) {
 		final QAsyncProcess a = new QAsyncProcess("a");
 		SqlInsertWithKeyCallback<Long> callback = new SqlInsertWithKeyCallback<Long>() {
 			@Override
 			public Long doInSqlInsertWithKeyClause(SQLInsertClause insert) {
 				insert.set(a.launchedBy, launcherId);
-				insert.set(a.description,
-						adjustSize(description, a.description));
+				insert.set(a.description, adjustSize(description, a.description));
 				insert.set(a.asyncType, asyncType.code());
 				insert.set(a.asyncStatus, AsyncStatus.LAUNCHING.code());
 				insert.set(a.registeredAt, dtm);
@@ -314,13 +282,11 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 		checkState(
 				id != null,
 				"failed to create QAsyncProcess: launchedBy={0}, description={1}, asyncType={2}, asyncStatus={3}, registeredAt={4}",
-				launcherId, description, asyncType.code(),
-				AsyncStatus.LAUNCHING.code(), dtm);
+				launcherId, description, asyncType.code(), AsyncStatus.LAUNCHING.code(), dtm);
 		return id.longValue();
 	}
 
-	private void finishAsyncProcess(final long asyncId,
-			final LocalDateTime dtm, final AsyncStatus status) {
+	private void finishAsyncProcess(final long asyncId, final LocalDateTime dtm, final AsyncStatus status) {
 		final QAsyncProcess a = new QAsyncProcess("a");
 		long count = queryDslJdbcOperations.update(a, new SqlUpdateCallback() {
 			@Override
@@ -334,16 +300,13 @@ public class AsyncProcessStoreImpl implements AsyncProcessStore {
 				return update.execute();
 			}
 		});
-		checkState(
-				count == 1L,
-				"failed to update QAsyncProcess: id={0}, asyncStatus={1}, finishedAt={2}, count={3}",
+		checkState(count == 1L, "failed to update QAsyncProcess: id={0}, asyncStatus={1}, finishedAt={2}, count={3}",
 				asyncId, status.code(), dtm, count);
 	}
 
 	private String throwableToString(Throwable th) {
 		try {
-			Map<String, Object> map = ToMapUtil.fromThrowable(th,
-					Integer.MAX_VALUE);
+			Map<String, Object> map = ToMapUtil.fromThrowable(th, Integer.MAX_VALUE);
 			return objectMapper.writeValueAsString(map);
 		} catch (JsonProcessingException ex) {
 			throw new IllegalStateException();

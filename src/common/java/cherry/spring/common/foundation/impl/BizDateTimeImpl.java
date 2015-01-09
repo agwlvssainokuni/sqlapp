@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 agwlvssainokuni
+ * Copyright 2014,2015 agwlvssainokuni
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,21 +53,17 @@ public class BizDateTimeImpl implements BizDateTime {
 		Expression<LocalDateTime> curDtm = currentTimestamp(LocalDateTime.class);
 		QBizdatetimeMaster a = new QBizdatetimeMaster("a");
 		SQLQuery query = createSqlQuery(a);
-		Tuple tuple = queryDslJdbcOperations.queryForObject(query, new QTuple(
-				curDtm, a.offsetDay, a.offsetHour, a.offsetMinute,
-				a.offsetSecond));
+		Tuple tuple = queryDslJdbcOperations.queryForObject(query, new QTuple(curDtm, a.offsetDay, a.offsetHour,
+				a.offsetMinute, a.offsetSecond));
 		if (tuple == null) {
 			return LocalDateTime.now();
 		}
-		return tuple.get(curDtm).plusDays(tuple.get(a.offsetDay))
-				.plusHours(tuple.get(a.offsetHour))
-				.plusMinutes(tuple.get(a.offsetMinute))
-				.plusSeconds(tuple.get(a.offsetSecond));
+		return tuple.get(curDtm).plusDays(tuple.get(a.offsetDay)).plusHours(tuple.get(a.offsetHour))
+				.plusMinutes(tuple.get(a.offsetMinute)).plusSeconds(tuple.get(a.offsetSecond));
 	}
 
 	private SQLQuery createSqlQuery(QBizdatetimeMaster a) {
-		return queryDslJdbcOperations.newSqlQuery().from(a)
-				.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
+		return queryDslJdbcOperations.newSqlQuery().from(a).where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()))
 				.orderBy(a.id.desc()).limit(1);
 	}
 
