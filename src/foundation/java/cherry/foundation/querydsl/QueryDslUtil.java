@@ -41,20 +41,40 @@ import com.mysema.query.types.expr.DateExpression;
 import com.mysema.query.types.expr.DateTimeExpression;
 import com.mysema.query.types.expr.TimeExpression;
 
+/**
+ * Querydslサポート機能。<br />
+ */
 public class QueryDslUtil {
 
+	/**
+	 * SQL関数「CURRENT_DATE」。
+	 */
 	public static DateExpression<LocalDate> currentDate() {
 		return DateExpression.currentDate(LocalDate.class);
 	}
 
+	/**
+	 * SQL関数「CURRENT_TIME」。
+	 */
 	public static TimeExpression<LocalTime> currentTime() {
 		return TimeExpression.currentTime(LocalTime.class);
 	}
 
+	/**
+	 * SQL関数「CURRENT_TIMESTAMP」。
+	 */
 	public static DateTimeExpression<LocalDateTime> currentTimestamp() {
 		return DateTimeExpression.currentTimestamp(LocalDateTime.class);
 	}
 
+	/**
+	 * カラムメタデータに基づいて文字列の長さを調整する。<br />
+	 * 具体的にはSQL型の文字数に収まるよう切り詰める。
+	 * 
+	 * @param value 対象文字列。
+	 * @param path 調整先のカラム。
+	 * @return 長さを調整した文字列。
+	 */
 	public static String adjustSize(String value, Path<?> path) {
 		if (value == null) {
 			return value;
@@ -69,6 +89,13 @@ public class QueryDslUtil {
 		}
 	}
 
+	/**
+	 * カラムメタデータに基づいて当該カラムの表記名を取得する。<br />
+	 * 「AS」で別名が指定された場合は別名、そうでなければ、元のカラム名が得られる。カラム名を特定できない場合はnullが返却される。
+	 * 
+	 * @param expression 対象の式。
+	 * @return 表記名。
+	 */
 	public static String getExpressionLabel(Expression<?> expression) {
 		if (expression instanceof Operation) {
 			Operation<?> op = (Operation<?>) expression;
@@ -82,6 +109,14 @@ public class QueryDslUtil {
 		return null;
 	}
 
+	/**
+	 * {@link Tuple}の内容を{@link Map}の形態で取得する。<br />
+	 * {@link Map}には、キーとしてカラム名をcamelCaseに変換した文字列、値として当該カラムの値そのままが格納される。
+	 * 
+	 * @param tuple 元データを保持する{@link Tuple}を指定する。
+	 * @param expressions 元データのカラムを指定する。
+	 * @return {@link Tuple}の内容を格納した{@link Map}。
+	 */
 	public static Map<String, ?> tupleToMap(Tuple tuple, Expression<?>... expressions) {
 		Map<String, Object> map = new LinkedHashMap<>();
 		for (Expression<?> expr : expressions) {
@@ -93,6 +128,14 @@ public class QueryDslUtil {
 		return map;
 	}
 
+	/**
+	 * {@link Tuple}のリストを{@link Map}のリストの形態で取得する。<br />
+	 * {@link Tuple}の内容を格納した{@link Map}は、{@link #tupleToMap(Tuple, Expression...)}により取得する。
+	 * 
+	 * @param tupleList 元データを保持する{@link Tuple}のリストを指定する。
+	 * @param expressions 元データのカラムを指定する。
+	 * @return {@link Tuple}の内容を格納した{@link Map}のリスト。
+	 */
 	public static List<Map<String, ?>> tupleToMap(List<Tuple> tupleList, Expression<?>... expressions) {
 		List<Map<String, ?>> list = new ArrayList<>(tupleList.size());
 		for (Tuple tuple : tupleList) {
@@ -101,6 +144,14 @@ public class QueryDslUtil {
 		return list;
 	}
 
+	/**
+	 * {@link Tuple}のリストを{@link Map}のリストの形態で取得する。<br />
+	 * {@link Tuple}の内容を格納した{@link Map}のリストは、{@link #tupleToMap(PagedList, Expression...)}により取得する。
+	 * 
+	 * @param pagedList 元データを保持する{@link Tuple}のリストを指定する。
+	 * @param expressions 元データのカラムを指定する。
+	 * @return {@link Tuple}の内容を格納した{@link Map}のリスト。
+	 */
 	public static PagedList<Map<String, ?>> tupleToMap(PagedList<Tuple> pagedList, Expression<?>... expressions) {
 		PagedList<Map<String, ?>> list = new PagedList<>();
 		list.setPageSet(pagedList.getPageSet());

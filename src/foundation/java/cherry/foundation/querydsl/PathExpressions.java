@@ -33,40 +33,106 @@ import com.mysema.query.types.path.SimplePath;
 import com.mysema.query.types.path.StringPath;
 import com.mysema.query.types.path.TimePath;
 
+/**
+ * Querydslサポート機能。<br />
+ * パスに関する操作を提供する。
+ */
 public class PathExpressions {
 
+	/**
+	 * テーブルに相当するパスを取得する。
+	 * 
+	 * @param variable テーブル別名。
+	 * @return テーブルのパス。
+	 */
 	public static SimplePath<Tuple> simplePath(String variable) {
 		return Expressions.path(Tuple.class, variable);
 	}
 
+	/**
+	 * 真偽値カラムに相当するパスを取得する。
+	 * 
+	 * @param parent テーブルのパス。
+	 * @param property カラム別名。
+	 * @return カラムのパス。
+	 */
 	public static BooleanPath booleanPath(Path<?> parent, String property) {
 		return Expressions.booleanPath(parent, property);
 	}
 
+	/**
+	 * 数値カラム ({@link Integer}) に相当するパスを取得する。
+	 * 
+	 * @param parent テーブルのパス。
+	 * @param property カラム別名。
+	 * @return カラムのパス。
+	 */
 	public static NumberPath<Integer> intPath(Path<?> parent, String property) {
 		return Expressions.numberPath(Integer.class, parent, property);
 	}
 
+	/**
+	 * 数値カラム ({@link Long}) に相当するパスを取得する。
+	 * 
+	 * @param parent テーブルのパス。
+	 * @param property カラム別名。
+	 * @return カラムのパス。
+	 */
 	public static NumberPath<Long> longPath(Path<?> parent, String property) {
 		return Expressions.numberPath(Long.class, parent, property);
 	}
 
+	/**
+	 * 数値カラム ({@link BigDecimal}) に相当するパスを取得する。
+	 * 
+	 * @param parent テーブルのパス。
+	 * @param property カラム別名。
+	 * @return カラムのパス。
+	 */
 	public static NumberPath<BigDecimal> decimalPath(Path<?> parent, String property) {
 		return Expressions.numberPath(BigDecimal.class, parent, property);
 	}
 
+	/**
+	 * 文字列カラムに相当するパスを取得する。
+	 * 
+	 * @param parent テーブルのパス。
+	 * @param property カラムの別名。
+	 * @return カラムのパス。
+	 */
 	public static StringPath stringPath(Path<?> parent, String property) {
 		return Expressions.stringPath(parent, property);
 	}
 
+	/**
+	 * 日付カラムに相当するパスを取得する。
+	 * 
+	 * @param parent テーブルのパス。
+	 * @param property カラムの別名。
+	 * @return カラムのパス。
+	 */
 	public static DatePath<LocalDate> datePath(Path<?> parent, String property) {
 		return Expressions.datePath(LocalDate.class, parent, property);
 	}
 
+	/**
+	 * 時刻カラムに相当するパスを取得する。
+	 * 
+	 * @param parent テーブルのパス。
+	 * @param property カラムの別名。
+	 * @return カラムのパス。
+	 */
 	public static TimePath<LocalTime> timePath(Path<?> parent, String property) {
 		return Expressions.timePath(LocalTime.class, parent, property);
 	}
 
+	/**
+	 * 日時カラムに相当するパスを取得する。
+	 * 
+	 * @param parent テーブルのパス。
+	 * @param property カラムの別名。
+	 * @return カラムのパス。
+	 */
 	public static DateTimePath<LocalDateTime> dateTimePath(Path<?> parent, String property) {
 		return Expressions.dateTimePath(LocalDateTime.class, parent, property);
 	}

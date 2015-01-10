@@ -27,10 +27,14 @@ import cherry.foundation.etl.Consumer;
 import cherry.foundation.etl.ExtractorResultSetExtractor;
 import cherry.foundation.etl.Limiter;
 import cherry.foundation.etl.LimiterException;
+import cherry.foundation.etl.NoneLimiter;
 import cherry.goods.paginate.PageSet;
 import cherry.goods.paginate.PagedList;
 import cherry.goods.paginate.Paginator;
 
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.types.Expression;
 
@@ -50,35 +54,72 @@ public class QueryDslSupportImpl implements QueryDslSupport {
 
 	@Override
 	public <T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo,
-			long pageSz, RowMapper<T> rowMapper, Expression<?>... expressions) {
-
-		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
-		query = commonClause.configure(query);
-		long count = queryDslJdbcOperations.count(query);
-
-		PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
-		query.limit(pageSz).offset(pageSet.getCurrent().getFrom());
-		query = orderByClause.configure(query);
-		List<T> list = queryDslJdbcOperations.query(query, rowMapper, expressions);
-
-		PagedList<T> result = new PagedList<>();
-		result.setPageSet(pageSet);
-		result.setList(list);
-		return result;
+			long pageSz, final RowMapper<T> rowMapper, final Expression<?>... expressions) {
+		Predicate<Long> cancelPredicate = Predicates.alwaysFalse();
+		return search(commonClause, orderByClause, pageNo, pageSz, cancelPredicate, rowMapper, expressions);
 	}
 
 	@Override
 	public <T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo,
-			long pageSz, Expression<T> expression) {
+			long pageSz, Predicate<Long> cancelPredicate, final RowMapper<T> rowMapper,
+			final Expression<?>... expressions) {
+		Function<SQLQuery, List<T>> searchFunction = new SearchFunction<T>() {
+			@Override
+			public List<T> apply(SQLQuery query) {
+				return queryDslJdbcOperations.query(query, rowMapper, expressions);
+			}
+		};
+		return searchMain(commonClause, orderByClause, pageNo, pageSz, cancelPredicate, searchFunction);
+	}
+
+	@Override
+	public <T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo,
+			long pageSz, final Expression<T> expression) {
+		Predicate<Long> cancelPredicate = Predicates.alwaysFalse();
+		return search(commonClause, orderByClause, pageNo, pageSz, cancelPredicate, expression);
+	}
+
+	@Override
+	public <T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo,
+			long pageSz, Predicate<Long> cancelPredicate, final Expression<T> expression) {
+		Function<SQLQuery, List<T>> searchFunction = new SearchFunction<T>() {
+			@Override
+			public List<T> apply(SQLQuery query) {
+				return queryDslJdbcOperations.query(query, expression);
+			}
+		};
+		return searchMain(commonClause, orderByClause, pageNo, pageSz, cancelPredicate, searchFunction);
+	}
+
+	@Override
+	public long download(QueryConfigurer commonClause, QueryConfigurer orderByClause, Consumer consumer,
+			Expression<?>... expressions) throws IOException {
+		return downloadMain(commonClause, orderByClause, consumer, new NoneLimiter(), expressions);
+	}
+
+	@Override
+	public long download(QueryConfigurer commonClause, QueryConfigurer orderByClause, Consumer consumer,
+			Limiter limiter, Expression<?>... expressions) throws LimiterException, IOException {
+		return downloadMain(commonClause, orderByClause, consumer, limiter, expressions);
+	}
+
+	private <T> PagedList<T> searchMain(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo,
+			long pageSz, Predicate<Long> cancelPredicate, Function<SQLQuery, List<T>> searchFunction) {
 
 		SQLQuery query = queryDslJdbcOperations.newSqlQuery();
 		query = commonClause.configure(query);
 		long count = queryDslJdbcOperations.count(query);
 
 		PageSet pageSet = paginator.paginate(pageNo, count, pageSz);
+		if (cancelPredicate.apply(count)) {
+			PagedList<T> result = new PagedList<>();
+			result.setPageSet(pageSet);
+			return result;
+		}
+
 		query.limit(pageSz).offset(pageSet.getCurrent().getFrom());
 		query = orderByClause.configure(query);
-		List<T> list = queryDslJdbcOperations.query(query, expression);
+		List<T> list = searchFunction.apply(query);
 
 		PagedList<T> result = new PagedList<>();
 		result.setPageSet(pageSet);
@@ -86,8 +127,7 @@ public class QueryDslSupportImpl implements QueryDslSupport {
 		return result;
 	}
 
-	@Override
-	public long download(QueryConfigurer commonClause, QueryConfigurer orderByClause, Consumer consumer,
+	private long downloadMain(QueryConfigurer commonClause, QueryConfigurer orderByClause, Consumer consumer,
 			Limiter limiter, Expression<?>... expressions) throws LimiterException, IOException {
 
 		ResultSetExtractor<Long> extractor = new ExtractorResultSetExtractor(consumer, limiter);
@@ -104,6 +144,13 @@ public class QueryDslSupportImpl implements QueryDslSupport {
 			throw (IOException) ex.getCause();
 		} finally {
 			limiter.stop();
+		}
+	}
+
+	static abstract class SearchFunction<T> implements Function<SQLQuery, List<T>> {
+		@Override
+		public boolean equals(Object object) {
+			return this == object;
 		}
 	}
 

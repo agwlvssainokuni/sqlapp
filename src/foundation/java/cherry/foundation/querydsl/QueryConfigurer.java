@@ -18,8 +18,18 @@ package cherry.foundation.querydsl;
 
 import com.mysema.query.sql.SQLQuery;
 
+/**
+ * Querydslサポート機能。<br />
+ * {@link SQLQuery}を構成する。
+ */
 public interface QueryConfigurer {
 
+	/**
+	 * {@link SQLQuery}を構成する。
+	 * 
+	 * @param query 構成対象の{@link SQLQuery}。
+	 * @return 構成した{@link SQLQuery}。
+	 */
 	SQLQuery configure(SQLQuery query);
 
 }
