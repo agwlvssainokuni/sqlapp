@@ -28,7 +28,7 @@ ext {
 	versionJackson = "2.4.4"
 	versionAspectJ = "1.8.2"
 	versionAopalliance = "1.0"
-	versionSpring = "4.1.4.RELEASE"
+	versionSpring = "4.1.3.RELEASE"
 	versionSpringSecurity = "3.2.5.RELEASE"
 	versionSpringMobile = "1.1.3.RELEASE"
 	versionSpringDataJdbcCore = "1.1.0.RELEASE"
