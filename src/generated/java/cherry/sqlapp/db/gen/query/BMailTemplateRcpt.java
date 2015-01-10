@@ -3,10 +3,10 @@ package cherry.sqlapp.db.gen.query;
 import javax.annotation.Generated;
 
 /**
- * BMailTemplateAddress is a Querydsl bean type
+ * BMailTemplateRcpt is a Querydsl bean type
  */
 @Generated("com.mysema.query.codegen.BeanSerializer")
-public class BMailTemplateAddress {
+public class BMailTemplateRcpt {
 
     private org.joda.time.LocalDateTime createdAt;
 

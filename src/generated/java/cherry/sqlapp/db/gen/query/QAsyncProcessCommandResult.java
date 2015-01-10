@@ -71,8 +71,8 @@ public class QAsyncProcessCommandResult extends com.mysema.query.sql.RelationalP
         addMetadata(exitValue, ColumnMetadata.named("EXIT_VALUE").withIndex(3).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(8).ofType(Types.INTEGER).withSize(10).notNull());
-        addMetadata(stderr, ColumnMetadata.named("STDERR").withIndex(5).ofType(Types.VARCHAR).withSize(1024).notNull());
-        addMetadata(stdout, ColumnMetadata.named("STDOUT").withIndex(4).ofType(Types.VARCHAR).withSize(1024).notNull());
+        addMetadata(stderr, ColumnMetadata.named("STDERR").withIndex(5).ofType(Types.VARCHAR).withSize(1000).notNull());
+        addMetadata(stdout, ColumnMetadata.named("STDOUT").withIndex(4).ofType(Types.VARCHAR).withSize(1000).notNull());
         addMetadata(updatedAt, ColumnMetadata.named("UPDATED_AT").withIndex(6).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
     }
 

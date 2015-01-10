@@ -62,7 +62,7 @@ public class QAsyncProcessCommand extends com.mysema.query.sql.RelationalPathBas
 
     public void addMetadata() {
         addMetadata(asyncId, ColumnMetadata.named("ASYNC_ID").withIndex(2).ofType(Types.BIGINT).withSize(19).notNull());
-        addMetadata(command, ColumnMetadata.named("COMMAND").withIndex(3).ofType(Types.VARCHAR).withSize(50).notNull());
+        addMetadata(command, ColumnMetadata.named("COMMAND").withIndex(3).ofType(Types.VARCHAR).withSize(100).notNull());
         addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(5).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
         addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(7).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());

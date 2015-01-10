@@ -1,5 +1,5 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/12/14 10:06:26
+-- Date/Time    : 2014/12/27 7:16:05
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -24,7 +24,7 @@ create table mail_rcpt (
   id BIGINT not null AUTO_INCREMENT
   , mail_id BIGINT not null
   , rcpt_type VARCHAR(3) not null
-  , rcpt_addr VARCHAR(512) not null
+  , rcpt_addr VARCHAR(300) not null
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
@@ -35,15 +35,15 @@ create table mail_rcpt (
 -- メール送信記録
 create table mail_log (
   id BIGINT not null AUTO_INCREMENT
-  , launched_by VARCHAR(32) not null
+  , launched_by VARCHAR(100) not null
   , launched_at TIMESTAMP not null
   , mail_status INTEGER not null
-  , message_name VARCHAR(32) not null
+  , message_name VARCHAR(30) not null
   , scheduled_at TIMESTAMP not null
   , sent_at TIMESTAMP
-  , from_addr VARCHAR(512) not null
-  , subject VARCHAR(1024) not null
-  , body VARCHAR(4096) not null
+  , from_addr VARCHAR(300) not null
+  , subject VARCHAR(1000) not null
+  , body VARCHAR(5000) not null
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null

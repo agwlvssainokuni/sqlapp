@@ -62,7 +62,7 @@
 					<jdbcUrl>jdbc:h2:./build/gendb</jdbcUrl>
 					<jdbcUser>sa</jdbcUser>
 					<packageName>cherry.sqlapp.db.gen.query</packageName>
-					<targetFolder>${project.basedir}/src/querydsl/java</targetFolder>
+					<targetFolder>${project.basedir}/src/generated/java</targetFolder>
 					<namePrefix>Q</namePrefix>
 					<beanPrefix>B</beanPrefix>
 					<exportBeans>true</exportBeans>

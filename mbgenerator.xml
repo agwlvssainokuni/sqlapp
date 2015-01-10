@@ -26,11 +26,11 @@
 			<property name="javaTypeByColumnName.SQL_TYPE" value="cherry.sqlapp.code.SqlTypeCode" />
 		</javaTypeResolver>
 		<javaModelGenerator targetPackage="cherry.sqlapp.db.gen.dto"
-			targetProject="src/mybatis/java" />
+			targetProject="src/generated/java" />
 		<sqlMapGenerator targetPackage="cherry.sqlapp.db.gen.mapper"
-			targetProject="src/mybatis/java" />
+			targetProject="src/generated/java" />
 		<javaClientGenerator targetPackage="cherry.sqlapp.db.gen.mapper"
-			type="ANNOTATEDMAPPER" targetProject="src/mybatis/java" />
+			type="ANNOTATEDMAPPER" targetProject="src/generated/java" />
 		<table tableName="sqltool_load">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
@@ -85,7 +85,7 @@
 		<table tableName="mail_template">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
-		<table tableName="mail_template_address">
+		<table tableName="mail_template_rcpt">
 			<generatedKey column="id" sqlStatement="JDBC" />
 		</table>
 	</context>

@@ -26,7 +26,7 @@ import cherry.foundation.mail.MailData;
 import cherry.foundation.mail.TemplateStore;
 import cherry.foundation.type.DeletedFlag;
 import cherry.sqlapp.db.gen.query.QMailTemplate;
-import cherry.sqlapp.db.gen.query.QMailTemplateAddress;
+import cherry.sqlapp.db.gen.query.QMailTemplateRcpt;
 
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
@@ -46,7 +46,7 @@ public class TemplateStoreImpl implements TemplateStore {
 		querya.where(a.deletedFlg.eq(DeletedFlag.NOT_DELETED.code()));
 		Tuple templ = queryDslJdbcOperations.queryForObject(querya, new QTuple(a.id, a.fromAddr, a.subject, a.body));
 
-		QMailTemplateAddress b = new QMailTemplateAddress("b");
+		QMailTemplateRcpt b = new QMailTemplateRcpt("b");
 		SQLQuery queryb = queryDslJdbcOperations.newSqlQuery();
 		queryb.from(b);
 		queryb.where(b.templateId.eq(templ.get(a.id)));

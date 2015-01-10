@@ -1,5 +1,5 @@
 -- Project Name : SpringApp
--- Date/Time    : 2014/12/14 10:04:51
+-- Date/Time    : 2014/12/27 7:15:47
 -- Author       : agwlvssainokuni
 -- RDBMS Type   : IBM DB2
 -- Application  : A5:SQL Mk-2
@@ -24,8 +24,8 @@ create table async_process_command_result (
   ID BIGINT not null AUTO_INCREMENT
   , async_id BIGINT not null
   , exit_value INTEGER not null
-  , stdout VARCHAR(1024) not null
-  , stderr VARCHAR(1024) not null
+  , stdout VARCHAR(1000) not null
+  , stderr VARCHAR(1000) not null
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
@@ -40,7 +40,7 @@ create index async_process_command_result_IX1
 create table async_process_command_arg (
   id BIGINT not null AUTO_INCREMENT
   , async_id BIGINT not null
-  , argument VARCHAR(50) not null
+  , argument VARCHAR(100) not null
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
@@ -55,7 +55,7 @@ create index async_process_command_arg_IX1
 create table async_process_command (
   id BIGINT not null AUTO_INCREMENT
   , async_id BIGINT not null
-  , command VARCHAR(50) not null
+  , command VARCHAR(100) not null
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
@@ -71,7 +71,7 @@ create table async_process_file_result_detail (
   id BIGINT not null AUTO_INCREMENT
   , async_id BIGINT not null
   , record_number BIGINT not null
-  , description VARCHAR(50)
+  , description VARCHAR(100)
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
@@ -103,7 +103,7 @@ create index async_process_file_result_IX1
 create table async_process_file_arg (
   id BIGINT not null AUTO_INCREMENT
   , async_id BIGINT not null
-  , argument VARCHAR(50) not null
+  , argument VARCHAR(100) not null
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , lock_version INTEGER default 1 not null
@@ -118,10 +118,10 @@ create index async_process_file_arg_IX1
 create table async_process_file (
   id BIGINT not null AUTO_INCREMENT
   , async_id BIGINT not null
-  , handler_name VARCHAR(50) not null
-  , param_name VARCHAR(50) not null
-  , original_filename VARCHAR(50) not null
-  , content_type VARCHAR(50) not null
+  , handler_name VARCHAR(100) not null
+  , param_name VARCHAR(100) not null
+  , original_filename VARCHAR(100) not null
+  , content_type VARCHAR(30) not null
   , file_size BIGINT not null
   , updated_at TIMESTAMP default CURRENT_TIMESTAMP not null
   , created_at TIMESTAMP default CURRENT_TIMESTAMP not null
@@ -136,8 +136,8 @@ create index async_process_file_IX1
 -- 非同期実行状況管理
 create table async_process (
   id BIGINT not null AUTO_INCREMENT
-  , launched_by VARCHAR(32) not null
-  , description VARCHAR(64) not null
+  , launched_by VARCHAR(100) not null
+  , description VARCHAR(100) not null
   , async_type VARCHAR(3) not null
   , async_status VARCHAR(3) not null
   , registered_at TIMESTAMP not null

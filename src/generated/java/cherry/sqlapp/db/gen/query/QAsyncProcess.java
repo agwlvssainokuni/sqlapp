@@ -77,11 +77,11 @@ public class QAsyncProcess extends com.mysema.query.sql.RelationalPathBase<BAsyn
         addMetadata(asyncType, ColumnMetadata.named("ASYNC_TYPE").withIndex(4).ofType(Types.VARCHAR).withSize(3).notNull());
         addMetadata(createdAt, ColumnMetadata.named("CREATED_AT").withIndex(11).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
         addMetadata(deletedFlg, ColumnMetadata.named("DELETED_FLG").withIndex(13).ofType(Types.INTEGER).withSize(10).notNull());
-        addMetadata(description, ColumnMetadata.named("DESCRIPTION").withIndex(3).ofType(Types.VARCHAR).withSize(64).notNull());
+        addMetadata(description, ColumnMetadata.named("DESCRIPTION").withIndex(3).ofType(Types.VARCHAR).withSize(100).notNull());
         addMetadata(finishedAt, ColumnMetadata.named("FINISHED_AT").withIndex(9).ofType(Types.TIMESTAMP).withSize(23).withDigits(10));
         addMetadata(id, ColumnMetadata.named("ID").withIndex(1).ofType(Types.BIGINT).withSize(19).notNull());
         addMetadata(launchedAt, ColumnMetadata.named("LAUNCHED_AT").withIndex(7).ofType(Types.TIMESTAMP).withSize(23).withDigits(10));
-        addMetadata(launchedBy, ColumnMetadata.named("LAUNCHED_BY").withIndex(2).ofType(Types.VARCHAR).withSize(32).notNull());
+        addMetadata(launchedBy, ColumnMetadata.named("LAUNCHED_BY").withIndex(2).ofType(Types.VARCHAR).withSize(100).notNull());
         addMetadata(lockVersion, ColumnMetadata.named("LOCK_VERSION").withIndex(12).ofType(Types.INTEGER).withSize(10).notNull());
         addMetadata(registeredAt, ColumnMetadata.named("REGISTERED_AT").withIndex(6).ofType(Types.TIMESTAMP).withSize(23).withDigits(10).notNull());
         addMetadata(startedAt, ColumnMetadata.named("STARTED_AT").withIndex(8).ofType(Types.TIMESTAMP).withSize(23).withDigits(10));
