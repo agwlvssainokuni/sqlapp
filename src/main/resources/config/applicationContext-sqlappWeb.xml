@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://www.springframework.org/schema/beans" xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
-		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<security:authentication-manager id="authenticationManager">
 		<security:authentication-provider>
@@ -13,30 +12,23 @@
 		</security:authentication-provider>
 	</security:authentication-manager>
 
-	<security:http auto-config="false"
-		authentication-manager-ref="authenticationManager">
-		<security:intercept-url pattern="/secure/**"
-			access="IS_AUTHENTICATED_FULLY" />
-		<security:intercept-url pattern="/sqltool/**"
-			access="IS_AUTHENTICATED_FULLY" />
-		<security:form-login login-page="/login"
-			login-processing-url="/login/req" authentication-failure-url="/login?loginFailed"
-			default-target-url="/secure/" always-use-default-target="false"
+	<security:http auto-config="false" authentication-manager-ref="authenticationManager">
+		<security:intercept-url pattern="/secure/**" access="IS_AUTHENTICATED_FULLY" />
+		<security:intercept-url pattern="/sqltool/**" access="IS_AUTHENTICATED_FULLY" />
+		<security:form-login login-page="/login" login-processing-url="/login/req"
+			authentication-failure-url="/login?loginFailed" default-target-url="/secure/" always-use-default-target="false"
 			username-parameter="loginId" password-parameter="password" />
-		<security:logout logout-url="/logout"
-			logout-success-url="/login?loggedOut" invalidate-session="true" />
+		<security:logout logout-url="/logout" logout-success-url="/login?loggedOut" invalidate-session="true" />
 		<security:csrf request-matcher-ref="csrfRequestMatcher" />
 	</security:http>
 
 	<bean id="csrfRequestMatcher" class="cherry.foundation.springmvc.CsrfRequestMatcher">
 		<property name="excludes">
 			<list>
-				<bean
-					class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
+				<bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
 					<constructor-arg value="/login/**" />
 				</bean>
-				<bean
-					class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
+				<bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
 					<constructor-arg value="/logout/**" />
 				</bean>
 			</list>
@@ -52,21 +44,17 @@
 			<bean class="cherry.foundation.springmvc.OperationLogHandlerInterceptor" />
 		</mvc:interceptor>
 		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
-		<bean
-			class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
-		<bean
-			class="org.springframework.mobile.device.site.SitePreferenceHandlerInterceptor" />
+		<bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
+		<bean class="org.springframework.mobile.device.site.SitePreferenceHandlerInterceptor" />
 	</mvc:interceptors>
 
 	<mvc:annotation-driven conversion-service="conversionService">
 		<mvc:argument-resolvers>
 			<bean class="org.springframework.mobile.device.DeviceWebArgumentResolver" />
-			<bean
-				class="org.springframework.mobile.device.site.SitePreferenceWebArgumentResolver" />
+			<bean class="org.springframework.mobile.device.site.SitePreferenceWebArgumentResolver" />
 		</mvc:argument-resolvers>
 		<mvc:message-converters>
-			<bean
-				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<property name="objectMapper" ref="objectMapper" />
 			</bean>
 		</mvc:message-converters>
@@ -74,11 +62,9 @@
 
 	<mvc:default-servlet-handler />
 
-	<bean id="validator"
-		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 
-	<bean id="tilesConfigurer"
-		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<property name="definitions">
 			<list>
 				<value>/WEB-INF/tiles.xml</value>
@@ -86,18 +72,14 @@
 		</property>
 	</bean>
 
-	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
 		<property name="viewResolvers">
 			<list>
 				<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-					<property name="viewClass"
-						value="org.springframework.web.servlet.view.tiles3.TilesView" />
+					<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
 				</bean>
-				<bean
-					class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-					<property name="viewClass"
-						value="org.springframework.web.servlet.view.JstlView" />
+				<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+					<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 					<property name="prefix" value="/WEB-INF/jsp/" />
 					<property name="suffix" value=".jsp" />
 				</bean>
@@ -105,15 +87,13 @@
 		</property>
 		<property name="defaultViews">
 			<list>
-				<bean
-					class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+				<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
 					<property name="objectMapper" ref="objectMapper" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 
-	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
+	<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
 
 </beans>

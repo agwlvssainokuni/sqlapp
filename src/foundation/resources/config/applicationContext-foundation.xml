@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://www.springframework.org/schema/beans" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:context="http://www.springframework.org/schema/context"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:util="http://www.springframework.org/schema/util"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
-		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<context:property-placeholder location="classpath:foundation.properties"
 		ignore-unresolvable="true" />
@@ -37,20 +36,16 @@
 	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
 		<property name="customEditors">
 			<map>
-				<entry key="java.util.ResourceBundle"
-					value="org.springframework.beans.propertyeditors.ResourceBundleEditor" />
-				<entry key="org.joda.time.format.DateTimeFormatter"
-					value="cherry.foundation.type.editor.DateTimeFormatEditor" />
+				<entry key="java.util.ResourceBundle" value="org.springframework.beans.propertyeditors.ResourceBundleEditor" />
+				<entry key="org.joda.time.format.DateTimeFormatter" value="cherry.foundation.type.editor.DateTimeFormatEditor" />
 			</map>
 		</property>
 	</bean>
-	<bean id="conversionService"
-		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="registerDefaultFormatters" value="false" />
 		<property name="formatters">
 			<set>
-				<bean
-					class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
+				<bean class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
 				<bean class="org.springframework.format.number.NumberFormatter">
 					<property name="pattern" value="${foundation.format.number}" />
 				</bean>
@@ -62,14 +57,12 @@
 				<bean class="cherry.foundation.type.format.DelegateFormatterRegistrar">
 					<property name="formatters">
 						<list>
-							<bean
-								class="org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar">
+							<bean class="org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar">
 								<property name="dateFormatter" value="${foundation.format.date}" />
 								<property name="timeFormatter" value="${foundation.format.time}" />
 								<property name="dateTimeFormatter" value="${foundation.format.datetime}" />
 							</bean>
-							<bean
-								class="cherry.foundation.type.format.CustomDateTimeFormatAnnotationFormatterFactory">
+							<bean class="cherry.foundation.type.format.CustomDateTimeFormatAnnotationFormatterFactory">
 								<property name="dateToPrint" value="${foundation.format.dateToPrint}" />
 								<property name="dateToParse" value="${foundation.format.dateToParse}" />
 								<property name="timeToPrint" value="${foundation.format.timeToPrint}" />
@@ -78,12 +71,9 @@
 								<property name="delimiterToPrint" value="${foundation.format.delimiterToPrint}" />
 								<property name="delimiterToParse" value="${foundation.format.delimiterToParse}" />
 							</bean>
-							<bean
-								class="cherry.foundation.type.converter.JodaTimeSqlConverterRegistrar" />
-							<bean
-								class="cherry.foundation.type.converter.SecureTypeSqlConverterRegistrar" />
-							<bean
-								class="cherry.foundation.type.converter.CodeSqlConverterRegistrar" />
+							<bean class="cherry.foundation.type.converter.JodaTimeSqlConverterRegistrar" />
+							<bean class="cherry.foundation.type.converter.SecureTypeSqlConverterRegistrar" />
+							<bean class="cherry.foundation.type.converter.CodeSqlConverterRegistrar" />
 						</list>
 					</property>
 				</bean>
@@ -92,12 +82,10 @@
 	</bean>
 
 	<!-- 単項目バリデーション設定 -->
-	<bean id="validator"
-		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 
 	<!-- JSONマッピング設定 -->
-	<bean id="objectMapper"
-		class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+	<bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
 		<property name="modules">
 			<array>
 				<bean class="com.fasterxml.jackson.datatype.joda.JodaModule" />
@@ -105,8 +93,7 @@
 		</property>
 		<property name="featuresToDisable">
 			<array>
-				<util:constant
-					static-field="com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS" />
+				<util:constant static-field="com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS" />
 			</array>
 		</property>
 	</bean>
@@ -115,30 +102,24 @@
 	<bean class="cherry.foundation.AppCtxHolder" />
 
 	<!-- メッセージソースユーティリティ設定 -->
-	<bean class="cherry.foundation.util.MessageSourceUtil"
-		factory-method="setMessageSource">
+	<bean class="cherry.foundation.util.MessageSourceUtil" factory-method="setMessageSource">
 		<constructor-arg ref="messageSource" />
 	</bean>
 
 	<!-- パスワードハッシュ設定 -->
-	<bean id="passwordEncoder"
-		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 	<!-- DBアクセス設定 -->
-	<bean id="namedParameterJdbcOperations"
-		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+	<bean id="namedParameterJdbcOperations" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
 		<constructor-arg ref="dataSource" />
 	</bean>
-	<bean id="queryDslJdbcOperations"
-		class="org.springframework.data.jdbc.query.QueryDslJdbcTemplate">
+	<bean id="queryDslJdbcOperations" class="org.springframework.data.jdbc.query.QueryDslJdbcTemplate">
 		<constructor-arg ref="dataSource" />
 	</bean>
-	<bean id="rowMapperCreator"
-		class="cherry.foundation.type.jdbc.CustomBeanPropertyRowMapperCreator">
+	<bean id="rowMapperCreator" class="cherry.foundation.type.jdbc.CustomBeanPropertyRowMapperCreator">
 		<property name="conversionService" ref="conversionService" />
 	</bean>
-	<bean id="sqlParameterSourceCreator"
-		class="cherry.foundation.type.jdbc.CustomBeanPropertySqlParameterSourceCreator" />
+	<bean id="sqlParameterSourceCreator" class="cherry.foundation.type.jdbc.CustomBeanPropertySqlParameterSourceCreator" />
 
 	<bean id="queryDslSupport" class="cherry.foundation.querydsl.QueryDslSupportImpl">
 		<property name="queryDslJdbcOperations" ref="queryDslJdbcOperations" />
@@ -156,8 +137,7 @@
 	<bean id="oneTimeTokenIssuer" class="cherry.foundation.onetimetoken.OneTimeTokenIssuerImpl">
 		<property name="name" value="${foundation.onetimetoken.name}" />
 	</bean>
-	<bean id="oneTimeTokenValidator"
-		class="cherry.foundation.onetimetoken.OneTimeTokenValidatorImpl">
+	<bean id="oneTimeTokenValidator" class="cherry.foundation.onetimetoken.OneTimeTokenValidatorImpl">
 		<property name="name" value="${foundation.onetimetoken.name}" />
 	</bean>
 
@@ -231,16 +211,14 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean class="cherry.foundation.type.SecureBigInteger"
-		factory-method="setEncoder">
+	<bean class="cherry.foundation.type.SecureBigInteger" factory-method="setEncoder">
 		<constructor-arg>
 			<bean class="cherry.foundation.crypto.SecureBigIntegerEncoder">
 				<property name="crypto" ref="aesCrypto" />
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean class="cherry.foundation.type.SecureBigDecimal"
-		factory-method="setEncoder">
+	<bean class="cherry.foundation.type.SecureBigDecimal" factory-method="setEncoder">
 		<constructor-arg>
 			<bean class="cherry.foundation.crypto.SecureBigDecimalEncoder">
 				<property name="crypto" ref="aesCrypto" />

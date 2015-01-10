@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:cache="http://www.springframework.org/schema/cache"
-	xsi:schemaLocation="http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.1.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<context:property-placeholder location="classpath:sqlapp.properties"
-		ignore-unresolvable="true" />
+	<context:property-placeholder location="classpath:sqlapp.properties" ignore-unresolvable="true" />
 
 	<context:component-scan base-package="cherry.sqlapp" />
 
@@ -37,8 +35,7 @@
 		<constructor-arg value="log" />
 	</bean>
 
-	<bean id="messageSource"
-		class="org.springframework.context.support.ResourceBundleMessageSource">
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
 				<value>message/code</value>
@@ -54,8 +51,7 @@
 	<cache:annotation-driven />
 
 	<bean id="cacheManager" class="org.springframework.cache.guava.GuavaCacheManager">
-		<property name="cacheSpecification"
-			value="concurrencyLevel=4,expireAfterAccess=10s,expireAfterWrite=1m,weakKeys,weakValues" />
+		<property name="cacheSpecification" value="concurrencyLevel=4,expireAfterAccess=10s,expireAfterWrite=1m,weakKeys,weakValues" />
 	</bean>
 
 </beans>
