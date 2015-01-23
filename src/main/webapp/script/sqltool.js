@@ -1,24 +1,23 @@
 $(function() {
 
-	$(".app-pager-link").each(function(index) {
-		var current = $(".app-page-current", this).attr("title");
+	$(".pager-link").each(function(index) {
+		var form = $(this).attr("data-form");
+		var pno = $(this).attr("data-pno");
+		var current = $(this).attr("data-current");
 		$("li", this).each(function() {
-			if (this.title == current) {
+			var pageNo = $("a", this).attr("title");
+			if (pageNo == current) {
 				if ($(this).hasClass("edge")) {
 					$(this).addClass("disabled");
 				} else {
 					$(this).addClass("active");
 				}
-				$("a", this).click(function() {
-					return false;
-				})
+				$("a", this).removeAttr("href");
 			} else {
-				var pageNo = this.title - 1;
-				$("a", this).click(function() {
-					var form = $(".app-pager-form");
-					$("input.app-page-no", form).val(pageNo);
-					form.submit();
-					return false;
+				$("a", this).click(function(event) {
+					event.preventDefault();
+					$("input[name='" + pno + "']", $(form)).val(pageNo - 1);
+					$(form).submit();
 				});
 			}
 		})

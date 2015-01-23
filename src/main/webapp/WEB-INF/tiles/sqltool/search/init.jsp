@@ -148,9 +148,9 @@
 				<div class="panel-body">
 					<f:form servletRelativeAction="/sqltool/search/execute"
 						method="POST" modelAttribute="sqltoolSearchForm"
-						id="sqltoolSearchForm2" cssClass="app-pager-form">
-						<f:hidden id="pageNo2" path="pageNo" cssClass="app-page-no" />
-						<f:hidden id="pageSz2" path="pageSz" cssClass="app-page-sz" />
+						id="sqltoolSearchForm2">
+						<f:hidden id="pageNo2" path="pageNo" />
+						<f:hidden id="pageSz2" path="pageSz" />
 						<f:hidden id="name2" path="name" />
 						<f:hidden id="sqlType2" path="sqlType" />
 						<f:hidden id="published2" path="published" />
@@ -164,7 +164,8 @@
 							<s:message code="common/pager.message.0"
 								arguments="${pagedList.pageSet.last.to+1},${pagedList.pageSet.current.from+1},${pagedList.pageSet.current.to+1}" />
 						</div>
-						<app:pagerLink pageSet="${pagedList.pageSet}" />
+						<app:pagerLink pageSet="${pagedList.pageSet}"
+							form="#sqltoolSearchForm2" pno="pageNo" />
 					</div>
 					<table id="searchResultList" class="table table-striped">
 						<thead>
@@ -213,7 +214,8 @@
 						</tbody>
 					</table>
 					<div>
-						<app:pagerLink pageSet="${pagedList.pageSet}" />
+						<app:pagerLink pageSet="${pagedList.pageSet}"
+							form="#sqltoolSearchForm2" pno="pageNo" />
 					</div>
 				</div>
 			</div>

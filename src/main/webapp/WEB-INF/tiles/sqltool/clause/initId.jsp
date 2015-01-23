@@ -245,10 +245,9 @@
 			</div>
 			<div id="clauseResult" class="panel-collapse collapse in">
 				<f:form servletRelativeAction="${baseUri}/execute" method="POST"
-					modelAttribute="sqltoolClauseForm" id="sqltoolClause2"
-					class="app-pager-form">
-					<f:hidden id="pageNo2" path="pageNo" cssClass="app-page-no" />
-					<f:hidden id="pageSz2" path="pageSz" cssClass="app-page-sz" />
+					modelAttribute="sqltoolClauseForm" id="sqltoolClause2">
+					<f:hidden id="pageNo2" path="pageNo" />
+					<f:hidden id="pageSz2" path="pageSz" />
 					<f:hidden id="lockVersion2" path="lockVersion" />
 					<f:hidden id="databaseName2" path="databaseName" />
 					<f:hidden id="select2" path="select" />
@@ -265,12 +264,14 @@
 							<s:message code="common/pager.message.0"
 								arguments="${pageSet.last.to+1},${pageSet.current.from+1},${pageSet.current.to+1}" />
 						</div>
-						<app:pagerLink pageSet="${pageSet}" />
+						<app:pagerLink pageSet="${pageSet}" form="#sqltoolClause2"
+							pno="pageNo" />
 					</div>
 					<app:resultSet id="resultSetList" resultSet="${resultSet}"
 						pageSet="${pageSet}" />
 					<div>
-						<app:pagerLink pageSet="${pageSet}" />
+						<app:pagerLink pageSet="${pageSet}" form="#sqltoolClause2"
+							pno="pageNo" />
 					</div>
 				</div>
 			</div>
