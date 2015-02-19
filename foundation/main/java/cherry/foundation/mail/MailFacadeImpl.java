@@ -65,4 +65,10 @@ public class MailFacadeImpl implements MailFacade {
 		return mailSendHandler.sendNow(launcherId, messageName, from, to, cc, bcc, subject, body);
 	}
 
+	@Override
+	public long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
+			List<String> bcc, String subject, String body, AttachmentPreparator preparator) {
+		return mailSendHandler.sendNow(launcherId, messageName, from, to, cc, bcc, subject, body, preparator);
+	}
+
 }

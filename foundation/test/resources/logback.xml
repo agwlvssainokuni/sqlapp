@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd-HH:mm:ss.SSS} [%-5level] %logger - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="onmemory" class="cherry.foundation.log.trace.OnMemoryAppender" />
+	<logger name="cherry" level="DEBUG" />
+	<logger name="com.mysema" level="DEBUG" />
+	<logger name="org.springframework" level="DEBUG" />
+	<logger name="org.flywaydb" level="DEBUG" />
+	<logger name="trace" level="TRACE" />
+	<root level="INFO">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="onmemory" />
+	</root>
+</configuration>

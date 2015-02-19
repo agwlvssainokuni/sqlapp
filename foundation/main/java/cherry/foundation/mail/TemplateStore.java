@@ -20,4 +20,6 @@ public interface TemplateStore {
 
 	MailData getTemplate(String templateName);
 
+	void putTemplate(String templateName, MailData mailData);
+
 }

@@ -27,19 +27,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
-import javax.validation.OverridesAttribute;
 import javax.validation.Payload;
-import javax.validation.ReportAsSingleViolation;
-import javax.validation.constraints.Size;
 
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Retention(RUNTIME)
-@Constraint(validatedBy = {})
-@Size(min = 0, max = Integer.MAX_VALUE)
-@ReportAsSingleViolation
+@Constraint(validatedBy = { MinLengthValidator.class })
 public @interface MinLength {
 
-	@OverridesAttribute(constraint = Size.class, name = "min")
 	int value() default 0;
 
 	String message() default "{cherry.foundation.validator.MinLength.message}";

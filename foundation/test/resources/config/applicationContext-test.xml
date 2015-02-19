@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="applicationContext-foundation.xml" />
+	<import resource="applicationContext-foundationMapper.xml" />
+
+	<jdbc:embedded-database id="dataSource" type="H2" />
+
+	<bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
+		<property name="dataSource" ref="dataSource" />
+		<property name="locations" value="db/migration" />
+		<property name="encoding" value="UTF-8" />
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<mybatis-spring:scan base-package="cherry.foundation.type.db.mapper" />
+
+	<bean id="paginator" class="cherry.goods.paginate.PaginatorImpl">
+		<property name="paginateStrategy">
+			<bean class="cherry.goods.paginate.TotalCountStrategy">
+				<property name="totalCount" value="7" />
+				<property name="lowerSideHint" value="3" />
+				<property name="lowerTrim" value="1" />
+				<property name="upperTrim" value="1" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="navigator" class="cherry.foundation.navi.NavigatorImpl">
+		<property name="objectMapper" ref="objectMapper" />
+		<property name="navigationDef" value="classpath:cherry/foundation/navi/navi.json" />
+	</bean>
+
+	<bean id="codeStore" class="cherry.foundation.code.SimpleCodeStore">
+		<property name="codeDefMap">
+			<map key-type="java.lang.String" value-type="java.util.Map">
+				<entry key="CODE0">
+					<map key-type="java.lang.String" value-type="java.lang.String">
+						<entry key="01" value="LABEL01" />
+						<entry key="02" value="LABEL02" />
+					</map>
+				</entry>
+				<entry key="CODE1">
+					<map key-type="java.lang.String" value-type="java.lang.String">
+						<entry key="11" value="LABEL11" />
+						<entry key="12" value="LABEL12" />
+						<entry key="13" value="LABEL13" />
+					</map>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="numberingStore" class="cherry.foundation.numbering.SimpleNumberingStore">
+		<property name="numberingDefinitionMap">
+			<map key-type="java.lang.String" value-type="cherry.foundation.numbering.NumberingDefinition">
+				<entry key="NUMA">
+					<bean class="cherry.foundation.numbering.NumberingDefinition">
+						<property name="template" value="AA{0,number,0000000000}" />
+						<property name="minValue" value="1" />
+						<property name="maxValue" value="9999999999" />
+					</bean>
+				</entry>
+				<entry key="NUMB">
+					<bean class="cherry.foundation.numbering.NumberingDefinition">
+						<property name="template" value="BB{0,number,0000000000}" />
+						<property name="minValue" value="1" />
+						<property name="maxValue" value="9999999999" />
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+</beans>

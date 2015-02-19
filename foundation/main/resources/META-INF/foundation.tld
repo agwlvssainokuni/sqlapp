@@ -9,12 +9,24 @@
 	<short-name>foundation</short-name>
 	<uri>urn:cherry:foundation</uri>
 
-	<function>
-		<description>Conversion</description>
-		<name>convert</name>
-		<function-class>cherry.foundation.ConversionServiceTag</function-class>
-		<function-signature>java.lang.String convert(java.lang.Object)</function-signature>
-	</function>
+	<tag>
+		<description>ObjectRenderer</description>
+		<name>render</name>
+		<tag-class>cherry.foundation.render.RenderTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Object</type>
+		</attribute>
+		<attribute>
+			<name>mode</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Integer</type>
+		</attribute>
+	</tag>
 
 	<function>
 		<description>Navigate</description>
@@ -27,22 +39,62 @@
 		<description>OneTimeToken</description>
 		<name>onetimetoken</name>
 		<function-class>cherry.foundation.onetimetoken.OneTimeTokenTag</function-class>
-		<function-signature>
-			cherry.foundation.onetimetoken.OneTimeToken newToken(javax.servlet.http.HttpServletRequest)
-		</function-signature>
+		<function-signature>cherry.foundation.onetimetoken.OneTimeToken newToken(javax.servlet.http.HttpServletRequest)</function-signature>
 	</function>
 
 	<function>
-		<description>getLabeledEnumList</description>
+		<description>GetCodeEntry</description>
+		<name>getCodeEntry</name>
+		<function-class>cherry.foundation.code.CodeTag</function-class>
+		<function-signature>cherry.foundation.code.CodeEntry getCodeEntry(java.lang.String, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<description>GetCodeEntryPlainLabel</description>
+		<name>getCodeEntryPlainLabel</name>
+		<function-class>cherry.foundation.code.CodeTag</function-class>
+		<function-signature>cherry.foundation.code.CodeEntry getCodeEntryPlainLabel(java.lang.String, java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<description>GetCodeList</description>
+		<name>getCodeList</name>
+		<function-class>cherry.foundation.code.CodeTag</function-class>
+		<function-signature>java.util.List getCodeList(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<description>GetCodeListPlainLabel</description>
+		<name>getCodeListPlainLabel</name>
+		<function-class>cherry.foundation.code.CodeTag</function-class>
+		<function-signature>java.util.List getCodeListPlainLabel(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<description>GetCodeMap</description>
+		<name>getCodeMap</name>
+		<function-class>cherry.foundation.code.CodeTag</function-class>
+		<function-signature>java.util.Map getCodeMap(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<description>GetCodeMapPlainLabel</description>
+		<name>getCodeMapPlainLabel</name>
+		<function-class>cherry.foundation.code.CodeTag</function-class>
+		<function-signature>java.util.Map getCodeMapPlainLabel(java.lang.String)</function-signature>
+	</function>
+
+	<function>
+		<description>GetLabeledEnumList</description>
 		<name>getLabeledEnumList</name>
 		<function-class>cherry.foundation.type.EnumUtil</function-class>
 		<function-signature>java.util.List getLabeledEnumList(java.lang.String)</function-signature>
 	</function>
 
 	<function>
-		<description>getLabeledCodeList</description>
-		<name>getLabeledCodeList</name>
-		<function-class>cherry.foundation.type.CodeUtil</function-class>
+		<description>GetLabeledEnumCodeList</description>
+		<name>getLabeledEnumCodeList</name>
+		<function-class>cherry.foundation.type.EnumCodeUtil</function-class>
 		<function-signature>java.util.List getLabeledCodeList(java.lang.String)</function-signature>
 	</function>
 

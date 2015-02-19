@@ -28,6 +28,9 @@ public interface MailSendHandler {
 	long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
 			List<String> bcc, String subject, String body);
 
+	long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
+			List<String> bcc, String subject, String body, AttachmentPreparator preparator);
+
 	List<Long> listMessage(LocalDateTime dtm);
 
 	boolean sendMessage(long messageId);

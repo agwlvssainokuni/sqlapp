@@ -31,4 +31,9 @@ public class SimpleTemplateStore implements TemplateStore {
 		return mailDataMap.get(templateName);
 	}
 
+	@Override
+	public void putTemplate(String templateName, MailData mailData) {
+		mailDataMap.put(templateName, mailData);
+	}
+
 }

@@ -19,15 +19,15 @@ package cherry.foundation.type.converter;
 import org.springframework.core.convert.converter.Converter;
 
 import cherry.foundation.type.Code;
-import cherry.foundation.type.CodeUtil;
-import cherry.foundation.type.CodeUtil.CodeMap;
+import cherry.foundation.type.EnumCodeUtil;
+import cherry.foundation.type.EnumCodeUtil.CodeMap;
 
 public abstract class EnumCodeConverter<C, E extends Code<C>> implements Converter<C, E> {
 
 	private CodeMap<C, E> codeMap;
 
 	protected EnumCodeConverter(Class<E> type, E defaultValue) {
-		this.codeMap = CodeUtil.getCodeMap(type, defaultValue);
+		this.codeMap = EnumCodeUtil.getCodeMap(type, defaultValue);
 	}
 
 	@Override

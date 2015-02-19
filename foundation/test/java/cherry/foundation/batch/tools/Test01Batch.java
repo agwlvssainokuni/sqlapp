@@ -14,25 +14,19 @@
  * limitations under the License.
  */
 
-package cherry.foundation;
+package cherry.foundation.batch.tools;
 
-import static cherry.foundation.AppCtxHolder.getAppCtx;
+import org.springframework.stereotype.Component;
 
-import org.springframework.core.convert.ConversionService;
+import cherry.foundation.batch.ExitStatus;
+import cherry.foundation.batch.IBatch;
 
-public class ConversionServiceTag {
+@Component("test01Batch")
+public class Test01Batch implements IBatch {
 
-	private static ConversionService conversionService = null;
-
-	public static ConversionService getConversionService() {
-		if (conversionService == null) {
-			conversionService = getAppCtx().getBean(ConversionService.class);
-		}
-		return conversionService;
-	}
-
-	public static String convert(Object source) {
-		return getConversionService().convert(source, String.class);
+	@Override
+	public ExitStatus execute(String... args) {
+		return ExitStatus.valueOf(args[0]);
 	}
 
 }

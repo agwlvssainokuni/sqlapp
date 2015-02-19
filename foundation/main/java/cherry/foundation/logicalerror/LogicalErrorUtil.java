@@ -20,6 +20,8 @@ import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BindingResult;
 
+import cherry.foundation.type.Code;
+
 public class LogicalErrorUtil {
 
 	public static void reject(BindingResult binding, ILogicalError logicalError, Object... args) {
@@ -30,8 +32,16 @@ public class LogicalErrorUtil {
 		binding.rejectValue(name, logicError.code(), args, logicError.code());
 	}
 
-	public static MessageSourceResolvable resolve(String code) {
-		return new DefaultMessageSourceResolvable(code);
+	public static MessageSourceResolvable resolve(ILogicalError code, Object... args) {
+		return resolve(code.code(), args);
+	}
+
+	public static MessageSourceResolvable resolve(Code<String> code, Object... args) {
+		return resolve(code.code(), args);
+	}
+
+	public static MessageSourceResolvable resolve(String code, Object... args) {
+		return new DefaultMessageSourceResolvable(new String[] { code }, args);
 	}
 
 	public static void rejectOnOneTimeTokenError(BindingResult binding) {

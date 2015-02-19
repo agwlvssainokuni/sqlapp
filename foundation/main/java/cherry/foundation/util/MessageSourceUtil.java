@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.springframework.context.MessageSource;
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -39,6 +40,15 @@ public class MessageSourceUtil {
 		List<String> list = new ArrayList<>(binding.getAllErrors().size());
 		for (ObjectError objectError : binding.getAllErrors()) {
 			list.add(messageSource.getMessage(objectError, locale));
+		}
+		return list;
+	}
+
+	public static List<String> getMessageList(List<MessageSourceResolvable> messages) {
+		Locale locale = LocaleContextHolder.getLocale();
+		List<String> list = new ArrayList<>(messages.size());
+		for (MessageSourceResolvable resolvable : messages) {
+			list.add(messageSource.getMessage(resolvable, locale));
 		}
 		return list;
 	}

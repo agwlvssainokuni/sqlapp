@@ -20,11 +20,14 @@
 				and !execution(* cherry.foundation.type..*.*(..))
 				and !execution(* cherry.foundation.crypto..*.*(..))
 				and !execution(* cherry.goods.crypto..*.*(..))
+				and !execution(* cherry.foundation.telno..*.*(..))
+				and !execution(* cherry.goods.telno..*.*(..))
+				and !execution(* cherry.goods.wakachi..*.*(..))
 				" />
 	</aop:config>
 	<bean id="traceInterceptor" class="cherry.foundation.log.trace.TraceInterceptor">
-		<property name="arrayLengthLimit" value="${foundation.trace.arrayLengthLimit}" />
-		<property name="objectLengthLimit" value="${foundation.trace.objectLengthLimit}" />
+		<property name="arrayLengthLimit" value="0" />
+		<property name="objectLengthLimit" value="0" />
 		<property name="packagePrefix">
 			<list>
 				<value>cherry</value>
@@ -37,6 +40,10 @@
 		<property name="customEditors">
 			<map>
 				<entry key="java.util.ResourceBundle" value="org.springframework.beans.propertyeditors.ResourceBundleEditor" />
+				<entry key="java.text.NumberFormat" value="cherry.foundation.type.editor.NumberFormatEditor" />
+				<entry key="com.ibm.icu.text.NumberFormat" value="cherry.foundation.type.editor.Icu4jNumberFormatEditor" />
+				<entry key="com.ibm.icu.text.Transliterator" value="cherry.foundation.type.editor.Icu4jTransliteratorEditor" />
+				<entry key="org.springframework.format.number.NumberFormatter" value="cherry.foundation.type.editor.NumberFormatterEditor" />
 				<entry key="org.joda.time.format.DateTimeFormatter" value="cherry.foundation.type.editor.DateTimeFormatEditor" />
 			</map>
 		</property>
@@ -47,7 +54,7 @@
 			<set>
 				<bean class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
 				<bean class="org.springframework.format.number.NumberFormatter">
-					<property name="pattern" value="${foundation.format.number}" />
+					<property name="pattern" value="###0.##" />
 				</bean>
 			</set>
 		</property>
@@ -58,18 +65,18 @@
 					<property name="formatters">
 						<list>
 							<bean class="org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar">
-								<property name="dateFormatter" value="${foundation.format.date}" />
-								<property name="timeFormatter" value="${foundation.format.time}" />
-								<property name="dateTimeFormatter" value="${foundation.format.datetime}" />
+								<property name="dateFormatter" value="yyyy/MM/dd" />
+								<property name="timeFormatter" value="HH:mm:ss" />
+								<property name="dateTimeFormatter" value="yyyy/MM/dd HH:mm:ss" />
 							</bean>
 							<bean class="cherry.foundation.type.format.CustomDateTimeFormatAnnotationFormatterFactory">
-								<property name="dateToPrint" value="${foundation.format.dateToPrint}" />
-								<property name="dateToParse" value="${foundation.format.dateToParse}" />
-								<property name="timeToPrint" value="${foundation.format.timeToPrint}" />
-								<property name="timeToParseHm" value="${foundation.format.timeToParseHm}" />
-								<property name="timeToParseS" value="${foundation.format.timeToParseS}" />
-								<property name="delimiterToPrint" value="${foundation.format.delimiterToPrint}" />
-								<property name="delimiterToParse" value="${foundation.format.delimiterToParse}" />
+								<property name="dateToPrint" value="yyyy/MM/dd" />
+								<property name="dateToParse" value="yyyy/M/d" />
+								<property name="timeToPrint" value="HH:mm:ss" />
+								<property name="timeToParseHm" value="H:m" />
+								<property name="timeToParseS" value=":s" />
+								<property name="delimiterToPrint" value=" " />
+								<property name="delimiterToParse" value=" " />
 							</bean>
 							<bean class="cherry.foundation.type.converter.JodaTimeSqlConverterRegistrar" />
 							<bean class="cherry.foundation.type.converter.SecureTypeSqlConverterRegistrar" />
@@ -86,6 +93,26 @@
 
 	<!-- JSONマッピング設定 -->
 	<bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+		<property name="modules">
+			<array>
+				<bean class="com.fasterxml.jackson.datatype.joda.JodaModule" />
+			</array>
+		</property>
+		<property name="featuresToDisable">
+			<array>
+				<util:constant static-field="com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS" />
+			</array>
+		</property>
+	</bean>
+	<!-- YAMLマッピング設定 -->
+	<bean id="yamlObjectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+		<property name="objectMapper">
+			<bean class="com.fasterxml.jackson.databind.ObjectMapper">
+				<constructor-arg type="com.fasterxml.jackson.core.JsonFactory">
+					<bean class="com.fasterxml.jackson.dataformat.yaml.YAMLFactory" />
+				</constructor-arg>
+			</bean>
+		</property>
 		<property name="modules">
 			<array>
 				<bean class="com.fasterxml.jackson.datatype.joda.JodaModule" />
@@ -128,17 +155,23 @@
 
 	<!-- ダウンロード設定 -->
 	<bean id="downloadOperation" class="cherry.foundation.download.DownloadTemplate">
-		<property name="headerName" value="${foundation.download.headerName}" />
-		<property name="headerValue" value="${foundation.download.headerValue}" />
-		<property name="formatter" value="${foundation.download.format}" />
+		<property name="headerName" value="Content-Disposition" />
+		<property name="headerValue" value="attachment; filename=&quot;{0}&quot;" />
+		<property name="formatter" value="yyyyMMddHHmmss" />
+	</bean>
+	<bean id="tableDownloadOperation" class="cherry.foundation.download.TableDownloadTemplate">
+		<property name="downloadOperation" ref="downloadOperation" />
+		<property name="queryDslSupport" ref="queryDslSupport" />
+		<property name="csvType" value="text/csv" />
+		<property name="excelType" value="application/vnd.ms-excel" />
 	</bean>
 
 	<!-- 多重POST検出機能設定 -->
 	<bean id="oneTimeTokenIssuer" class="cherry.foundation.onetimetoken.OneTimeTokenIssuerImpl">
-		<property name="name" value="${foundation.onetimetoken.name}" />
+		<property name="name" value="__OneTimeToken__" />
 	</bean>
 	<bean id="oneTimeTokenValidator" class="cherry.foundation.onetimetoken.OneTimeTokenValidatorImpl">
-		<property name="name" value="${foundation.onetimetoken.name}" />
+		<property name="name" value="__OneTimeToken__" />
 	</bean>
 
 	<!-- DB処理補助機能設定 -->
@@ -156,8 +189,8 @@
 
 	<!-- コマンド実行機能設定 -->
 	<bean id="commandLauncher" class="cherry.goods.command.CommandLauncherImpl">
-		<property name="charset" value="${foundation.command.charset}" />
-		<property name="redirectErrorStream" value="${foundation.command.redirectErrorStream}" />
+		<property name="charset" value="UTF-8" />
+		<property name="redirectErrorStream" value="true" />
 	</bean>
 
 	<!-- 暗号機能設定 -->
@@ -180,12 +213,26 @@
 		</property>
 	</bean>
 
+	<!-- 区分値管理機能 -->
+	<bean id="codeManager" class="cherry.foundation.code.CodeManagerImpl">
+		<property name="valueTemplate" value="{0} - {1}" />
+		<property name="entryCacheSpec" value="maximumSize=1000,expireAfterAccess=60m" />
+		<property name="listCacheSpec" value="maximumSize=100,expireAfterAccess=60m" />
+		<property name="codeStore" ref="codeStore" />
+	</bean>
+
+	<!-- 発番管理機能 -->
+	<bean id="numberingManager" class="cherry.foundation.numbering.NumberingManagerImpl">
+		<property name="cacheSpec" value="maximumSize=50,expireAfterAccess=60m" />
+		<property name="numberingStore" ref="numberingStore" />
+	</bean>
+
 	<!-- 型関係機能設定 -->
 	<!-- 区分値 -->
 	<bean class="cherry.foundation.type.EnumUtil" factory-method="setMessageSource">
 		<constructor-arg ref="messageSource" />
 	</bean>
-	<bean class="cherry.foundation.type.CodeUtil" factory-method="setMessageSource">
+	<bean class="cherry.foundation.type.EnumCodeUtil" factory-method="setMessageSource">
 		<constructor-arg ref="messageSource" />
 	</bean>
 	<!-- 項目暗号化 -->
@@ -224,6 +271,62 @@
 				<property name="crypto" ref="aesCrypto" />
 			</bean>
 		</constructor-arg>
+	</bean>
+
+	<!-- 文字列処理 -->
+	<!-- オブジェクト描画 -->
+	<bean id="objectRenderer" class="cherry.foundation.render.ObjectRendererImpl">
+		<property name="conversionService" ref="conversionService" />
+		<property name="numberFormatter">
+			<list>
+				<value>#,##0.###</value>
+				<value>#,##0.0</value>
+				<value>#,##0.00</value>
+				<value>#,##0.000</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 分かち書き -->
+	<bean id="wakachigakiTokenizer" class="cherry.goods.wakachi.CompositeTokenizer">
+		<property name="tokenizers">
+			<list value-type="cherry.goods.wakachi.Tokenizer">
+				<bean class="cherry.goods.wakachi.SpaceCharTokenizer" />
+				<bean class="cherry.goods.wakachi.UnicodeBlockTokenizer" />
+				<bean class="cherry.goods.wakachi.NgramTokenizer">
+					<property name="applyToAscii" value="false" />
+					<property name="length" value="2" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 電話番号正規化 -->
+	<bean id="telNoNormalizer" class="cherry.goods.telno.TelNoNormalizerImpl">
+		<property name="areaCodeTable">
+			<bean class="cherry.foundation.telno.AreaCodeTableFactory">
+				<property name="soumuExcelParser">
+					<bean class="cherry.goods.telno.SoumuExcelParser">
+						<property name="numberLabel" value="番号" />
+						<property name="areaCodeLabel" value="市外局番" />
+						<property name="localCodeLabel" value="市内局番" />
+					</bean>
+				</property>
+				<property name="resources">
+					<list value-type="org.springframework.core.io.Resource">
+						<value>classpath:cherry/goods/telno/soumu/000124070.xls</value>
+						<value>classpath:cherry/goods/telno/soumu/000124071.xls</value>
+						<value>classpath:cherry/goods/telno/soumu/000124072.xls</value>
+						<value>classpath:cherry/goods/telno/soumu/000124073.xls</value>
+						<value>classpath:cherry/goods/telno/soumu/000124074.xls</value>
+						<value>classpath:cherry/goods/telno/soumu/000124075.xls</value>
+						<value>classpath:cherry/goods/telno/soumu/000124076.xls</value>
+						<value>classpath:cherry/goods/telno/soumu/000124077.xls</value>
+						<value>classpath:cherry/goods/telno/soumu/000124078.xls</value>
+					</list>
+				</property>
+			</bean>
+		</property>
 	</bean>
 
 </beans>

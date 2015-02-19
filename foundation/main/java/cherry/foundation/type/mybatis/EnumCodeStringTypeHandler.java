@@ -25,15 +25,15 @@ import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 
 import cherry.foundation.type.Code;
-import cherry.foundation.type.CodeUtil;
-import cherry.foundation.type.CodeUtil.CodeMap;
+import cherry.foundation.type.EnumCodeUtil;
+import cherry.foundation.type.EnumCodeUtil.CodeMap;
 
 public abstract class EnumCodeStringTypeHandler<E extends Code<String>> extends BaseTypeHandler<E> {
 
 	private CodeMap<String, E> codeMap;
 
 	protected EnumCodeStringTypeHandler(Class<E> type, E defaultValue) {
-		this.codeMap = CodeUtil.getCodeMap(type, defaultValue);
+		this.codeMap = EnumCodeUtil.getCodeMap(type, defaultValue);
 	}
 
 	@Override

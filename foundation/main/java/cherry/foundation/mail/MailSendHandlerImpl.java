@@ -18,9 +18,13 @@ package cherry.foundation.mail;
 
 import java.util.List;
 
+import javax.mail.internet.MimeMessage;
+
 import org.joda.time.LocalDateTime;
-import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.transaction.annotation.Transactional;
 
 import cherry.foundation.bizdtm.BizDateTime;
@@ -31,7 +35,7 @@ public class MailSendHandlerImpl implements MailSendHandler {
 
 	private MessageStore messageStore;
 
-	private MailSender mailSender;
+	private JavaMailSender mailSender;
 
 	public void setBizDateTime(BizDateTime bizDateTime) {
 		this.bizDateTime = bizDateTime;
@@ -41,7 +45,7 @@ public class MailSendHandlerImpl implements MailSendHandler {
 		this.messageStore = messageStore;
 	}
 
-	public void setMailSender(MailSender mailSender) {
+	public void setMailSender(JavaMailSender mailSender) {
 		this.mailSender = mailSender;
 	}
 
@@ -56,11 +60,18 @@ public class MailSendHandlerImpl implements MailSendHandler {
 	@Override
 	public long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
 			List<String> bcc, String subject, String body) {
+		return sendNow(launcherId, messageName, from, to, cc, bcc, subject, body, null);
+	}
+
+	@Transactional
+	@Override
+	public long sendNow(String launcherId, String messageName, String from, List<String> to, List<String> cc,
+			List<String> bcc, String subject, String body, AttachmentPreparator preparator) {
 		LocalDateTime now = bizDateTime.now();
 		long messageId = messageStore.createMessage(launcherId, messageName, now, from, to, cc, bcc, subject, body);
 		SimpleMailMessage msg = messageStore.getMessage(messageId);
 		messageStore.finishMessage(messageId);
-		mailSender.send(msg);
+		send(msg, preparator);
 		return messageId;
 	}
 
@@ -78,8 +89,28 @@ public class MailSendHandlerImpl implements MailSendHandler {
 			return false;
 		}
 		messageStore.finishMessage(messageId);
-		mailSender.send(msg);
+		send(msg, null);
 		return true;
+	}
+
+	private void send(final SimpleMailMessage msg, final AttachmentPreparator preparator) {
+		if (preparator == null) {
+			mailSender.send(msg);
+		} else {
+			mailSender.send(new MimeMessagePreparator() {
+				@Override
+				public void prepare(MimeMessage mimeMessage) throws Exception {
+					MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+					helper.setTo(msg.getTo());
+					helper.setCc(msg.getCc());
+					helper.setBcc(msg.getBcc());
+					helper.setFrom(msg.getFrom());
+					helper.setSubject(msg.getSubject());
+					helper.setText(msg.getText());
+					preparator.prepare(new Attachment(helper));
+				}
+			});
+		}
 	}
 
 }

@@ -29,7 +29,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import cherry.goods.log.Log;
 import cherry.goods.log.LogFactory;
 
-public class CodeUtil {
+public class EnumCodeUtil {
 
 	private static MessageSource messageSource;
 
