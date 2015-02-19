@@ -17,8 +17,8 @@
 package cherry.sqlapp.code;
 
 import cherry.foundation.type.Code;
-import cherry.foundation.type.CodeUtil;
-import cherry.foundation.type.CodeUtil.CodeMap;
+import cherry.foundation.type.EnumCodeUtil;
+import cherry.foundation.type.EnumCodeUtil.CodeMap;
 
 public enum SqlTypeCode implements Code<String> {
 	CLAUSE("clause"), STATEMENT("statement"), LOAD("load");
@@ -34,7 +34,7 @@ public enum SqlTypeCode implements Code<String> {
 		return code;
 	}
 
-	private static final CodeMap<String, SqlTypeCode> codeMap = CodeUtil.getCodeMap(SqlTypeCode.class, null);
+	private static final CodeMap<String, SqlTypeCode> codeMap = EnumCodeUtil.getCodeMap(SqlTypeCode.class, null);
 
 	public static SqlTypeCode codeValueOf(String code) {
 		return codeMap.get(code);
