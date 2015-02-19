@@ -23,8 +23,9 @@ import org.joda.time.LocalDateTime;
  * 日付操作ユーティリティ。<br />
  * 下記の機能を提供する。
  * <ul>
- * <li>日付範囲(FROM)の条件指定値決定 ({@link #rangeFrom(LocalDate)}, {@link #rangeFrom(LocalDateTime)}</li>
- * <li>日付範囲(TO)の条件指定値決定 ({@link #rangeTo(LocalDate)}, {@link #rangeTo(LocalDateTime)}</li>
+ * <li>日付範囲(FROM)の条件指定値決定 ({@link #rangeFrom(LocalDate)}, {@link #rangeFrom(LocalDateTime)},
+ * {@link #ymRangeFrom(LocalDate)}</li>
+ * <li>日付範囲(TO)の条件指定値決定 ({@link #rangeTo(LocalDate)}, {@link #rangeTo(LocalDateTime)}, {@link #ymRangeTo(LocalDate)}</li>
  * </ul>
  */
 public class LocalDateUtil {
@@ -76,6 +77,42 @@ public class LocalDateUtil {
 			return null;
 		}
 		return to.toLocalDate().plusDays(1);
+	}
+
+	/**
+	 * 年月(日なし)を保持する形式の日付データ(Y/M/1形式)に正規化する。
+	 * 
+	 * @param dt 入力された年月データ。
+	 * @return 年月(日なし)を正規化した日付値。
+	 */
+	public static LocalDate normalizeYm(LocalDate dt) {
+		if (dt == null) {
+			return null;
+		}
+		return new LocalDate(dt.getYear(), dt.getMonthOfYear(), 1);
+	}
+
+	/**
+	 * 年月(日なし)のデータから日付範囲(FROM)の条件指定値を決定する。
+	 * 
+	 * @param from 入力された年月(日なし)。
+	 * @return 入力された年月(日なし)に対する日付範囲(FROM)の条件指定値。
+	 */
+	public static LocalDate ymRangeFrom(LocalDate from) {
+		return normalizeYm(from);
+	}
+
+	/**
+	 * 年月(日なし)のデータから日付範囲(TO)の条件指定値を決定する。
+	 * 
+	 * @param to 入力された年月(日なし)。
+	 * @return 入力された年月(日なし)に対する日付範囲(TO)の条件指定値。
+	 */
+	public static LocalDate ymRangeTo(LocalDate to) {
+		if (to == null) {
+			return null;
+		}
+		return normalizeYm(to).plusMonths(1);
 	}
 
 }
