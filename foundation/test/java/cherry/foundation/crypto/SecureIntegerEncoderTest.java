@@ -22,11 +22,11 @@ import static org.junit.Assert.assertThat;
 
 import java.security.SecureRandom;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
 import cherry.foundation.type.SecureInteger;
-import cherry.goods.util.RandomUtil;
 
 public class SecureIntegerEncoderTest {
 
@@ -69,8 +69,8 @@ public class SecureIntegerEncoderTest {
 
 	private SecureIntegerEncoder createSecureIntegerEncoder() throws Exception {
 		AESCryptoSupport crypto = new AESCryptoSupport();
-		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil.randomBytes(16)));
-		crypto.setInitVectorResource(new InMemoryResource(RandomUtil.randomBytes(16)));
+		crypto.setSecretKeyResource(new InMemoryResource(RandomUtils.nextBytes(16)));
+		crypto.setInitVectorResource(new InMemoryResource(RandomUtils.nextBytes(16)));
 		crypto.afterPropertiesSet();
 		SecureIntegerEncoder encoder = new SecureIntegerEncoder();
 		encoder.setCrypto(crypto);

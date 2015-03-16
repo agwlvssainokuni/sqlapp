@@ -12,6 +12,7 @@
 	<logger name="org.springframework" level="DEBUG" />
 	<logger name="org.flywaydb" level="DEBUG" />
 	<logger name="trace" level="TRACE" />
+	<logger name="logtest" level="OFF" />
 	<root level="INFO">
 		<appender-ref ref="stdout" />
 		<appender-ref ref="onmemory" />

@@ -56,6 +56,34 @@ public class ExtractorBatch implements IBatch {
 
 	private Extractor extractor;
 
+	public void setQuery(String query) {
+		this.query = query;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public void setCharset(Charset charset) {
+		this.charset = charset;
+	}
+
+	public void setWithHeader(boolean withHeader) {
+		this.withHeader = withHeader;
+	}
+
+	public void setParamMap(Map<String, Object> paramMap) {
+		this.paramMap = paramMap;
+	}
+
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+
+	public void setExtractor(Extractor extractor) {
+		this.extractor = extractor;
+	}
+
 	@Override
 	public ExitStatus execute(String... args) {
 

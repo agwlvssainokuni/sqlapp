@@ -55,7 +55,7 @@ public abstract class LongMasker implements Masker<Long> {
 				}
 			}
 
-			long maskedValue = (Math.abs(value) / digitMask) * digitMask + (mask % digitMask);
+			long maskedValue = (Math.abs(value) / digitMask) * digitMask + mask % digitMask;
 
 			if (value < 0) {
 				return -maskedValue;
@@ -129,7 +129,7 @@ public abstract class LongMasker implements Masker<Long> {
 				digitMask *= 10;
 			}
 
-			long maskedValue = (mask / digitMask) * digitMask + (Math.abs(value) % digitMask);
+			long maskedValue = (mask / digitMask) * digitMask + Math.abs(value) % digitMask;
 
 			if (value < 0) {
 				return -maskedValue;

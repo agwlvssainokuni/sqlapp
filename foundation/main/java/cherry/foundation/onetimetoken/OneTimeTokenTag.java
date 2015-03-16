@@ -16,14 +16,36 @@
 
 package cherry.foundation.onetimetoken;
 
-import static cherry.foundation.AppCtxTag.getBeanByClass;
+import static com.google.common.html.HtmlEscapers.htmlEscaper;
+
+import java.text.MessageFormat;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class OneTimeTokenTag {
+import org.springframework.web.servlet.tags.RequestContextAwareTag;
 
-	public static OneTimeToken newToken(HttpServletRequest request) {
-		return getBeanByClass(OneTimeTokenIssuer.class).newToken(request);
+public class OneTimeTokenTag extends RequestContextAwareTag {
+
+	private static final long serialVersionUID = 1L;
+
+	private String template = "<input type=\"hidden\" name=\"{0}\" value=\"{1}\" />";
+
+	public void setTemplate(String template) {
+		this.template = template;
+	}
+
+	@Override
+	protected int doStartTagInternal() throws Exception {
+		OneTimeTokenIssuer issuer = getRequestContext().getWebApplicationContext().getBean(OneTimeTokenIssuer.class);
+		HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
+		OneTimeToken token = issuer.newToken(request);
+		pageContext.getOut().write(handleToken(token));
+		return SKIP_BODY;
+	}
+
+	private String handleToken(OneTimeToken token) {
+		return MessageFormat.format(template, htmlEscaper().escape(token.getName()),
+				htmlEscaper().escape(token.getValue()));
 	}
 
 }

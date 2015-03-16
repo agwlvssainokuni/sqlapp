@@ -23,10 +23,9 @@ import static org.junit.Assert.assertThat;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
-
-import cherry.goods.util.RandomUtil;
 
 public class RSACryptoSupportTest {
 
@@ -34,7 +33,7 @@ public class RSACryptoSupportTest {
 	public void testEncDec() throws Exception {
 		RSACryptoSupport crypto = createCrypto();
 		for (int i = 0; i < 100; i++) {
-			byte[] p = RandomUtil.randomBytes(245);
+			byte[] p = RandomUtils.nextBytes(245);
 			byte[] c = crypto.encrypt(p);
 			assertThat(c, is(not(p)));
 			assertThat(crypto.decrypt(c), is(p));

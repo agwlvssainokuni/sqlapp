@@ -18,6 +18,7 @@
 			pointcut="execution(* cherry..*.*(..))
 				and !execution(* cherry.foundation.log..*.*(..))
 				and !execution(* cherry.foundation.type..*.*(..))
+				and !execution(* cherry.foundation.springmvc..*.*(..))
 				and !execution(* cherry.foundation.crypto..*.*(..))
 				and !execution(* cherry.goods.crypto..*.*(..))
 				and !execution(* cherry.foundation.telno..*.*(..))
@@ -55,6 +56,16 @@
 				<bean class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
 				<bean class="org.springframework.format.number.NumberFormatter">
 					<property name="pattern" value="###0.##" />
+				</bean>
+				<bean class="cherry.foundation.type.format.CustomNumberFormatAnnotationFormatterFactory">
+					<property name="numberFormatter">
+						<list>
+							<value>###0.###</value>
+							<value>###0.0</value>
+							<value>###0.00</value>
+							<value>###0.000</value>
+						</list>
+					</property>
 				</bean>
 			</set>
 		</property>
@@ -141,7 +152,22 @@
 		<constructor-arg ref="dataSource" />
 	</bean>
 	<bean id="queryDslJdbcOperations" class="org.springframework.data.jdbc.query.QueryDslJdbcTemplate">
-		<constructor-arg ref="dataSource" />
+		<constructor-arg>
+			<bean class="org.springframework.jdbc.core.JdbcTemplate">
+				<constructor-arg ref="dataSource" />
+			</bean>
+		</constructor-arg>
+		<constructor-arg>
+			<bean class="cherry.foundation.type.querydsl.CustomH2Templates">
+				<property name="customTypes">
+					<list>
+						<bean class="cherry.foundation.type.querydsl.LocalDateTimeType" />
+						<bean class="cherry.foundation.type.querydsl.LocalDateType" />
+						<bean class="cherry.foundation.type.querydsl.LocalTimeType" />
+					</list>
+				</property>
+			</bean>
+		</constructor-arg>
 	</bean>
 	<bean id="rowMapperCreator" class="cherry.foundation.type.jdbc.CustomBeanPropertyRowMapperCreator">
 		<property name="conversionService" ref="conversionService" />

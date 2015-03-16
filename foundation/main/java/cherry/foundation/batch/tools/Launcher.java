@@ -118,7 +118,7 @@ public class Launcher {
 	/**
 	 * バッチプログラムを起動する際に出力するログの文言を解決する機能を提供する。
 	 */
-	private class Msg {
+	private static class Msg {
 
 		/** 文言定義を保持する。 */
 		private MessageSource msgSrc = createMessageSource();

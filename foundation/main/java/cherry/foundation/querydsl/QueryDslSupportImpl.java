@@ -63,7 +63,7 @@ public class QueryDslSupportImpl implements QueryDslSupport {
 	public <T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo,
 			long pageSz, Predicate<Long> cancelPredicate, final RowMapper<T> rowMapper,
 			final Expression<?>... expressions) {
-		Function<SQLQuery, List<T>> searchFunction = new SearchFunction<T>() {
+		Function<SQLQuery, List<T>> searchFunction = new Function<SQLQuery, List<T>>() {
 			@Override
 			public List<T> apply(SQLQuery query) {
 				return queryDslJdbcOperations.query(query, rowMapper, expressions);
@@ -82,7 +82,7 @@ public class QueryDslSupportImpl implements QueryDslSupport {
 	@Override
 	public <T> PagedList<T> search(QueryConfigurer commonClause, QueryConfigurer orderByClause, long pageNo,
 			long pageSz, Predicate<Long> cancelPredicate, final Expression<T> expression) {
-		Function<SQLQuery, List<T>> searchFunction = new SearchFunction<T>() {
+		Function<SQLQuery, List<T>> searchFunction = new Function<SQLQuery, List<T>>() {
 			@Override
 			public List<T> apply(SQLQuery query) {
 				return queryDslJdbcOperations.query(query, expression);
@@ -144,13 +144,6 @@ public class QueryDslSupportImpl implements QueryDslSupport {
 			throw (IOException) ex.getCause();
 		} finally {
 			limiter.stop();
-		}
-	}
-
-	static abstract class SearchFunction<T> implements Function<SQLQuery, List<T>> {
-		@Override
-		public boolean equals(Object object) {
-			return this == object;
 		}
 	}
 

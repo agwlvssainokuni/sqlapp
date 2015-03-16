@@ -32,8 +32,11 @@ public class JodaTimeSqlConverterRegistrar implements FormatterRegistrar {
 	@Override
 	public void registerFormatters(FormatterRegistry registry) {
 		registry.addConverter(new LocalDateConverter());
+		registry.addConverter(new SqlDateConverter());
 		registry.addConverter(new LocalTimeConverter());
+		registry.addConverter(new SqlTimeConverter());
 		registry.addConverter(new LocalDateTimeConverter());
+		registry.addConverter(new SqlTimestampConverter());
 	}
 
 	static class LocalDateConverter implements Converter<Date, LocalDate> {
@@ -43,10 +46,24 @@ public class JodaTimeSqlConverterRegistrar implements FormatterRegistrar {
 		}
 	}
 
+	static class SqlDateConverter implements Converter<LocalDate, Date> {
+		@Override
+		public Date convert(LocalDate source) {
+			return new Date(source.toDate().getTime());
+		}
+	}
+
 	static class LocalTimeConverter implements Converter<Time, LocalTime> {
 		@Override
 		public LocalTime convert(Time source) {
-			return new LocalTime(source.getTime() + LocalDate.now().toDate().getTime());
+			return LocalTime.fromMillisOfDay(source.getTime());
+		}
+	}
+
+	static class SqlTimeConverter implements Converter<LocalTime, Time> {
+		@Override
+		public Time convert(LocalTime source) {
+			return new Time(source.getMillisOfDay());
 		}
 	}
 
@@ -54,6 +71,13 @@ public class JodaTimeSqlConverterRegistrar implements FormatterRegistrar {
 		@Override
 		public LocalDateTime convert(Timestamp source) {
 			return new LocalDateTime(source.getTime());
+		}
+	}
+
+	static class SqlTimestampConverter implements Converter<LocalDateTime, Timestamp> {
+		@Override
+		public Timestamp convert(LocalDateTime source) {
+			return new Timestamp(source.toDate().getTime());
 		}
 	}
 

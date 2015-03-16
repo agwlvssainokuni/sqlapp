@@ -56,7 +56,7 @@ public class CommandLauncherImpl implements CommandLauncher {
 	@Override
 	public CommandResult launch(String... command) throws IOException, InterruptedException {
 		CommandResult result = new CommandResult();
-		Process proc = (new ProcessBuilder(command)).redirectErrorStream(redirectErrorStream).start();
+		Process proc = new ProcessBuilder(command).redirectErrorStream(redirectErrorStream).start();
 		try (InputStream in = proc.getErrorStream(); Reader r = new InputStreamReader(in, charset)) {
 			result.setStderr(CharStreams.toString(r));
 		}

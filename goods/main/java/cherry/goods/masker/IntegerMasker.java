@@ -55,7 +55,7 @@ public abstract class IntegerMasker implements Masker<Integer> {
 				}
 			}
 
-			int maskedValue = (Math.abs(value) / digitMask) * digitMask + (mask % digitMask);
+			int maskedValue = (Math.abs(value) / digitMask) * digitMask + mask % digitMask;
 
 			if (value < 0) {
 				return -maskedValue;
@@ -129,7 +129,7 @@ public abstract class IntegerMasker implements Masker<Integer> {
 				digitMask *= 10;
 			}
 
-			int maskedValue = (mask / digitMask) * digitMask + (Math.abs(value) % digitMask);
+			int maskedValue = (mask / digitMask) * digitMask + Math.abs(value) % digitMask;
 
 			if (value < 0) {
 				return -maskedValue;

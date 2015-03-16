@@ -19,10 +19,9 @@ package cherry.foundation.crypto;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
-
-import cherry.goods.util.RandomUtil;
 
 public class AESCryptoSupportTest {
 
@@ -30,12 +29,12 @@ public class AESCryptoSupportTest {
 	public void testDefault() throws Exception {
 
 		AESCryptoSupport crypto = new AESCryptoSupport();
-		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil.randomBytes(16)));
-		crypto.setInitVectorResource(new InMemoryResource(RandomUtil.randomBytes(16)));
+		crypto.setSecretKeyResource(new InMemoryResource(RandomUtils.nextBytes(16)));
+		crypto.setInitVectorResource(new InMemoryResource(RandomUtils.nextBytes(16)));
 		crypto.afterPropertiesSet();
 
 		for (int i = 0; i < 100; i++) {
-			byte[] plain = RandomUtil.randomBytes(1024);
+			byte[] plain = RandomUtils.nextBytes(1024);
 			byte[] enc = crypto.encrypt(plain);
 			byte[] dec = crypto.decrypt(enc);
 			assertThat(dec, is(plain));
@@ -47,12 +46,12 @@ public class AESCryptoSupportTest {
 
 		AESCryptoSupport crypto = new AESCryptoSupport();
 		crypto.setAlgorithm("AES/CBC/PKCS5Padding");
-		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil.randomBytes(16)));
-		crypto.setInitVectorResource(new InMemoryResource(RandomUtil.randomBytes(16)));
+		crypto.setSecretKeyResource(new InMemoryResource(RandomUtils.nextBytes(16)));
+		crypto.setInitVectorResource(new InMemoryResource(RandomUtils.nextBytes(16)));
 		crypto.afterPropertiesSet();
 
 		for (int i = 0; i < 100; i++) {
-			byte[] plain = RandomUtil.randomBytes(1024);
+			byte[] plain = RandomUtils.nextBytes(1024);
 			byte[] enc = crypto.encrypt(plain);
 			byte[] dec = crypto.decrypt(enc);
 			assertThat(dec, is(plain));
@@ -64,11 +63,11 @@ public class AESCryptoSupportTest {
 
 		AESCryptoSupport crypto = new AESCryptoSupport();
 		crypto.setAlgorithm("AES/ECB/PKCS5Padding");
-		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil.randomBytes(16)));
+		crypto.setSecretKeyResource(new InMemoryResource(RandomUtils.nextBytes(16)));
 		crypto.afterPropertiesSet();
 
 		for (int i = 0; i < 100; i++) {
-			byte[] plain = RandomUtil.randomBytes(1024);
+			byte[] plain = RandomUtils.nextBytes(1024);
 			byte[] enc = crypto.encrypt(plain);
 			byte[] dec = crypto.decrypt(enc);
 			assertThat(dec, is(plain));
@@ -78,8 +77,8 @@ public class AESCryptoSupportTest {
 	@Test
 	public void testUsingKeyCipherHelper() throws Exception {
 
-		byte[] key = RandomUtil.randomBytes(16);
-		byte[] iv = RandomUtil.randomBytes(16);
+		byte[] key = RandomUtils.nextBytes(16);
+		byte[] iv = RandomUtils.nextBytes(16);
 
 		AESCryptoSupport crypto0 = new AESCryptoSupport();
 		crypto0.setSecretKeyResource(new InMemoryResource(key));
@@ -87,8 +86,8 @@ public class AESCryptoSupportTest {
 		crypto0.afterPropertiesSet();
 
 		AESCryptoSupport keyCrypto = new AESCryptoSupport();
-		keyCrypto.setSecretKeyResource(new InMemoryResource(RandomUtil.randomBytes(16)));
-		keyCrypto.setInitVectorResource(new InMemoryResource(RandomUtil.randomBytes(16)));
+		keyCrypto.setSecretKeyResource(new InMemoryResource(RandomUtils.nextBytes(16)));
+		keyCrypto.setInitVectorResource(new InMemoryResource(RandomUtils.nextBytes(16)));
 		keyCrypto.afterPropertiesSet();
 
 		AESCryptoSupport crypto1 = new AESCryptoSupport();
@@ -98,7 +97,7 @@ public class AESCryptoSupportTest {
 		crypto1.afterPropertiesSet();
 
 		for (int i = 0; i < 100; i++) {
-			byte[] plain = RandomUtil.randomBytes(1024);
+			byte[] plain = RandomUtils.nextBytes(1024);
 			byte[] enc0 = crypto0.encrypt(plain);
 			byte[] enc1 = crypto1.encrypt(plain);
 			assertThat(enc1, is(enc0));

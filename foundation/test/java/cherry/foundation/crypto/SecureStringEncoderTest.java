@@ -25,11 +25,12 @@ import static org.junit.Assert.fail;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.codec.DecoderException;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
 import cherry.foundation.type.SecureString;
-import cherry.goods.util.RandomUtil;
 
 public class SecureStringEncoderTest {
 
@@ -37,7 +38,7 @@ public class SecureStringEncoderTest {
 	public void testEncodeDecode() throws Exception {
 		SecureStringEncoder encoder = createSecureStringEncoder();
 		for (int i = 0; i < 100; i++) {
-			String plain = RandomUtil.randomString(1024);
+			String plain = RandomStringUtils.randomAlphanumeric(1024);
 			String crypto = encoder.encode(plain);
 			assertThat(crypto, is(not(plain)));
 			assertThat(encoder.decode(crypto), is(plain));
@@ -49,7 +50,7 @@ public class SecureStringEncoderTest {
 		SecureString.setEncoder(createSecureStringEncoder());
 		for (int i = 0; i < 100; i++) {
 
-			String plain = RandomUtil.randomString(1024);
+			String plain = RandomStringUtils.randomAlphanumeric(1024);
 			SecureString ss0 = SecureString.plainValueOf(plain);
 			assertThat(ss0.plain(), is(plain));
 			assertThat(ss0.crypto(), is(not(plain)));
@@ -81,8 +82,8 @@ public class SecureStringEncoderTest {
 
 	private SecureStringEncoder createSecureStringEncoder() throws Exception {
 		AESCryptoSupport crypto = new AESCryptoSupport();
-		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil.randomBytes(16)));
-		crypto.setInitVectorResource(new InMemoryResource(RandomUtil.randomBytes(16)));
+		crypto.setSecretKeyResource(new InMemoryResource(RandomUtils.nextBytes(16)));
+		crypto.setInitVectorResource(new InMemoryResource(RandomUtils.nextBytes(16)));
 		crypto.afterPropertiesSet();
 		SecureStringEncoder encoder = new SecureStringEncoder();
 		encoder.setCharset(StandardCharsets.UTF_8);

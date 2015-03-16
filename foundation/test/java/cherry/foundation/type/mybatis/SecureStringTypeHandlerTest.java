@@ -23,6 +23,7 @@ import static org.junit.Assert.assertThat;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +35,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import cherry.foundation.type.SecureString;
 import cherry.foundation.type.db.dto.ConversionTest;
 import cherry.foundation.type.db.mapper.ConversionTestMapper;
-import cherry.goods.util.RandomUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
@@ -53,7 +53,7 @@ public class SecureStringTypeHandlerTest {
 
 	@Test
 	public void testSaveAndLoad() {
-		String plain = RandomUtil.randomString(32);
+		String plain = RandomStringUtils.randomAlphanumeric(32);
 		ConversionTest record = new ConversionTest();
 		record.setSecStr(SecureString.plainValueOf(plain));
 

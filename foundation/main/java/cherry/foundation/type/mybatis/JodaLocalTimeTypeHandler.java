@@ -25,7 +25,6 @@ import java.sql.Time;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
-import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
 @MappedTypes(LocalTime.class)
@@ -43,7 +42,7 @@ public class JodaLocalTimeTypeHandler extends BaseTypeHandler<LocalTime> {
 		if (time == null) {
 			return null;
 		}
-		return new LocalTime(time.getTime() + LocalDate.now().toDate().getTime());
+		return LocalTime.fromMillisOfDay(time.getTime());
 	}
 
 	@Override
@@ -52,7 +51,7 @@ public class JodaLocalTimeTypeHandler extends BaseTypeHandler<LocalTime> {
 		if (time == null) {
 			return null;
 		}
-		return new LocalTime(time.getTime() + LocalDate.now().toDate().getTime());
+		return LocalTime.fromMillisOfDay(time.getTime());
 	}
 
 	@Override
@@ -61,7 +60,7 @@ public class JodaLocalTimeTypeHandler extends BaseTypeHandler<LocalTime> {
 		if (time == null) {
 			return null;
 		}
-		return new LocalTime(time.getTime() + LocalDate.now().toDate().getTime());
+		return LocalTime.fromMillisOfDay(time.getTime());
 	}
 
 }

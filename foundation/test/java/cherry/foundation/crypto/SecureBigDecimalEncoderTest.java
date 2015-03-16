@@ -23,11 +23,11 @@ import static org.junit.Assert.assertThat;
 import java.math.BigDecimal;
 import java.security.SecureRandom;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
 import cherry.foundation.type.SecureBigDecimal;
-import cherry.goods.util.RandomUtil;
 
 public class SecureBigDecimalEncoderTest {
 
@@ -70,8 +70,8 @@ public class SecureBigDecimalEncoderTest {
 
 	private SecureBigDecimalEncoder createSecureBigDecimalEncoder() throws Exception {
 		AESCryptoSupport crypto = new AESCryptoSupport();
-		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil.randomBytes(16)));
-		crypto.setInitVectorResource(new InMemoryResource(RandomUtil.randomBytes(16)));
+		crypto.setSecretKeyResource(new InMemoryResource(RandomUtils.nextBytes(16)));
+		crypto.setInitVectorResource(new InMemoryResource(RandomUtils.nextBytes(16)));
 		crypto.afterPropertiesSet();
 		SecureBigDecimalEncoder encoder = new SecureBigDecimalEncoder();
 		encoder.setCrypto(crypto);

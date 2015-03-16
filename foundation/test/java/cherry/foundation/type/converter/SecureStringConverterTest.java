@@ -19,6 +19,7 @@ package cherry.foundation.type.converter;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cherry.foundation.type.SecureString;
-import cherry.goods.util.RandomUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:config/applicationContext-test.xml")
@@ -44,7 +44,7 @@ public class SecureStringConverterTest {
 	@Test
 	public void testConvert() {
 		for (int i = 0; i < 100; i++) {
-			String plain = RandomUtil.randomString(1024);
+			String plain = RandomStringUtils.randomAlphanumeric(1024);
 			String crypto = SecureString.plainValueOf(plain).crypto();
 			assertThat(cs.convert(crypto, SecureString.class).plain(), is(plain));
 		}

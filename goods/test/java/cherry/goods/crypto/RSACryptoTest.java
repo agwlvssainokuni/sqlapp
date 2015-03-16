@@ -23,9 +23,8 @@ import static org.junit.Assert.assertThat;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
-
-import cherry.goods.util.RandomUtil;
 
 public class RSACryptoTest {
 
@@ -33,7 +32,7 @@ public class RSACryptoTest {
 	public void testEncDec() throws Exception {
 		RSACrypto helper = createCrypto();
 		for (int i = 0; i < 100; i++) {
-			byte[] plain = RandomUtil.randomBytes(245);
+			byte[] plain = RandomUtils.nextBytes(245);
 			byte[] crypto = helper.encrypt(plain);
 			assertThat(crypto, is(not(plain)));
 			assertThat(helper.decrypt(crypto), is(plain));

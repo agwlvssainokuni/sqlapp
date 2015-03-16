@@ -42,11 +42,9 @@ public class NgramTokenizer implements Tokenizer {
 		if (text.isEmpty()) {
 			return list;
 		}
-		if (of(text.charAt(0)) == BASIC_LATIN) {
-			if (!applyToAscii) {
-				list.add(text);
-				return list;
-			}
+		if (of(text.charAt(0)) == BASIC_LATIN && !applyToAscii) {
+			list.add(text);
+			return list;
 		}
 		for (int i = length; i <= text.length(); i++) {
 			list.add(text.substring(i - length, i));

@@ -41,7 +41,8 @@ public class Log {
 	 * @return ログ文言定義 (現在の定義を返却する)。
 	 */
 	public static List<ResourceBundle> setMessageDef(ResourceBundle... msgDef) {
-		messageDef = Arrays.asList(msgDef);
+		messageDef = new ArrayList<>();
+		messageDef.addAll(Arrays.asList(msgDef));
 		return messageDef;
 	}
 
@@ -110,11 +111,6 @@ public class Log {
 				logger.warn(createMessage(id, args));
 			}
 			break;
-		case ERROR:
-			if (logger.isErrorEnabled()) {
-				logger.error(createMessage(id, args));
-			}
-			break;
 		default:
 			if (logger.isErrorEnabled()) {
 				logger.error(createMessage(id, args));
@@ -140,11 +136,6 @@ public class Log {
 		case WARN:
 			if (logger.isWarnEnabled()) {
 				logger.warn(createMessage(id, args), ex);
-			}
-			break;
-		case ERROR:
-			if (logger.isErrorEnabled()) {
-				logger.error(createMessage(id, args), ex);
 			}
 			break;
 		default:

@@ -25,9 +25,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
-
-import cherry.goods.util.RandomUtil;
 
 public class VersionedCryptoTest {
 
@@ -42,7 +41,7 @@ public class VersionedCryptoTest {
 		helper.setVersionStrategy(new DefaultVersionStrategy());
 
 		for (int i = 0; i < 100; i++) {
-			byte[] plain = RandomUtil.randomBytes(1024);
+			byte[] plain = RandomUtils.nextBytes(1024);
 			byte[] crypto = helper.encrypt(plain);
 			assertThat(crypto, is(not(plain)));
 			assertThat(helper.decrypt(crypto), is(plain));
@@ -63,7 +62,7 @@ public class VersionedCryptoTest {
 		helper1.setCryptoMap(map);
 
 		for (int i = 0; i < 100; i++) {
-			byte[] plain = RandomUtil.randomBytes(1024);
+			byte[] plain = RandomUtils.nextBytes(1024);
 			byte[] crypto = helper0.encrypt(plain);
 			assertThat(crypto, is(not(plain)));
 			assertThat(crypto, is(not(helper1.encrypt(plain))));
@@ -79,7 +78,7 @@ public class VersionedCryptoTest {
 		helper0.setDefaultVersion(1);
 		helper0.setCryptoMap(map);
 		try {
-			byte[] plain = RandomUtil.randomBytes(1024);
+			byte[] plain = RandomUtils.nextBytes(1024);
 			helper0.encrypt(plain);
 			fail("Exception must be thrown");
 		} catch (IllegalStateException ex) {
@@ -103,7 +102,7 @@ public class VersionedCryptoTest {
 		crypto1.setCryptoMap(map1);
 
 		try {
-			byte[] plain = RandomUtil.randomBytes(1024);
+			byte[] plain = RandomUtils.nextBytes(1024);
 			byte[] crypto = crypto1.encrypt(plain);
 			assertThat(crypto1.decrypt(crypto), is(plain));
 
@@ -124,8 +123,8 @@ public class VersionedCryptoTest {
 
 	private Crypto createAESCrypto() throws IOException {
 		AESCrypto crypto = new AESCrypto();
-		crypto.setSecretKeyBytes(RandomUtil.randomBytes(16));
-		crypto.setInitVectorBytes(RandomUtil.randomBytes(16));
+		crypto.setSecretKeyBytes(RandomUtils.nextBytes(16));
+		crypto.setInitVectorBytes(RandomUtils.nextBytes(16));
 		return crypto;
 	}
 

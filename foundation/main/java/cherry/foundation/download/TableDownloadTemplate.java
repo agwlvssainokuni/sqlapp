@@ -135,7 +135,7 @@ public class TableDownloadTemplate implements TableDownloadOperation {
 		}
 	}
 
-	public class WithHeaderConsumer extends DelegateConsumer {
+	private static class WithHeaderConsumer extends DelegateConsumer {
 
 		private String[] header;
 

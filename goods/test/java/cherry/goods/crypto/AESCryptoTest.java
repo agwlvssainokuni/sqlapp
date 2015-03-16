@@ -19,9 +19,8 @@ package cherry.goods.crypto;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
-
-import cherry.goods.util.RandomUtil;
 
 public class AESCryptoTest {
 
@@ -29,11 +28,11 @@ public class AESCryptoTest {
 	public void testDefault() throws Exception {
 
 		AESCrypto crypto = new AESCrypto();
-		crypto.setSecretKeyBytes(RandomUtil.randomBytes(16));
-		crypto.setInitVectorBytes(RandomUtil.randomBytes(16));
+		crypto.setSecretKeyBytes(RandomUtils.nextBytes(16));
+		crypto.setInitVectorBytes(RandomUtils.nextBytes(16));
 
 		for (int i = 0; i < 100; i++) {
-			byte[] plain = RandomUtil.randomBytes(1024);
+			byte[] plain = RandomUtils.nextBytes(1024);
 			byte[] enc = crypto.encrypt(plain);
 			byte[] dec = crypto.decrypt(enc);
 			assertThat(dec, is(plain));
@@ -45,11 +44,11 @@ public class AESCryptoTest {
 
 		AESCrypto crypto = new AESCrypto();
 		crypto.setAlgorithm("AES/CBC/PKCS5Padding");
-		crypto.setSecretKeyBytes(RandomUtil.randomBytes(16));
-		crypto.setInitVectorBytes(RandomUtil.randomBytes(16));
+		crypto.setSecretKeyBytes(RandomUtils.nextBytes(16));
+		crypto.setInitVectorBytes(RandomUtils.nextBytes(16));
 
 		for (int i = 0; i < 100; i++) {
-			byte[] plain = RandomUtil.randomBytes(1024);
+			byte[] plain = RandomUtils.nextBytes(1024);
 			byte[] enc = crypto.encrypt(plain);
 			byte[] dec = crypto.decrypt(enc);
 			assertThat(dec, is(plain));
@@ -61,10 +60,10 @@ public class AESCryptoTest {
 
 		AESCrypto crypto = new AESCrypto();
 		crypto.setAlgorithm("AES/ECB/PKCS5Padding");
-		crypto.setSecretKeyBytes(RandomUtil.randomBytes(16));
+		crypto.setSecretKeyBytes(RandomUtils.nextBytes(16));
 
 		for (int i = 0; i < 100; i++) {
-			byte[] plain = RandomUtil.randomBytes(1024);
+			byte[] plain = RandomUtils.nextBytes(1024);
 			byte[] enc = crypto.encrypt(plain);
 			byte[] dec = crypto.decrypt(enc);
 			assertThat(dec, is(plain));
@@ -74,16 +73,16 @@ public class AESCryptoTest {
 	@Test
 	public void testUsingKeyCrypto() throws Exception {
 
-		byte[] key = RandomUtil.randomBytes(16);
-		byte[] iv = RandomUtil.randomBytes(16);
+		byte[] key = RandomUtils.nextBytes(16);
+		byte[] iv = RandomUtils.nextBytes(16);
 
 		AESCrypto crypto0 = new AESCrypto();
 		crypto0.setSecretKeyBytes(key);
 		crypto0.setInitVectorBytes(iv);
 
 		AESCrypto keyCrypto = new AESCrypto();
-		keyCrypto.setSecretKeyBytes(RandomUtil.randomBytes(16));
-		keyCrypto.setInitVectorBytes(RandomUtil.randomBytes(16));
+		keyCrypto.setSecretKeyBytes(RandomUtils.nextBytes(16));
+		keyCrypto.setInitVectorBytes(RandomUtils.nextBytes(16));
 
 		AESCrypto crypto1 = new AESCrypto();
 		crypto1.setKeyCrypto(keyCrypto);
@@ -91,7 +90,7 @@ public class AESCryptoTest {
 		crypto1.setInitVectorBytes(keyCrypto.encrypt(iv));
 
 		for (int i = 0; i < 100; i++) {
-			byte[] plain = RandomUtil.randomBytes(1024);
+			byte[] plain = RandomUtils.nextBytes(1024);
 			byte[] enc0 = crypto0.encrypt(plain);
 			byte[] enc1 = crypto1.encrypt(plain);
 			assertThat(enc1, is(enc0));

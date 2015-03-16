@@ -86,22 +86,22 @@ public class CharTypeValidator {
 
 	static {
 		int shift = 0;
-		BASIC_LATIN = (1 << (shift++));
-		HALF_WIDTH = (1 << (shift++));
-		FULL_WIDTH = (1 << (shift++));
-		SPACE = (1 << (shift++));
-		NUMERIC = (1 << (shift++));
-		ALPHA = (1 << (shift++));
-		UPPER = (1 << (shift++));
-		LOWER = (1 << (shift++));
-		FULL_SPACE = (1 << (shift++));
-		FULL_NUMERIC = (1 << (shift++));
-		FULL_ALPHA = (1 << (shift++));
-		FULL_UPPER = (1 << (shift++));
-		FULL_LOWER = (1 << (shift++));
-		FULL_HIRAGANA = (1 << (shift++));
-		FULL_KATAKANA = (1 << (shift++));
-		HALF_KATAKANA = (1 << (shift++));
+		BASIC_LATIN = 1 << (shift++);
+		HALF_WIDTH = 1 << (shift++);
+		FULL_WIDTH = 1 << (shift++);
+		SPACE = 1 << (shift++);
+		NUMERIC = 1 << (shift++);
+		ALPHA = 1 << (shift++);
+		UPPER = 1 << (shift++);
+		LOWER = 1 << (shift++);
+		FULL_SPACE = 1 << (shift++);
+		FULL_NUMERIC = 1 << (shift++);
+		FULL_ALPHA = 1 << (shift++);
+		FULL_UPPER = 1 << (shift++);
+		FULL_LOWER = 1 << (shift++);
+		FULL_HIRAGANA = 1 << (shift++);
+		FULL_KATAKANA = 1 << (shift++);
+		HALF_KATAKANA = 1 << (shift++);
 	}
 
 	/**
@@ -255,10 +255,9 @@ public class CharTypeValidator {
 			if (isLowSurrogate(seq.charAt(i))) {
 				continue;
 			}
-			if (isValid(codePointAt(seq, i), mode, acceptable)) {
-				continue;
+			if (!isValid(codePointAt(seq, i), mode, acceptable)) {
+				return new CharTypeResult(false, i, codePointAt(seq, i));
 			}
-			return new CharTypeResult(false, i, codePointAt(seq, i));
 		}
 		return new CharTypeResult();
 	}
@@ -410,7 +409,13 @@ public class CharTypeValidator {
 				codePoint == '\u30FB' || // '・' from KATAKANA
 				codePoint == '\u30FC' || // 'ー' from KATAKANA
 				// \u30FD 'ヽ' and \u30FE 'ヾ' if iteration mark for KATAKANA
-				codePoint == '\u30FF'; // 'ヿ' from KATAKANA (not in Win31J)
+				codePoint == '\u30FF' || // 'ヿ' from KATAKANA (not in Win31J)
+				codePoint == '\u3001' || // '、'
+				codePoint == '\u3002' || // '。'
+				codePoint == '\u300C' || // '「'
+				codePoint == '\u300D' || // '」'
+				codePoint == '\u300E' || // '『'
+				codePoint == '\u300F'; // '』'
 	}
 
 	/**
@@ -430,7 +435,13 @@ public class CharTypeValidator {
 				codePoint == '\u309B' || // '゛' from HIRAGANA
 				codePoint == '\u309C' || // '゜' from HIRAGANA
 				// \u309D 'ゝ' and \u309E 'ゞ' is iteration mark for HIRAGANA
-				codePoint == '\u309F'; // 'ゟ' from HIRAGANA (not in Win31J)
+				codePoint == '\u309F' || // 'ゟ' from HIRAGANA (not in Win31J)
+				codePoint == '\u3001' || // '、'
+				codePoint == '\u3002' || // '。'
+				codePoint == '\u300C' || // '「'
+				codePoint == '\u300D' || // '」'
+				codePoint == '\u300E' || // '『'
+				codePoint == '\u300F'; // '』'
 	}
 
 	/**

@@ -19,9 +19,8 @@ package cherry.goods.crypto;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
-
-import cherry.goods.util.RandomUtil;
 
 public class NullCryptoTest {
 
@@ -29,7 +28,7 @@ public class NullCryptoTest {
 	public void testEncodeDecode() {
 		NullCrypto crypto = new NullCrypto();
 		for (int i = 0; i < 100; i++) {
-			byte[] plain = RandomUtil.randomBytes(1024);
+			byte[] plain = RandomUtils.nextBytes(1024);
 			byte[] enc = crypto.encrypt(plain);
 			assertThat(enc, is(plain));
 			byte[] dec = crypto.decrypt(enc);

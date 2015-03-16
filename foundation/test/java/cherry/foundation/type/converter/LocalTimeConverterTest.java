@@ -39,6 +39,7 @@ public class LocalTimeConverterTest {
 	@Test
 	public void testCanConvert() {
 		assertThat(cs.canConvert(Time.class, LocalTime.class), is(true));
+		assertThat(cs.canConvert(LocalTime.class, Time.class), is(true));
 	}
 
 	@Test
@@ -48,6 +49,7 @@ public class LocalTimeConverterTest {
 			LocalTime lt = now.plusSeconds(i);
 			Time time = new Time(lt.getMillisOfDay());
 			assertThat(cs.convert(time, LocalTime.class), is(lt));
+			assertThat(cs.convert(lt, Time.class), is(time));
 		}
 	}
 

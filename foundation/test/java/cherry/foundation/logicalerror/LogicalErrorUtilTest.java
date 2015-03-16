@@ -28,6 +28,8 @@ import org.junit.Test;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.validation.BindingResult;
 
+import cherry.foundation.type.Code;
+
 public class LogicalErrorUtilTest {
 
 	@Test
@@ -68,7 +70,39 @@ public class LogicalErrorUtilTest {
 	}
 
 	@Test
-	public void testResolve() {
+	public void testResolveFromLogicalError() {
+		MessageSourceResolvable resolvable = LogicalErrorUtil.resolve(new ILogicalError() {
+			@Override
+			public String code() {
+				return "property";
+			}
+		});
+		assertNotNull(resolvable.getCodes());
+		assertEquals(1, resolvable.getCodes().length);
+		assertEquals("property", resolvable.getCodes()[0]);
+		assertNotNull(resolvable.getArguments());
+		assertEquals(0, resolvable.getArguments().length);
+		assertNull(resolvable.getDefaultMessage());
+	}
+
+	@Test
+	public void testResolveFromCode() {
+		MessageSourceResolvable resolvable = LogicalErrorUtil.resolve(new Code<String>() {
+			@Override
+			public String code() {
+				return "property";
+			}
+		});
+		assertNotNull(resolvable.getCodes());
+		assertEquals(1, resolvable.getCodes().length);
+		assertEquals("property", resolvable.getCodes()[0]);
+		assertNotNull(resolvable.getArguments());
+		assertEquals(0, resolvable.getArguments().length);
+		assertNull(resolvable.getDefaultMessage());
+	}
+
+	@Test
+	public void testResolveFromString() {
 		MessageSourceResolvable resolvable = LogicalErrorUtil.resolve("property");
 		assertNotNull(resolvable.getCodes());
 		assertEquals(1, resolvable.getCodes().length);

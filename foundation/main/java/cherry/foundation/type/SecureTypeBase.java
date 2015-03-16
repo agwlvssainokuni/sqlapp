@@ -51,7 +51,7 @@ public abstract class SecureTypeBase<T> implements SecureType<T>, Serializable {
 
 	@Override
 	public String toString() {
-		return (new StringBuilder(getClass().getSimpleName())).append("[").append(plain()).append("]").toString();
+		return new StringBuilder(getClass().getSimpleName()).append("[").append(plain()).append("]").toString();
 	}
 
 }

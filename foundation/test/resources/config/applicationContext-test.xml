@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<import resource="applicationContext-foundation.xml" />
@@ -21,6 +23,47 @@
 	</bean>
 
 	<mybatis-spring:scan base-package="cherry.foundation.type.db.mapper" />
+
+	<bean class="cherry.goods.log.Log" factory-method="setMessageDef">
+		<constructor-arg>
+			<list>
+				<value>cherry/goods/log/log1</value>
+			</list>
+		</constructor-arg>
+	</bean>
+	<bean class="cherry.goods.log.Log" factory-method="addMessageDef">
+		<constructor-arg>
+			<list>
+				<value>cherry/goods/log/log2</value>
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/login/**" />
+			<mvc:mapping path="/logout/**" />
+			<mvc:mapping path="/secure/**" />
+			<bean class="cherry.foundation.springmvc.OperationLogHandlerInterceptor" />
+		</mvc:interceptor>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+		<bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
+		<bean class="org.springframework.mobile.device.site.SitePreferenceHandlerInterceptor" />
+	</mvc:interceptors>
+
+	<mvc:annotation-driven conversion-service="conversionService">
+		<mvc:argument-resolvers>
+			<bean class="org.springframework.mobile.device.DeviceWebArgumentResolver" />
+			<bean class="org.springframework.mobile.device.site.SitePreferenceWebArgumentResolver" />
+		</mvc:argument-resolvers>
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper" ref="objectMapper" />
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<mvc:default-servlet-handler />
 
 	<bean id="paginator" class="cherry.goods.paginate.PaginatorImpl">
 		<property name="paginateStrategy">

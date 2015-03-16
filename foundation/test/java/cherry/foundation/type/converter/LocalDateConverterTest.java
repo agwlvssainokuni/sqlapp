@@ -39,6 +39,7 @@ public class LocalDateConverterTest {
 	@Test
 	public void testCanConvert() {
 		assertThat(cs.canConvert(Date.class, LocalDate.class), is(true));
+		assertThat(cs.canConvert(LocalDate.class, Date.class), is(true));
 	}
 
 	@Test
@@ -48,6 +49,7 @@ public class LocalDateConverterTest {
 			LocalDate ld = now.plusDays(i);
 			Date date = new Date(ld.toDate().getTime());
 			assertThat(cs.convert(date, LocalDate.class), is(ld));
+			assertThat(cs.convert(ld, Date.class), is(date));
 		}
 	}
 

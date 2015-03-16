@@ -23,10 +23,10 @@ import static org.junit.Assert.assertThat;
 
 import java.security.SecureRandom;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 
 import cherry.goods.crypto.VersionStrategy.VersionedData;
-import cherry.goods.util.RandomUtil;
 
 public class DefaultVersioningStrategyTest {
 
@@ -37,7 +37,7 @@ public class DefaultVersioningStrategyTest {
 		DefaultVersionStrategy strategy = new DefaultVersionStrategy();
 		for (int i = 0; i < 100; i++) {
 			int version = random.nextInt();
-			byte[] plain = RandomUtil.randomBytes(1024);
+			byte[] plain = RandomUtils.nextBytes(1024);
 			byte[] encoded = strategy.encode(plain, version);
 			assertThat(plain, is(not(encoded)));
 			VersionedData<byte[], Integer> vd = strategy.decode(encoded);

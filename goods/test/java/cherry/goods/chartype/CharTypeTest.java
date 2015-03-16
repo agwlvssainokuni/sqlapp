@@ -258,6 +258,12 @@ public class CharTypeTest {
 				case 0x8154: // 'ゝ'
 				case 0x8155: // 'ゞ'
 				case 0x815B: // 'ー'
+				case 0x8141: // '、'
+				case 0x8142: // '。'
+				case 0x8175: // '「'
+				case 0x8176: // '」'
+				case 0x8177: // '『'
+				case 0x8178: // '』'
 					assertThat(CharTypeValidator.isFullHiragana(unicode), is(true));
 					break;
 				default:
@@ -283,6 +289,12 @@ public class CharTypeTest {
 				case 0x8152: // 'ヽ'
 				case 0x8153: // 'ヾ'
 				case 0x815B: // 'ー'
+				case 0x8141: // '、'
+				case 0x8142: // '。'
+				case 0x8175: // '「'
+				case 0x8176: // '」'
+				case 0x8177: // '『'
+				case 0x8178: // '』'
 					assertThat(CharTypeValidator.isFullKatakana(unicode), is(true));
 					break;
 				default:

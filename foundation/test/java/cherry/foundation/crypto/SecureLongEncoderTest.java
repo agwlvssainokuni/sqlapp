@@ -22,11 +22,11 @@ import static org.junit.Assert.assertThat;
 
 import java.security.SecureRandom;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
 import org.springframework.security.util.InMemoryResource;
 
 import cherry.foundation.type.SecureLong;
-import cherry.goods.util.RandomUtil;
 
 public class SecureLongEncoderTest {
 
@@ -69,8 +69,8 @@ public class SecureLongEncoderTest {
 
 	private SecureLongEncoder createSecureLongEncoder() throws Exception {
 		AESCryptoSupport crypto = new AESCryptoSupport();
-		crypto.setSecretKeyResource(new InMemoryResource(RandomUtil.randomBytes(16)));
-		crypto.setInitVectorResource(new InMemoryResource(RandomUtil.randomBytes(16)));
+		crypto.setSecretKeyResource(new InMemoryResource(RandomUtils.nextBytes(16)));
+		crypto.setInitVectorResource(new InMemoryResource(RandomUtils.nextBytes(16)));
 		crypto.afterPropertiesSet();
 		SecureLongEncoder encoder = new SecureLongEncoder();
 		encoder.setCrypto(crypto);

@@ -39,6 +39,7 @@ public class LocalDateTimeConverterTest {
 	@Test
 	public void testCanConvert() {
 		assertThat(cs.canConvert(Timestamp.class, LocalDateTime.class), is(true));
+		assertThat(cs.canConvert(LocalDateTime.class, Timestamp.class), is(true));
 	}
 
 	@Test
@@ -48,6 +49,7 @@ public class LocalDateTimeConverterTest {
 			LocalDateTime ldt = now.plusSeconds(i);
 			Timestamp ts = new Timestamp(ldt.toDate().getTime());
 			assertThat(cs.convert(ts, LocalDateTime.class), is(ldt));
+			assertThat(cs.convert(ldt, Timestamp.class), is(ts));
 		}
 	}
 
